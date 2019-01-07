@@ -8,7 +8,9 @@ Two versions of the script are added to the repository. The normal and elaborate
 First, it detects to outside corners of the grid and warps the picture to match those corners as corners of the picture. This perspective warps is stored as the calibration of the picture. It can be performed before a game session, be repeated during game session or be included in the game state analysis (calibration, on my laptop, takes roughly 1 second). Next, the calibration is used to also warp the image that needs processing. With the perspective warp performed, the locations of each grid cell are known - with perhaps a minor offset from the image processoing. The image is first turned into a HSV color range to better distinguish between the red (geometry) and blue markers (ecotopes). Two masks are created that only pass through the red and blue makers respectively as white, turning the rest of the image black. A for loop is subsequently used to cycle through the locations of each grid cell as the region of interest. Here, a circular mask is applied to remove any shapes from adjacent grid cells and the number of counters - correponding to the amount of coloured squares) are counted. The amount of contours identified for each grid cell is then stored in a numpy array with three columns:
 
 ●	grid cell number (from 1 to 143)
+
 ●	geometry height (0, 1, 2, 3 or 4) - 0 in the example corresponds to river bed level, 2 to floodplain level and 4 to dike level
+
 ●	aggregated ecotope type (1: grassland, 2: brushwood, 3: thicket, 4: forest, 5: unvegetated, 6: agriculture, 7: build structure,
   8: river bed/water) - these are preliminary
 
