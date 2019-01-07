@@ -96,8 +96,6 @@ def calcGrid(height, width):
     # determine size of grid circles from image and step size in x direction
     radius = int(round(height / 10))
     x_step = np.cos(np.deg2rad(30)) * radius
-    x_list = []
-    y_list = []
     origins = []
     
     # determine x and y coordinates of gridcells midpoints
@@ -110,13 +108,8 @@ def calcGrid(height, width):
                 y = int(round(radius * b))
             else:
                 y = int(round(radius * (b - 0.5)))
-            x_list.append(x)
-            y_list.append(y)
-    
-    # create array of x, y coordinates gridcells and gridcell number 
-    for x, y in zip(x_list, y_list):
-        origins.append([x, y])
-    
+            origins.append([x, y])
+        
     """
     # backup x, y coordinates and gridcell numbers in a text file, unnecessary for script to work
     with open('grid_coordinates.txt', 'w') as f:

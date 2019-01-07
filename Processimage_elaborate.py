@@ -67,9 +67,8 @@ def detectMarkers(file, pers, img_x, img_y, origins, r):
     mask = np.zeros((2*r, 2*r), dtype = "uint8") # empty mask of grid cell size
     cv2.circle(mask, (r, r), safe_r, (255, 255, 255), -1) # circle for mask, centered with safe radius
     
-    d = 0 # counter for filenames. Storing files is not necessary for script to work
-    geometry = [] # empty list for geometry values
-    ecotopes = [] # empty list for ecotopes values
+    d = 0 # counter for filenames and cell numbers. Storing files is not necessary for script to work
+    cell = [] # empty list for current state of cells
     
     # for loop that analyzes all grid cells
     for (x, y) in origins:
@@ -94,6 +93,9 @@ def detectMarkers(file, pers, img_x, img_y, origins, r):
         cv2.imwrite(os.path.join(eco_path, filenameEco), maskedImgEco)
         
         """
+        *** Voorlopig obsolete code i.v.m. wijziging direct naar cell lijst i.p.v. eerst in aparte list
+        wegschrijven ***
+        
         deze code fixed in dit geval de net missers (niet gesloten contouren), maar is niet robuust.
         Dit zit hem niet in de calbiratie, maar in de controle over licht. De gebruikte foto is slecht
         verlicht (donker), heeft reflectie en delen met schaduw. Volgende stap is het maken en updaten
@@ -112,16 +114,8 @@ def detectMarkers(file, pers, img_x, img_y, origins, r):
             ecotopes.append(len(contoursEco))
         """
         
-        geometry.append(len(contoursGeo))
-        ecotopes.append(len(contoursEco))
+        cell.append([d, len(contoursGeo), len(contoursEco)])
     
-    c = 0 # counter for grid cells
-    cell = [] # empty list for current state of cells
-    
-    # create one array with the current status of all grid cells with cellnumber, geometry (height) and ecotope (type)
-    for geo, eco in zip(geometry, ecotopes):
-        c += 1
-        cell.append([c, geo, eco])
     cell = np.array(cell) # convert list to a numpy array
     # export cell status to a text file
     with open(os.path.join(pic_path, '09_cell_status.txt'), 'w') as f:
