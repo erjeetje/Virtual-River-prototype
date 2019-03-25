@@ -108,21 +108,21 @@ def rotateGrid(canvas, img):
 
 def calcGrid(height, width):
     # determine size of grid circles from image and step size in x direction
-    radius = int(round(height / 10))
+    radius = (height / 10)
     x_step = np.cos(np.deg2rad(30)) * radius
     # print(x_step)
     origins = []
 
     # determine x and y coordinates of gridcells midpoints
     for a in range(1, 16):  # range reflects gridsize in x direction
-        x = int(round(x_step * a))
+        x = (x_step * a)
         for b in range(1, 11):  # range reflects gridsize in y direction
             if a % 2 == 0:
                 if b == 10:
                     continue
-                y = int(round(radius * b))
+                y = (radius * b)
             else:
-                y = int(round(radius * (b - 0.5)))
+                y = (radius * (b - 0.5))
             origins.append([x, y])
     features = createFeatures(origins, radius)
     return np.array(origins), radius, features
