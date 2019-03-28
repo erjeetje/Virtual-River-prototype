@@ -22,16 +22,23 @@ def read_calibration():
     with open('calibration.json') as f:
         calibration = json.load(f)
     # convert to transform matrix
-    transform = cv2.getPerspectiveTransform(
+    sandbox_transform = cv2.getPerspectiveTransform(
             np.array(calibration['img_post_cut_points'], dtype='float32'),
             np.array(calibration['model_points'], dtype='float32')
     )
-    calibration['image_post_cut2model'] = transform
+    tygron_transform = cv2.getPerspectiveTransform(
+            np.array(calibration['img_post_cut_points'], dtype='float32'),
+            np.array(calibration['tygron_export'], dtype='float32')
+    )
+    calibration['image_post_cut2model'] = sandbox_transform
+    calibration['image_post_cut2tygron'] = tygron_transform
+    #with open('tygron_export.geojson', 'w') as f:
+        #geojson.dump(board_featurecollection, f, sort_keys=True, indent=2)
     return calibration
 
 
 def read_hexagons():
-    with open('hexagons_features_transformed.geojson') as f:
+    with open('hexagons_sandbox_transformed.geojson') as f:
         features = geojson.load(f)
     return features
 
@@ -51,10 +58,10 @@ def read_grid():
     feature_collection = geojson.FeatureCollection(features)
     with open('grid.geojson', 'w') as f:
         geojson.dump(feature_collection, f, sort_keys=True, indent=2)
-    return feature_collection, xy
+    return feature_collection
 
 
-def hex_to_points(hexagons, grid, xy, method='nearest'):
+def hex_to_points(hexagons, grid, method='nearest'):
     hex_coor = []
     polygons = []
     for feature in hexagons.features:
@@ -70,13 +77,34 @@ def hex_to_points(hexagons, grid, xy, method='nearest'):
     board_shapely = geometry.mapping(board_as_polygon)
     board_feature = geojson.Feature(geometry=board_shapely)
     board_featurecollection = geojson.FeatureCollection([board_feature])
+    #print(board_shapely)
     with open('board_border.geojson', 'w') as f:
         geojson.dump(board_featurecollection, f, sort_keys=True, indent=2)
+    line = list(geojson.utils.coords(board_feature))
+    minx = 0.0
+    miny = 0.0
+    maxx = 0.0
+    maxy = 0.0
+    for x, y in line:
+        if x < minx:
+            minx = x
+        elif x > maxx:
+            maxx = x
+        else:
+            continue
+        if y < miny:
+            miny = y
+        elif y > maxy:
+            maxy = y
+        else:
+            continue
+    bbox=geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny), (minx, miny), (minx, maxy)])
+    #print(bbox)
     inside_id = []
     inside_coor = []
     for feature in grid.features:
         point = geometry.asShape(feature.geometry)
-        if board_as_polygon.contains(point):
+        if bbox.contains(point):
             feature.properties["board"] = True
             inside_id.append(feature.id)
             x_point = point.centroid.x
@@ -108,32 +136,41 @@ def hex_to_points(hexagons, grid, xy, method='nearest'):
             change this section to finding the nearest neighbour on the horizontal axis +
             another rule if no nearest neighbour on the horizontal axis
             """
-    tac = time.time()
     for feature in grid.features:
         if feature.properties["board"]:
             nearest_three = nearest[feature.id]
             distances2hex = distances[feature.id]
-            if distances2hex[1] > 45:
+            if distances2hex[0] > 35:
+                hexagon1 = hexagons_by_id[nearest_three[0]]
+                hexagon2 = hexagons_by_id[nearest_three[1]]
+                hexagon3 = hexagons_by_id[nearest_three[2]]
+                distances2hex = np.power(distances2hex, 2)
+                dist2hex1 = 1 / distances2hex[0]
+                dist2hex2 = 1 / distances2hex[1]
+                dist2hex3 = 1 / distances2hex[2]
+                total_dist = dist2hex1 + dist2hex2 + dist2hex3
+                feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist), 5)
+            elif distances2hex[1] > 45:
                 hexagon = hexagons_by_id[nearest_three[0]]
                 feature.properties['z'] = hexagon.properties['z']
             elif distances2hex[2] > 45:
                 hexagon1 = hexagons_by_id[nearest_three[0]]
                 hexagon2 = hexagons_by_id[nearest_three[1]]
-                distances2hex = np.power(distances2hex, 3)
+                distances2hex = np.power(distances2hex, 2)
                 dist2hex1 = 1 / distances2hex[0]
                 dist2hex2 = 1 / distances2hex[1]
                 total_dist = dist2hex1 + dist2hex2
-                feature.properties['z'] = hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist)
+                feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist), 5)
             else:
                 hexagon1 = hexagons_by_id[nearest_three[0]]
                 hexagon2 = hexagons_by_id[nearest_three[1]]
                 hexagon3 = hexagons_by_id[nearest_three[2]]
-                distances2hex = np.power(distances2hex, 3)
+                distances2hex = np.power(distances2hex, 2)
                 dist2hex1 = 1 / distances2hex[0]
                 dist2hex2 = 1 / distances2hex[1]
                 dist2hex3 = 1 / distances2hex[2]
                 total_dist = dist2hex1 + dist2hex2 + dist2hex3
-                feature.properties['z'] = hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist)
+                feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist), 5)
         else:
             continue
 
@@ -156,15 +193,16 @@ def hex_to_points(hexagons, grid, xy, method='nearest'):
 
     with open('grid_with_z_triangulate.geojson', 'w') as f:
         geojson.dump(grid, f, sort_keys=True, indent=2)
-    return tac
+    return grid
 
 
 if __name__ == "__main__":
     tic = time.time()
     calibration = read_calibration()
     hexagons = read_hexagons()
-    grid, xy = read_grid()
-    tac = hex_to_points(hexagons, grid, xy, method='griddata')
+    grid = read_grid()
+    tac = time.time()
+    grid_triangulate = hex_to_points(hexagons, grid, method='griddata')
     model = bmi.wrapper.BMIWrapper('dflowfm')
     model.initialize(r'C:\Users\HaanRJ\Documents\GitHub\sandbox-fm\models\sandbox\Waal_schematic\waal_with_side.mdu')
     print('model initialized')

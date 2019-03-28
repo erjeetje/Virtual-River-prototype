@@ -6,11 +6,30 @@ Created on Thu Jan  3 10:49:34 2019
 """
 
 
-# import time
+import json
 import cv2
 import numpy as np
 import geojson
+import sandbox_fm.calibrate
+from sandbox_fm.calibration_wizard import NumpyEncoder
 
+
+def createCalibrationFile(img_x, img_y, cut_points):
+    calibration = {}
+    calibration['model_points'] = [-400, 300 ], [400, 300], [400, -300], [-400, -300]  # model points following SandBox implementation; between [-600, -400] and [600, 400] 
+    calibration['img_points'] = [0, 0], [1920, 0], [1920, 1080], [0, 1080]  # resolution camera; FullHD
+    calibration['img_pre_cut_points'] = cut_points.tolist()  # calibration points used to cut images
+    calibration['img_post_cut_points'] = [0, 0], [img_x, 0], [img_x, img_y],  [0, img_y]  # corners of image after image cut
+    calibration['tygron_export'] = [0, 0], [1000, 0], [1000, -750],  [0, -750]
+    calibration['tygron_update'] = [0, 0], [1000, 0], [1000, 750],  [0, 750]
+    calibration['z'] = [0.0, 9.0]  # height range
+    calibration['z_values'] = [0, 5]  # height of game pieces; may be subject to change after interpolation
+    calibration['box'] = [0, 0], [640, 0], [640, 480], [0, 480] # box == beamer
+    transforms = sandbox_fm.calibrate.compute_transforms(calibration)
+    calibration.update(transforms)
+    with open('calibration.json', 'w') as f:
+        json.dump(calibration, f, sort_keys=True, indent=2, cls=NumpyEncoder)
+    return transforms
 
 def detectCorners(filename, method = 'standard'):
     """

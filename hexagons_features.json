@@ -36,7 +36,11 @@
       "type": "Polygon"
     },
     "id": 0,
-    "properties": {},
+    "properties": {
+      "id": 0,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -76,7 +80,11 @@
       "type": "Polygon"
     },
     "id": 1,
-    "properties": {},
+    "properties": {
+      "id": 1,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -116,7 +124,11 @@
       "type": "Polygon"
     },
     "id": 2,
-    "properties": {},
+    "properties": {
+      "id": 2,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -156,7 +168,11 @@
       "type": "Polygon"
     },
     "id": 3,
-    "properties": {},
+    "properties": {
+      "id": 3,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -196,7 +212,11 @@
       "type": "Polygon"
     },
     "id": 4,
-    "properties": {},
+    "properties": {
+      "id": 4,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -236,7 +256,11 @@
       "type": "Polygon"
     },
     "id": 5,
-    "properties": {},
+    "properties": {
+      "id": 5,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -276,7 +300,11 @@
       "type": "Polygon"
     },
     "id": 6,
-    "properties": {},
+    "properties": {
+      "id": 6,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -316,7 +344,11 @@
       "type": "Polygon"
     },
     "id": 7,
-    "properties": {},
+    "properties": {
+      "id": 7,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -356,7 +388,11 @@
       "type": "Polygon"
     },
     "id": 8,
-    "properties": {},
+    "properties": {
+      "id": 8,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -396,7 +432,11 @@
       "type": "Polygon"
     },
     "id": 9,
-    "properties": {},
+    "properties": {
+      "id": 9,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -436,7 +476,11 @@
       "type": "Polygon"
     },
     "id": 10,
-    "properties": {},
+    "properties": {
+      "id": 10,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -476,7 +520,11 @@
       "type": "Polygon"
     },
     "id": 11,
-    "properties": {},
+    "properties": {
+      "id": 11,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -516,7 +564,11 @@
       "type": "Polygon"
     },
     "id": 12,
-    "properties": {},
+    "properties": {
+      "id": 12,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -556,7 +608,11 @@
       "type": "Polygon"
     },
     "id": 13,
-    "properties": {},
+    "properties": {
+      "id": 13,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -596,7 +652,11 @@
       "type": "Polygon"
     },
     "id": 14,
-    "properties": {},
+    "properties": {
+      "id": 14,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -636,7 +696,11 @@
       "type": "Polygon"
     },
     "id": 15,
-    "properties": {},
+    "properties": {
+      "id": 15,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -676,7 +740,11 @@
       "type": "Polygon"
     },
     "id": 16,
-    "properties": {},
+    "properties": {
+      "id": 16,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -716,7 +784,11 @@
       "type": "Polygon"
     },
     "id": 17,
-    "properties": {},
+    "properties": {
+      "id": 17,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -756,7 +828,11 @@
       "type": "Polygon"
     },
     "id": 18,
-    "properties": {},
+    "properties": {
+      "id": 18,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -796,7 +872,11 @@
       "type": "Polygon"
     },
     "id": 19,
-    "properties": {},
+    "properties": {
+      "id": 19,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -836,7 +916,11 @@
       "type": "Polygon"
     },
     "id": 20,
-    "properties": {},
+    "properties": {
+      "id": 20,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -876,7 +960,11 @@
       "type": "Polygon"
     },
     "id": 21,
-    "properties": {},
+    "properties": {
+      "id": 21,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -916,7 +1004,11 @@
       "type": "Polygon"
     },
     "id": 22,
-    "properties": {},
+    "properties": {
+      "id": 22,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -956,7 +1048,11 @@
       "type": "Polygon"
     },
     "id": 23,
-    "properties": {},
+    "properties": {
+      "id": 23,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -996,7 +1092,11 @@
       "type": "Polygon"
     },
     "id": 24,
-    "properties": {},
+    "properties": {
+      "id": 24,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -1036,7 +1136,11 @@
       "type": "Polygon"
     },
     "id": 25,
-    "properties": {},
+    "properties": {
+      "id": 25,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -1076,7 +1180,11 @@
       "type": "Polygon"
     },
     "id": 26,
-    "properties": {},
+    "properties": {
+      "id": 26,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1116,7 +1224,11 @@
       "type": "Polygon"
     },
     "id": 27,
-    "properties": {},
+    "properties": {
+      "id": 27,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -1156,7 +1268,11 @@
       "type": "Polygon"
     },
     "id": 28,
-    "properties": {},
+    "properties": {
+      "id": 28,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1196,7 +1312,11 @@
       "type": "Polygon"
     },
     "id": 29,
-    "properties": {},
+    "properties": {
+      "id": 29,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -1236,7 +1356,11 @@
       "type": "Polygon"
     },
     "id": 30,
-    "properties": {},
+    "properties": {
+      "id": 30,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1276,7 +1400,11 @@
       "type": "Polygon"
     },
     "id": 31,
-    "properties": {},
+    "properties": {
+      "id": 31,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -1316,7 +1444,11 @@
       "type": "Polygon"
     },
     "id": 32,
-    "properties": {},
+    "properties": {
+      "id": 32,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -1356,7 +1488,11 @@
       "type": "Polygon"
     },
     "id": 33,
-    "properties": {},
+    "properties": {
+      "id": 33,
+      "landuse": 4,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1396,7 +1532,11 @@
       "type": "Polygon"
     },
     "id": 34,
-    "properties": {},
+    "properties": {
+      "id": 34,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -1436,7 +1576,11 @@
       "type": "Polygon"
     },
     "id": 35,
-    "properties": {},
+    "properties": {
+      "id": 35,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -1476,7 +1620,11 @@
       "type": "Polygon"
     },
     "id": 36,
-    "properties": {},
+    "properties": {
+      "id": 36,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1516,7 +1664,11 @@
       "type": "Polygon"
     },
     "id": 37,
-    "properties": {},
+    "properties": {
+      "id": 37,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -1556,7 +1708,11 @@
       "type": "Polygon"
     },
     "id": 38,
-    "properties": {},
+    "properties": {
+      "id": 38,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -1596,7 +1752,11 @@
       "type": "Polygon"
     },
     "id": 39,
-    "properties": {},
+    "properties": {
+      "id": 39,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1636,7 +1796,11 @@
       "type": "Polygon"
     },
     "id": 40,
-    "properties": {},
+    "properties": {
+      "id": 40,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -1676,7 +1840,11 @@
       "type": "Polygon"
     },
     "id": 41,
-    "properties": {},
+    "properties": {
+      "id": 41,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1716,7 +1884,11 @@
       "type": "Polygon"
     },
     "id": 42,
-    "properties": {},
+    "properties": {
+      "id": 42,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1756,7 +1928,11 @@
       "type": "Polygon"
     },
     "id": 43,
-    "properties": {},
+    "properties": {
+      "id": 43,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -1796,7 +1972,11 @@
       "type": "Polygon"
     },
     "id": 44,
-    "properties": {},
+    "properties": {
+      "id": 44,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -1836,7 +2016,11 @@
       "type": "Polygon"
     },
     "id": 45,
-    "properties": {},
+    "properties": {
+      "id": 45,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1876,7 +2060,11 @@
       "type": "Polygon"
     },
     "id": 46,
-    "properties": {},
+    "properties": {
+      "id": 46,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -1916,7 +2104,11 @@
       "type": "Polygon"
     },
     "id": 47,
-    "properties": {},
+    "properties": {
+      "id": 47,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -1956,7 +2148,11 @@
       "type": "Polygon"
     },
     "id": 48,
-    "properties": {},
+    "properties": {
+      "id": 48,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -1996,7 +2192,11 @@
       "type": "Polygon"
     },
     "id": 49,
-    "properties": {},
+    "properties": {
+      "id": 49,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2036,7 +2236,11 @@
       "type": "Polygon"
     },
     "id": 50,
-    "properties": {},
+    "properties": {
+      "id": 50,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -2076,7 +2280,11 @@
       "type": "Polygon"
     },
     "id": 51,
-    "properties": {},
+    "properties": {
+      "id": 51,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2116,7 +2324,11 @@
       "type": "Polygon"
     },
     "id": 52,
-    "properties": {},
+    "properties": {
+      "id": 52,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -2156,7 +2368,11 @@
       "type": "Polygon"
     },
     "id": 53,
-    "properties": {},
+    "properties": {
+      "id": 53,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -2196,7 +2412,11 @@
       "type": "Polygon"
     },
     "id": 54,
-    "properties": {},
+    "properties": {
+      "id": 54,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2236,7 +2456,11 @@
       "type": "Polygon"
     },
     "id": 55,
-    "properties": {},
+    "properties": {
+      "id": 55,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -2276,7 +2500,11 @@
       "type": "Polygon"
     },
     "id": 56,
-    "properties": {},
+    "properties": {
+      "id": 56,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2316,7 +2544,11 @@
       "type": "Polygon"
     },
     "id": 57,
-    "properties": {},
+    "properties": {
+      "id": 57,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2356,7 +2588,11 @@
       "type": "Polygon"
     },
     "id": 58,
-    "properties": {},
+    "properties": {
+      "id": 58,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -2396,7 +2632,11 @@
       "type": "Polygon"
     },
     "id": 59,
-    "properties": {},
+    "properties": {
+      "id": 59,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -2436,7 +2676,11 @@
       "type": "Polygon"
     },
     "id": 60,
-    "properties": {},
+    "properties": {
+      "id": 60,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2476,7 +2720,11 @@
       "type": "Polygon"
     },
     "id": 61,
-    "properties": {},
+    "properties": {
+      "id": 61,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -2516,7 +2764,11 @@
       "type": "Polygon"
     },
     "id": 62,
-    "properties": {},
+    "properties": {
+      "id": 62,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -2556,7 +2808,11 @@
       "type": "Polygon"
     },
     "id": 63,
-    "properties": {},
+    "properties": {
+      "id": 63,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2596,7 +2852,11 @@
       "type": "Polygon"
     },
     "id": 64,
-    "properties": {},
+    "properties": {
+      "id": 64,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2636,7 +2896,11 @@
       "type": "Polygon"
     },
     "id": 65,
-    "properties": {},
+    "properties": {
+      "id": 65,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -2676,7 +2940,11 @@
       "type": "Polygon"
     },
     "id": 66,
-    "properties": {},
+    "properties": {
+      "id": 66,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2716,7 +2984,11 @@
       "type": "Polygon"
     },
     "id": 67,
-    "properties": {},
+    "properties": {
+      "id": 67,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -2756,7 +3028,11 @@
       "type": "Polygon"
     },
     "id": 68,
-    "properties": {},
+    "properties": {
+      "id": 68,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2796,7 +3072,11 @@
       "type": "Polygon"
     },
     "id": 69,
-    "properties": {},
+    "properties": {
+      "id": 69,
+      "landuse": 0,
+      "z": 1
+    },
     "type": "Feature"
   },
   {
@@ -2836,7 +3116,11 @@
       "type": "Polygon"
     },
     "id": 70,
-    "properties": {},
+    "properties": {
+      "id": 70,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -2876,7 +3160,11 @@
       "type": "Polygon"
     },
     "id": 71,
-    "properties": {},
+    "properties": {
+      "id": 71,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -2916,7 +3204,11 @@
       "type": "Polygon"
     },
     "id": 72,
-    "properties": {},
+    "properties": {
+      "id": 72,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -2956,7 +3248,11 @@
       "type": "Polygon"
     },
     "id": 73,
-    "properties": {},
+    "properties": {
+      "id": 73,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -2996,7 +3292,11 @@
       "type": "Polygon"
     },
     "id": 74,
-    "properties": {},
+    "properties": {
+      "id": 74,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3036,7 +3336,11 @@
       "type": "Polygon"
     },
     "id": 75,
-    "properties": {},
+    "properties": {
+      "id": 75,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -3076,7 +3380,11 @@
       "type": "Polygon"
     },
     "id": 76,
-    "properties": {},
+    "properties": {
+      "id": 76,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3116,7 +3424,11 @@
       "type": "Polygon"
     },
     "id": 77,
-    "properties": {},
+    "properties": {
+      "id": 77,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -3156,7 +3468,11 @@
       "type": "Polygon"
     },
     "id": 78,
-    "properties": {},
+    "properties": {
+      "id": 78,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3196,7 +3512,11 @@
       "type": "Polygon"
     },
     "id": 79,
-    "properties": {},
+    "properties": {
+      "id": 79,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -3236,7 +3556,11 @@
       "type": "Polygon"
     },
     "id": 80,
-    "properties": {},
+    "properties": {
+      "id": 80,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -3276,7 +3600,11 @@
       "type": "Polygon"
     },
     "id": 81,
-    "properties": {},
+    "properties": {
+      "id": 81,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3316,7 +3644,11 @@
       "type": "Polygon"
     },
     "id": 82,
-    "properties": {},
+    "properties": {
+      "id": 82,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -3356,7 +3688,11 @@
       "type": "Polygon"
     },
     "id": 83,
-    "properties": {},
+    "properties": {
+      "id": 83,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3396,7 +3732,11 @@
       "type": "Polygon"
     },
     "id": 84,
-    "properties": {},
+    "properties": {
+      "id": 84,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -3436,7 +3776,11 @@
       "type": "Polygon"
     },
     "id": 85,
-    "properties": {},
+    "properties": {
+      "id": 85,
+      "landuse": 4,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3476,7 +3820,11 @@
       "type": "Polygon"
     },
     "id": 86,
-    "properties": {},
+    "properties": {
+      "id": 86,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -3516,7 +3864,11 @@
       "type": "Polygon"
     },
     "id": 87,
-    "properties": {},
+    "properties": {
+      "id": 87,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3556,7 +3908,11 @@
       "type": "Polygon"
     },
     "id": 88,
-    "properties": {},
+    "properties": {
+      "id": 88,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -3596,7 +3952,11 @@
       "type": "Polygon"
     },
     "id": 89,
-    "properties": {},
+    "properties": {
+      "id": 89,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -3636,7 +3996,11 @@
       "type": "Polygon"
     },
     "id": 90,
-    "properties": {},
+    "properties": {
+      "id": 90,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3676,7 +4040,11 @@
       "type": "Polygon"
     },
     "id": 91,
-    "properties": {},
+    "properties": {
+      "id": 91,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3716,7 +4084,11 @@
       "type": "Polygon"
     },
     "id": 92,
-    "properties": {},
+    "properties": {
+      "id": 92,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3756,7 +4128,11 @@
       "type": "Polygon"
     },
     "id": 93,
-    "properties": {},
+    "properties": {
+      "id": 93,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -3796,7 +4172,11 @@
       "type": "Polygon"
     },
     "id": 94,
-    "properties": {},
+    "properties": {
+      "id": 94,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3836,7 +4216,11 @@
       "type": "Polygon"
     },
     "id": 95,
-    "properties": {},
+    "properties": {
+      "id": 95,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -3876,7 +4260,11 @@
       "type": "Polygon"
     },
     "id": 96,
-    "properties": {},
+    "properties": {
+      "id": 96,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3916,7 +4304,11 @@
       "type": "Polygon"
     },
     "id": 97,
-    "properties": {},
+    "properties": {
+      "id": 97,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -3956,7 +4348,11 @@
       "type": "Polygon"
     },
     "id": 98,
-    "properties": {},
+    "properties": {
+      "id": 98,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -3996,7 +4392,11 @@
       "type": "Polygon"
     },
     "id": 99,
-    "properties": {},
+    "properties": {
+      "id": 99,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4036,7 +4436,11 @@
       "type": "Polygon"
     },
     "id": 100,
-    "properties": {},
+    "properties": {
+      "id": 100,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4076,7 +4480,11 @@
       "type": "Polygon"
     },
     "id": 101,
-    "properties": {},
+    "properties": {
+      "id": 101,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4116,7 +4524,11 @@
       "type": "Polygon"
     },
     "id": 102,
-    "properties": {},
+    "properties": {
+      "id": 102,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4156,7 +4568,11 @@
       "type": "Polygon"
     },
     "id": 103,
-    "properties": {},
+    "properties": {
+      "id": 103,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -4196,7 +4612,11 @@
       "type": "Polygon"
     },
     "id": 104,
-    "properties": {},
+    "properties": {
+      "id": 104,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4236,7 +4656,11 @@
       "type": "Polygon"
     },
     "id": 105,
-    "properties": {},
+    "properties": {
+      "id": 105,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -4276,7 +4700,11 @@
       "type": "Polygon"
     },
     "id": 106,
-    "properties": {},
+    "properties": {
+      "id": 106,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4316,7 +4744,11 @@
       "type": "Polygon"
     },
     "id": 107,
-    "properties": {},
+    "properties": {
+      "id": 107,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4356,7 +4788,11 @@
       "type": "Polygon"
     },
     "id": 108,
-    "properties": {},
+    "properties": {
+      "id": 108,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4396,7 +4832,11 @@
       "type": "Polygon"
     },
     "id": 109,
-    "properties": {},
+    "properties": {
+      "id": 109,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4436,7 +4876,11 @@
       "type": "Polygon"
     },
     "id": 110,
-    "properties": {},
+    "properties": {
+      "id": 110,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4476,7 +4920,11 @@
       "type": "Polygon"
     },
     "id": 111,
-    "properties": {},
+    "properties": {
+      "id": 111,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4516,7 +4964,11 @@
       "type": "Polygon"
     },
     "id": 112,
-    "properties": {},
+    "properties": {
+      "id": 112,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -4556,7 +5008,11 @@
       "type": "Polygon"
     },
     "id": 113,
-    "properties": {},
+    "properties": {
+      "id": 113,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4596,7 +5052,11 @@
       "type": "Polygon"
     },
     "id": 114,
-    "properties": {},
+    "properties": {
+      "id": 114,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4636,7 +5096,11 @@
       "type": "Polygon"
     },
     "id": 115,
-    "properties": {},
+    "properties": {
+      "id": 115,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -4676,7 +5140,11 @@
       "type": "Polygon"
     },
     "id": 116,
-    "properties": {},
+    "properties": {
+      "id": 116,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4716,7 +5184,11 @@
       "type": "Polygon"
     },
     "id": 117,
-    "properties": {},
+    "properties": {
+      "id": 117,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4756,7 +5228,11 @@
       "type": "Polygon"
     },
     "id": 118,
-    "properties": {},
+    "properties": {
+      "id": 118,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4796,7 +5272,11 @@
       "type": "Polygon"
     },
     "id": 119,
-    "properties": {},
+    "properties": {
+      "id": 119,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4836,7 +5316,11 @@
       "type": "Polygon"
     },
     "id": 120,
-    "properties": {},
+    "properties": {
+      "id": 120,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -4876,7 +5360,11 @@
       "type": "Polygon"
     },
     "id": 121,
-    "properties": {},
+    "properties": {
+      "id": 121,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -4916,7 +5404,11 @@
       "type": "Polygon"
     },
     "id": 122,
-    "properties": {},
+    "properties": {
+      "id": 122,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4956,7 +5448,11 @@
       "type": "Polygon"
     },
     "id": 123,
-    "properties": {},
+    "properties": {
+      "id": 123,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -4996,7 +5492,11 @@
       "type": "Polygon"
     },
     "id": 124,
-    "properties": {},
+    "properties": {
+      "id": 124,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -5036,7 +5536,11 @@
       "type": "Polygon"
     },
     "id": 125,
-    "properties": {},
+    "properties": {
+      "id": 125,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -5076,7 +5580,11 @@
       "type": "Polygon"
     },
     "id": 126,
-    "properties": {},
+    "properties": {
+      "id": 126,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -5116,7 +5624,11 @@
       "type": "Polygon"
     },
     "id": 127,
-    "properties": {},
+    "properties": {
+      "id": 127,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -5156,7 +5668,11 @@
       "type": "Polygon"
     },
     "id": 128,
-    "properties": {},
+    "properties": {
+      "id": 128,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -5196,7 +5712,11 @@
       "type": "Polygon"
     },
     "id": 129,
-    "properties": {},
+    "properties": {
+      "id": 129,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -5236,7 +5756,11 @@
       "type": "Polygon"
     },
     "id": 130,
-    "properties": {},
+    "properties": {
+      "id": 130,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -5276,7 +5800,11 @@
       "type": "Polygon"
     },
     "id": 131,
-    "properties": {},
+    "properties": {
+      "id": 131,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -5316,7 +5844,11 @@
       "type": "Polygon"
     },
     "id": 132,
-    "properties": {},
+    "properties": {
+      "id": 132,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -5356,7 +5888,11 @@
       "type": "Polygon"
     },
     "id": 133,
-    "properties": {},
+    "properties": {
+      "id": 133,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -5396,7 +5932,11 @@
       "type": "Polygon"
     },
     "id": 134,
-    "properties": {},
+    "properties": {
+      "id": 134,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -5436,7 +5976,11 @@
       "type": "Polygon"
     },
     "id": 135,
-    "properties": {},
+    "properties": {
+      "id": 135,
+      "landuse": 0,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -5476,7 +6020,11 @@
       "type": "Polygon"
     },
     "id": 136,
-    "properties": {},
+    "properties": {
+      "id": 136,
+      "landuse": 9,
+      "z": 0
+    },
     "type": "Feature"
   },
   {
@@ -5516,7 +6064,11 @@
       "type": "Polygon"
     },
     "id": 137,
-    "properties": {},
+    "properties": {
+      "id": 137,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -5556,7 +6108,11 @@
       "type": "Polygon"
     },
     "id": 138,
-    "properties": {},
+    "properties": {
+      "id": 138,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -5596,7 +6152,11 @@
       "type": "Polygon"
     },
     "id": 139,
-    "properties": {},
+    "properties": {
+      "id": 139,
+      "landuse": 0,
+      "z": 3
+    },
     "type": "Feature"
   },
   {
@@ -5636,7 +6196,11 @@
       "type": "Polygon"
     },
     "id": 140,
-    "properties": {},
+    "properties": {
+      "id": 140,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   },
   {
@@ -5676,7 +6240,11 @@
       "type": "Polygon"
     },
     "id": 141,
-    "properties": {},
+    "properties": {
+      "id": 141,
+      "landuse": 0,
+      "z": 4
+    },
     "type": "Feature"
   },
   {
@@ -5716,7 +6284,11 @@
       "type": "Polygon"
     },
     "id": 142,
-    "properties": {},
+    "properties": {
+      "id": 142,
+      "landuse": 0,
+      "z": 2
+    },
     "type": "Feature"
   }
 ]
