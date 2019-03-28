@@ -44,6 +44,7 @@ def mainmenu():
                 - send picture to initialize or store picture and send correct filename
                 """
                 token, hex_sandbox, hex_tygron, hex_water, hex_land, transforms = initialize(filename)
+                print(token)
                 with open('token.txt', 'w') as f:
                     f.write(token)
                 hex_sandbox_prev = hex_sandbox
@@ -86,7 +87,10 @@ def mainmenu():
 
 
 def initialize(filename):
-    username, password = "r.j.denhaan@utwente.nl", "OdIketh9"
+    with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
+        username = f.read()
+    with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
+        password = g.read()
     token = "token=" + tygron.join_session(username, password)
     canvas, thresh = cali.detectCorners(filename, method='adaptive')  # image name for calibration (would be first image pre-session)
     pers, img_x, img_y, origins, radius, cut_points, features = cali.rotateGrid(canvas, thresh)  # store calibration values as global variables
