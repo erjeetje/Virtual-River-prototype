@@ -14,7 +14,7 @@ import sandbox_fm.calibrate
 from sandbox_fm.calibration_wizard import NumpyEncoder
 
 
-def createCalibrationFile(img_x, img_y, cut_points):
+def create_calibration_file(img_x, img_y, cut_points):
     calibration = {}
     calibration['model_points'] = [-400, 300 ], [400, 300], [400, -300], [-400, -300]  # model points following SandBox implementation; between [-600, -400] and [600, 400] 
     calibration['img_points'] = [0, 0], [1920, 0], [1920, 1080], [0, 1080]  # resolution camera; FullHD
@@ -31,7 +31,7 @@ def createCalibrationFile(img_x, img_y, cut_points):
         json.dump(calibration, f, sort_keys=True, indent=2, cls=NumpyEncoder)
     return transforms
 
-def detectCorners(filename, method = 'standard'):
+def detect_corners(filename, method = 'standard'):
     """
     functiebeschrijving
     """
@@ -75,7 +75,7 @@ def detectCorners(filename, method = 'standard'):
     return canvas, thresh
 
 
-def rotateGrid(canvas, img):
+def rotate_grid(canvas, img):
     # get index of one of the two highest corners, store it and delete from array
     lowest_y = int(np.argmin(canvas, axis=0)[1:])
     top_corner1 = canvas[lowest_y]
@@ -121,11 +121,11 @@ def rotateGrid(canvas, img):
     # warp image according to the perspective transform and store image
     # warped = cv2.warpPerspective(img, perspective, (img_x, img_y))
     # cv2.imwrite('warpedGrid.jpg', warped)
-    origins, radius, features = calcGrid(img_y, img_x)
+    origins, radius, features = calc_grid(img_y, img_x)
     return perspective, img_x, img_y, origins, radius, pts1, features
 
 
-def calcGrid(height, width):
+def calc_grid(height, width):
     # determine size of grid circles from image and step size in x direction
     radius = (height / 10)
     x_step = np.cos(np.deg2rad(30)) * radius
@@ -143,11 +143,11 @@ def calcGrid(height, width):
             else:
                 y = (radius * (b - 0.5))
             origins.append([x, y])
-    features = createFeatures(origins, radius)
+    features = create_features(origins, radius)
     return np.array(origins), radius, features
 
 
-def createFeatures(origins, radius):
+def create_features(origins, radius):
     radius = radius/2
     dist = radius/np.cos(np.deg2rad(30))
     x_jump = dist/2

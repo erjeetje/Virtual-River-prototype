@@ -80,45 +80,6 @@ def set_elevation(tiff_file, api_key, start=False):
         return
 
 
-def set_terrain_type_backup(api_key, hexagons, terrain_type="land", api_endpoint="https://engine.tygron.com/api/session/event/EditorTerrainTypeEventType/ADD_TERRAIN_POLYGONS/?"):
-    if terrain_type == "water":
-        terrain_id = 3
-    else:
-        terrain_id = 0
-    polygons = []
-    """
-    Deze methode opdelen in twee delen:
-    
-    Deel 1: polygon verwijderen/toevoegen, krijgt mee: id, coordinaten, water/land.
-    Op basis van water of land polygon verwijderen (water) of toevoegen (land)
-    en dat komt overeen met building_remove_polygons en building_add_polygons
-    
-    Deel 2: Krijgt mee terrain_type & geojson file of file name. Maakt
-    multipolygons geheel water, danwel land.
-    """
-    api_url = "https://engine.tygron.com/api/session/event/EditorBuildingEventType/BUILDING_REMOVE_POLYGONS/?"
-    for feature in hexagons.features:
-        #data = requests.get(api_quick+str(feature.id)+"?f=JSON&"+api_key)
-        #tygron_buildings = feature.id
-        shape = geometry.asShape(feature.geometry)
-        polygons.append(shape)
-        multi = geometry.MultiPolygon([shape])
-        #print(multi)
-        remove = geometry.mapping(multi)
-        r = requests.post(url = api_url+api_key, json=[feature.id, 1, remove])
-    #for feature_id in tygron_buildings:   
-    #print(tygron_buildings)
-    multipolygon = geometry.MultiPolygon(polygons)
-    waterbodies = geometry.mapping(multipolygon)
-    r = requests.post(url = api_endpoint+api_key, json=[terrain_id, waterbodies, True])
-    print(r, r.text)
-    try:
-        pastebin_url = r.json()
-        print(pastebin_url)
-    except ValueError:
-        print("waterbodies updated")
-
-
 def set_terrain_type(api_key, terrain_type="land"):
     with open('waterbodies.geojson') as f:
         hexagons = geojson.load(f)
@@ -138,7 +99,10 @@ def set_terrain_type(api_key, terrain_type="land"):
         pastebin_url = r.json()
         print(pastebin_url)
     except ValueError:
-        print("waterbodies updated")
+        if terrain_type == "water":
+            print("waterbodies updated")
+        else:
+            print("land terrain updated")
 
 
 def remove_polygon(api_key, hexagon_id, hexagon_shape, api_endpoint="https://engine.tygron.com/api/session/event/EditorBuildingEventType/BUILDING_REMOVE_POLYGONS/?"):

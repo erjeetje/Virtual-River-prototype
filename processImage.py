@@ -16,7 +16,7 @@ import sandbox_fm.calibrate
 from sandbox_fm.calibration_wizard import NumpyEncoder
 
 
-def detectMarkers(file, pers, img_x, img_y, origins, r, features, method = 'rgb'):
+def detect_markers(file, pers, img_x, img_y, origins, r, features, method = 'rgb'):
     # load and process the new image (game state)
     img = cv2.imread(file)
     warped = cv2.warpPerspective(img, pers, (img_x, img_y))  # warp image it to calibrated perspective
@@ -149,14 +149,14 @@ def transform(features, transforms, export=None):
 if __name__ == '__main__':
     tic = time.time()  # start performance timer
     filename = 'board_image0.jpg'
-    canvas, thresh = cali.detectCorners(filename, method = 'adaptive')  # image name for calibration (would be first image pre-session)
-    pers, img_x, img_y, origins, radius, cut_points, features = cali.rotateGrid(canvas, thresh)  # store calibration values as global variables
-    transforms = cali.createCalibrationFile(img_x, img_y, cut_points)
+    canvas, thresh = cali.detect_corners(filename, method = 'adaptive')  # image name for calibration (would be first image pre-session)
+    pers, img_x, img_y, origins, radius, cut_points, features = cali.rotate_grid(canvas, thresh)  # store calibration values as global variables
+    transforms = cali.create_calibration_file(img_x, img_y, cut_points)
 
     with open('hexagons_features.json', 'w') as g:
         json.dump(features, g, sort_keys=True, indent=2)
     tac = time.time()  # calibration performance timer
-    hexagon_current = detectMarkers(filename, pers, img_x, img_y, origins, radius, features, transforms)  # initiate the image processing function
+    hexagon_current = detect_markers(filename, pers, img_x, img_y, origins, radius, features, transforms)  # initiate the image processing function
     toc = time.time()  # end performance timer
     print('calibration time:', tac-tic)  # print calibration performance time
     print('image processing time:', toc-tac)  # print image processing performance time

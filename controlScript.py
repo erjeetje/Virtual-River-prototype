@@ -44,15 +44,14 @@ def mainmenu():
                 - take new picture
                 - send picture to initialize or store picture and send correct filename
                 """
-                token, hex_sandbox, hex_tygron, hex_water, hex_land, transforms = initialize(filename)
+                token, hex_sandbox, hex_tygron, hex_water, hex_land, grid, grid_interpolated, transforms = initialize(filename)
                 with open('token.txt', 'w') as f:
                     f.write(token)
                 hex_sandbox_prev = hex_sandbox
                 hex_tygron_prev = hex_tygron
                 hex_water_prev = hex_water
                 hex_land_prev = hex_land
-                grid = gridmap.read_grid()
-                grid_interpolated = gridmap.hex_to_points(hex_sandbox, grid)
+                print("stored initial board state")
                 """
                 this section will also need scripts to:
                 - to create the grid for sandbox
@@ -64,7 +63,7 @@ def mainmenu():
                 - 
                 """
                 start = False
-                print("Initializing complete")
+                print("Initializing complete, waiting for next command")
             else:
                 print("Already running")
                 pass
@@ -91,18 +90,22 @@ def initialize(filename):
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
         password = g.read()
     token = "token=" + tygron.join_session(username, password)
-    canvas, thresh = cali.detectCorners(filename, method='adaptive')  # image name for calibration (would be first image pre-session)
-    pers, img_x, img_y, origins, radius, cut_points, features = cali.rotateGrid(canvas, thresh)  # store calibration values as global variables
-    transforms = cali.createCalibrationFile(img_x, img_y, cut_points)
-    hexagons = detect.detectMarkers(filename, pers, img_x, img_y, origins, radius, features)
+    print("logged in to Tygron")
+    canvas, thresh = cali.detect_corners(filename, method='adaptive')  # image name for calibration (would be first image pre-session)
+    pers, img_x, img_y, origins, radius, cut_points, features = cali.rotate_grid(canvas, thresh)  # store calibration values as global variables
+    transforms = cali.create_calibration_file(img_x, img_y, cut_points)
+    print("calibrated camera")
+    hexagons = detect.detect_markers(filename, pers, img_x, img_y, origins, radius, features)
+    print("processed initial board state")
     hexagons_sandbox = detect.transform(hexagons, transforms, export="sandbox")
     hexagons_tygron = detect.transform(hexagons, transforms, export="tygron_initialize")
     hexagons_water, hexagons_land = detect.transform(hexagons, transforms, export="tygron")
-    """
-    with open('hexagons_features.json', 'w') as g:
-        json.dump(features, g, sort_keys=True, indent=2)
-    """
-    return token, hexagons_sandbox, hexagons_tygron, hexagons_water, hexagons_land, transforms
+    print("prepared geojson files")
+    grid = gridmap.read_grid()
+    print("loaded grid")
+    grid_interpolated = gridmap.hex_to_points(hexagons_sandbox, grid)
+    print("executed grid interpolation")
+    return token, hexagons_sandbox, hexagons_tygron, hexagons_water, hexagons_land, grid, grid_interpolated, transforms
     
     
 def update():
