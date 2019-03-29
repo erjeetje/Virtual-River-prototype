@@ -12,6 +12,7 @@ import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
 import gridMapping as gridmap
+import updateFunctions as update
 
 
 def mainmenu():
@@ -44,7 +45,6 @@ def mainmenu():
                 - send picture to initialize or store picture and send correct filename
                 """
                 token, hex_sandbox, hex_tygron, hex_water, hex_land, transforms = initialize(filename)
-                print(token)
                 with open('token.txt', 'w') as f:
                     f.write(token)
                 hex_sandbox_prev = hex_sandbox
@@ -82,7 +82,6 @@ def mainmenu():
         else:
             print("Unrecognized keystroke\n")
             exit(0)
-
         time.sleep(0.3)
 
 

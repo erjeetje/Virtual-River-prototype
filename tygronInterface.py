@@ -80,13 +80,11 @@ def set_elevation(tiff_file, api_key, start=False):
         return
 
 
-def set_terrain_type(api_key, terrain_type="land", api_endpoint="https://engine.tygron.com/api/session/event/EditorTerrainTypeEventType/ADD_TERRAIN_POLYGONS/?"):
+def set_terrain_type_backup(api_key, hexagons, terrain_type="land", api_endpoint="https://engine.tygron.com/api/session/event/EditorTerrainTypeEventType/ADD_TERRAIN_POLYGONS/?"):
     if terrain_type == "water":
         terrain_id = 3
     else:
         terrain_id = 0
-    with open('waterbodies.geojson') as f:
-        hexagons = geojson.load(f)
     polygons = []
     """
     Deze methode opdelen in twee delen:
@@ -118,15 +116,63 @@ def set_terrain_type(api_key, terrain_type="land", api_endpoint="https://engine.
         pastebin_url = r.json()
         print(pastebin_url)
     except ValueError:
-        print("no content")
+        print("waterbodies updated")
 
+
+def set_terrain_type(api_key, terrain_type="land"):
+    with open('waterbodies.geojson') as f:
+        hexagons = geojson.load(f)
+    polygons = []
+    for feature in hexagons.features:
+        shape = geometry.asShape(feature.geometry)
+        polygons.append(shape)
+        if terrain_type == "water":
+            remove_polygon(api_key, feature.id, shape)
+        else:
+            add_polygon(api_key, feature.id, shape)
+    multipolygon = geometry.MultiPolygon(polygons)
+    hexagons2change = geometry.mapping(multipolygon)
+    r = update_polygon(api_key, hexagons2change, terrain_type=terrain_type)
+    print(r, r.text)
+    try:
+        pastebin_url = r.json()
+        print(pastebin_url)
+    except ValueError:
+        print("waterbodies updated")
+
+
+def remove_polygon(api_key, hexagon_id, hexagon_shape, api_endpoint="https://engine.tygron.com/api/session/event/EditorBuildingEventType/BUILDING_REMOVE_POLYGONS/?"):
+    multi = geometry.MultiPolygon([hexagon_shape])
+    remove = geometry.mapping(multi)
+    r = requests.post(url = api_endpoint+api_key, json=[hexagon_id, 1, remove])
+    return
+
+
+def add_polygon(api_key, hexagon_id, hexagon_shape, api_endpoint="https://engine.tygron.com/api/session/event/EditorBuildingEventType/BUILDING_ADD_POLYGONS/?"):
+    multi = geometry.MultiPolygon([hexagon_shape])
+    remove = geometry.mapping(multi)
+    r = requests.post(url = api_endpoint+api_key, json=[hexagon_id, 1, remove])
+    return
+
+
+def update_polygon(api_key, hexagons, terrain_type="land", api_endpoint="https://engine.tygron.com/api/session/event/EditorTerrainTypeEventType/ADD_TERRAIN_POLYGONS/?"):
+    if terrain_type == "water":
+        terrain_id = 3
+    else:
+        terrain_id = 0
+    r = requests.post(url = api_endpoint+api_key, json=[terrain_id, hexagons, True])
+    return r
+    
 
 if __name__ == '__main__':
-    #api_key = "token=17065669jHl9YslxzhiyY5KJePuVFFmI" # verandert elke sessie > dus eerst opvragen
-    api_key = join_session("r.j.denhaan@utwente.nl", "OdIketh9")
+    with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
+        username = f.read()
+    with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
+        password = g.read()
+    api_key = join_session(username, password)
     api_key = "token="+api_key
     print(api_key)
     set_function(60, 0, api_key)
     buildings_json = get_buildings(api_key)
     #print(buildings_json)
-    #set_terrain_type(api_key, terrain_type = "water")
+    set_terrain_type(api_key, terrain_type="water")

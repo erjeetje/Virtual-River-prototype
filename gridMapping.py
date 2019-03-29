@@ -196,6 +196,35 @@ def hex_to_points(hexagons, grid, method='nearest'):
     return grid
 
 
+def create_geotiff(grid):
+    columns = []
+    rows = []
+    z= []
+    for feature in grid.features:
+        if feature.properties["board"]:
+            shape = geometry.asShape(feature.geometry)
+            x_point = shape.centroid.x
+            y_point = shape.centroid.y
+            if x_point not in columns:
+                columns.append(x_point)
+            if y_point not in rows:
+                rows.append(y_point)
+            z.append(feature.properties["z"])
+        else:
+            continue
+    z = np.array(z)
+    z = np.reshape(z, (len(rows),len(columns)))
+    #z = np.flip(z, 0)
+    #z = z.T
+    with open('z_array_test.txt', 'w') as f:
+        for item in z:
+            f.write("%s\n" % item)
+    print(columns)
+    print(rows)
+    #print(len(columns), len(rows))
+    return
+
+
 if __name__ == "__main__":
     tic = time.time()
     calibration = read_calibration()
@@ -203,6 +232,7 @@ if __name__ == "__main__":
     grid = read_grid()
     tac = time.time()
     grid_triangulate = hex_to_points(hexagons, grid, method='griddata')
+    create_geotiff(grid_triangulate)
     model = bmi.wrapper.BMIWrapper('dflowfm')
     model.initialize(r'C:\Users\HaanRJ\Documents\GitHub\sandbox-fm\models\sandbox\Waal_schematic\waal_with_side.mdu')
     print('model initialized')
