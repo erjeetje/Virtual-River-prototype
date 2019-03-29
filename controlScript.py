@@ -15,7 +15,7 @@ import gridMapping as gridmap
 import updateFunctions as update
 
 
-def mainmenu():
+def main_menu():
     start = True # boolean in order to only run initialize method once
     token = "" # empty string to store Tygron api session token
     d = 0 # turn tracker
@@ -40,9 +40,10 @@ def mainmenu():
                 print("Calibrating Virtual River, preparing SandBox and logging into Tygron")
                 """
                 to add:
-                - initiate camera
-                - take new picture
-                - send picture to initialize or store picture and send correct filename
+                    - initiate camera
+                    - take new picture
+                    - send picture to initialize or store picture and send
+                      correct filename
                 """
                 token, hex_sandbox, hex_tygron, hex_water, hex_land, grid, grid_interpolated, transforms = initialize(filename)
                 with open('token.txt', 'w') as f:
@@ -54,13 +55,13 @@ def mainmenu():
                 print("stored initial board state")
                 """
                 this section will also need scripts to:
-                - to create the grid for sandbox
-                - to store indices and weighing factors for interpolation
-                - to execute the interpolation
-                - to convert the grid to geotiff
-                - to initialize all the changes in Tygron (water/land/buildings)
-                - to initiate the hydrodynamic model
-                - 
+                    - to create the grid for sandbox
+                    - to store indices and weighing factors for interpolation
+                    - to execute the interpolation
+                    - to convert the grid to geotiff
+                    - to initialize all the changes in Tygron (water/land/
+                      buildings)
+                    - to initiate the hydrodynamic model
                 """
                 start = False
                 print("Initializing complete, waiting for next command")
@@ -113,10 +114,10 @@ def update():
     return
 
 
-def compareHex(hexagons_new, hexagons_old):
+def compare_hex(hexagons_new, hexagons_old):
     
     return
 
 
 if __name__ == '__main__':
-    mainmenu()
+    main_menu()

@@ -141,6 +141,29 @@ def hex_to_points(hexagons, grid, method='nearest'):
             nearest_three = nearest[feature.id]
             distances2hex = distances[feature.id]
             if distances2hex[0] > 35:
+                if distances2hex[1] <= 60:
+                    if distances2hex[2] <= 60:
+                        hexagon1 = hexagons_by_id[nearest_three[0]]
+                        hexagon2 = hexagons_by_id[nearest_three[1]]
+                        hexagon3 = hexagons_by_id[nearest_three[2]]
+                        distances2hex = np.power(distances2hex, 2)
+                        dist2hex1 = 1 / distances2hex[0]
+                        dist2hex2 = 1 / distances2hex[1]
+                        dist2hex3 = 1 / distances2hex[2]
+                        total_dist = dist2hex1 + dist2hex2 + dist2hex3
+                        feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist), 5)
+                    else:
+                        hexagon1 = hexagons_by_id[nearest_three[0]]
+                        hexagon2 = hexagons_by_id[nearest_three[1]]
+                        distances2hex = np.power(distances2hex, 2)
+                        dist2hex1 = 1 / distances2hex[0]
+                        dist2hex2 = 1 / distances2hex[1]
+                        total_dist = dist2hex1 + dist2hex2
+                        feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist), 5)
+                else:
+                    hexagon = hexagons_by_id[nearest_three[0]]
+                    feature.properties['z'] = hexagon.properties['z']
+                """
                 hexagon1 = hexagons_by_id[nearest_three[0]]
                 hexagon2 = hexagons_by_id[nearest_three[1]]
                 hexagon3 = hexagons_by_id[nearest_three[2]]
@@ -150,6 +173,7 @@ def hex_to_points(hexagons, grid, method='nearest'):
                 dist2hex3 = 1 / distances2hex[2]
                 total_dist = dist2hex1 + dist2hex2 + dist2hex3
                 feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist), 5)
+                """
             elif distances2hex[1] > 45:
                 hexagon = hexagons_by_id[nearest_three[0]]
                 feature.properties['z'] = hexagon.properties['z']
@@ -191,7 +215,7 @@ def hex_to_points(hexagons, grid, method='nearest'):
         - Geen nearest neighbour horizontaal --> nearest hexagon
     """
 
-    with open('grid_with_z_triangulate.geojson', 'w') as f:
+    with open('grid_with_z_triangulate2.geojson', 'w') as f:
         geojson.dump(grid, f, sort_keys=True, indent=2)
     return grid
 

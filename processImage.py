@@ -117,8 +117,7 @@ def transform(features, transforms, export=None):
                 waterbodies.append(new_feature)
             else:
                 landbodies.append(new_feature)
-        else:
-            transformed_features.append(new_feature)
+        transformed_features.append(new_feature)
     if export == "sandbox":
         transformed_features = geojson.FeatureCollection(transformed_features)
         with open('hexagons_sandbox_transformed.geojson', 'w') as f:
@@ -137,6 +136,8 @@ def transform(features, transforms, export=None):
         return transformed_features
     else:
         transformed_features = geojson.FeatureCollection(transformed_features)
+        with open('hexagons_tygron_update_transformed.geojson', 'w') as f:
+            geojson.dump(transformed_features, f, sort_keys=True, indent=2)
         waterbodies = geojson.FeatureCollection(waterbodies)
         with open('waterbodies_tygron_transformed.geojson', 'w') as f:
             geojson.dump(waterbodies, f, sort_keys=True, indent=2)
