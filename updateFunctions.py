@@ -9,7 +9,7 @@ import geojson
 import tygronInterface as tygron
 
 
-def compare_hex(hexagons_old, hexagons_new, token):
+def compare_hex(token, hexagons_old, hexagons_new):
     """
     compares the current state of each location to the previous state, should
     handle:
@@ -45,8 +45,9 @@ def compare_hex(hexagons_old, hexagons_new, token):
     if becomes_land:
         landbodies = geojson.FeatureCollection(becomes_land)
         tygron.set_terrain_type(token, landbodies, terrain_type="land")
+    z_changed = geojson.FeatureCollection(z_changed)
     print("changed cells")
-    return
+    return z_changed
 
 
 if __name__ == '__main__':
@@ -59,4 +60,4 @@ if __name__ == '__main__':
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
         password = g.read()
     token = "token=" + tygron.join_session(username, password)
-    compare_hex(hexagons_old, hexagons_new, token)
+    z = compare_hex(token, hexagons_old, hexagons_new)

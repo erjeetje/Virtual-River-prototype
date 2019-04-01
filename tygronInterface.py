@@ -111,6 +111,8 @@ def set_terrain_type(api_key, hexagons, terrain_type="land"):
         add_section(api_key, hexagon_ids)
         for feature in hexagons.features:
             shape = geometry.asShape(feature.geometry)
+            #building = geojson.GeometryCollection(feature.geometry)
+            #add_building(api_key, feature.id, building)
             add_polygon(api_key, feature.id, shape)
             set_function(api_key, feature.id, 0)
         try:
@@ -168,6 +170,7 @@ def add_building(api_key, hexagon_id, hexagon_shape, api_endpoint="https://engin
     print(r, r.text)
     return r
 """
+
 
 def add_section(api_key, hexagon_ids, api_endpoint="https://engine.tygron.com/api/session/event/EditorBuildingEventType/ADD_SECTION/?"):
     r = requests.post(url=api_endpoint+api_key, json=[hexagon_ids])

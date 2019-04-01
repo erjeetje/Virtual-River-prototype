@@ -61,161 +61,204 @@ def read_grid():
     return feature_collection
 
 
-def hex_to_points(hexagons, grid, method='nearest'):
-    hex_coor = []
-    polygons = []
-    for feature in hexagons.features:
-        shape = geometry.asShape(feature.geometry)
-        x_hex = shape.centroid.x
-        y_hex = shape.centroid.y
-        hex_coor.append([x_hex, y_hex])
-        polygons.append(shape)
-    hex_coor = np.array(hex_coor)
-    hex_locations = spatial.cKDTree(hex_coor)
-    multipolygon = geometry.MultiPolygon(polygons)
-    board_as_polygon = unary_union(multipolygon)
-    board_shapely = geometry.mapping(board_as_polygon)
-    board_feature = geojson.Feature(geometry=board_shapely)
-    board_featurecollection = geojson.FeatureCollection([board_feature])
-    #print(board_shapely)
-    with open('board_border.geojson', 'w') as f:
-        geojson.dump(board_featurecollection, f, sort_keys=True, indent=2)
-    line = list(geojson.utils.coords(board_feature))
-    minx = 0.0
-    miny = 0.0
-    maxx = 0.0
-    maxy = 0.0
-    for x, y in line:
-        if x < minx:
-            minx = x
-        elif x > maxx:
-            maxx = x
-        else:
-            continue
-        if y < miny:
-            miny = y
-        elif y > maxy:
-            maxy = y
-        else:
-            continue
-    bbox=geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny), (minx, miny), (minx, maxy)])
-    #print(bbox)
-    inside_id = []
-    inside_coor = []
-    for feature in grid.features:
-        point = geometry.asShape(feature.geometry)
-        if bbox.contains(point):
-            feature.properties["board"] = True
-            inside_id.append(feature.id)
-            x_point = point.centroid.x
-            y_point = point.centroid.y
-            inside_coor.append([x_point, y_point])
-        else:
-            feature.properties["board"] = False
+def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
+    """
+    Interpolation function when starting (update entire board) and during a
+    session (update selection only). Updates grid
 
-    inside_coor = np.array(inside_coor)
-    inside_locations = spatial.cKDTree(inside_coor)
-    nearest = {}
-    distances = {}
-    hexagons_by_id = {feature.id: feature for feature in hexagons.features}
+    Requires:
+        - hexagons: all hexagons (current state)
+        - grid: (previous state)
 
-    for feature in grid.features:
-        shape = geometry.asShape(feature.geometry)
-        x_hex = shape.centroid.x
-        y_hex = shape.centroid.y
-        xy = np.array([x_hex, y_hex])
-        if feature.properties["board"]:
-            dist, indices = hex_locations.query(xy, k=3)
-            nearest[feature.id] = indices.tolist()
-            distances[feature.id] = dist.tolist()
-        else:
-            dist, indices = inside_locations.query(xy)
-            nearest[feature.id] = indices
-            distances[feature.id] = dist
-            """
-            change this section to finding the nearest neighbour on the horizontal axis +
-            another rule if no nearest neighbour on the horizontal axis
-            """
-    for feature in grid.features:
-        if feature.properties["board"]:
-            nearest_three = nearest[feature.id]
-            distances2hex = distances[feature.id]
-            if distances2hex[0] > 35:
-                if distances2hex[1] <= 60:
-                    if distances2hex[2] <= 60:
-                        hexagon1 = hexagons_by_id[nearest_three[0]]
-                        hexagon2 = hexagons_by_id[nearest_three[1]]
-                        hexagon3 = hexagons_by_id[nearest_three[2]]
-                        distances2hex = np.power(distances2hex, 2)
-                        dist2hex1 = 1 / distances2hex[0]
-                        dist2hex2 = 1 / distances2hex[1]
-                        dist2hex3 = 1 / distances2hex[2]
-                        total_dist = dist2hex1 + dist2hex2 + dist2hex3
-                        feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist), 5)
-                    else:
-                        hexagon1 = hexagons_by_id[nearest_three[0]]
-                        hexagon2 = hexagons_by_id[nearest_three[1]]
-                        distances2hex = np.power(distances2hex, 2)
-                        dist2hex1 = 1 / distances2hex[0]
-                        dist2hex2 = 1 / distances2hex[1]
-                        total_dist = dist2hex1 + dist2hex2
-                        feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist), 5)
-                else:
-                    hexagon = hexagons_by_id[nearest_three[0]]
-                    feature.properties['z'] = hexagon.properties['z']
-                """
-                hexagon1 = hexagons_by_id[nearest_three[0]]
-                hexagon2 = hexagons_by_id[nearest_three[1]]
-                hexagon3 = hexagons_by_id[nearest_three[2]]
-                distances2hex = np.power(distances2hex, 2)
-                dist2hex1 = 1 / distances2hex[0]
-                dist2hex2 = 1 / distances2hex[1]
-                dist2hex3 = 1 / distances2hex[2]
-                total_dist = dist2hex1 + dist2hex2 + dist2hex3
-                feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist), 5)
-                """
-            elif distances2hex[1] > 45:
-                hexagon = hexagons_by_id[nearest_three[0]]
-                feature.properties['z'] = hexagon.properties['z']
-            elif distances2hex[2] > 45:
-                hexagon1 = hexagons_by_id[nearest_three[0]]
-                hexagon2 = hexagons_by_id[nearest_three[1]]
-                distances2hex = np.power(distances2hex, 2)
-                dist2hex1 = 1 / distances2hex[0]
-                dist2hex2 = 1 / distances2hex[1]
-                total_dist = dist2hex1 + dist2hex2
-                feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist), 5)
+    Optional:
+        - changed_hex (hexagons with changed "z" values compared to previous
+          state, needed if start=False)
+        - start (differentiate between starting and updating, default=False)
+    """
+    if start:
+        hex_coor = []
+        polygons = []
+        for feature in hexagons.features:
+            shape = geometry.asShape(feature.geometry)
+            x_hex = shape.centroid.x
+            y_hex = shape.centroid.y
+            hex_coor.append([x_hex, y_hex])
+            polygons.append(shape)
+        hex_coor = np.array(hex_coor)
+        hex_locations = spatial.cKDTree(hex_coor)
+        multipolygon = geometry.MultiPolygon(polygons)
+        board_as_polygon = unary_union(multipolygon)
+        board_shapely = geometry.mapping(board_as_polygon)
+        board_feature = geojson.Feature(geometry=board_shapely)
+        board_featurecollection = geojson.FeatureCollection([board_feature])
+        with open('board_border.geojson', 'w') as f:
+            geojson.dump(board_featurecollection, f, sort_keys=True, indent=2)
+        line = list(geojson.utils.coords(board_feature))
+        minx = 0.0
+        miny = 0.0
+        maxx = 0.0
+        maxy = 0.0
+        for x, y in line:
+            if x < minx:
+                minx = x
+            elif x > maxx:
+                maxx = x
             else:
-                hexagon1 = hexagons_by_id[nearest_three[0]]
-                hexagon2 = hexagons_by_id[nearest_three[1]]
-                hexagon3 = hexagons_by_id[nearest_three[2]]
-                distances2hex = np.power(distances2hex, 2)
-                dist2hex1 = 1 / distances2hex[0]
-                dist2hex2 = 1 / distances2hex[1]
-                dist2hex3 = 1 / distances2hex[2]
-                total_dist = dist2hex1 + dist2hex2 + dist2hex3
-                feature.properties['z'] = round(hexagon1.properties['z'] * (dist2hex1 / total_dist) + hexagon2.properties['z'] * (dist2hex2 / total_dist) + hexagon3.properties['z'] * (dist2hex3 / total_dist), 5)
+                continue
+            if y < miny:
+                miny = y
+            elif y > maxy:
+                maxy = y
+            else:
+                continue
+        bbox = geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny), (minx, miny), (minx, maxy)])
+        inside_id = []
+        inside_coor = []
+        for feature in grid.features:
+            point = geometry.asShape(feature.geometry)
+            if bbox.contains(point):
+                feature.properties["board"] = True
+                feature.properties["changed"] = False
+                inside_id.append(feature.id)
+                x_point = point.centroid.x
+                y_point = point.centroid.y
+                inside_coor.append([x_point, y_point])
+            else:
+                feature.properties["board"] = False
+                feature.properties["changed"] = False
+
+        inside_coor = np.array(inside_coor)
+        inside_locations = spatial.cKDTree(inside_coor)
+        for feature in grid.features:
+            shape = geometry.asShape(feature.geometry)
+            x_hex = shape.centroid.x
+            y_hex = shape.centroid.y
+            xy = np.array([x_hex, y_hex])
+            if feature.properties["board"]:
+                dist, indices = hex_locations.query(xy, k=3)
+                if dist[0] > 35:
+                    if dist[1] <= 60:
+                        if dist[2] <= 60:
+                            weights = 1 / np.power(dist, 2)
+                            weights_sum = sum(weights)
+                            feature.properties["nearest"] = indices.tolist()
+                            feature.properties["weight"] = weights.tolist()
+                            feature.properties["weight_sum"] = weights_sum
+                        else:
+                            weights = 1 / np.power(dist[0:2], 2)
+                            weights_sum = sum(weights)
+                            feature.properties["nearest"] = indices[0:2].tolist()
+                            feature.properties["weight"] = weights.tolist()
+                            feature.properties["weight_sum"] = weights_sum
+                    else:
+                        feature.properties["nearest"] = indices[0].tolist()
+                elif dist[1] > 45:
+                    feature.properties["nearest"] = indices[0].tolist()
+                elif dist[2] > 45:
+                    weights = 1 / np.power(dist[0:2], 2)
+                    weights_sum = sum(weights)
+                    feature.properties["nearest"] = indices[0:2].tolist()
+                    feature.properties["weight"] = weights.tolist()
+                    feature.properties["weight_sum"] = weights_sum
+                else:
+                    weights = 1 / np.power(dist, 2)
+                    weights_sum = sum(weights)
+                    feature.properties["nearest"] = indices.tolist()
+                    feature.properties["weight"] = weights.tolist()
+                    feature.properties["weight_sum"] = weights_sum
+            else:
+                dist, indices = inside_locations.query(xy)
+                feature.properties["nearest"] = inside_id[indices]
+                """
+                change this section to finding the nearest neighbour on the horizontal axis +
+                another rule if no nearest neighbour on the horizontal axis
+                """
+    else:
+        indices_updated = []
+        counter = 0
+        for feature in changed_hex.features:
+            indices_updated.append(feature.id)
+        for feature in grid.features:
+            if feature.properties["board"]:
+                if type(feature.properties["nearest"]) is int:
+                    if feature.properties["nearest"] in indices_updated:
+                        feature.properties["changed"] = True
+                        counter += 1
+                elif any((True for x in feature.properties["nearest"] if x in indices_updated)):
+                    feature.properties["changed"] = True
+                    counter += 1
+                else:
+                    feature.properties["changed"] = False
+            else:
+                continue
+        print("Hexagons updated are: "+str(indices_updated))
+        print("Number of gridpoints inside the board to update: "+str(counter))
+
+    hexagons_by_id = {feature.id: feature for feature in hexagons.features}
+    for feature in grid.features:
+        if feature.properties["board"]:
+            if start:
+                nearest = feature.properties["nearest"]
+                if type(nearest) is int:
+                    hexagon = hexagons_by_id[nearest]
+                    feature.properties['z'] = hexagon.properties['z']
+                else:
+                    if len(nearest) == 2:
+                        weights = feature.properties["weight"]
+                        weights_sum = feature.properties["weight_sum"]
+                        hexagon1 = hexagons_by_id[nearest[0]]
+                        hexagon2 = hexagons_by_id[nearest[1]]
+                        feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum), 5)
+                    else:
+                        weights = feature.properties["weight"]
+                        weights_sum = feature.properties["weight_sum"]
+                        hexagon1 = hexagons_by_id[nearest[0]]
+                        hexagon2 = hexagons_by_id[nearest[1]]
+                        hexagon3 = hexagons_by_id[nearest[2]]
+                        feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum) + hexagon3.properties['z'] * (weights[2] / weights_sum), 5)
+            else:
+                if feature.properties["changed"]:
+                    nearest = feature.properties["nearest"]
+                    if type(nearest) == int:
+                        hexagon = hexagons_by_id[nearest]
+                        feature.properties['z'] = hexagon.properties['z']
+                    else:
+                        if len(nearest) == 2:
+                            weights = feature.properties["weight"]
+                            weights_sum = feature.properties["weight_sum"]
+                            hexagon1 = hexagons_by_id[nearest[0]]
+                            hexagon2 = hexagons_by_id[nearest[1]]
+                            feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum), 5)
+                        else:
+                            weights = feature.properties["weight"]
+                            weights_sum = feature.properties["weight_sum"]
+                            hexagon1 = hexagons_by_id[nearest[0]]
+                            hexagon2 = hexagons_by_id[nearest[1]]
+                            hexagon3 = hexagons_by_id[nearest[2]]
+                            feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum) + hexagon3.properties['z'] * (weights[2] / weights_sum), 5)
+                else:
+                    continue
         else:
             continue
 
     grid_by_id = {feature.id: feature for feature in grid.features}
+    counter = 0
     for feature in grid.features:
         if not feature.properties["board"]:
-            inside_point = grid_by_id[inside_id[nearest[feature.id]]]
-            feature.properties['z'] = inside_point.properties['z']
+            nearest = feature.properties["nearest"]
+            inside_point = grid_by_id[nearest]
+            if inside_point.properties["changed"]:
+                feature.properties['z'] = inside_point.properties['z']
+                counter += 1
+            else:
+                continue
         else:
             continue
+    if not start:
+        print("Number of gridpoints outside the board updated: "+str(counter))
 
-    """
-    Optie:
-        - binnen bord True boolean
-        - buiten bord False boolean
-        - True --> nearest three hexagons (huidige implementatie)
-        - False --> zoek nearest horizontale neighbour die True is
-        - Geen nearest neighbour horizontaal --> nearest hexagon
-    """
-
-    with open('grid_with_z_triangulate2.geojson', 'w') as f:
+    filename = 'grid_with_z_triangulate_%d.geojson'%turn
+    with open(filename, 'w') as f:
         geojson.dump(grid, f, sort_keys=True, indent=2)
     return grid
 
@@ -255,8 +298,8 @@ if __name__ == "__main__":
     hexagons = read_hexagons()
     grid = read_grid()
     tac = time.time()
-    grid_triangulate = hex_to_points(hexagons, grid, method='griddata')
-    create_geotiff(grid_triangulate)
+    grid_triangulate = hex_to_points(hexagons, grid, start=True)
+    #create_geotiff(grid_triangulate)
     model = bmi.wrapper.BMIWrapper('dflowfm')
     model.initialize(r'C:\Users\HaanRJ\Documents\GitHub\sandbox-fm\models\sandbox\Waal_schematic\waal_with_side.mdu')
     print('model initialized')

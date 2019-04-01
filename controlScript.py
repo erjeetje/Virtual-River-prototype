@@ -6,13 +6,13 @@ Created on Thu Mar 28 09:56:24 2019
 """
 
 import time
-import json
+import geojson
 import keyboard
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping as gridmap
-import updateFunctions as update
+import gridMapping_test as gridmap
+import updateFunctions as compare
 
 
 def main_menu():
@@ -45,6 +45,7 @@ def main_menu():
                     - send picture to initialize or store picture and send
                       correct filename
                 """
+                tic = time.time()
                 token, hex_sandbox, hex_tygron, hex_water, hex_land, grid, grid_interpolated, transforms = initialize(filename)
                 with open('token.txt', 'w') as f:
                     f.write(token)
@@ -53,6 +54,8 @@ def main_menu():
                 hex_water_prev = hex_water
                 hex_land_prev = hex_land
                 print("stored initial board state")
+                toc = time.time()
+                print("Start up and calibration time: "+str(toc-tic))
                 """
                 this section will also need scripts to:
                     - to create the grid for sandbox
@@ -73,7 +76,16 @@ def main_menu():
             print("Updating board state")
             d += 1
             filename = 'board_image%d.jpg'%d # snapshot filename
-            print("Turn "+str(d))
+            with open('hexagons_tygron_update_transformed_test1.geojson') as f:
+                hexagons_old = geojson.load(f)
+            with open('hexagons_tygron_update_transformed_test2.geojson') as g:
+                hexagons_new = geojson.load(g)
+            tic = time.time()
+            z_changed = compare.compare_hex(token, hexagons_old, hexagons_new)
+            tac = time.time()
+            grid_interpolated = gridmap.hex_to_points(hexagons_new, grid_interpolated, changed_hex=z_changed, turn=d)
+            toc = time.time()
+            print("Updated to "+str(d)+". Comparison update time: "+str(tac-tic)+". Interpolation update time: "+str(toc-tac)+". Total update time: "+str(toc-tic))
         elif a == '0':
             print("Exiting\n")
             time.sleep(1)
@@ -104,11 +116,11 @@ def initialize(filename):
     print("prepared geojson files")
     grid = gridmap.read_grid()
     print("loaded grid")
-    grid_interpolated = gridmap.hex_to_points(hexagons_sandbox, grid)
+    grid_interpolated = gridmap.hex_to_points(hexagons_sandbox, grid, start=True)
     print("executed grid interpolation")
     return token, hexagons_sandbox, hexagons_tygron, hexagons_water, hexagons_land, grid, grid_interpolated, transforms
     
-    
+  
 def update():
     
     return
