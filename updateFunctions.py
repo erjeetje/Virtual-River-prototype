@@ -32,11 +32,14 @@ def compare_hex(token, hexagons_old, hexagons_new):
         if feature.properties["z"] is not reference_hex.properties["z"]:
             print("hexagon " + str(feature.id) + " z value changed")
             z_changed.append(feature)
-            if feature.properties["z"] < 2 and reference_hex.properties["z"] >= 2:
+            if (feature.properties["z"] < 2 and
+                    reference_hex.properties["z"] >= 2):
                 becomes_water.append(feature)
-            elif feature.properties["z"] >= 2 and reference_hex.properties["z"] < 2:
+            elif (feature.properties["z"] >= 2 and
+                    reference_hex.properties["z"] < 2):
                 becomes_land.append(feature)
-        if feature.properties["landuse"] is not reference_hex.properties["landuse"]:
+        if (feature.properties["landuse"] is not
+                reference_hex.properties["landuse"]):
             print("hexagon " + str(feature.id) + " land use value changed")
             landuse_changed.append(feature)
     if becomes_water:
@@ -59,5 +62,9 @@ if __name__ == '__main__':
         username = f.read()
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
         password = g.read()
-    token = "token=" + tygron.join_session(username, password)
-    z = compare_hex(token, hexagons_old, hexagons_new)
+    token = tygron.join_session(username, password)
+    if token is None:
+        print("logging in to Tygron failed, unable to make changes in Tygron")
+    else:
+        token = "token=" + token
+        z = compare_hex(token, hexagons_old, hexagons_new)

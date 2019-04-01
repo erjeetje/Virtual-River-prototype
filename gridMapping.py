@@ -4,18 +4,17 @@ Created on Thu Feb 28 16:07:11 2019
 
 @author: HaanRJ
 """
+
+import time
 import json
 import cv2
 import geojson
 import numpy as np
-#from scipy import interpolate
-from scipy import spatial
-#import rtree
-from shapely import geometry
-from shapely.ops import unary_union
-import time
 import netCDF4
 import bmi.wrapper
+from scipy.spatial import cKDTree
+from shapely import geometry
+from shapely.ops import unary_union
 
 
 def read_calibration():
@@ -32,8 +31,6 @@ def read_calibration():
     )
     calibration['image_post_cut2model'] = sandbox_transform
     calibration['image_post_cut2tygron'] = tygron_transform
-    #with open('tygron_export.geojson', 'w') as f:
-        #geojson.dump(board_featurecollection, f, sort_keys=True, indent=2)
     return calibration
 
 
@@ -44,7 +41,8 @@ def read_hexagons():
 
 
 def read_grid():
-    ds = netCDF4.Dataset(r'D:\Werkzaamheden map\Onderzoek\Design 2018\Models\300x200_2_net.nc')
+    loc = r"D:\Werkzaamheden map\Onderzoek\Design 2018\Models\300x200_2_net.nc"
+    ds = netCDF4.Dataset(loc)
     x = ds.variables['NetNode_x'][:]
     y = ds.variables['NetNode_y'][:]
     ds.close()
@@ -74,6 +72,7 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
         - changed_hex (hexagons with changed "z" values compared to previous
           state, needed if start=False)
         - start (differentiate between starting and updating, default=False)
+        - turn (used to store files under the correct turn number, default = 0)
     """
     if start:
         hex_coor = []
@@ -85,7 +84,7 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
             hex_coor.append([x_hex, y_hex])
             polygons.append(shape)
         hex_coor = np.array(hex_coor)
-        hex_locations = spatial.cKDTree(hex_coor)
+        hex_locations = cKDTree(hex_coor)
         multipolygon = geometry.MultiPolygon(polygons)
         board_as_polygon = unary_union(multipolygon)
         board_shapely = geometry.mapping(board_as_polygon)
@@ -111,7 +110,8 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
                 maxy = y
             else:
                 continue
-        bbox = geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny), (minx, miny), (minx, maxy)])
+        bbox = geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny),
+                                 (minx, miny), (minx, maxy)])
         inside_id = []
         inside_coor = []
         for feature in grid.features:
@@ -128,7 +128,7 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
                 feature.properties["changed"] = False
 
         inside_coor = np.array(inside_coor)
-        inside_locations = spatial.cKDTree(inside_coor)
+        inside_locations = cKDTree(inside_coor)
         for feature in grid.features:
             shape = geometry.asShape(feature.geometry)
             x_hex = shape.centroid.x
@@ -169,10 +169,10 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
             else:
                 dist, indices = inside_locations.query(xy)
                 feature.properties["nearest"] = inside_id[indices]
-                """
-                change this section to finding the nearest neighbour on the horizontal axis +
-                another rule if no nearest neighbour on the horizontal axis
-                """
+
+                # change this section to finding the nearest neighbour on the
+                # horizontal axis + another rule if no nearest neighbour on the
+                # horizontal axis
     else:
         indices_updated = []
         counter = 0
@@ -184,7 +184,8 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
                     if feature.properties["nearest"] in indices_updated:
                         feature.properties["changed"] = True
                         counter += 1
-                elif any((True for x in feature.properties["nearest"] if x in indices_updated)):
+                elif any((True for x in feature.properties["nearest"]
+                          if x in indices_updated)):
                     feature.properties["changed"] = True
                     counter += 1
                 else:
@@ -208,18 +209,26 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
                         weights_sum = feature.properties["weight_sum"]
                         hexagon1 = hexagons_by_id[nearest[0]]
                         hexagon2 = hexagons_by_id[nearest[1]]
-                        feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum), 5)
+                        feature.properties['z'] = \
+                            round(hexagon1.properties['z'] * (weights[0] /
+                                  weights_sum) + hexagon2.properties['z'] *
+                                  (weights[1] / weights_sum), 5)
                     else:
                         weights = feature.properties["weight"]
                         weights_sum = feature.properties["weight_sum"]
                         hexagon1 = hexagons_by_id[nearest[0]]
                         hexagon2 = hexagons_by_id[nearest[1]]
                         hexagon3 = hexagons_by_id[nearest[2]]
-                        feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum) + hexagon3.properties['z'] * (weights[2] / weights_sum), 5)
+                        feature.properties['z'] = \
+                            round(hexagon1.properties['z'] * (weights[0] /
+                                  weights_sum) + hexagon2.properties['z'] *
+                                  (weights[1] / weights_sum) +
+                                  hexagon3.properties['z'] * (weights[2] /
+                                  weights_sum), 5)
             else:
                 if feature.properties["changed"]:
                     nearest = feature.properties["nearest"]
-                    if type(nearest) == int:
+                    if type(nearest) is int:
                         hexagon = hexagons_by_id[nearest]
                         feature.properties['z'] = hexagon.properties['z']
                     else:
@@ -228,14 +237,22 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
                             weights_sum = feature.properties["weight_sum"]
                             hexagon1 = hexagons_by_id[nearest[0]]
                             hexagon2 = hexagons_by_id[nearest[1]]
-                            feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum), 5)
+                            feature.properties['z'] = \
+                                round(hexagon1.properties['z'] * (weights[0] /
+                                      weights_sum) + hexagon2.properties['z'] *
+                                      (weights[1] / weights_sum), 5)
                         else:
                             weights = feature.properties["weight"]
                             weights_sum = feature.properties["weight_sum"]
                             hexagon1 = hexagons_by_id[nearest[0]]
                             hexagon2 = hexagons_by_id[nearest[1]]
                             hexagon3 = hexagons_by_id[nearest[2]]
-                            feature.properties['z'] = round(hexagon1.properties['z'] * (weights[0] / weights_sum) + hexagon2.properties['z'] * (weights[1] / weights_sum) + hexagon3.properties['z'] * (weights[2] / weights_sum), 5)
+                            feature.properties['z'] = \
+                                round(hexagon1.properties['z'] * (weights[0] /
+                                      weights_sum) + hexagon2.properties['z'] *
+                                      (weights[1] / weights_sum) +
+                                      hexagon3.properties['z'] * (weights[2] /
+                                      weights_sum), 5)
                 else:
                     continue
         else:
@@ -256,17 +273,17 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
             continue
     if not start:
         print("Number of gridpoints outside the board updated: "+str(counter))
-
-    filename = 'grid_with_z_triangulate_%d.geojson'%turn
+    tec = time.time()
+    filename = 'grid_with_z_triangulate_%d.geojson' % turn
     with open(filename, 'w') as f:
         geojson.dump(grid, f, sort_keys=True, indent=2)
-    return grid
+    return grid, tec
 
 
 def create_geotiff(grid):
     columns = []
     rows = []
-    z= []
+    z = []
     for feature in grid.features:
         if feature.properties["board"]:
             shape = geometry.asShape(feature.geometry)
