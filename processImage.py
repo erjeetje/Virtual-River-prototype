@@ -106,6 +106,11 @@ def detect_markers(file, pers, img_x, img_y, origins, r, features,
 
 
 def transform(features, transforms, export=None):
+    """
+    Function that transforms geojson files to new coordinates based on where
+    the geojson needs to be transformed to (e.g. from the image processed to
+    the model: 'img_post_cut2model').
+    """
     transformed_features = []
     waterbodies = []
     landbodies = []
@@ -116,11 +121,11 @@ def transform(features, transforms, export=None):
     elif export == "tygron":
         transform = transforms['img_post_cut2tygron_update']
     else:
-        print("unknown export method, current supported are: sandbox, "
-              "tygron & tygron_initialize")
+        print("unknown export method, current supported are: 'sandbox', "
+              "'tygron' & 'tygron_initialize'")
         return features
     for feature in features:
-        pts = np.array(feature.geometry['coordinates'][0], dtype='float32')
+        pts = np.array(feature.geometry["coordinates"][0], dtype="float32")
         # points should be channels
         # pts = np.c_[pts, np.zeros_like(pts[:, 0])]
         x, y = pts[:, 0], pts[:, 1]

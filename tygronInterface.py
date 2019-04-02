@@ -15,6 +15,10 @@ def join_session(username, password, application_type="EDITOR",
                  api_endpoint=("https://engine.tygron.com/api/services/event/"
                                "IOServiceEventType/GET_MY_JOINABLE_SESSIONS/?"
                                "f=JSON")):
+    """
+    Login function to Tygron, returns api token on successful login (requires
+    a Tygron session to run called 'rivercare_hex').
+    """
     sessions_data = requests.post(url=api_endpoint, json=[],
                                   auth=(username, password))
     session_id = -1
@@ -43,7 +47,8 @@ def set_function(api_key, hex_id, new_type,
                  api_endpoint=("https://engine.tygron.com/api/session/event/"
                                "EditorBuildingEventType/SET_FUNCTION/?")):
     """
-    Functie voor type landgebruik in te vullen/updaten. Werkt per zeshoek
+    Function for setting the land use of each hexagon in Tygron. Updates the
+    Building function in Tygron.
     """
     r = requests.post(url=api_endpoint+api_key, json=[hex_id, new_type])
     print(r.text)
@@ -59,7 +64,7 @@ def set_function(api_key, hex_id, new_type,
 def get_buildings(api_key, api_endpoint=("https://engine.tygron.com/api/"
                                          "session/items/buildings/?f=JSON&")):
     """
-    Ophalen alle gebouwen uit Tygron engine
+    Function to retrieve all building information from Tygron.
     """
     data = requests.get(api_endpoint+api_key)
     buildings_json = data.json()
@@ -68,8 +73,13 @@ def get_buildings(api_key, api_endpoint=("https://engine.tygron.com/api/"
 
 def set_elevation(tiff_file, api_key, start=False):
     """
-    GeoTIFF maken --> stackoverflow afzoeken
-    Inladen komt Rudolf op terug
+    Function to update the elevation of the entire Tygron world. Uploads
+    a new GeoTIFF and in case of the initiating the session, selects the
+    GeoTIFF as the elevation map. On turn updates, selects the newly updated
+    GeoTIFF as the new elevation map.
+
+    Placeholder: GeoTIFF maken --> stackoverflow afzoeken, inladen komt Rudolf
+    op terug.
     """
     if start:
         api_endpoint = ("https://engine.tygron.com/api/session/event/"
@@ -96,6 +106,14 @@ def set_elevation(tiff_file, api_key, start=False):
 
 
 def set_terrain_type(api_key, hexagons, terrain_type="land"):
+    """
+    Function that updates terrain in Tygron. Mainly, it updates terrain from
+    land to water and visa versa. In case of water to land, first changes the
+    hexagon terrain to water and then adds a building to it which is
+    subsequently updated to a specific land use. In case of land to water,
+    first removes any building (the land use) from the hexagon and then changes
+    the terrain to water.
+    """
     polygons = []
     if terrain_type == "water":
         for feature in hexagons.features:
@@ -112,7 +130,8 @@ def set_terrain_type(api_key, hexagons, terrain_type="land"):
             print("test")
     else:
         """
-        to do: see if only one for loop can be used
+        to do: see if only one for loop can be used --> do this after steps for
+        updating are clear, question is currently with Rudolf.
         """
         hexagon_ids = []
         for feature in hexagons.features:
@@ -161,6 +180,9 @@ def remove_polygon(api_key, hexagon_id, hexagon_shape,
                    api_endpoint=("https://engine.tygron.com/api/session/event/"
                                  "EditorBuildingEventType/"
                                  "BUILDING_REMOVE_POLYGONS/?")):
+    """
+    Function that removes a building (land use) from a hexagon in Tygron.
+    """
     multi = geometry.MultiPolygon([hexagon_shape])
     remove = geometry.mapping(multi)
     r = requests.post(url=api_endpoint+api_key, json=[hexagon_id, 1, remove])
@@ -172,6 +194,10 @@ def add_polygon(api_key, hexagon_id, hexagon_shape,
                 api_endpoint=("https://engine.tygron.com/api/session/event/"
                               "EditorBuildingEventType/"
                               "BUILDING_ADD_POLYGONS/?")):
+    """
+    Function that adds a polygon to a building (land use) for a hexagon in
+    Tygron.
+    """
     multi = geometry.MultiPolygon([hexagon_shape])
     add = geometry.mapping(multi)
     r = requests.post(url=api_endpoint+api_key, json=[hexagon_id, 1, add])
@@ -211,6 +237,10 @@ def update_terrain(api_key, hexagons, terrain_type="land",
                    api_endpoint=("https://engine.tygron.com/api/session/event/"
                                  "EditorTerrainTypeEventType/"
                                  "ADD_TERRAIN_POLYGONS/?")):
+    """
+    Function that changes the terrain of a hexagon in Tygron. Changes the
+    terrain from land to water or from water to land.
+    """
     if terrain_type == "water":
         terrain_id = 3
     else:

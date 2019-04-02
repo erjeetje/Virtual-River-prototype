@@ -16,6 +16,10 @@ import updateFunctions as compare
 
 
 def main_menu():
+    """
+    Main script that continues to run during a session. Initiates the
+    calibration and any updates thereafter. Stores all data while running
+    """
     # boolean in order to only run initialize method once
     start = True
     # empty string to store Tygron api session token
@@ -107,9 +111,9 @@ def main_menu():
                 print("Updating board state")
                 turn += 1
                 filename = 'board_image%d.jpg' % turn  # snapshot filename
-                with open('hexagons_tygron_update_transformed_test1.geojson') as f:
+                with open('hexagons_tygron_update_transformed_test2.geojson') as f:
                     hexagons_old = geojson.load(f)
-                with open('hexagons_tygron_update_transformed_test2.geojson') as g:
+                with open('hexagons_tygron_update_transformed_test1.geojson') as g:
                     hexagons_new = geojson.load(g)
                 tic = time.time()
                 z_changed = compare.compare_hex(token, hexagons_old, hexagons_new)
@@ -139,6 +143,17 @@ def main_menu():
 
 
 def initialize(filename):
+    """
+    Function that handles all the startup necessities:
+    - calls logging into Tygron
+    - initiates and calibrates the camera
+    - get, perform and store the necessary transforms
+    - process initial board state
+    - initiate sandbox model
+    - run sandbox model
+    - update Tygron
+    - return all variables that need storing
+    """
     with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
         username = f.read()
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
@@ -149,7 +164,7 @@ def initialize(filename):
     else:
         token = "token=" + token
         print("logged in to Tygron")
-        # camera calibration
+        # camera calibration --> to do: initiation
         canvas, thresh = cali.detect_corners(filename, method='adaptive')
         # store calibration values as global variables
         pers, img_x, img_y, origins, radius, cut_points, features \
@@ -181,10 +196,10 @@ def initialize(filename):
 
 
 def update():
-    return
-
-
-def compare_hex(hexagons_new, hexagons_old):
+    """
+    function that initiates and handles all update steps. Returns all update
+    variables
+    """
     return
 
 
