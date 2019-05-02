@@ -27,7 +27,7 @@ def main_menu():
     # turn tracker
     turn = 0
     # snapshot filename
-    filename = 'board_image%d.jpg' % turn
+    filename = 'webcam_test%d.jpg' % turn
     # current hexagon state on the board, transformed to sandbox, geojson
     # featurecollection (multipolygon)
     hex_sandbox = None
@@ -176,7 +176,8 @@ def initialize(filename):
         transforms = cali.create_calibration_file(img_x, img_y, cut_points)
         print("calibrated camera")
         hexagons = detect.detect_markers(filename, pers, img_x, img_y,
-                                         origins, radius, features)
+                                         origins, radius, features,
+                                         method='LAB')
         print("processed initial board state")
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,

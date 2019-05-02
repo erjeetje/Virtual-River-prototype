@@ -51,6 +51,7 @@ def detect_corners(filename, method='standard'):
     and returns their coordinates as a 2D array.
     """
     img = cv2.imread(filename)  # load image
+    height, width, channels = img.shape
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # convert image to grayscale
     if method == 'adaptive':
         blur = cv2.medianBlur(gray, 5)  # flur grayscale image
@@ -65,10 +66,24 @@ def detect_corners(filename, method='standard'):
                                     cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         cv2.imwrite('Standard_threshold.jpg', thresh)  # store threshold image
 
+    # create mask to only search for circles in the corner
+    mask = np.zeros((height, width), dtype="uint8") 
+    print(mask.shape)
+    margin_x = round(width * 0.2)
+    margin_y = round(height * 0.14)
+    cv2.rectangle(mask, (0, 0), (margin_x, margin_y), (255, 255, 255), -1)
+    cv2.rectangle(mask, (width-margin_x, 0), (width, margin_y),
+                  (255, 255, 255), -1)
+    cv2.rectangle(mask, (0, height-margin_y), (margin_x, height),
+                  (255, 255, 255), -1)
+    cv2.rectangle(mask, (width-margin_x, height-margin_y), (width, height),
+                  (255, 255, 255), -1)
+    masked_tresh = cv2.bitwise_and(thresh, thresh, mask=mask)
     # detect corner circles in the image (min/max radius ensures only
     # finding those)
-    circles = cv2.HoughCircles(thresh, cv2.HOUGH_GRADIENT, 1, 200, param1=50,
-                               param2=22, minRadius=50, maxRadius=70)
+    circles = cv2.HoughCircles(masked_tresh, cv2.HOUGH_GRADIENT, 1, 200,
+                               param1=50, param2=14, minRadius=18,
+                               maxRadius=21)
 
     # ensure at least some circles were found, such falesafes (also for certain
     # error types) should be build in in later versions
@@ -132,7 +147,7 @@ def rotate_grid(canvas, img):
     pts1 = np.float32([top_left, top_right, bottom_right, bottom_left])
 
     # this value needs changing according to image size
-    img_y = 3000  # warped image height
+    img_y = 1000  # warped image height
     # height/width ratio given current grid
     ratio = 1.3861874976470018770202169598726
     img_x = int(round(img_y * ratio))  # warped image width
@@ -186,9 +201,11 @@ def create_features(height, width):
         point6 = [x+x_jump, y-y_jump]
         polygon = geojson.Polygon([[point1, point2, point3, point4, point5,
                                     point6, point1]])
-        feature = geojson.Feature(id=i, geometry=polygon, properties={"column": column[i]})
-        #feature.properties["column"] = column[i]
-        if i == 1:
+        feature = geojson.Feature(id=i, geometry=polygon)
+        feature.properties["column"] = column[i]
+        feature.properties["x_center"] = int(round(x))
+        feature.properties["y_center"] = int(round(y))
+        if i == 0:
             print(feature)
         features.append(feature)
     return features, origins, radius

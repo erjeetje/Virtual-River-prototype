@@ -21,85 +21,147 @@ def detect_markers(file, pers, img_x, img_y, origins, r, features,
     img = cv2.imread(file)
     # warp image it to calibrated perspective
     warped = cv2.warpPerspective(img, pers, (img_x, img_y))
-    # blur image
-    blur = cv2.GaussianBlur(warped, (25, 25), 0)
-    if method == 'hsv':
-        # convert image to HSV
-        hsv = cv2.cvtColor(blur, cv2.COLOR_BGR2HSV)
-        # save HSV file to show status, unnecessary for script to work
-        #cv2.imwrite('hsv.jpg', hsv)  
+    if method is 'LAB':
+        lab = cv2.cvtColor(warped, cv2.COLOR_BGR2Lab)
+        L, A, B = cv2.split(lab)
+        A = cv2.medianBlur(A, 5)
+        B = cv2.medianBlur(B, 5)
         # set ranges for blue and red to create masks, may need updating
-        lower_blue = (100, 0, 0)  # lower bound for each channel
-        upper_blue = (255, 120, 175)  # upper bound for each channel
-        lower_red = (0, 100, 100)  # lower bound for each channel
-        upper_red = (100, 255, 255)  # upper bound for each channel
-        # create the mask and use it to change the colors
-        blue_mask = cv2.inRange(hsv, lower_blue, upper_blue)
-        red_mask = cv2.inRange(hsv, lower_red, upper_red)
-    elif method == 'lab':
-        print('no lab method written')
-    else:
-        # set ranges for blue and red to create masks, may need updating
-        lower_blue = 240
-        upper_blue = 255
-        lower_red = 240
+        lower_blue = 0
+        upper_blue = 110
+        lower_red = 160
         upper_red = 255
-        # create the mask and use it to change the colors
-        blue_mask = cv2.inRange(blur[:, :, 0], lower_blue, upper_blue)
-        red_mask = cv2.inRange(blur[:, :, 2], lower_red, upper_red)
-
-    # dilate resulting images to remove minor contours
-    kernel = np.ones((10, 10), np.uint8)  # kernel for dilate function
-    red_dilate = cv2.dilate(red_mask, kernel, iterations=1)  # dilate red
-    blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)  # dilate blue
-    # save dilated red and blue, unnecessary for script to work
-    cv2.imwrite('red_mask_dilated.jpg', red_dilate)
-    cv2.imwrite('blue_mask_dilated.jpg', blue_dilate)
-
-    # convert diameter to actual radius as int value
-    r = int(round(r / 2))
-    # slightly lower radius to create a mask that removes contours from
-    # slight grid misplacement
-    safe_r = int(round(r*0.95))
-    # empty mask of grid cell size
-    mask = np.zeros((2*r, 2*r), dtype="uint8")
-    # circle for mask, centered with safe radius
-    cv2.circle(mask, (r, r), safe_r, (255, 255, 255), -1)
-
+        # isolate red and blue in the image
+        blue_mask = cv2.inRange(B, lower_blue, upper_blue)
+        red_mask = cv2.inRange(A, lower_red, upper_red)
+        # add dilation to the image
+        kernel = np.ones((2,2), np.uint8)
+        red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
+        blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
+        cv2.imwrite('red_mask_dilated_LAB.jpg', red_dilate)
+        cv2.imwrite('blue_mask_dilated_LAB.jpg', blue_dilate)
+    elif method is 'YCrCb':
+        ycrcb = cv2.cvtColor(warped, cv2.COLOR_BGR2YCrCb)
+        Y, Cr, Cb = cv2.split(ycrcb)
+        Cb = cv2.medianBlur(Cb, 5)
+        Cr = cv2.medianBlur(Cr, 5)
+        # set ranges for blue and red to create masks, may need updating
+        lower_blue = 160
+        upper_blue = 255
+        lower_red = 160
+        upper_red = 255
+        # isolate red and blue in the image
+        blue_mask = cv2.inRange(Cb, lower_blue, upper_blue)
+        red_mask = cv2.inRange(Cr, lower_red, upper_red)
+        # add dilation to the image
+        kernel = np.ones((2,2), np.uint8)
+        red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
+        blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
+        cv2.imwrite('red_mask_dilated_YCrCb.jpg', red_dilate)
+        cv2.imwrite('blue_mask_dilated_YCrCb.jpg', blue_dilate)
+    else:
+        B, G, R = cv2.split(warped)
+        B = cv2.medianBlur(B, 5)
+        R = cv2.medianBlur(R, 5)
+        # set ranges for blue and red to create masks, may need updating
+        lower_blue = 220
+        upper_blue = 255
+        lower_red = 230
+        upper_red = 255
+        # isolate red and blue in the image
+        blue_mask = cv2.inRange(B, lower_blue, upper_blue)
+        red_mask = cv2.inRange(R, lower_red, upper_red)
+        # add dilation to the image
+        kernel = np.ones((2,2), np.uint8)
+        red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
+        blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
+        # save masks, can be removed later
+        cv2.imwrite('red_mask_dilated_RGB.jpg', red_dilate)
+        cv2.imwrite('blue_mask_dilated_RGB.jpg', blue_dilate)
+   
+    # create a mask for the region of interest processing
+    y_cell = int(round(r / 2)) # convert diameter to actual radius as int value
+    x_cell = int(round(1.25 * y_cell))
+    margin = int(round(y_cell * 0.95)) # slightly lower radius to create a mask that removes contours from slight grid misplacement
+    mask = np.zeros((2 * y_cell, 2 * x_cell), dtype="uint8") # empty mask of grid cell size
+    dist = margin/np.cos(np.deg2rad(30))
+    x_jump = int(round(dist/2))
+    y_jump = margin
+    dist = int(round(dist))
+    point1 = [x_cell+dist, y_cell]
+    point2 = [x_cell+x_jump, y_cell+y_jump]
+    point3 = [x_cell-x_jump, y_cell+y_jump]
+    point4 = [x_cell-dist, y_cell]
+    point5 = [x_cell-x_jump, y_cell-y_jump]
+    point6 = [x_cell+x_jump, y_cell-y_jump]
+    pts = np.array([point1, point2, point3, point4, point5, point6], np.int32)
+    cv2.fillPoly(mask, [pts], (255,255,255))
     # for loop that analyzes all grid cells
     for i, feature in enumerate(features):
-        geometry = asShape(feature.geometry)
-        x = int(geometry.centroid.x)
-        y = int(geometry.centroid.y)
+        #geometry = asShape(feature.geometry)
+        x = feature.properties["x_center"]
+        y = feature.properties["y_center"]
+        if i < 10:
+            x = x - 7
+        elif i < 19:
+            x = x - 5
+        elif i < 29:
+            x = x - 3
+        elif i < 38:
+            x = x - 2
+        elif i < 48:
+            x = x - 1
+        elif i < 95:
+            pass
+        elif i < 105:
+            x = x + 1
+        elif i < 114:
+            x = x + 2
+        elif i < 124:
+            x = x + 3
+        elif i < 133:
+            x = x + 5
+        else:
+            x = x + 7
+        """
+        point1 = [x+dist, y]
+        point2 = [x+x_jump, y+y_jump]
+        point3 = [x-x_jump, y+y_jump]
+        point4 = [x-dist, y]
+        point5 = [x-x_jump, y-y_jump]
+        point6 = [x+x_jump, y-y_jump]
+        pts = np.array([point1, point2, point3, point4,
+                        point5, point6], np.int32)
+        cv2.polylines(warped, [pts], True, (255,255,255))
+        """
+        
         # get region of interest (ROI) for red (geometry) and analyse number
         # of contours (which identifies the markers) found
-        roiGeo = red_dilate[y-r:y+r, x-r:x+r]
+        roiGeo = red_dilate[y-y_cell:y+y_cell, x-x_cell:x+x_cell]
         # mask the ROI to eliminate adjacent grid cells
         maskedImgGeo = cv2.bitwise_and(roiGeo, roiGeo, mask = mask)
         # find contours within masked ROI
         im1, contoursGeo, hierarchy1 = cv2.findContours(maskedImgGeo,
                                                         cv2.RETR_CCOMP,
                                                         cv2.CHAIN_APPROX_SIMPLE)
-        # draw contours, not necessary for script to work
-        # cv2.drawContours(maskedImgGeo, contoursGeo, -1, (130,130,130), 3)
 
         # same as above for blue (ecotopes) as above
-        roiEco = blue_dilate[y-r:y+r, x-r:x+r]
+        roiEco = blue_dilate[y-y_cell:y+y_cell, x-x_cell:x+x_cell]
         maskedImgEco = cv2.bitwise_and(roiEco, roiEco, mask=mask)
         im2, contoursEco, hierarchy2 = cv2.findContours(maskedImgEco,
                                                         cv2.RETR_CCOMP,
                                                         cv2.CHAIN_APPROX_SIMPLE)
-        # cv2.drawContours(maskedImgEco, contoursEco, -1, (130, 130, 130), 3)
-
+        """
         # store each analyzed ROI, not necessary for the script to work
-        # filenameGeo = 'geo_roi_%d.jpg'%d
-        # filenameEco = 'eco_roi_%d.jpg'%d
-        # cv2.imwrite(filenameGeo, maskedImgGeo)
-        # cv2.imwrite(filenameEco, maskedImgEco)
-        feature.properties["id"] = i
+        filenameGeo = 'geo_roi_%i.jpg'%i
+        filenameEco = 'eco_roi_%i.jpg'%i
+        cv2.imwrite(filenameGeo, maskedImgGeo)
+        cv2.imwrite(filenameEco, maskedImgEco)
+        """
         feature.properties["tygron_id"] = i
         feature.properties["z"] = len(contoursGeo)
         feature.properties["landuse"] = len(contoursEco)
+    #cv2.imwrite('cells.jpg', warped)
     hexagons = geojson.FeatureCollection(features)
     with open('hexagons.geojson', 'w') as f:
         geojson.dump(hexagons, f, sort_keys=True,
