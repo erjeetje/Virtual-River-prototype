@@ -45,12 +45,13 @@ def create_calibration_file(img_x, img_y, cut_points):
     return transforms
 
 
-def detect_corners(filename, method='standard'):
+def detect_corners(img, method='standard'):
+    # changed filename as variable to img
     """
     Function that detects the corners of the board (the four white circles)
     and returns their coordinates as a 2D array.
     """
-    img = cv2.imread(filename)  # load image
+    #img = cv2.imread(filename)  # load image
     height, width, channels = img.shape
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # convert image to grayscale
     if method == 'adaptive':
@@ -208,6 +209,7 @@ def create_features(height, width):
         if i == 0:
             print(feature)
         features.append(feature)
+    features = geojson.FeatureCollection(features)
     return features, origins, radius
 
 

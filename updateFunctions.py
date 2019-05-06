@@ -27,9 +27,13 @@ def compare_hex(token, hexagons_old, hexagons_new):
     becomes_water = []
     becomes_land = []
     landuse_changed = []
+    #hexagons_by_id = {feature.id: feature for feature in hexagons_old.features}
     for feature in hexagons_new.features:
         reference_hex = hexagons_old[feature.id]
-        if feature.properties["z"] is not reference_hex.properties["z"]:
+        #if feature.id > 136 and feature.id < 141:
+            #print(str(feature.id) + ": " + str(feature.properties["z"]))
+            #print(str(reference_hex.id) + ": " + str(reference_hex.properties["z"]))
+        if feature.properties["z"] != reference_hex.properties["z"]:
             print("hexagon " + str(feature.id) + " z value changed")
             z_changed.append(feature)
             if (feature.properties["z"] < 2 and
@@ -42,12 +46,14 @@ def compare_hex(token, hexagons_old, hexagons_new):
                 reference_hex.properties["landuse"]):
             print("hexagon " + str(feature.id) + " land use value changed")
             landuse_changed.append(feature)
+    """
     if becomes_water:
         waterbodies = geojson.FeatureCollection(becomes_water)
         tygron.set_terrain_type(token, waterbodies, terrain_type="water")
     if becomes_land:
         landbodies = geojson.FeatureCollection(becomes_land)
         tygron.set_terrain_type(token, landbodies, terrain_type="land")
+    """
     z_changed = geojson.FeatureCollection(z_changed)
     print("changed cells")
     return z_changed

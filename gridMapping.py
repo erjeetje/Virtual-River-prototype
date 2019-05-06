@@ -18,6 +18,7 @@ from shapely import geometry
 from shapely.ops import unary_union
 from rasterio import open as opentif
 from rasterio.features import rasterize
+from rasterio.transform import from_origin
 from rasterio.crs import CRS
 from PIL import Image
 from io import BytesIO
@@ -493,7 +494,7 @@ def create_geotiff(grid):
         point4 = [x-step, y-step]
         polygon = geojson.Polygon([[point1, point2, point3, point4, point1]])
         new_feature = geojson.Feature(geometry=polygon)
-        new_feature.properties['z'] = feature.properties['z']
+        new_feature.properties['z'] = feature.properties['z'] / 4
         features.append(new_feature)
     features = geojson.FeatureCollection(features)
     geometries = [feature.geometry for feature in features['features']]
@@ -503,9 +504,12 @@ def create_geotiff(grid):
     plt.imshow(img)
     
     #crs = CRS({"init": "epsg:3857"}) 8969 8966
-    crs = CRS.from_epsg(3857)
-    with opentif('geotiff_test2.tif', 'w', driver='GTiff', width=1000, height=750, count=1, dtype=img.dtype) as dst:
-        dst.crs = crs
+    #crs = CRS.from_epsg(3857)
+    compression = {"compress": "LZW"}
+    with opentif('geotiff_test9.tif', 'w', driver='GTiff', width=1000,
+                 height=750, count=1, dtype=img.dtype, crs='EPSG:3857',
+                 transform=from_origin(0, 0, 1, 1), **compression) as dst:
+        #dst.crs = crs
         dst.write(img, 1)
     return
 

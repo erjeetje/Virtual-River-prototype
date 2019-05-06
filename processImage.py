@@ -15,12 +15,15 @@ import sandbox_fm.calibrate
 from shapely.geometry import asShape
 
 
-def detect_markers(file, pers, img_x, img_y, origins, r, features,
+def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
                    method='rgb'):
     # load and process the new image (game state)
-    img = cv2.imread(file)
+    #img = cv2.imread(file)
     # warp image it to calibrated perspective
     warped = cv2.warpPerspective(img, pers, (img_x, img_y))
+    d = turn
+    filename = 'turn_%d.jpg'%d
+    cv2.imwrite(filename, warped)
     if method is 'LAB':
         lab = cv2.cvtColor(warped, cv2.COLOR_BGR2Lab)
         L, A, B = cv2.split(lab)
@@ -38,8 +41,8 @@ def detect_markers(file, pers, img_x, img_y, origins, r, features,
         kernel = np.ones((2,2), np.uint8)
         red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
-        cv2.imwrite('red_mask_dilated_LAB.jpg', red_dilate)
-        cv2.imwrite('blue_mask_dilated_LAB.jpg', blue_dilate)
+        cv2.imwrite('red_mask_dilated_LAB%d.jpg'%d, red_dilate)
+        cv2.imwrite('blue_mask_dilated_LAB%d.jpg'%d, blue_dilate)
     elif method is 'YCrCb':
         ycrcb = cv2.cvtColor(warped, cv2.COLOR_BGR2YCrCb)
         Y, Cr, Cb = cv2.split(ycrcb)
@@ -57,8 +60,8 @@ def detect_markers(file, pers, img_x, img_y, origins, r, features,
         kernel = np.ones((2,2), np.uint8)
         red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
-        cv2.imwrite('red_mask_dilated_YCrCb.jpg', red_dilate)
-        cv2.imwrite('blue_mask_dilated_YCrCb.jpg', blue_dilate)
+        cv2.imwrite('red_mask_dilated_YCrCb%d.jpg'%d, red_dilate)
+        cv2.imwrite('blue_mask_dilated_YCrCb%d.jpg'%d, blue_dilate)
     else:
         B, G, R = cv2.split(warped)
         B = cv2.medianBlur(B, 5)
@@ -76,8 +79,8 @@ def detect_markers(file, pers, img_x, img_y, origins, r, features,
         red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
         # save masks, can be removed later
-        cv2.imwrite('red_mask_dilated_RGB.jpg', red_dilate)
-        cv2.imwrite('blue_mask_dilated_RGB.jpg', blue_dilate)
+        cv2.imwrite('red_mask_dilated_RGB%d.jpg'%d, red_dilate)
+        cv2.imwrite('blue_mask_dilated_RGB%d.jpg'%d, blue_dilate)
    
     # create a mask for the region of interest processing
     y_cell = int(round(r / 2)) # convert diameter to actual radius as int value
@@ -97,7 +100,7 @@ def detect_markers(file, pers, img_x, img_y, origins, r, features,
     pts = np.array([point1, point2, point3, point4, point5, point6], np.int32)
     cv2.fillPoly(mask, [pts], (255,255,255))
     # for loop that analyzes all grid cells
-    for i, feature in enumerate(features):
+    for i, feature in enumerate(features.features):
         #geometry = asShape(feature.geometry)
         x = feature.properties["x_center"]
         y = feature.properties["y_center"]
@@ -162,11 +165,11 @@ def detect_markers(file, pers, img_x, img_y, origins, r, features,
         feature.properties["z"] = len(contoursGeo)
         feature.properties["landuse"] = len(contoursEco)
     #cv2.imwrite('cells.jpg', warped)
-    hexagons = geojson.FeatureCollection(features)
-    with open('hexagons.geojson', 'w') as f:
-        geojson.dump(hexagons, f, sort_keys=True,
+    #hexagons = geojson.FeatureCollection(features)
+    with open('hexagons%d.geojson'%d, 'w') as f:
+        geojson.dump(features, f, sort_keys=True,
                      indent=2)
-    return hexagons
+    return features
 
 
 def transform(features, transforms, export=None):
