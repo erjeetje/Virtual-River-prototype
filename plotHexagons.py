@@ -33,7 +33,7 @@ def plot(hexagons, turn=0):
         else:
             color = red
         ax.add_patch(PolygonPatch(poly, fc=color, ec=color, alpha=0.5,
-                                  zorder=2 ))
+                                  zorder=2))
     ax.axis('scaled')
     plt.show()
 
@@ -42,24 +42,24 @@ if __name__ == '__main__':
     try:
         with open('hexagons0.geojson') as f:
             hexagons0 = geojson.load(f)
-        plot(hexagons0)
+        plot(hexagons0, turn=0)
     except FileNotFoundError:
         pass
     try:
         with open('hexagons1.geojson') as f:
             hexagons1 = geojson.load(f)
-        plot(hexagons1)
+        plot(hexagons1, turn=1)
     except FileNotFoundError:
         pass
     try:
         with open('hexagons2.geojson') as f:
             hexagons2 = geojson.load(f)
-        plot(hexagons2)
+        plot(hexagons2, turn=2)
     except FileNotFoundError:
         pass
     try:
         with open('hexagons3.geojson') as f:
             hexagons3 = geojson.load(f)
-        plot(hexagons3)
+        plot(hexagons3, turn=3)
     except FileNotFoundError:
         pass

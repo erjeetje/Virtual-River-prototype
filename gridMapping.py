@@ -50,7 +50,7 @@ def read_hexagons():
     function that loads and returns the hexagons. Currently not called in
     the control script as the hexagons are stored internally.
     """
-    with open('hexagons_sandbox_transformed_adjusted.geojson') as f:
+    with open('hexagons0.geojson') as f:
         features = geojson.load(f)
     return features
 
@@ -467,7 +467,7 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
         
     if not start:
         print("Number of gridpoints outside the board updated: "+str(counter))
-    filename = 'grid_with_z_triangulate_test%d.geojson' % turn
+    filename = 'interpolated_grid%d.geojson' % turn
     with open(filename, 'w') as f:
         geojson.dump(grid, f, sort_keys=True, indent=2)
     return grid
@@ -524,8 +524,8 @@ def run_model(grid):
     print('interpolation time:', toc-tac)
     print(model.get_current_time())
     model.get_var('s1')
-    numk = model.get_var('numk')
-    ndx = model.get_var('ndx')
+    #numk = model.get_var('numk')
+    #ndx = model.get_var('ndx')
     ndxi = model.get_var('ndxi')
     
     # points, nodes, vertices (corner points)
@@ -596,6 +596,6 @@ if __name__ == "__main__":
     tac = time.time()
     grid_triangulate = hex_to_points(hexagons, grid, start=True)
     tec = time.time()
-    create_geotiff(grid_triangulate)
-    #run_model(grid_triangulate)
+    #create_geotiff(grid_triangulate)
+    run_model(grid_triangulate)
     toc = time.time()

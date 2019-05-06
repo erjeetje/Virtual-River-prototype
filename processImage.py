@@ -166,9 +166,6 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         feature.properties["landuse"] = len(contoursEco)
     #cv2.imwrite('cells.jpg', warped)
     #hexagons = geojson.FeatureCollection(features)
-    with open('hexagons%d.geojson'%d, 'w') as f:
-        geojson.dump(features, f, sort_keys=True,
-                     indent=2)
     return features
 
 

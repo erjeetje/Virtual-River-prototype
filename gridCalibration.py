@@ -206,8 +206,6 @@ def create_features(height, width):
         feature.properties["column"] = column[i]
         feature.properties["x_center"] = int(round(x))
         feature.properties["y_center"] = int(round(y))
-        if i == 0:
-            print(feature)
         features.append(feature)
     features = geojson.FeatureCollection(features)
     return features, origins, radius

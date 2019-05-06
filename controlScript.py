@@ -185,6 +185,9 @@ def main_menu():
                                                 hexagons_new)
                 hexagons_sandbox = detect.transform(hexagons_new, transforms,
                                             export="sandbox")
+                with open('hexagons%d.geojson'%turn, 'w') as f:
+                    geojson.dump(hexagons_sandbox, f, sort_keys=True,
+                                 indent=2)
                 hexagons_water, hexagons_land = detect.transform(z_changed,
                                                                  transforms,
                                                                  export="tygron")
@@ -259,6 +262,9 @@ def initialize(turn):
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,
                                             export="sandbox")
+        with open('hexagons%d.geojson'%turn, 'w') as f:
+            geojson.dump(hexagons_sandbox, f, sort_keys=True,
+                         indent=2)
         hexagons_tygron = detect.transform(hexagons, transforms,
                                            export="tygron_initialize")
         hexagons_water, hexagons_land = detect.transform(hexagons, transforms,
