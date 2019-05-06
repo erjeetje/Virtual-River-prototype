@@ -117,7 +117,6 @@ def set_terrain_type(api_key, hexagons, terrain_type="land"):
             polygons.append(shape)
             remove_polygon(api_key, feature.properties["tygron_id"], shape)
             counter += 1
-            print(counter)
         multipolygon = geometry.MultiPolygon(polygons)
         hexagons2change = geometry.mapping(multipolygon)
         r = update_terrain(api_key, hexagons2change, terrain_type=terrain_type)
@@ -144,7 +143,6 @@ def set_terrain_type(api_key, hexagons, terrain_type="land"):
             add_polygon(api_key, feature.properties["tygron_id"], shape)
             set_function(api_key, feature.properties["tygron_id"], 0)
             counter += 1
-            print(counter)
         try:
             pastebin_url = r.json()
             print(pastebin_url)

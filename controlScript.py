@@ -8,13 +8,13 @@ Created on Thu Mar 28 09:56:24 2019
 import time
 import geojson
 import keyboard
-import cv2
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
+import plotHexagons as plotter
 
 
 def main_menu():
@@ -132,17 +132,23 @@ def main_menu():
                 print("retrieved board image after turn " + str(turn))
                 """
                 # The code below should work, but for some reason the line
-                # hexagons_new = ... also updates hexagons. Don't understand why
+                # hexagons_new = ... also updates hexagons. Don't understand
+                # why
 
                 for feature in hexagons.features:
                     if feature.id > 136 and feature.id < 141:
-                        print("Old id " + str(feature.id) + ": " + str(feature.properties["z"]))
+                        print("Old id " + str(feature.id) + ": " +
+                              str(feature.properties["z"]))
                     else:
                         pass
                 """
                 hexagons_new = detect.detect_markers(img, pers, img_x, img_y,
-                                         origins, radius, hexagons, turn=turn,
-                                         method='LAB')
+                                                     origins, radius, hexagons,
+                                                     turn=turn, method='LAB')
+                #plotter.plot(hexagons, turn=turn)
+                print("processed current board state")
+                # this next update should not be necessary if tygron IDs are
+                # properly updated at an earlier stage
                 hexagons_new = tygron.update_hexagons_tygron_id(token,
                                                                 hexagons_new)
                 """
@@ -170,23 +176,11 @@ def main_menu():
                     else:
                         pass
                 """
-                # the below few lines are temporary as there seems to be a
+                # the below two lines are temporary as there seems to be a
                 # problem with the code above that should work.
                 d = turn - 1
                 with open('hexagons%d.geojson'%d) as f:
                     hexagons_old = geojson.load(f)
-                for feature in hexagons_old.features:
-                    if feature.id > 136 and feature.id < 141:
-                        print("Old id " + str(feature.id) + ": " +
-                              str(feature.properties["z"]))
-                    else:
-                        pass
-                for feature in hexagons_new.features:
-                    if feature.id > 136 and feature.id < 141:
-                        print("New id " + str(feature.id) + ": " +
-                              str(feature.properties["z"]))
-                    else:
-                        pass
                 z_changed = compare.compare_hex(token, hexagons_old, 
                                                 hexagons_new)
                 hexagons_sandbox = detect.transform(hexagons_new, transforms,
@@ -203,6 +197,7 @@ def main_menu():
                                                           grid_interpolated,
                                                           changed_hex=z_changed,
                                                           turn=turn)
+                #gridmap.create_geotiff(grid_interpolated, turn)
                 toc = time.time()
                 print("Updated to turn " + str(turn) +
                       ". Comparison update time: " + str(tac-tic) +
@@ -259,6 +254,7 @@ def initialize(turn):
         hexagons = detect.detect_markers(img, pers, img_x, img_y,
                                          origins, radius, features,
                                          method='LAB')
+        #plotter.plot(hexagons, turn=turn)
         print("processed initial board state")
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,
@@ -271,7 +267,8 @@ def initialize(turn):
         grid = gridmap.read_grid()
         print("loaded grid")
         grid_interpolated = gridmap.hex_to_points(hexagons_sandbox, grid,
-                                                       start=True)
+                                                  start=True)
+        #gridmap.create_geotiff(grid_interpolated, turn)
         print("executed grid interpolation")
         """
         This section is not very efficient, once the system is up and running

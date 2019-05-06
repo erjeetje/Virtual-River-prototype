@@ -473,11 +473,12 @@ def hex_to_points(hexagons, grid, changed_hex=None, start=False, turn=0):
     return grid
 
 
-def create_geotiff(grid):
+def create_geotiff(grid, turn=0):
     """
     Function that creates a GeoTIFF from the grid as constructed in the
     hex_to_points function
     """
+    d = turn
     features = []
     step = 3 * 1.25
     for feature in grid.features:
@@ -506,7 +507,7 @@ def create_geotiff(grid):
     #crs = CRS({"init": "epsg:3857"}) 8969 8966
     #crs = CRS.from_epsg(3857)
     compression = {"compress": "LZW"}
-    with opentif('geotiff_test9.tif', 'w', driver='GTiff', width=1000,
+    with opentif('grid_height_map%d.tif'%d, 'w', driver='GTiff', width=1000,
                  height=750, count=1, dtype=img.dtype, crs='EPSG:3857',
                  transform=from_origin(0, 0, 1, 1), **compression) as dst:
         #dst.crs = crs
