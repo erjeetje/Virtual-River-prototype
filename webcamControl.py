@@ -22,6 +22,8 @@ def get_image(turn, mirror=False):
     cam.set(3, 1920)
     cam.set(4, 1080)
     ret_val, img = cam.read()
+    if mirror:
+        img = cv2.flip(img, 1)
     filename = 'turn_picture%i.jpg' % turn
     cv2.imwrite(filename, img)
     return img

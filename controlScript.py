@@ -14,7 +14,8 @@ import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
-import plotHexagons as plotter
+from copy import deepcopy
+#import plotHexagons as plotter
 
 
 def main_menu():
@@ -28,9 +29,11 @@ def main_menu():
     token = ""
     # turn tracker
     turn = 0
-    
+
+    model = None
+
     hexagons = None
-    
+
     hexagons_new = None
     # current hexagon state on the board, transformed to sandbox, geojson
     # featurecollection (multipolygon)
@@ -60,9 +63,19 @@ def main_menu():
     # all necessary transforms
     transforms = None
     # sandbox grid, geojson featurecollection (points)
-    grid = None
+    node_grid = None
     # interpolated grid (with z), geojson featurecollection (points)
-    grid_interpolated = None
+    #grid_interpolated = None
+
+    # filled board where hexagons located behind the dike are filled up in
+    # order to have a closed geometry for Delft3D
+    hexagons_adjusted_sandbox = None
+
+    # filled node grid that can be used by Delft3D
+    filled_node_grid = None
+
+    # face grid to deal with roughness
+    face_grid = None
     
     pers = None
     
@@ -91,8 +104,8 @@ def main_menu():
                 tic = time.time()
                 #try:
                 token, hexagons, hex_sandbox, hex_tygron, hex_water, \
-                    hex_land, grid, grid_interpolated, transforms, pers, \
-                    img_x, img_y, origins, radius = initialize(turn)
+                    hex_land, node_grid, transforms, pers, img_x, img_y, \
+                    origins, radius = initialize(turn)
                 #except TypeError:
                     #print("Calibration failed, closing application")
                     #time.sleep(2)
@@ -128,7 +141,7 @@ def main_menu():
                 tic = time.time()
                 print("Updating board state")
                 turn += 1
-                img = webcam.get_image(turn)
+                img = webcam.get_image(turn, mirror=True)
                 print("retrieved board image after turn " + str(turn))
                 """
                 # The code below should work, but for some reason the line
@@ -196,10 +209,17 @@ def main_menu():
                 tygron.set_terrain_type(token, hexagons_land,
                                         terrain_type="land")
                 tac = time.time()
-                grid_interpolated = gridmap.hex_to_points(hexagons_sandbox,
-                                                          grid_interpolated,
+                node_grid = gridmap.update_node_grid(z_changed, node_grid,
+                                                      turn=turn)
+                node_grid = gridmap.interpolate_node_grid(hexagons_sandbox,
+                                                          node_grid,
+                                                          turn=turn)
+                """
+                node_grid = gridmap.hex_to_points(hexagons_sandbox,
+                                                          node_grid,
                                                           changed_hex=z_changed,
                                                           turn=turn)
+                """
                 #gridmap.create_geotiff(grid_interpolated, turn)
                 toc = time.time()
                 print("Updated to turn " + str(turn) +
@@ -243,7 +263,7 @@ def initialize(turn):
     else:
         token = "token=" + token
         print("logged in to Tygron")
-        img = webcam.get_image(turn)
+        img = webcam.get_image(turn, mirror=True)
         print("retrieved initial board image")
         # camera calibration --> to do: initiation
         # changed filename as variable to img
@@ -270,10 +290,24 @@ def initialize(turn):
         hexagons_water, hexagons_land = detect.transform(hexagons, transforms,
                                                          export="tygron")
         print("prepared geojson files")
-        grid = gridmap.read_grid()
+        node_grid = gridmap.read_node_grid()
         print("loaded grid")
-        grid_interpolated = gridmap.hex_to_points(hexagons_sandbox, grid,
-                                                  start=True)
+        node_grid = gridmap.index_node_grid(hexagons_sandbox, node_grid)
+        node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid)
+        filled_node_grid = deepcopy(node_grid)
+        filled_hexagons = deepcopy(hexagons_sandbox)
+        filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
+        filled_node_grid = gridmap.update_node_grid(filled_hexagons,
+                                                    filled_node_grid)
+        filled_node_grid = gridmap.interpolate_node_grid(filled_hexagons,
+                                                          filled_node_grid,
+                                                          turn=turn)
+        with open('node_grid%d.geojson'%turn, 'w') as f:
+            geojson.dump(node_grid, f, sort_keys=True,
+                         indent=2)
+        with open('filled_node_grid%d.geojson'%turn, 'w') as f:
+            geojson.dump(filled_node_grid, f, sort_keys=True,
+                         indent=2)
         #gridmap.create_geotiff(grid_interpolated, turn)
         print("executed grid interpolation")
         """
@@ -286,8 +320,8 @@ def initialize(turn):
         print("updated Tygron")
     try:
         return token, hexagons, hexagons_sandbox, hexagons_tygron, \
-            hexagons_water, hexagons_land, grid, grid_interpolated, \
-            transforms, pers, img_x, img_y, origins, radius
+            hexagons_water, hexagons_land, node_grid, transforms, \
+            pers, img_x, img_y, origins, radius
     except UnboundLocalError:
         print("logging in to Tygron failed, closing application")
         quit()

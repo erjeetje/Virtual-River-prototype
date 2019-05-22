@@ -69,7 +69,6 @@ def detect_corners(img, method='standard'):
 
     # create mask to only search for circles in the corner
     mask = np.zeros((height, width), dtype="uint8") 
-    print(mask.shape)
     margin_x = round(width * 0.2)
     margin_y = round(height * 0.14)
     cv2.rectangle(mask, (0, 0), (margin_x, margin_y), (255, 255, 255), -1)
