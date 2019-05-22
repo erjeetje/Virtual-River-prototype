@@ -27,14 +27,12 @@ def compare_hex(token, hexagons_old, hexagons_new):
     becomes_water = []
     becomes_land = []
     landuse_changed = []
-    #hexagons_by_id = {feature.id: feature for feature in hexagons_old.features}
+    dike_moved = False
     for feature in hexagons_new.features:
         reference_hex = hexagons_old[feature.id]
-        #if feature.id > 136 and feature.id < 141:
-            #print(str(feature.id) + ": " + str(feature.properties["z"]))
-            #print(str(reference_hex.id) + ": " + str(reference_hex.properties["z"]))
         if feature.properties["z"] != reference_hex.properties["z"]:
             print("hexagon " + str(feature.id) + " z value changed")
+            feature.properties["changed"] = True
             z_changed.append(feature)
             if (feature.properties["z"] < 2 and
                     reference_hex.properties["z"] >= 2):
@@ -42,6 +40,12 @@ def compare_hex(token, hexagons_old, hexagons_new):
             elif (feature.properties["z"] >= 2 and
                     reference_hex.properties["z"] < 2):
                 becomes_land.append(feature)
+            if (feature.properties["z"] >= 4 or
+                    reference_hex.properties["z"] >= 4):
+                print("Detected a dike relocation, will update total grid")
+                dike_moved = True
+        else:
+            feature.properties["changed"] = False
         if (feature.properties["landuse"] is not
                 reference_hex.properties["landuse"]):
             print("hexagon " + str(feature.id) + " land use value changed")
@@ -56,7 +60,7 @@ def compare_hex(token, hexagons_old, hexagons_new):
     """
     z_changed = geojson.FeatureCollection(z_changed)
     print("changed cells")
-    return z_changed
+    return hexagons_new, z_changed, dike_moved
 
 
 if __name__ == '__main__':

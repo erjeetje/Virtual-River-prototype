@@ -85,7 +85,7 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
     # create a mask for the region of interest processing
     y_cell = int(round(r / 2)) # convert diameter to actual radius as int value
     x_cell = int(round(1.25 * y_cell))
-    margin = int(round(y_cell * 0.95)) # slightly lower radius to create a mask that removes contours from slight grid misplacement
+    margin = int(round(y_cell * 0.92)) # slightly lower radius to create a mask that removes contours from slight grid misplacement
     mask = np.zeros((2 * y_cell, 2 * x_cell), dtype="uint8") # empty mask of grid cell size
     dist = margin/np.cos(np.deg2rad(30))
     x_jump = int(round(dist/2))
@@ -101,7 +101,6 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
     cv2.fillPoly(mask, [pts], (255,255,255))
     # for loop that analyzes all grid cells
     for i, feature in enumerate(features.features):
-        #geometry = asShape(feature.geometry)
         x = feature.properties["x_center"]
         y = feature.properties["y_center"]
         if i < 10:
@@ -154,8 +153,8 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         im2, contoursEco, hierarchy2 = cv2.findContours(maskedImgEco,
                                                         cv2.RETR_CCOMP,
                                                         cv2.CHAIN_APPROX_SIMPLE)
-        """
         # store each analyzed ROI, not necessary for the script to work
+        """
         filenameGeo = 'geo_roi_%i.jpg'%i
         filenameEco = 'eco_roi_%i.jpg'%i
         cv2.imwrite(filenameGeo, maskedImgGeo)
@@ -165,7 +164,6 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         feature.properties["z"] = len(contoursGeo)
         feature.properties["landuse"] = len(contoursEco)
     #cv2.imwrite('cells.jpg', warped)
-    #hexagons = geojson.FeatureCollection(features)
     return features
 
 

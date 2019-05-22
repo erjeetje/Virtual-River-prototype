@@ -838,7 +838,7 @@
       "id": 17,
       "properties": {
         "column": 2,
-        "landuse": 4,
+        "landuse": 0,
         "tygron_id": 17,
         "x_center": 173,
         "y_center": 800,
@@ -4693,7 +4693,7 @@
       "properties": {
         "column": 11,
         "landuse": 9,
-        "tygron_id": null,
+        "tygron_id": 174,
         "x_center": 953,
         "y_center": 450,
         "z": 0

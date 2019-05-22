@@ -159,9 +159,7 @@ def rotate_grid(canvas, img):
     # warp image according to the perspective transform and store image
     # warped = cv2.warpPerspective(img, perspective, (img_x, img_y))
     # cv2.imwrite('warpedGrid.jpg', warped)
-    #origins, radius = calc_grid(img_y, img_x)
     features, origins, radius = create_features(img_y, img_x)
-    #origins = np.array(origins)
     return perspective, img_x, img_y, origins, radius, pts1, features
 
 
@@ -208,30 +206,6 @@ def create_features(height, width):
         features.append(feature)
     features = geojson.FeatureCollection(features)
     return features, origins, radius
-
-
-"""
-def create_features(origins, radius):
-    # Function that creates Polygon features (hexagon shaped) for all hexagons.
-    radius = radius/2
-    dist = radius/np.cos(np.deg2rad(30))
-    x_jump = dist/2
-    y_jump = radius
-    features = []
-
-    for i, (x, y) in enumerate(origins):
-        point1 = [x+dist, y]
-        point2 = [x+x_jump, y+y_jump]
-        point3 = [x-x_jump, y+y_jump]
-        point4 = [x-dist, y]
-        point5 = [x-x_jump, y-y_jump]
-        point6 = [x+x_jump, y-y_jump]
-        polygon = geojson.Polygon([[point1, point2, point3, point4, point5,
-                                    point6, point1]])
-        feature = geojson.Feature(id=i, geometry=polygon)
-        features.append(feature)
-    return features
-"""
 
 
 def drawMask(origins, img):
