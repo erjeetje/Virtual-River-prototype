@@ -94,14 +94,6 @@ def main_menu():
             if start:
                 print("Calibrating Virtual River, preparing SandBox "
                       "and logging into Tygron")
-                """
-                to add:
-                    - initiate camera
-                    - take new picture
-                    - send picture to initialize or store picture and send
-                      correct filename
-                """
-                tic = time.time()
                 #try:
                 token, hexagons_new, hex_sandbox, hex_tygron, hex_water, \
                     hex_land, node_grid, filled_node_grid, transforms, pers, \
@@ -112,25 +104,6 @@ def main_menu():
                     #break
                 with open('token.txt', 'w') as f:
                     f.write(token)
-                """
-                hex_sandbox_prev = hex_sandbox
-                hex_tygron_prev = hex_tygron
-                hex_water_prev = hex_water
-                hex_land_prev = hex_land
-                """
-                print("stored initial board state")
-                toc = time.time()
-                print("Start up and calibration time: "+str(toc-tic))
-                """
-                this section will also need scripts to:
-                    - to create the grid for sandbox
-                    - to store indices and weighing factors for interpolation
-                    - to execute the interpolation
-                    - to convert the grid to geotiff
-                    - to initialize all the changes in Tygron (water/land/
-                      buildings)
-                    - to initiate the hydrodynamic model
-                """
                 start = False
                 print("Initializing complete, waiting for next command")
             else:
@@ -138,80 +111,11 @@ def main_menu():
                 pass
         elif a == '1':
             if not start:
-                save = False
-                tic = time.time()
-                print("Updating board state")
                 turn += 1
-                img = webcam.get_image(turn, mirror=True)
-                print("retrieved board image after turn " + str(turn))
-                hexagons_old = deepcopy(hexagons_new)
-                hexagons_new = detect.detect_markers(img, pers, img_x, img_y,
-                                                     origins, radius,
-                                                     hexagons_new, turn=turn,
-                                                     method='LAB')
-                print("processed current board state")
-                # this next update should not be necessary if tygron IDs are
-                # properly updated at an earlier stage
-                hexagons_new = tygron.update_hexagons_tygron_id(token,
-                                                                hexagons_new)
-                hexagons_new, z_changed, dike_moved = compare.compare_hex(
-                        token, hexagons_old, hexagons_new)
-                hexagons_sandbox = detect.transform(hexagons_new, transforms,
-                                                    export="sandbox")
-                if save:
-                    with open('hexagons%d.geojson' % turn, 'w') as f:
-                        geojson.dump(hexagons_sandbox, f, sort_keys=True,
-                                     indent=2)
-                hexagons_water, hexagons_land = detect.transform(z_changed,
-                                                                 transforms,
-                                                                 export="tygron")
-                tygron.set_terrain_type(token, hexagons_water,
-                                        terrain_type="water")
-                tygron.set_terrain_type(token, hexagons_land,
-                                        terrain_type="land")
-                tac = time.time()
-                node_grid = gridmap.update_node_grid(z_changed, node_grid,
-                                                      turn=turn)
-                node_grid = gridmap.interpolate_node_grid(hexagons_sandbox,
-                                                          node_grid,
-                                                          turn=turn,
-                                                          save=True)
-                filled_hexagons = deepcopy(hexagons_sandbox)
-                if dike_moved:
-                    filled_node_grid = deepcopy(node_grid)
-                    filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
-                    filled_node_grid = gridmap.update_node_grid(
-                            filled_hexagons, filled_node_grid, fill=True)
-                    filled_node_grid = gridmap.interpolate_node_grid(
-                            filled_hexagons, filled_node_grid, turn=turn,
-                            save=True)
-                    print("updated complete grid, dike relocation detected")
-                else:
-                    filled_node_grid = gridmap.update_node_grid(
-                            z_changed, filled_node_grid, turn=turn)
-                    filled_node_grid = gridmap.interpolate_node_grid(
-                            hexagons_sandbox, filled_node_grid,
-                            turn=turn, save=True)
-                gridmap.create_geotiff(node_grid, turn)
-                if save:
-                    with open('node_grid%d.geojson' % turn, 'w') as f:
-                        geojson.dump(node_grid, f, sort_keys=True,
-                                     indent=2)
-                    with open('filled_node_grid%d.geojson' % turn, 'w') as f:
-                        geojson.dump(filled_node_grid, f, sort_keys=True,
-                                     indent=2)
-                """
-                node_grid = gridmap.hex_to_points(hexagons_sandbox,
-                                                          node_grid,
-                                                          changed_hex=z_changed,
-                                                          turn=turn)
-                """
-                #gridmap.create_geotiff(grid_interpolated, turn)
-                toc = time.time()
-                print("Updated to turn " + str(turn) +
-                      ". Comparison update time: " + str(tac-tic) +
-                      ". Interpolation update time: " + str(toc-tac) +
-                      ". Total update time: " + str(toc-tic))
+                hexagons_new, node_grid, filled_node_grid = update(
+                        token, transforms, pers, img_x, img_y, origins, radius,
+                        hexagons_new, node_grid, filled_node_grid, turn=turn)
+                print("Update complete, waiting for next command")
             else:
                 print("No calibration run, please first calibrate Virtual"
                       "River by pressing '5'")
@@ -239,6 +143,7 @@ def initialize(turn, save=False):
     - update Tygron
     - return all variables that need storing
     """
+    tic = time.time()
     with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
         username = f.read()
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
@@ -263,13 +168,12 @@ def initialize(turn, save=False):
         hexagons = detect.detect_markers(img, pers, img_x, img_y,
                                          origins, radius, features,
                                          method='LAB')
-        #plotter.plot(hexagons, turn=turn)
         print("processed initial board state")
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,
                                             export="sandbox")
         if save:
-            with open('hexagons%d.geojson'%turn, 'w') as f:
+            with open('hexagons%d.geojson' % turn, 'w') as f:
                 geojson.dump(hexagons_sandbox, f, sort_keys=True,
                              indent=2)
         hexagons_tygron = detect.transform(hexagons, transforms,
@@ -289,8 +193,8 @@ def initialize(turn, save=False):
                                                     filled_node_grid,
                                                     fill=True)
         filled_node_grid = gridmap.interpolate_node_grid(filled_hexagons,
-                                                          filled_node_grid,
-                                                          turn=turn)
+                                                         filled_node_grid,
+                                                         turn=turn)
         if save:
             with open('node_grid%d.geojson' % turn, 'w') as f:
                 geojson.dump(node_grid, f, sort_keys=True,
@@ -309,6 +213,9 @@ def initialize(turn, save=False):
         tygron.set_terrain_type(token, hexagons_water, terrain_type="water")
         tygron.set_terrain_type(token, hexagons_land, terrain_type="land")
         print("updated Tygron")
+        print("stored initial board state")
+        toc = time.time()
+        print("Start up and calibration time: "+str(toc-tic))
     try:
         return token, hexagons, hexagons_sandbox, hexagons_tygron, \
             hexagons_water, hexagons_land, node_grid, filled_node_grid, \
@@ -318,12 +225,69 @@ def initialize(turn, save=False):
         quit()
 
 
-def update():
+def update(token, transforms, pers, img_x, img_y, origins, radius,
+           hexagons_new, node_grid, filled_node_grid, turn=1, save=False):
     """
     function that initiates and handles all update steps. Returns all update
     variables
     """
-    return
+    tic = time.time()
+    print("Updating board state")
+    img = webcam.get_image(turn, mirror=True)
+    print("retrieved board image after turn " + str(turn))
+    hexagons_old = deepcopy(hexagons_new)
+    hexagons_new = detect.detect_markers(img, pers, img_x, img_y, origins,
+                                         radius, hexagons_new, turn=turn,
+                                         method='LAB')
+    print("processed current board state")
+    # this next update should not be necessary if tygron IDs are
+    # properly updated at an earlier stage
+    hexagons_new = tygron.update_hexagons_tygron_id(token, hexagons_new)
+    hexagons_new, z_changed, dike_moved = compare.compare_hex(
+            token, hexagons_old, hexagons_new)
+    hexagons_sandbox = detect.transform(hexagons_new, transforms,
+                                        export="sandbox")
+    if save:
+        with open('hexagons%d.geojson' % turn, 'w') as f:
+            geojson.dump(hexagons_sandbox, f, sort_keys=True,
+                         indent=2)
+    hexagons_water, hexagons_land = detect.transform(z_changed,
+                                                     transforms,
+                                                     export="tygron")
+    tygron.set_terrain_type(token, hexagons_water, terrain_type="water")
+    tygron.set_terrain_type(token, hexagons_land, terrain_type="land")
+    tac = time.time()
+    node_grid = gridmap.update_node_grid(z_changed, node_grid, turn=turn)
+    node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid,
+                                              turn=turn, save=False)
+    if dike_moved:
+        filled_hexagons = deepcopy(hexagons_sandbox)
+        filled_node_grid = deepcopy(node_grid)
+        filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
+        filled_node_grid = gridmap.update_node_grid(
+                filled_hexagons, filled_node_grid, fill=True)
+        filled_node_grid = gridmap.interpolate_node_grid(
+                filled_hexagons, filled_node_grid, turn=turn, save=False)
+        print("updated complete grid, dike relocation detected")
+    else:
+        filled_node_grid = gridmap.update_node_grid(
+                z_changed, filled_node_grid, turn=turn)
+        filled_node_grid = gridmap.interpolate_node_grid(
+                hexagons_sandbox, filled_node_grid, turn=turn, save=False)
+    gridmap.create_geotiff(node_grid, turn)
+    if save:
+        with open('node_grid%d.geojson' % turn, 'w') as f:
+            geojson.dump(node_grid, f, sort_keys=True,
+                         indent=2)
+        with open('filled_node_grid%d.geojson' % turn, 'w') as f:
+            geojson.dump(filled_node_grid, f, sort_keys=True,
+                         indent=2)
+    toc = time.time()
+    print("Updated to turn " + str(turn) +
+          ". Comparison update time: " + str(tac-tic) +
+          ". Interpolation update time: " + str(toc-tac) +
+          ". Total update time: " + str(toc-tic))
+    return hexagons_new, node_grid, filled_node_grid
 
 
 if __name__ == '__main__':

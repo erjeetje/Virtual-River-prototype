@@ -6572,7 +6572,7 @@
         "tygron_id": 165,
         "x_center": 1299,
         "y_center": 350,
-        "z": 2
+        "z": 3
       },
       "type": "Feature"
     },
@@ -6616,11 +6616,11 @@
       "properties": {
         "changed": false,
         "column": 15,
-        "landuse": 9,
+        "landuse": 0,
         "tygron_id": 137,
         "x_center": 1299,
         "y_center": 450,
-        "z": 0
+        "z": 3
       },
       "type": "Feature"
     },
@@ -6664,11 +6664,11 @@
       "properties": {
         "changed": false,
         "column": 15,
-        "landuse": 9,
+        "landuse": 0,
         "tygron_id": 138,
         "x_center": 1299,
         "y_center": 550,
-        "z": 0
+        "z": 3
       },
       "type": "Feature"
     },
@@ -6716,7 +6716,7 @@
         "tygron_id": 139,
         "x_center": 1299,
         "y_center": 650,
-        "z": 2
+        "z": 3
       },
       "type": "Feature"
     },
@@ -6812,7 +6812,7 @@
         "tygron_id": 141,
         "x_center": 1299,
         "y_center": 850,
-        "z": 2
+        "z": 4
       },
       "type": "Feature"
     },
@@ -6860,7 +6860,7 @@
         "tygron_id": 142,
         "x_center": 1299,
         "y_center": 950,
-        "z": 4
+        "z": 2
       },
       "type": "Feature"
     }

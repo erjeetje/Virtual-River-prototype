@@ -44,7 +44,7 @@
         "tygron_id": 141,
         "x_center": 1299,
         "y_center": 850,
-        "z": 2
+        "z": 4
       },
       "type": "Feature"
     },
@@ -92,7 +92,7 @@
         "tygron_id": 142,
         "x_center": 1299,
         "y_center": 950,
-        "z": 4
+        "z": 2
       },
       "type": "Feature"
     }
