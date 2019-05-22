@@ -14,6 +14,7 @@ import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
+import modelInterface as D3D
 from copy import deepcopy
 #import plotHexagons as plotter
 
@@ -96,8 +97,9 @@ def main_menu():
                       "and logging into Tygron")
                 #try:
                 token, hexagons_new, hex_sandbox, hex_tygron, hex_water, \
-                    hex_land, node_grid, filled_node_grid, transforms, pers, \
-                    img_x, img_y, origins, radius = initialize(turn)
+                    hex_land, node_grid, filled_node_grid, face_grid, \
+                    transforms, pers, img_x, img_y, origins, radius, \
+                    model = initialize(turn)
                 #except TypeError:
                     #print("Calibration failed, closing application")
                     #time.sleep(2)
@@ -181,7 +183,9 @@ def initialize(turn, save=False):
         hexagons_water, hexagons_land = detect.transform(hexagons, transforms,
                                                          export="tygron")
         print("prepared geojson files")
+        model = D3D.initialize_model()
         node_grid = gridmap.read_node_grid()
+        face_grid = gridmap.read_face_grid(model)
         print("loaded grid")
         node_grid = gridmap.index_node_grid(hexagons_sandbox, node_grid)
         node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid)
@@ -219,7 +223,7 @@ def initialize(turn, save=False):
     try:
         return token, hexagons, hexagons_sandbox, hexagons_tygron, \
             hexagons_water, hexagons_land, node_grid, filled_node_grid, \
-            transforms, pers, img_x, img_y, origins, radius
+            face_grid, transforms, pers, img_x, img_y, origins, radius, model
     except UnboundLocalError:
         print("logging in to Tygron failed, closing application")
         quit()
