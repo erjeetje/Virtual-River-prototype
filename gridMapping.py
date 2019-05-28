@@ -177,8 +177,8 @@ def index_face_grid(hexagons, grid):
         xy = np.array([x_point, y_point])
         if bbox.contains(point):
             feature.properties["board"] = True
-            dist, indices = hex_locations.query(xy)
-            feature.properties["location"] = indices[0].tolist()
+            dist, index = hex_locations.query(xy)
+            feature.properties["location"] = index
             feature.properties["changed"] = True
         else:
             feature.properties["board"] = False
@@ -555,11 +555,14 @@ if __name__ == "__main__":
     t1 = time.time()
     print("Read hexagons: " + str(t1 - t0))
     node_grid = read_node_grid()
+    model = D3D.initialize_model()
+    face_grid = read_face_grid(model)
     t2 = time.time()
-    print("Load grid: " + str(t2 - t1))
+    print("Load node and face grids: " + str(t2 - t1))
     node_grid = index_node_grid(hexagons, node_grid)
+    face_grid = index_face_grid(hexagons, face_grid)
     t3 = time.time()
-    print("Index grid: " + str(t3 - t2))
+    print("Index node and face grid: " + str(t3 - t2))
     node_grid = interpolate_node_grid(hexagons, node_grid)
     with open('node_grid_before%d.geojson' % turn, 'w') as f:
         geojson.dump(node_grid, f, sort_keys=True,
@@ -589,8 +592,7 @@ if __name__ == "__main__":
     t8 = time.time()
     if save:
         print("Saved both grids: " + str(t8 - t7))
-    #create_geotiff(node_grid)
+    create_geotiff(node_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
-    model = D3D.initialize_model()
     D3D.run_model(model, filled_node_grid, hexagons)
