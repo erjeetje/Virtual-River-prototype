@@ -119,7 +119,7 @@ def main_menu():
                         hexagons_new, node_grid, filled_node_grid, turn=turn)
                 print("Update complete, waiting for next command")
             else:
-                print("No calibration run, please first calibrate Virtual"
+                print("No calibration run, please first calibrate Virtual "
                       "River by pressing '5'")
                 pass
         elif a == '0':
@@ -133,7 +133,7 @@ def main_menu():
         time.sleep(0.3)
 
 
-def initialize(turn, save=False):
+def initialize(turn, save=True):
     """
     Function that handles all the startup necessities:
     - calls logging into Tygron
@@ -178,6 +178,7 @@ def initialize(turn, save=False):
             with open('hexagons%d.geojson' % turn, 'w') as f:
                 geojson.dump(hexagons_sandbox, f, sort_keys=True,
                              indent=2)
+            print("saved hexagon file (conditional)")
         hexagons_tygron = detect.transform(hexagons, transforms,
                                            export="tygron_initialize")
         hexagons_water, hexagons_land = detect.transform(hexagons, transforms,
@@ -206,6 +207,7 @@ def initialize(turn, save=False):
             with open('filled_node_grid%d.geojson' % turn, 'w') as f:
                 geojson.dump(filled_node_grid, f, sort_keys=True,
                              indent=2)
+            print("saved interpolation files (conditional)")
         print("executed grid fill interpolation")
         gridmap.create_geotiff(node_grid, turn)
         print("created geotiff")
@@ -230,7 +232,7 @@ def initialize(turn, save=False):
 
 
 def update(token, transforms, pers, img_x, img_y, origins, radius,
-           hexagons_new, node_grid, filled_node_grid, turn=1, save=False):
+           hexagons_new, node_grid, filled_node_grid, turn=1, save=True):
     """
     function that initiates and handles all update steps. Returns all update
     variables
@@ -255,6 +257,7 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
         with open('hexagons%d.geojson' % turn, 'w') as f:
             geojson.dump(hexagons_sandbox, f, sort_keys=True,
                          indent=2)
+        print("saved hexagon file for turn " + str(turn) + " (conditional)")
     hexagons_water, hexagons_land = detect.transform(z_changed,
                                                      transforms,
                                                      export="tygron")
@@ -286,6 +289,7 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
         with open('filled_node_grid%d.geojson' % turn, 'w') as f:
             geojson.dump(filled_node_grid, f, sort_keys=True,
                          indent=2)
+        print("saved grid files for turn " + str(turn) + " (conditional)")
     toc = time.time()
     print("Updated to turn " + str(turn) +
           ". Comparison update time: " + str(tac-tic) +

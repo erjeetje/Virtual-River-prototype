@@ -13,6 +13,7 @@ import numpy as np
 import netCDF4
 import bmi.wrapper
 import matplotlib.pyplot as plt
+import modelInterface as D3D
 from copy import deepcopy
 from scipy.spatial import cKDTree
 from shapely import geometry
@@ -132,6 +133,56 @@ def hexagons_to_fill(hexagons):
         else:
             feature.properties["behind_dike"] = False
     return hexagons
+
+
+def index_face_grid(hexagons, grid):
+    hex_coor = []
+    polygons = []
+    for feature in hexagons.features:
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        y_hex = shape.centroid.y
+        hex_coor.append([x_hex, y_hex])
+        polygons.append(shape)
+    hex_coor = np.array(hex_coor)
+    hex_locations = cKDTree(hex_coor)
+    multipolygon = geometry.MultiPolygon(polygons)
+    board_as_polygon = unary_union(multipolygon)
+    board_shapely = geometry.mapping(board_as_polygon)
+    board_feature = geojson.Feature(geometry=board_shapely)
+    line = list(geojson.utils.coords(board_feature))
+    minx = 0.0
+    miny = 0.0
+    maxx = 0.0
+    maxy = 0.0
+    for x, y in line:
+        if x < minx:
+            minx = x
+        elif x > maxx:
+            maxx = x
+        else:
+            continue
+        if y < miny:
+            miny = y
+        elif y > maxy:
+            maxy = y
+        else:
+            continue
+    bbox = geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny),
+                             (minx, miny), (minx, maxy)])
+    for feature in grid.features:
+        point = geometry.asShape(feature.geometry)
+        x_point = point.centroid.x
+        y_point = point.centroid.y
+        xy = np.array([x_point, y_point])
+        if not bbox.contains(point):
+            feature.properties["board"] = False
+            feature.properties["location"] = None
+        else:
+            feature.properties["board"] = True
+            dist, indices = hex_locations.query(xy)
+            feature.properties["location"] = indices[0].tolist()
+    return grid
 
 
 def index_node_grid(hexagons, grid):
@@ -536,7 +587,8 @@ if __name__ == "__main__":
     t8 = time.time()
     if save:
         print("Saved both grids: " + str(t8 - t7))
-    create_geotiff(node_grid)
+    #create_geotiff(node_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
-    #run_model(filled_node_grid, hexagons)
+    model = D3D.initialize_model()
+    D3D.run_model(model, filled_node_grid, hexagons)
