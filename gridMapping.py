@@ -175,13 +175,15 @@ def index_face_grid(hexagons, grid):
         x_point = point.centroid.x
         y_point = point.centroid.y
         xy = np.array([x_point, y_point])
-        if not bbox.contains(point):
-            feature.properties["board"] = False
-            feature.properties["location"] = None
-        else:
+        if bbox.contains(point):
             feature.properties["board"] = True
             dist, indices = hex_locations.query(xy)
             feature.properties["location"] = indices[0].tolist()
+            feature.properties["changed"] = True
+        else:
+            feature.properties["board"] = False
+            feature.properties["location"] = None
+            feature.properties["changed"] = False
     return grid
 
 
