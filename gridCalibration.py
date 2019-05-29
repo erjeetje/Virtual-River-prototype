@@ -201,6 +201,7 @@ def create_features(height, width):
                                     point6, point1]])
         feature = geojson.Feature(id=i, geometry=polygon)
         feature.properties["column"] = column[i]
+        feature.properties["tygron_id"] = i
         feature.properties["x_center"] = int(round(x))
         feature.properties["y_center"] = int(round(y))
         features.append(feature)

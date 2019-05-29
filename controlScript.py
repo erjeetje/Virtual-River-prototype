@@ -189,6 +189,7 @@ def initialize(turn, save=True):
         face_grid = gridmap.read_face_grid(model)
         print("loaded grid")
         node_grid = gridmap.index_node_grid(hexagons_sandbox, node_grid)
+        face_grid = gridmap.index_face_grid(hexagons_sandbox, face_grid)
         node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid)
         print("executed grid interpolation")
         filled_node_grid = deepcopy(node_grid)

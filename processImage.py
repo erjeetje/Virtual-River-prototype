@@ -21,8 +21,7 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
     #img = cv2.imread(file)
     # warp image it to calibrated perspective
     warped = cv2.warpPerspective(img, pers, (img_x, img_y))
-    d = turn
-    filename = 'turn_%d.jpg'%d
+    filename = 'turn_%d.jpg' % turn
     cv2.imwrite(filename, warped)
     if method is 'LAB':
         lab = cv2.cvtColor(warped, cv2.COLOR_BGR2Lab)
@@ -38,11 +37,11 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         blue_mask = cv2.inRange(B, lower_blue, upper_blue)
         red_mask = cv2.inRange(A, lower_red, upper_red)
         # add dilation to the image
-        kernel = np.ones((2,2), np.uint8)
-        red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
-        blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
-        cv2.imwrite('red_mask_dilated_LAB%d.jpg'%d, red_dilate)
-        cv2.imwrite('blue_mask_dilated_LAB%d.jpg'%d, blue_dilate)
+        kernel = np.ones((2, 2), np.uint8)
+        red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
+        blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
+        cv2.imwrite('red_mask_dilated_LAB%d.jpg' % turn, red_dilate)
+        cv2.imwrite('blue_mask_dilated_LAB%d.jpg' % turn, blue_dilate)
     elif method is 'YCrCb':
         ycrcb = cv2.cvtColor(warped, cv2.COLOR_BGR2YCrCb)
         Y, Cr, Cb = cv2.split(ycrcb)
@@ -57,11 +56,11 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         blue_mask = cv2.inRange(Cb, lower_blue, upper_blue)
         red_mask = cv2.inRange(Cr, lower_red, upper_red)
         # add dilation to the image
-        kernel = np.ones((2,2), np.uint8)
-        red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
-        blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
-        cv2.imwrite('red_mask_dilated_YCrCb%d.jpg'%d, red_dilate)
-        cv2.imwrite('blue_mask_dilated_YCrCb%d.jpg'%d, blue_dilate)
+        kernel = np.ones((2, 2), np.uint8)
+        red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
+        blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
+        cv2.imwrite('red_mask_dilated_YCrCb%d.jpg' % turn, red_dilate)
+        cv2.imwrite('blue_mask_dilated_YCrCb%d.jpg' % turn, blue_dilate)
     else:
         B, G, R = cv2.split(warped)
         B = cv2.medianBlur(B, 5)
@@ -75,18 +74,22 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         blue_mask = cv2.inRange(B, lower_blue, upper_blue)
         red_mask = cv2.inRange(R, lower_red, upper_red)
         # add dilation to the image
-        kernel = np.ones((2,2), np.uint8)
-        red_dilate = cv2.dilate(red_mask, kernel, iterations = 1)
-        blue_dilate = cv2.dilate(blue_mask, kernel, iterations = 1)
+        kernel = np.ones((2, 2), np.uint8)
+        red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
+        blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
         # save masks, can be removed later
-        cv2.imwrite('red_mask_dilated_RGB%d.jpg'%d, red_dilate)
-        cv2.imwrite('blue_mask_dilated_RGB%d.jpg'%d, blue_dilate)
-   
+        cv2.imwrite('red_mask_dilated_RGB%d.jpg' % turn, red_dilate)
+        cv2.imwrite('blue_mask_dilated_RGB%d.jpg' % turn, blue_dilate)
+
     # create a mask for the region of interest processing
-    y_cell = int(round(r / 2)) # convert diameter to actual radius as int value
+    # convert diameter to actual radius as int value
+    y_cell = int(round(r / 2))
     x_cell = int(round(1.25 * y_cell))
-    margin = int(round(y_cell * 0.92)) # slightly lower radius to create a mask that removes contours from slight grid misplacement
-    mask = np.zeros((2 * y_cell, 2 * x_cell), dtype="uint8") # empty mask of grid cell size
+    # slightly lower radius to create a mask that removes contours from slight
+    # grid misplacement
+    margin = int(round(y_cell * 0.92))
+    # empty mask of grid cell size
+    mask = np.zeros((2 * y_cell, 2 * x_cell), dtype="uint8")
     dist = margin/np.cos(np.deg2rad(30))
     x_jump = int(round(dist/2))
     y_jump = margin
@@ -98,7 +101,7 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
     point5 = [x_cell-x_jump, y_cell-y_jump]
     point6 = [x_cell+x_jump, y_cell-y_jump]
     pts = np.array([point1, point2, point3, point4, point5, point6], np.int32)
-    cv2.fillPoly(mask, [pts], (255,255,255))
+    cv2.fillPoly(mask, [pts], (255, 255, 255))
     # for loop that analyzes all grid cells
     for i, feature in enumerate(features.features):
         x = feature.properties["x_center"]
@@ -136,23 +139,19 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
                         point5, point6], np.int32)
         cv2.polylines(warped, [pts], True, (255,255,255))
         """
-        
         # get region of interest (ROI) for red (geometry) and analyse number
         # of contours (which identifies the markers) found
         roiGeo = red_dilate[y-y_cell:y+y_cell, x-x_cell:x+x_cell]
         # mask the ROI to eliminate adjacent grid cells
-        maskedImgGeo = cv2.bitwise_and(roiGeo, roiGeo, mask = mask)
+        maskedImgGeo = cv2.bitwise_and(roiGeo, roiGeo, mask=mask)
         # find contours within masked ROI
-        im1, contoursGeo, hierarchy1 = cv2.findContours(maskedImgGeo,
-                                                        cv2.RETR_CCOMP,
-                                                        cv2.CHAIN_APPROX_SIMPLE)
-
+        im1, contoursGeo, h1 = cv2.findContours(maskedImgGeo, cv2.RETR_CCOMP,
+                                                cv2.CHAIN_APPROX_SIMPLE)
         # same as above for blue (ecotopes) as above
         roiEco = blue_dilate[y-y_cell:y+y_cell, x-x_cell:x+x_cell]
         maskedImgEco = cv2.bitwise_and(roiEco, roiEco, mask=mask)
-        im2, contoursEco, hierarchy2 = cv2.findContours(maskedImgEco,
-                                                        cv2.RETR_CCOMP,
-                                                        cv2.CHAIN_APPROX_SIMPLE)
+        im2, contoursEco, h2 = cv2.findContours(maskedImgEco, cv2.RETR_CCOMP,
+                                                cv2.CHAIN_APPROX_SIMPLE)
         # store each analyzed ROI, not necessary for the script to work
         """
         filenameGeo = 'geo_roi_%i.jpg'%i
@@ -160,9 +159,23 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         cv2.imwrite(filenameGeo, maskedImgGeo)
         cv2.imwrite(filenameEco, maskedImgEco)
         """
-        feature.properties["tygron_id"] = i
-        feature.properties["z"] = len(contoursGeo)
-        feature.properties["landuse"] = len(contoursEco)
+        # z range between 0 and 5, with 4 as a dike and 5 a reinforced dike
+        feature.properties["z"] = min(len(contoursGeo), 5)
+        # landuse range between 0 and 9, with a subdivision for 0:
+        # 0 and z < 4: built environment
+        # 1: agriculture; production meadow/crop field
+        # 2: natural grassland
+        # 3: reed; 'ruigte'
+        # 4: shrubs; hard-/softwood
+        # 5: forest; hard-/softwood
+        # 6: mixtype class; mix between grass/reed/shrubs/forest
+        # 7: water body; sidechannel (connected to main channel) or lake
+        # 8: main channel; river bed with longitudinal training dams
+        # 9: main channel; river bed with groynes
+        # 10: dike (= landuse 0 and z >= 4)
+        feature.properties["landuse"] = min(len(contoursEco), 9)
+        if feature.properties["landuse"] == 0 & feature.properties["z"] >= 4:
+            feature.properties["landuse"] = 10
     #cv2.imwrite('cells.jpg', warped)
     return features
 

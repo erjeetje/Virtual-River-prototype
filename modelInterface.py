@@ -115,6 +115,7 @@ def landuse_to_friction(landuse):
         friction = 1
     return friction
 
+
 if __name__ == "__main__":
     save = False
     turn = 0
