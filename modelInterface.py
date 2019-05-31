@@ -22,7 +22,7 @@ def initialize_model():
     return model
 
 
-def run_model(model, filled_node_grid, hexagons):
+def run_model(model, filled_node_grid, face_grid, hexagons):
     model.get_var('s1')
     #numk = model.get_var('numk')
     #ndx = model.get_var('ndx')
@@ -66,7 +66,9 @@ def run_model(model, filled_node_grid, hexagons):
             if feature.properties['changed']
     ]
     frcu = model.get_var('frcu')
-    print(frcu)
+    test = np.unique(deepcopy(frcu))
+    print(test)
+    """
     hexagons_by_id = {feature.id: feature for feature in hexagons.features}
     default_landuse = 8
     for feature in filled_node_grid.features:
@@ -86,6 +88,7 @@ def run_model(model, filled_node_grid, hexagons):
     for feature in filled_node_grid.features:
         friction = landuse_to_friction(feature.properties['landuse'])
         frcu[feature.id] = friction
+    """
     if True:
         for feature in changed:
             zk_new = np.array([feature.properties['z']], dtype='float64') * 1.5

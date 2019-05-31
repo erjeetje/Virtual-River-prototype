@@ -11,9 +11,9 @@ import cv2
 import geojson
 import numpy as np
 import netCDF4
-import bmi.wrapper
 import matplotlib.pyplot as plt
 import modelInterface as D3D
+import updateRoughness as roughness
 from copy import deepcopy
 from scipy.spatial import cKDTree
 from shapely import geometry
@@ -21,9 +21,6 @@ from shapely.ops import unary_union
 from rasterio import open as opentif
 from rasterio.features import rasterize
 from rasterio.transform import from_origin
-from rasterio.crs import CRS
-from PIL import Image
-from io import BytesIO
 
 
 def read_calibration():
@@ -238,11 +235,13 @@ def index_node_grid(hexagons, grid):
     border_id = []
     border_coor = []
     """
-    x_coor = np.array([feature.geometry['coordinates'][0] for feature in grid['features']])
+    x_coor = np.array([feature.geometry['coordinates'][0] for
+                       feature in grid['features']])
     x_min = min(x_coor)
     x_max = max(x_coor)
     """
-    y_coor = np.array([feature.geometry['coordinates'][1] for feature in grid['features']])
+    y_coor = np.array([feature.geometry['coordinates'][1] for
+                       feature in grid['features']])
     y_coor = np.unique(y_coor)
     if y_coor[0] > 0:
         y_step = y_coor[0] - y_coor[1]
@@ -308,9 +307,9 @@ def index_node_grid(hexagons, grid):
                 """
                 """
                 border_id.append(feature.id)
-                border_coor.append([x_point, y_point])    
+                border_coor.append([x_point, y_point])
                 """
-        else:    
+        else:  
             feature.properties["board"] = True
             feature.properties["border"] = False
             feature.properties["changed"] = True
@@ -342,7 +341,7 @@ def index_node_grid(hexagons, grid):
         # are indixed for each point that is positioned within the game
         # board, based on the location of each point and the distance to
         # the nearest three hexagons.
-        
+
         # afvangen dist[x] = 0.0
         if feature.properties["board"]:
             dist, indices = hex_locations.query(xy, k=3)
@@ -391,14 +390,15 @@ def index_node_grid(hexagons, grid):
             #weights = 1 / np.power([dist1, dist2], 2)
             weights = [1 / dist1, 1 / dist2]
             weights_sum = sum(weights)
-            feature.properties["nearest"] = [inside_id[indices1], border_id[indices2]]
+            feature.properties["nearest"] = [inside_id[indices1],
+                                             border_id[indices2]]
             feature.properties["weight"] = weights
             feature.properties["weight_sum"] = weights_sum
         """
 
-            # change this section to finding the nearest neighbour on the
-            # horizontal axis + another rule if no nearest neighbour on the
-            # horizontal axis
+        # change this section to finding the nearest neighbour on the
+        # horizontal axis + another rule if no nearest neighbour on the
+        # horizontal axis
     return grid
 
 
@@ -411,7 +411,8 @@ def update_node_grid(hexagons, grid, fill=False, turn=0):
     counter = 0
     for feature in hexagons.features:
         if fill:
-            if feature.properties["behind_dike"]:
+            if feature.properties["behind_dike"] or \
+                    feature.properties["changed"]:
                 indices_updated.append(feature.id)
         else:
             if feature.properties["changed"]:
@@ -495,7 +496,7 @@ def interpolate_node_grid(hexagons, grid, turn=0, save=False):
                 round(inside_point1.properties['z'] * (weights[0] /
                       weights_sum) + inside_point2.properties['z'] *
                       (weights[1] / weights_sum), 5)
-        """  
+        """
     if turn != 0:
         print("Number of gridpoints outside the board updated: "+str(counter))
     if save:
@@ -532,13 +533,14 @@ def create_geotiff(grid, turn=0):
         features.append(new_feature)
     features = geojson.FeatureCollection(features)
     geometries = [feature.geometry for feature in features.features]
-    out = np.array([feature.properties['z'] for feature in features['features']])
+    out = np.array([feature.properties['z'] for
+                    feature in features['features']])
     img = rasterize(zip(geometries, out), out_shape=(750, 1000))
     img = cv2.flip(img, 0)
     plt.imshow(img)
 
     compression = {"compress": "LZW"}
-    with opentif('grid_height_map%d.tif'%d, 'w', driver='GTiff', width=1000,
+    with opentif('grid_height_map%d.tif' % d, 'w', driver='GTiff', width=1000,
                  height=750, count=1, dtype=img.dtype, crs='EPSG:3857',
                  transform=from_origin(0, 0, 1, 1), **compression) as dst:
         dst.write(img, 1)
@@ -552,6 +554,8 @@ if __name__ == "__main__":
     calibration = read_calibration()
     t0 = time.time()
     hexagons = read_hexagons(filename='hexagons0.geojson')
+    for feature in hexagons.features:
+        feature.properties["changed"] = True
     t1 = time.time()
     print("Read hexagons: " + str(t1 - t0))
     node_grid = read_node_grid()
@@ -564,9 +568,12 @@ if __name__ == "__main__":
     t3 = time.time()
     print("Index node and face grid: " + str(t3 - t2))
     node_grid = interpolate_node_grid(hexagons, node_grid)
+    hexagons, face_grid = roughness.hex_to_points(model, hexagons, face_grid)
     with open('node_grid_before%d.geojson' % turn, 'w') as f:
         geojson.dump(node_grid, f, sort_keys=True,
                      indent=2)
+    with open('face_grid_vegetation.geojson', 'w') as f:
+        geojson.dump(face_grid, f, sort_keys=True, indent=2)
     t4 = time.time()
     print("Interpolate grid: " + str(t4 - t3))
     filled_node_grid = deepcopy(node_grid)
@@ -574,6 +581,7 @@ if __name__ == "__main__":
     filled_hexagons = hexagons_to_fill(filled_hexagons)
     t5 = time.time()
     print("Hexagons to fill: " + str(t5 - t4))
+    test_print = []
     filled_node_grid = update_node_grid(filled_hexagons, filled_node_grid,
                                         fill=True)
     t6 = time.time()
@@ -595,4 +603,4 @@ if __name__ == "__main__":
     create_geotiff(node_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
-    D3D.run_model(model, filled_node_grid, hexagons)
+    D3D.run_model(model, filled_node_grid, face_grid, hexagons)

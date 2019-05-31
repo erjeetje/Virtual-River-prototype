@@ -140,6 +140,11 @@ def landuse_to_friction(hexagons):
         elif handler == "bed":
             feature.properties["Chezy"] = manning(h, n)
         else:
+            """
+            This else statement should handle buildings --> perhaps need to
+            add buildings as a geometry or structure in the model? Use manning
+            for the polygon?
+            """
             feature.properties["Chezy"] = klopstra(h, vegpar)
         print("cell: " + str(feature.id) + ". landuse: " + str(feature.properties["landuse"]) + ". h: " + str(h) + ". C: " +
               str(feature.properties["Chezy"]))
@@ -224,118 +229,6 @@ def klopstra(h, vegpar):
 def manning(h, n):
     Chezy = (h ** (1 / 6)) / n
     return Chezy
-
-
-def klopstra2(hexagons):
-    """
-    Formula of Klopstra (1997), as implemented in Delft3D
-    """
-    g = 9.81
-    kappa = 0.4
-    for feature in hexagons.features:
-        # this would require water height to be stored per hexagon
-        try:
-            h = feature.properties["waterheight"] - feature.properties["z"]
-        except KeyError:
-            try:
-                h = 6 - feature.properties["z"]
-            except KeyError:
-                h = 6
-        if feature.properties["landuse"] == 0:
-            # build environment
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
-        elif feature.properties["landuse"] == 1:
-            # agricultural land / production meadow?
-            vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
-        elif feature.properties["landuse"] == 2:
-            # grass / natural grassland
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}
-        elif feature.properties["landuse"] == 3:
-            # reed and roughness / rietruigte
-            vegpar = {"hv": 2, "n": 0.16, "Cd": 1.8, "kb": 0.1}
-        elif feature.properties["landuse"] == 4:
-            # shrubs / zachthoutstruweel
-            vegpar = {"hv": 6, "n": 0.13, "Cd": 1.5, "kb": 0.4}
-        elif feature.properties["landuse"] == 5:
-            # forest / zachthoutooibos
-            vegpar = {"hv": 10, "n": 0.028, "Cd": 1.5, "kb": 0.6}
-        elif feature.properties["landuse"] == 6:
-            # mixtype
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}
-        elif feature.properties["landuse"] == 7:
-            # side channel
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
-        elif feature.properties["landuse"] == 8 or 9:
-            # main channel
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
-        else:
-            # dike / production meadow
-            vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
-        if h > vegpar["hv"]:
-            # ----------------------------------
-            # Support terms
-            # ----------------------------------
-
-            # 'Second' implementation (1997)
-            alpha = 0.0227 * vegpar["hv"] ** (0.7)
-
-            # (squared) flow velocity vegetation
-            Cb = 18 * np.log10(12 * h / vegpar["kb"])
-            uvsq = vegpar["hv"] / (vegpar["Cd"] * vegpar["hv"] * vegpar["n"] /
-                                2 * g + Cb ** 2)
-            #uvsq = vegpar["hv"] / (vegpar["Cd"] * vegpar["hv"] * vegpar.m * vegpar.D /
-            #                    2 * g + vegpar.Cb ** 2)
-            # (First implementation)
-            #uvsq = 2 * g / (vegpar["Cd"] * vegpar.m * vegpar.D)
-            uv = np.sqrt(uvsq)
-
-            # Other support terms
-            A = vegpar["n"] * vegpar["Cd"] / (2 * alpha)
-            #A = vegpar.m * vegpar.D * vegpar["Cd"] / (2 * alpha)
-            A2 = np.sqrt(2 * A)
-            C3 = 2 * g * (h - vegpar["hv"]) / \
-                (alpha * A2 * (np.exp(vegpar["hv"] * A2) +
-                               np.exp(-vegpar["hv"] * A2)))
-
-            # Distance between top of vegetation and virtual bed of surface
-            # layer
-            E = A2 * C3 * np.exp(vegpar["hv"] * A2) / \
-                (2 * np.sqrt(C3 * np.exp(vegpar["hv"] * A2)) + uvsq)
-            hs = g * (1 + np.sqrt(1 + 4 * E ** 2 * kappa ** 2 *
-                                  (h - vegpar["hv"]) / g)) /\
-                     (2 * E ** 2 * kappa ** 2)
-
-            # Length scale for bed roughness of the surface layer
-            F = kappa * np.sqrt(C3 * np.exp(vegpar["hv"] * A2) + uvsq) / \
-                np.sqrt(g * (h - (vegpar["hv"] - hs)))
-            z0 = hs * np.exp(-F)
-
-            # ----------------------------------
-            # Klopstra's equation
-            # ----------------------------------
-            T1 = 2 / A2 * (np.sqrt(C3 * np.exp(vegpar["hv"] * A2) + uvsq))
-            T2 = uvsq / A2 * \
-                np.log((np.sqrt(C3 * np.exp(vegpar["hv"] * A2) + uvsq) - uv) *
-                       (np.sqrt(C3 + uvsq) + uv) /
-                       ((np.sqrt(C3 * np.exp(2 * A2) + uvsq) + uv) *
-                        (np.sqrt(C3 + uvsq) - uv)))
-            T3 = np.sqrt(g * (h - (vegpar["hv"] - hs))) / kappa * \
-                ((h - (vegpar["hv"] - hs)) * np.log((h - (vegpar["hv"] - hs)) / z0) -
-                 (hs * np.log(hs / z0)) -
-                 (h - vegpar["hv"]))
-
-            Chezy = (h ** (-3 / 2.)) * (T1 + T2 + T3)
-            feature.properties["Chezy"] = Chezy
-        else:
-            """ Emergent vegetation """
-            #kb = 0.05
-            Cb = 18 * np.log10(12 * h / vegpar["kb"])
-            Chezy = np.sqrt((vegpar["Cd"] * vegpar["n"] * h / (2 * g) +
-                             Cb ** -2) ** -1)
-            #Chezy = np.sqrt((vegpar["Cd"] * vegpar.m * vegpar.D * h / (2 * g) +
-            #                 Cb ** -2) ** -1)
-            feature.properties["Chezy"] = Chezy
-    return hexagons
 
 
 if __name__ == '__main__':
