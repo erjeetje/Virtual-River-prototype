@@ -6,6 +6,7 @@ Created on Thu Feb 28 16:07:11 2019
 """
 
 import time
+import os
 import json
 import cv2
 import geojson
@@ -23,12 +24,12 @@ from rasterio.features import rasterize
 from rasterio.transform import from_origin
 
 
-def read_calibration():
+def read_calibration(path=""):
     """
     function that loads and returns the calibration. Currently not called in
     the control script as calibration transforms are stored internally.
     """
-    with open('calibration.json') as f:
+    with open(os.path.join(path, 'calibration.json')) as f:
         calibration = json.load(f)
     # convert to transform matrix
     sandbox_transform = cv2.getPerspectiveTransform(
@@ -44,17 +45,17 @@ def read_calibration():
     return calibration
 
 
-def read_hexagons(filename='hexagons1.geojson'):
+def read_hexagons(filename='hexagons1.geojson', path=""):
     """
     function that loads and returns the hexagons. Currently not called in
     the control script as the hexagons are stored internally.
     """
-    with open(filename) as f:
+    with open(os.path.join(path, filename)) as f:
         features = geojson.load(f)
     return features
 
 
-def read_node_grid(save=False):
+def read_node_grid(save=False, path=""):
     """
     function that loads and returns the grid.
     """
@@ -72,12 +73,12 @@ def read_node_grid(save=False):
         features.append(feature)
     feature_collection = geojson.FeatureCollection(features)
     if save:
-        with open('grid.geojson', 'w') as f:
+        with open(os.path.join(path, 'node_grid.geojson'), 'w') as f:
             geojson.dump(feature_collection, f, sort_keys=True, indent=2)
     return feature_collection
 
 
-def read_face_grid(model, save=False):
+def read_face_grid(model, save=False, path=""):
     """
     function that loads and returns the grid.
     """
@@ -91,7 +92,7 @@ def read_face_grid(model, save=False):
         features.append(feature)
     feature_collection = geojson.FeatureCollection(features)
     if save:
-        with open('face_grid.geojson', 'w') as f:
+        with open(os.path.join(path, 'face_grid.geojson'), 'w') as f:
             geojson.dump(feature_collection, f, sort_keys=True, indent=2)
     return feature_collection
 
@@ -437,7 +438,7 @@ def update_node_grid(hexagons, grid, fill=False, turn=0):
     return grid
 
 
-def interpolate_node_grid(hexagons, grid, turn=0, save=False):
+def interpolate_node_grid(hexagons, grid, turn=0, save=False, path=""):
     # block of code that calculates the z variable for each grid point, based
     # on stored indices and, if applicable, weight factors. Distinguishes
     # between start (updates all as all are changed) and update (updates only
@@ -501,12 +502,12 @@ def interpolate_node_grid(hexagons, grid, turn=0, save=False):
         print("Number of gridpoints outside the board updated: "+str(counter))
     if save:
         filename = 'interpolated_grid%d.geojson' % turn
-        with open(filename, 'w') as f:
+        with open(os.path.join(path, filename), 'w') as f:
             geojson.dump(grid, f, sort_keys=True, indent=2)
     return grid
 
 
-def create_geotiff(grid, turn=0):
+def create_geotiff(grid, turn=0, path=""):
     """
     Function that creates a GeoTIFF from the grid as constructed in the
     hex_to_points function
@@ -540,8 +541,9 @@ def create_geotiff(grid, turn=0):
     plt.imshow(img)
 
     compression = {"compress": "LZW"}
-    with opentif('grid_height_map%d.tif' % d, 'w', driver='GTiff', width=1000,
-                 height=750, count=1, dtype=img.dtype, crs='EPSG:3857',
+    with opentif(os.path.join(path, 'grid_height_map%d.tif' % d), 'w',
+                 driver='GTiff', width=1000, height=750, count=1,
+                 dtype=img.dtype, crs='EPSG:3857',
                  transform=from_origin(0, 0, 1, 1), **compression) as dst:
         dst.write(img, 1)
     return

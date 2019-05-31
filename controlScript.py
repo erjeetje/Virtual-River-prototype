@@ -8,6 +8,7 @@ Created on Thu Mar 28 09:56:24 2019
 import time
 import geojson
 import keyboard
+import os
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
@@ -25,6 +26,14 @@ def main_menu():
     Main script that continues to run during a session. Initiates the
     calibration and any updates thereafter. Stores all data while running
     """
+    # path to save files
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    dir_path = os.path.join(dir_path, 'storing_files')
+    try:
+        os.mkdir(dir_path)
+        print("Directory ", dir_path, " Created.")
+    except FileExistsError:
+        print("Directory ", dir_path, " already exists, overwriting files.")
     # boolean in order to only run initialize method once
     start = True
     # empty string to store Tygron api session token
@@ -100,12 +109,12 @@ def main_menu():
                 token, hexagons_new, hex_sandbox, hex_tygron, hex_water, \
                     hex_land, node_grid, filled_node_grid, face_grid, \
                     transforms, pers, img_x, img_y, origins, radius, \
-                    model = initialize(turn)
+                    model = initialize(turn, dir_path)
                 #except TypeError:
                     #print("Calibration failed, closing application")
                     #time.sleep(2)
                     #break
-                with open('token.txt', 'w') as f:
+                with open(os.path.join(dir_path, 'token.txt'), 'w') as f:
                     f.write(token)
                 start = False
                 print("Initializing complete, waiting for next command")
@@ -116,8 +125,9 @@ def main_menu():
             if not start:
                 turn += 1
                 hexagons_new, node_grid, filled_node_grid = update(
-                        token, transforms, pers, img_x, img_y, origins, radius,
-                        hexagons_new, node_grid, filled_node_grid, turn=turn)
+                        token, dir_path, transforms, pers, img_x, img_y,
+                        origins, radius, hexagons_new, node_grid,
+                        filled_node_grid, turn=turn)
                 print("Update complete, waiting for next command")
             else:
                 print("No calibration run, please first calibrate Virtual "
@@ -134,7 +144,7 @@ def main_menu():
         time.sleep(0.3)
 
 
-def initialize(turn, save=True):
+def initialize(turn, dir_path, save=True):
     """
     Function that handles all the startup necessities:
     - calls logging into Tygron
@@ -161,22 +171,25 @@ def initialize(turn, save=True):
         print("retrieved initial board image")
         # camera calibration --> to do: initiation
         # changed filename as variable to img
-        canvas, thresh = cali.detect_corners(img, method='adaptive')
+        canvas, thresh = cali.detect_corners(img, method='adaptive',
+                                             path=dir_path)
         # store calibration values as global variables
         pers, img_x, img_y, origins, radius, cut_points, features \
             = cali.rotate_grid(canvas, thresh)
         # create the calibration file for use by other methods and store it
-        transforms = cali.create_calibration_file(img_x, img_y, cut_points)
+        transforms = cali.create_calibration_file(img_x, img_y, cut_points,
+                                                  path=dir_path)
         print("calibrated camera")
         hexagons = detect.detect_markers(img, pers, img_x, img_y,
                                          origins, radius, features,
-                                         method='LAB')
+                                         method='LAB',path=dir_path)
         print("processed initial board state")
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,
-                                            export="sandbox")
+                                            export="sandbox", path=dir_path)
         if save:
-            with open('hexagons%d.geojson' % turn, 'w') as f:
+            with open(os.path.join(dir_path, 'hexagons%d.geojson' % turn),
+                      'w') as f:
                 geojson.dump(hexagons_sandbox, f, sort_keys=True,
                              indent=2)
             print("saved hexagon file (conditional)")
@@ -186,12 +199,13 @@ def initialize(turn, save=True):
                                                          export="tygron")
         print("prepared geojson files")
         model = D3D.initialize_model()
-        node_grid = gridmap.read_node_grid()
-        face_grid = gridmap.read_face_grid(model)
+        node_grid = gridmap.read_node_grid(path=dir_path)
+        face_grid = gridmap.read_face_grid(model, path=dir_path)
         print("loaded grid")
         node_grid = gridmap.index_node_grid(hexagons_sandbox, node_grid)
         face_grid = gridmap.index_face_grid(hexagons_sandbox, face_grid)
-        node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid)
+        node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid,
+                                                  turn=turn, path=dir_path)
         hexagons_sandbox, face_grid = roughness.hex_to_points(model,
                                                               hexagons_sandbox,
                                                               face_grid)
@@ -204,17 +218,21 @@ def initialize(turn, save=True):
                                                     fill=True)
         filled_node_grid = gridmap.interpolate_node_grid(filled_hexagons,
                                                          filled_node_grid,
-                                                         turn=turn)
+                                                         turn=turn,
+                                                         path=dir_path)
         if save:
-            with open('node_grid%d.geojson' % turn, 'w') as f:
+            with open(os.path.join(dir_path, 'node_grid%d.geojson' % turn),
+                      'w') as f:
                 geojson.dump(node_grid, f, sort_keys=True,
                              indent=2)
-            with open('filled_node_grid%d.geojson' % turn, 'w') as f:
+            with open(os.path.join(dir_path,
+                                   'filled_node_grid%d.geojson' % turn),
+                      'w') as f:
                 geojson.dump(filled_node_grid, f, sort_keys=True,
                              indent=2)
             print("saved interpolation files (conditional)")
         print("executed grid fill interpolation")
-        gridmap.create_geotiff(node_grid, turn)
+        gridmap.create_geotiff(node_grid, turn=turn, path=dir_path)
         print("created geotiff")
         """
         This section is not very efficient, once the system is up and running
@@ -223,6 +241,10 @@ def initialize(turn, save=True):
         """
         tygron.set_terrain_type(token, hexagons_water, terrain_type="water")
         tygron.set_terrain_type(token, hexagons_land, terrain_type="land")
+        tygron.hex_to_terrain(token, hexagons)
+        """
+        add call to method in tygron module to set building types
+        """
         print("updated Tygron")
         print("stored initial board state")
         toc = time.time()
@@ -236,7 +258,7 @@ def initialize(turn, save=True):
         quit()
 
 
-def update(token, transforms, pers, img_x, img_y, origins, radius,
+def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
            hexagons_new, node_grid, filled_node_grid, turn=1, save=True):
     """
     function that initiates and handles all update steps. Returns all update
@@ -249,7 +271,7 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
     hexagons_old = deepcopy(hexagons_new)
     hexagons_new = detect.detect_markers(img, pers, img_x, img_y, origins,
                                          radius, hexagons_new, turn=turn,
-                                         method='LAB')
+                                         method='LAB', path=dir_path)
     print("processed current board state")
     # this next update should not be necessary if tygron IDs are
     # properly updated at an earlier stage
@@ -259,14 +281,15 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
     hexagons_sandbox = detect.transform(hexagons_new, transforms,
                                         export="sandbox")
     if save:
-        with open('hexagons%d.geojson' % turn, 'w') as f:
+        with open(os.path.join(dir_path, 'hexagons%d.geojson' % turn),
+                  'w') as f:
             geojson.dump(hexagons_sandbox, f, sort_keys=True,
                          indent=2)
         print("saved hexagon file for turn " + str(turn) + " (conditional)")
     """
     change code to transform all hexagons to tygron --> separate z_changed from
     < 2 to >= 2 and from >= 2 to < 2 afterwards
-    
+
     changed the code to implement changes as outlined above, test if it works
     properly
     """
@@ -276,6 +299,7 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
             hexagons_tygron)
     tygron.set_terrain_type(token, hexagons_to_water, terrain_type="water")
     tygron.set_terrain_type(token, hexagons_to_land, terrain_type="land")
+    tygron.hex_to_terrain(token, hexagons_tygron)
     tac = time.time()
     """
     changed the input in the next line from z_changed to hexagons_sandbox
@@ -284,7 +308,8 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
     node_grid = gridmap.update_node_grid(hexagons_sandbox, node_grid,
                                          turn=turn)
     node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid,
-                                              turn=turn, save=False)
+                                              turn=turn, save=False,
+                                              path=dir_path)
     """
     face grid update call should be added here. In addition, all geojson
     changed parameters should be changed to z_changed and landuse_changed
@@ -296,7 +321,8 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
         filled_node_grid = gridmap.update_node_grid(
                 filled_hexagons, filled_node_grid, fill=True)
         filled_node_grid = gridmap.interpolate_node_grid(
-                filled_hexagons, filled_node_grid, turn=turn, save=False)
+                filled_hexagons, filled_node_grid, turn=turn, save=False,
+                path=dir_path)
         print("updated complete grid, dike relocation detected")
     else:
         """
@@ -306,13 +332,16 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
         filled_node_grid = gridmap.update_node_grid(
                 hexagons_sandbox, filled_node_grid, turn=turn)
         filled_node_grid = gridmap.interpolate_node_grid(
-                hexagons_sandbox, filled_node_grid, turn=turn, save=False)
-    gridmap.create_geotiff(node_grid, turn)
+                hexagons_sandbox, filled_node_grid, turn=turn, save=False,
+                path=dir_path)
+    gridmap.create_geotiff(node_grid, turn=turn, path=dir_path)
     if save:
-        with open('node_grid%d.geojson' % turn, 'w') as f:
+        with open(os.path.join(dir_path, 'node_grid%d.geojson' % turn),
+                  'w') as f:
             geojson.dump(node_grid, f, sort_keys=True,
                          indent=2)
-        with open('filled_node_grid%d.geojson' % turn, 'w') as f:
+        with open(os.path.join(dir_path, 'filled_node_grid%d.geojson' % turn),
+                  'w') as f:
             geojson.dump(filled_node_grid, f, sort_keys=True,
                          indent=2)
         print("saved grid files for turn " + str(turn) + " (conditional)")

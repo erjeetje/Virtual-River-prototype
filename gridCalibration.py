@@ -7,6 +7,7 @@ Created on Thu Jan  3 10:49:34 2019
 
 
 import json
+import os
 import cv2
 import numpy as np
 import geojson
@@ -14,7 +15,7 @@ import sandbox_fm.calibrate
 from sandbox_fm.calibration_wizard import NumpyEncoder
 
 
-def create_calibration_file(img_x, img_y, cut_points):
+def create_calibration_file(img_x, img_y, cut_points, path=""):
     """
     Function that creates the calibration file (json format) and returns the
     transforms that can be used by other functions.
@@ -40,12 +41,12 @@ def create_calibration_file(img_x, img_y, cut_points):
     calibration['box'] = [0, 0], [640, 0], [640, 480], [0, 480]
     transforms = sandbox_fm.calibrate.compute_transforms(calibration)
     calibration.update(transforms)
-    with open('calibration.json', 'w') as f:
+    with open(os.path.join(path, 'calibration.json'), 'w') as f:
         json.dump(calibration, f, sort_keys=True, indent=2, cls=NumpyEncoder)
     return transforms
 
 
-def detect_corners(img, method='standard'):
+def detect_corners(img, method='standard', path=""):
     # changed filename as variable to img
     """
     Function that detects the corners of the board (the four white circles)
@@ -100,8 +101,8 @@ def detect_corners(img, method='standard'):
         cv2.circle(img, (x, y), r, (0, 255, 0), 4)
         # draw rectangle at center of detected corner
         cv2.rectangle(img, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
-
-    cv2.imwrite('CornersDetected.jpg', img) # store the corner detection image
+    # store the corner detection image
+    cv2.imwrite(os.path.join(path, 'CornersDetected.jpg'), img)
     return canvas, thresh
 
 
@@ -211,7 +212,7 @@ def create_features(height, width):
     return features, origins, radius
 
 
-def drawMask(origins, img):
+def drawMask(origins, img, path=""):
     """
     Function that can be called to draw the mask and print hexagon numbers.
     This function is currently not called. Can be removed at a later stage.
@@ -227,6 +228,6 @@ def drawMask(origins, img):
         cv2.putText(img, str(count), (x - 50, y + 30),
                     cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), 1)
     # save image with grid
-    cv2.imwrite('drawGrid.jpg', img)
+    cv2.imwrite(os.path.join(path, 'drawGrid.jpg'), img)
     print('success')
     return

@@ -312,6 +312,64 @@ def update_terrain(api_key, hexagons, terrain_type="land",
     return r
 
 
+def hex_to_terrain(api_key, hexagons):
+    # landuse range between 0 and 9, with a subdivision for 0:
+    # 0: built environment
+    # 1: agriculture; production meadow/crop field
+    # 2: natural grassland
+    # 3: reed; 'ruigte'
+    # 4: shrubs; hard-/softwood
+    # 5: forest; hard-/softwood
+    # 6: mixtype class; mix between grass/reed/shrubs/forest
+    # 7: water body; sidechannel (connected to main channel) or lake
+    # 8: main channel; river bed with longitudinal training dams
+    # 9: main channel; river bed with groynes
+    # 10: dike
+    for feature in hexagons.features:
+        if not feature.properties["landuse_changed"]:
+            continue
+        if feature.properties["z"] < 2:
+            continue
+        if feature.properties["landuse"] == 0:
+            # built environment / farm / factory
+            new_type = 0
+        elif feature.properties["landuse"] == 1:
+            # agriculture; production meadow/crop field
+            new_type = 0
+        elif feature.properties["landuse"] == 2:
+            # natural grassland
+            new_type = 0
+        elif feature.properties["landuse"] == 3:
+            # reed; 'ruigte'
+            new_type = 0
+        elif feature.properties["landuse"] == 4:
+            # shrubs; hard-/softwood
+            new_type = 0
+        elif feature.properties["landuse"] == 5:
+            # forest; hard-/softwood
+            new_type = 0
+        elif feature.properties["landuse"] == 6:
+            # mixtype class; mix between grass/reed/shrubs/forest
+            new_type = 0
+        """
+        Values 7 to 9 should not occur.
+        """
+        elif feature.properties["landuse"] == 7:
+            # water body; sidechannel (connected to main channel) or lake
+            new_type = 0
+        elif feature.properties["landuse"] == 8:
+            # main channel; river bed with longitudinal training dams
+            new_type = 0
+        elif feature.properties["landuse"] == 9:
+            # main channel; river bed with groynes
+            new_type = 0
+        elif feature.properties["landuse"] == 10:
+            # dike
+            new_type = 0
+        set_function(api_key, feature.properties["tygron_id"], new_type)
+    return
+
+
 if __name__ == '__main__':
     with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
         username = f.read()

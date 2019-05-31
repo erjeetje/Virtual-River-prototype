@@ -6,6 +6,7 @@ Created on Thu Jan  3 16:49:15 2019
 """
 
 import json
+import os
 import time
 import cv2
 import geojson
@@ -16,13 +17,13 @@ from shapely.geometry import asShape
 
 
 def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
-                   method='rgb'):
+                   method='rgb', path=""):
     # load and process the new image (game state)
     #img = cv2.imread(file)
     # warp image it to calibrated perspective
     warped = cv2.warpPerspective(img, pers, (img_x, img_y))
     filename = 'turn_%d.jpg' % turn
-    cv2.imwrite(filename, warped)
+    cv2.imwrite(os.path.join(path, filename), warped)
     if method is 'LAB':
         lab = cv2.cvtColor(warped, cv2.COLOR_BGR2Lab)
         L, A, B = cv2.split(lab)
@@ -40,8 +41,10 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         kernel = np.ones((2, 2), np.uint8)
         red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
-        cv2.imwrite('red_mask_dilated_LAB%d.jpg' % turn, red_dilate)
-        cv2.imwrite('blue_mask_dilated_LAB%d.jpg' % turn, blue_dilate)
+        cv2.imwrite(os.path.join(path, 'red_mask_dilated_LAB%d.jpg' % turn),
+                    red_dilate)
+        cv2.imwrite(os.path.join(path, 'blue_mask_dilated_LAB%d.jpg' % turn),
+                    blue_dilate)
     elif method is 'YCrCb':
         ycrcb = cv2.cvtColor(warped, cv2.COLOR_BGR2YCrCb)
         Y, Cr, Cb = cv2.split(ycrcb)
@@ -59,8 +62,10 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         kernel = np.ones((2, 2), np.uint8)
         red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
-        cv2.imwrite('red_mask_dilated_YCrCb%d.jpg' % turn, red_dilate)
-        cv2.imwrite('blue_mask_dilated_YCrCb%d.jpg' % turn, blue_dilate)
+        cv2.imwrite(os.path.join(path, 'red_mask_dilated_YCrCb%d.jpg' % turn),
+                    red_dilate)
+        cv2.imwrite(os.path.join(path, 'blue_mask_dilated_YCrCb%d.jpg' % turn),
+                                 blue_dilate)
     else:
         B, G, R = cv2.split(warped)
         B = cv2.medianBlur(B, 5)
@@ -78,8 +83,10 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
         # save masks, can be removed later
-        cv2.imwrite('red_mask_dilated_RGB%d.jpg' % turn, red_dilate)
-        cv2.imwrite('blue_mask_dilated_RGB%d.jpg' % turn, blue_dilate)
+        cv2.imwrite(os.path.join(path, 'red_mask_dilated_RGB%d.jpg' % turn),
+                    red_dilate)
+        cv2.imwrite(os.path.join(path, 'blue_mask_dilated_RGB%d.jpg' % turn),
+                    blue_dilate)
 
     # create a mask for the region of interest processing
     # convert diameter to actual radius as int value
@@ -170,7 +177,7 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
     return features
 
 
-def transform(features, transforms, export=None):
+def transform(features, transforms, export=None, path=""):
     """
     Function that transforms geojson files to new coordinates based on where
     the geojson needs to be transformed to (e.g. from the image processed to
@@ -200,7 +207,8 @@ def transform(features, transforms, export=None):
         transformed_features.append(new_feature)
     if export == "sandbox":
         transformed_features = geojson.FeatureCollection(transformed_features)
-        with open('hexagons_sandbox_transformed.geojson', 'w') as f:
+        with open(os.path.join(path, 'hexagons_sandbox_transformed.geojson'),
+                  'w') as f:
             geojson.dump(transformed_features, f, sort_keys=True, indent=2)
         return transformed_features
     elif export == "tygron_initialize":
@@ -212,13 +220,16 @@ def transform(features, transforms, export=None):
             }
         transformed_features = geojson.FeatureCollection(transformed_features,
                                                          crs=crs)
-        with open('hexagons_tygron_transformed.geojson', 'w') as f:
+        with open(os.path.join(path, 'hexagons_tygron_transformed.geojson'),
+                  'w') as f:
             geojson.dump(transformed_features, f, sort_keys=True, indent=2)
         return transformed_features
     else:
         transformed_features = geojson.FeatureCollection(transformed_features)
         if False:
-            with open('hexagons_tygron_update_transformed.geojson', 'w') as f:
+            with open(os.path.join(path,
+                                   'hexagons_tygron_update_transformed.geojson'),
+                      'w') as f:
                 geojson.dump(transformed_features, f, sort_keys=True, indent=2)
         return transformed_features
 
