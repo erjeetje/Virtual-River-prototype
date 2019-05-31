@@ -183,7 +183,7 @@ def index_face_grid(hexagons, grid):
         else:
             feature.properties["board"] = False
             feature.properties["location"] = None
-            feature.properties["changed"] = False
+            feature.properties["changed"] = True
     return grid
 
 
