@@ -136,6 +136,8 @@ def landuse_to_friction(hexagons):
             handler = "vegetation"
             name = "dike              "
         if handler == "vegetation":
+            if h <= 0:
+                h = 0.1
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
             feature.properties["Chezy"] = manning(h, n)

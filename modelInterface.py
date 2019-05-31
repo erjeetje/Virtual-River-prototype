@@ -12,6 +12,7 @@ import bmi.wrapper
 import matplotlib.pyplot as plt
 import numpy as np
 import gridMapping as gridmap
+import updateRoughness as roughness
 from copy import deepcopy
 
 
@@ -127,15 +128,21 @@ if __name__ == "__main__":
     calibration = gridmap.read_calibration()
     t0 = time.time()
     hexagons = gridmap.read_hexagons(filename='hexagons0.geojson')
+    for feature in hexagons.features:
+        feature.properties["changed"] = True
     t1 = time.time()
     print("Read hexagons: " + str(t1 - t0))
+    model = initialize_model()
     node_grid = gridmap.read_node_grid()
+    face_grid = gridmap.read_face_grid(model)
     t2 = time.time()
     print("Load grid: " + str(t2 - t1))
     node_grid = gridmap.index_node_grid(hexagons, node_grid)
+    face_grid = gridmap.index_face_grid(hexagons, face_grid)
     t3 = time.time()
     print("Index grid: " + str(t3 - t2))
     node_grid = gridmap.interpolate_node_grid(hexagons, node_grid)
+    hexagons, face_grid = roughness.hex_to_points(model, hexagons, face_grid)
     with open('node_grid_before%d.geojson' % turn, 'w') as f:
         geojson.dump(node_grid, f, sort_keys=True,
                      indent=2)
@@ -167,5 +174,4 @@ if __name__ == "__main__":
     gridmap.create_geotiff(node_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
-    model = initialize_model()
-    run_model(model, filled_node_grid, hexagons)
+    run_model(model, filled_node_grid, face_grid, hexagons)
