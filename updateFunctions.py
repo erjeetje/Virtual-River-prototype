@@ -32,7 +32,7 @@ def compare_hex(token, hexagons_old, hexagons_new):
         reference_hex = hexagons_old[feature.id]
         if feature.properties["z"] != reference_hex.properties["z"]:
             print("hexagon " + str(feature.id) + " z value changed")
-            feature.properties["changed"] = True
+            feature.properties["z_changed"] = True
             z_changed.append(feature)
             if (feature.properties["z"] < 2 and
                     reference_hex.properties["z"] >= 2):
@@ -45,10 +45,11 @@ def compare_hex(token, hexagons_old, hexagons_new):
                 print("Detected a dike relocation, will update total grid")
                 dike_moved = True
         else:
-            feature.properties["changed"] = False
-        if (feature.properties["landuse"] is not
-                reference_hex.properties["landuse"]):
+            feature.properties["z_changed"] = False
+        if (feature.properties["landuse"] !=
+            reference_hex.properties["landuse"]):
             print("hexagon " + str(feature.id) + " land use value changed")
+            feature.properties["landuse_changed"] = True
             landuse_changed.append(feature)
     """
     if becomes_water:
@@ -59,8 +60,24 @@ def compare_hex(token, hexagons_old, hexagons_new):
         tygron.set_terrain_type(token, landbodies, terrain_type="land")
     """
     z_changed = geojson.FeatureCollection(z_changed)
-    print("changed cells")
+    landuse_changed = geojson.FeatureCollection(landuse_changed)
+    print("cells compared")
     return hexagons_new, z_changed, dike_moved
+
+
+def terrain_updates(hexagons):
+    becomes_water = []
+    becomes_land = []
+    for feature in hexagons.features:
+        if not feature.properties["z_changed"]:
+            continue
+        if feature.properties["z"] < 2:
+            becomes_water.append(feature)
+        if feature.properties["z"] >= 2:
+            becomes_land.append(feature)
+    becomes_water = geojson.FeatureCollection(becomes_water)
+    becomes_land = geojson.FeatureCollection(becomes_land)
+    return becomes_water, becomes_land
 
 
 if __name__ == '__main__':

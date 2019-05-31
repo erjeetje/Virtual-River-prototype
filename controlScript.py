@@ -254,7 +254,7 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
     # this next update should not be necessary if tygron IDs are
     # properly updated at an earlier stage
     hexagons_new = tygron.update_hexagons_tygron_id(token, hexagons_new)
-    hexagons_new, z_changed, dike_moved = compare.compare_hex(
+    hexagons_new, z_changed, landuse_changed, dike_moved = compare.compare_hex(
             token, hexagons_old, hexagons_new)
     hexagons_sandbox = detect.transform(hexagons_new, transforms,
                                         export="sandbox")
@@ -263,13 +263,26 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
             geojson.dump(hexagons_sandbox, f, sort_keys=True,
                          indent=2)
         print("saved hexagon file for turn " + str(turn) + " (conditional)")
-    hexagons_water, hexagons_land = detect.transform(z_changed,
-                                                     transforms,
-                                                     export="tygron")
-    tygron.set_terrain_type(token, hexagons_water, terrain_type="water")
-    tygron.set_terrain_type(token, hexagons_land, terrain_type="land")
+    """
+    change code to transform all hexagons to tygron --> separate z_changed from
+    < 2 to >= 2 and from >= 2 to < 2 afterwards
+    
+    changed the code to implement changes as outlined above, test if it works
+    properly
+    """
+    hexagons_tygron = detect.transform(hexagons_new, transforms,
+                                       export="tygron")
+    hexagons_to_water, hexagons_to_land = compare.terrain_updates(
+            hexagons_tygron)
+    tygron.set_terrain_type(token, hexagons_to_water, terrain_type="water")
+    tygron.set_terrain_type(token, hexagons_to_land, terrain_type="land")
     tac = time.time()
-    node_grid = gridmap.update_node_grid(z_changed, node_grid, turn=turn)
+    """
+    changed the input in the next line from z_changed to hexagons_sandbox
+    check if it works properly
+    """
+    node_grid = gridmap.update_node_grid(hexagons_sandbox, node_grid,
+                                         turn=turn)
     node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid,
                                               turn=turn, save=False)
     """
@@ -286,8 +299,12 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
                 filled_hexagons, filled_node_grid, turn=turn, save=False)
         print("updated complete grid, dike relocation detected")
     else:
+        """
+        changed the input in the next line from z_changed to hexagons_sandbox
+        check if it works properly
+        """
         filled_node_grid = gridmap.update_node_grid(
-                z_changed, filled_node_grid, turn=turn)
+                hexagons_sandbox, filled_node_grid, turn=turn)
         filled_node_grid = gridmap.interpolate_node_grid(
                 hexagons_sandbox, filled_node_grid, turn=turn, save=False)
     gridmap.create_geotiff(node_grid, turn)

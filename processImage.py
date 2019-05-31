@@ -177,8 +177,6 @@ def transform(features, transforms, export=None):
     the model: 'img_post_cut2model').
     """
     transformed_features = []
-    waterbodies = []
-    landbodies = []
     if export == "sandbox":
         transform = transforms['img_post_cut2model']
     elif export == "tygron_initialize":
@@ -199,11 +197,6 @@ def transform(features, transforms, export=None):
         new_feature = geojson.Feature(id=feature.id,
                                       geometry=geojson.Polygon([xy_t.tolist()]),
                                       properties=feature.properties)
-        if export == "tygron":
-            if feature.properties["z"] < 2:
-                waterbodies.append(new_feature)
-            else:
-                landbodies.append(new_feature)
         transformed_features.append(new_feature)
     if export == "sandbox":
         transformed_features = geojson.FeatureCollection(transformed_features)
@@ -224,15 +217,10 @@ def transform(features, transforms, export=None):
         return transformed_features
     else:
         transformed_features = geojson.FeatureCollection(transformed_features)
-        with open('hexagons_tygron_update_transformed.geojson', 'w') as f:
-            geojson.dump(transformed_features, f, sort_keys=True, indent=2)
-        waterbodies = geojson.FeatureCollection(waterbodies)
-        with open('waterbodies_tygron_transformed.geojson', 'w') as f:
-            geojson.dump(waterbodies, f, sort_keys=True, indent=2)
-        landbodies = geojson.FeatureCollection(landbodies)
-        with open('landbodies_tygron_transformed.geojson', 'w') as f:
-            geojson.dump(landbodies, f, sort_keys=True, indent=2)
-        return waterbodies, landbodies
+        if False:
+            with open('hexagons_tygron_update_transformed.geojson', 'w') as f:
+                geojson.dump(transformed_features, f, sort_keys=True, indent=2)
+        return transformed_features
 
 
 if __name__ == '__main__':
