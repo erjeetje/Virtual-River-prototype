@@ -15,10 +15,10 @@ from copy import deepcopy
 
 def hex_to_points(model, hexagons, grid, test=True):
     frcu = model.get_var('frcu')
-    hexagons_by_id = {feature.id: feature for feature in hexagons.features}
     if test:
         hexagons = randomizer(hexagons)
     hexagons = landuse_to_friction(hexagons)
+    hexagons_by_id = {feature.id: feature for feature in hexagons.features}
     for feature in grid.features:
         if not feature.properties["board"]:
             continue
@@ -73,84 +73,83 @@ def landuse_to_friction(hexagons):
     # 10: dike
     test_list = []
     for feature in hexagons.features:
-        """
-        add if changed --> calculate, else continue? That would work well with
-        changes to hexagons, but not in relation to the changes in waterheight.
-        """
-        # this would require water height to be stored per hexagon    
-        try:
-            h = feature.properties["waterheight"] - feature.properties["z"]
-        except KeyError:
+        if not feature.properties["landuse_changed"]:
+            continue
+        else:
+            # this would require water height to be stored per hexagon    
             try:
-                h = 6 - feature.properties["z"]
+                h = feature.properties["waterheight"] - feature.properties["z"]
             except KeyError:
-                h = 6
-        if feature.properties["landuse"] == 0:
-            # build environment
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
-            handler = "building"
-            name = "building          "
-        elif feature.properties["landuse"] == 1:
-            # agricultural land / production meadow?
-            vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
-            handler = "vegetation"
-            name = "production meadow "
-        elif feature.properties["landuse"] == 2:
-            # grass / natural grassland
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}
-            handler = "vegetation"
-            name = "natural grassland "
-        elif feature.properties["landuse"] == 3:
-            # reed and roughness / rietruigte
-            vegpar = {"hv": 2, "n": 0.16, "Cd": 1.8, "kb": 0.1}
-            handler = "vegetation"
-            name = "reed roughness    "
-        elif feature.properties["landuse"] == 4:
-            # shrubs / zachthoutstruweel
-            vegpar = {"hv": 6, "n": 0.13, "Cd": 1.5, "kb": 0.4}
-            handler = "vegetation"
-            name = "soft wood shrubs  "
-        elif feature.properties["landuse"] == 5:
-            # forest / zachthoutooibos
-            vegpar = {"hv": 10, "n": 0.028, "Cd": 1.5, "kb": 0.6}
-            handler = "vegetation"
-            name = "soft wood forest  "
-        elif feature.properties["landuse"] == 6:
-            # mixtype
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
-            handler = "vegetation"
-            name = "vegetation mixtype"
-        elif feature.properties["landuse"] == 7:
-            # side channel
-            n = 0.025  # check approach with Koen
-            handler = "bed"
-            name = "side channel      "
-        elif feature.properties["landuse"] == 8 or feature.properties["landuse"] == 9:
-            # main channel
-            n = 0.025  # check approach with Koen
-            handler = "bed"
-            name = "main channel      "
-        else:
-            # dike / production meadow
-            vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
-            handler = "vegetation"
-            name = "dike              "
-        if handler == "vegetation":
-            if h <= 0:
-                h = 0.1
-            feature.properties["Chezy"] = klopstra(h, vegpar)
-        elif handler == "bed":
-            feature.properties["Chezy"] = manning(h, n)
-        else:
-            """
-            This else statement should handle buildings --> perhaps need to
-            add buildings as a geometry or structure in the model? Use manning
-            for the polygon?
-            """
-            feature.properties["Chezy"] = klopstra(h, vegpar)
-        print("cell: " + str(feature.id) + ". landuse: " + str(feature.properties["landuse"]) + ". h: " + str(h) + ". C: " +
-              str(feature.properties["Chezy"]))
-        test_list.append([name, h, feature.properties["Chezy"]])
+                try:
+                    h = 6 - feature.properties["z"]
+                except KeyError:
+                    h = 6
+            if feature.properties["landuse"] == 0:
+                # build environment
+                vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
+                handler = "building"
+                name = "building          "
+            elif feature.properties["landuse"] == 1:
+                # agricultural land / production meadow?
+                vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
+                handler = "vegetation"
+                name = "production meadow "
+            elif feature.properties["landuse"] == 2:
+                # grass / natural grassland
+                vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}
+                handler = "vegetation"
+                name = "natural grassland "
+            elif feature.properties["landuse"] == 3:
+                # reed and roughness / rietruigte
+                vegpar = {"hv": 2, "n": 0.16, "Cd": 1.8, "kb": 0.1}
+                handler = "vegetation"
+                name = "reed roughness    "
+            elif feature.properties["landuse"] == 4:
+                # shrubs / zachthoutstruweel
+                vegpar = {"hv": 6, "n": 0.13, "Cd": 1.5, "kb": 0.4}
+                handler = "vegetation"
+                name = "soft wood shrubs  "
+            elif feature.properties["landuse"] == 5:
+                # forest / zachthoutooibos
+                vegpar = {"hv": 10, "n": 0.028, "Cd": 1.5, "kb": 0.6}
+                handler = "vegetation"
+                name = "soft wood forest  "
+            elif feature.properties["landuse"] == 6:
+                # mixtype
+                vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
+                handler = "vegetation"
+                name = "vegetation mixtype"
+            elif feature.properties["landuse"] == 7:
+                # side channel
+                n = 0.025  # check approach with Koen
+                handler = "bed"
+                name = "side channel      "
+            elif feature.properties["landuse"] == 8 or feature.properties["landuse"] == 9:
+                # main channel
+                n = 0.025  # check approach with Koen
+                handler = "bed"
+                name = "main channel      "
+            else:
+                # dike / production meadow
+                vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
+                handler = "vegetation"
+                name = "dike              "
+            if handler == "vegetation":
+                if h <= 0:
+                    h = 0.1
+                feature.properties["Chezy"] = klopstra(h, vegpar)
+            elif handler == "bed":
+                feature.properties["Chezy"] = manning(h, n)
+            else:
+                """
+                This else statement should handle buildings --> perhaps need to
+                add buildings as a geometry or structure in the model? Use manning
+                for the polygon?
+                """
+                feature.properties["Chezy"] = klopstra(h, vegpar)
+            print("cell: " + str(feature.id) + ". landuse: " + str(feature.properties["landuse"]) + ". h: " + str(h) + ". C: " +
+                  str(feature.properties["Chezy"]))
+            test_list.append([name, h, feature.properties["Chezy"]])
     test_list = np.array(test_list)
     test_list = np.unique(test_list, axis=0)
     for item in test_list:

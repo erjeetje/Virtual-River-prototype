@@ -412,10 +412,10 @@ def update_node_grid(hexagons, grid, fill=False, turn=0):
     for feature in hexagons.features:
         if fill:
             if feature.properties["behind_dike"] or \
-                    feature.properties["changed"]:
+                    feature.properties["z_changed"]:
                 indices_updated.append(feature.id)
         else:
-            if feature.properties["changed"]:
+            if feature.properties["z_changed"]:
                 indices_updated.append(feature.id)
     for feature in grid.features:
         if not feature.properties["board"]:
@@ -555,7 +555,8 @@ if __name__ == "__main__":
     t0 = time.time()
     hexagons = read_hexagons(filename='hexagons0.geojson')
     for feature in hexagons.features:
-        feature.properties["changed"] = True
+        feature.properties["z_changed"] = True
+        feature.properties["landuse_changed"] = True
     t1 = time.time()
     print("Read hexagons: " + str(t1 - t0))
     node_grid = read_node_grid()

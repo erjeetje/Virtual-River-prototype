@@ -129,7 +129,8 @@ if __name__ == "__main__":
     t0 = time.time()
     hexagons = gridmap.read_hexagons(filename='hexagons0.geojson')
     for feature in hexagons.features:
-        feature.properties["changed"] = True
+        feature.properties["z_changed"] = True
+        feature.properties["landuse_changed"] = True
     t1 = time.time()
     print("Read hexagons: " + str(t1 - t0))
     model = initialize_model()

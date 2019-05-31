@@ -15,6 +15,7 @@ import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
+import updateRoughness as roughness
 from copy import deepcopy
 #import plotHexagons as plotter
 
@@ -191,6 +192,9 @@ def initialize(turn, save=True):
         node_grid = gridmap.index_node_grid(hexagons_sandbox, node_grid)
         face_grid = gridmap.index_face_grid(hexagons_sandbox, face_grid)
         node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid)
+        hexagons_sandbox, face_grid = roughness.hex_to_points(model,
+                                                              hexagons_sandbox,
+                                                              face_grid)
         print("executed grid interpolation")
         filled_node_grid = deepcopy(node_grid)
         filled_hexagons = deepcopy(hexagons_sandbox)
@@ -268,6 +272,10 @@ def update(token, transforms, pers, img_x, img_y, origins, radius,
     node_grid = gridmap.update_node_grid(z_changed, node_grid, turn=turn)
     node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid,
                                               turn=turn, save=False)
+    """
+    face grid update call should be added here. In addition, all geojson
+    changed parameters should be changed to z_changed and landuse_changed
+    """
     if dike_moved:
         filled_hexagons = deepcopy(hexagons_sandbox)
         filled_node_grid = deepcopy(node_grid)

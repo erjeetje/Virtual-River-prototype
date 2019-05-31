@@ -160,19 +160,9 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         cv2.imwrite(filenameEco, maskedImgEco)
         """
         # z range between 0 and 5, with 4 as a dike and 5 a reinforced dike
+        # this should eventually be changed to match the model's height scale
+        # directly.
         feature.properties["z"] = min(len(contoursGeo), 5)
-        # landuse range between 0 and 9, with a subdivision for 0:
-        # 0 and z < 4: built environment
-        # 1: agriculture; production meadow/crop field
-        # 2: natural grassland
-        # 3: reed; 'ruigte'
-        # 4: shrubs; hard-/softwood
-        # 5: forest; hard-/softwood
-        # 6: mixtype class; mix between grass/reed/shrubs/forest
-        # 7: water body; sidechannel (connected to main channel) or lake
-        # 8: main channel; river bed with longitudinal training dams
-        # 9: main channel; river bed with groynes
-        # 10: dike (= landuse 0 and z >= 4)
         feature.properties["landuse"] = min(len(contoursEco), 9)
         if feature.properties["landuse"] == 0 & feature.properties["z"] >= 4:
             feature.properties["landuse"] = 10
