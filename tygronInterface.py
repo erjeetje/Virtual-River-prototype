@@ -8,6 +8,7 @@ Created on Wed Mar 27 11:25:35 2019
 import requests
 import base64
 import json
+import random
 from shapely import geometry
 
 
@@ -92,6 +93,15 @@ def set_function(api_key, hex_id, new_type,
     except ValueError:
         print("no content")
     """
+    return
+
+
+def set_function_value(api_key, building_id, value,
+                       function_value="FLOOR_HEIGHT_M", 
+                       api_endpoint=("https://engine.tygron.com/api/session/"
+                                     "event/editorbuilding/"
+                                     "set_function_value/?")):
+    r = requests.post(url=api_endpoint+api_key, json=[building_id, function_value, value])
     return
 
 
@@ -288,22 +298,48 @@ def hex_to_terrain(api_key, hexagons):
             continue
         if feature.properties["landuse"] == 0:
             # built environment / farm / factory
-            new_type = 0
+            rand = random.randint(1, 3)
+            if rand == 1:
+                new_type = 936  # veehouderij
+            elif rand == 2:
+                new_type = 941  # Van Nelle Fabriek
+            else: 
+                new_type = 851  # Caballero Fabriek
         elif feature.properties["landuse"] == 1:
             # agriculture; production meadow/crop field
-            new_type = 0
+            rand = random.randint(1, 3)
+            if rand == 1:
+                new_type = 728  # maisveld
+            elif rand == 2:
+                new_type = 729  # graanveld
+            else:
+                new_type = 889  # koeienveld
         elif feature.properties["landuse"] == 2:
             # natural grassland
-            new_type = 0
+            new_type = 730  # grasland
         elif feature.properties["landuse"] == 3:
             # reed; 'ruigte'
-            new_type = 0
+            new_type = 742  # riet
         elif feature.properties["landuse"] == 4:
             # shrubs; hard-/softwood
-            new_type = 0
+            new_type = 898  # struikgewas
+            """
+            rand = random.randint(1, 2)
+            if rand == 1:
+                new_type = 753  # mangrovebos
+            else:
+                new_type = 898  # struikgewas
+            """
         elif feature.properties["landuse"] == 5:
             # forest; hard-/softwood
-            new_type = 0
+            new_type = 440  # loofbomen
+            """
+            rand = random.randint(1, 2)
+            if rand == 1:
+                new_type = 440  # loofbomen
+            else:
+                new_type = 888  # naaldbomen
+            """
         elif feature.properties["landuse"] == 6:
             # mixtype class; mix between grass/reed/shrubs/forest
             new_type = 0
@@ -319,7 +355,7 @@ def hex_to_terrain(api_key, hexagons):
             new_type = 0
         elif feature.properties["landuse"] == 10:
             # dike
-            new_type = 0
+            new_type = 730
         set_function(api_key, feature.properties["tygron_id"], new_type)
     return
 
@@ -343,5 +379,6 @@ if __name__ == '__main__':
         #    hexagons = geojson.load(f)
         #hexagons = update_hexagons_tygron_id(api_key, hexagons)
         #set_terrain_type(api_key, hexagons, terrain_type="water")
-        tiff_file = "grid_height_map0.tif"
-        set_elevation(tiff_file, api_key, start=True)
+        #tiff_file = "grid_height_map0.tif"
+        #set_elevation(tiff_file, api_key, start=True)
+        set_function_value(api_key, 6, 12.0, function_value="FLOOR_HEIGHT_M")
