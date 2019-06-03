@@ -536,17 +536,20 @@ def create_geotiff(grid, turn=0, path=""):
     geometries = [feature.geometry for feature in features.features]
     out = np.array([feature.properties['z'] for
                     feature in features['features']])
-    img = rasterize(zip(geometries, out), out_shape=(750, 1000))
-    img = cv2.flip(img, 0)
-    plt.imshow(img)
+    heightmap = rasterize(zip(geometries, out), out_shape=(750, 1000))
+    heightmap = cv2.flip(heightmap, 0)
+    plt.imshow(heightmap)
 
     compression = {"compress": "LZW"}
     with opentif(os.path.join(path, 'grid_height_map%d.tif' % d), 'w',
                  driver='GTiff', width=1000, height=750, count=1,
-                 dtype=img.dtype, crs='EPSG:3857',
+                 dtype=heightmap.dtype, crs='EPSG:3857',
                  transform=from_origin(0, 0, 1, 1), **compression) as dst:
-        dst.write(img, 1)
-    return
+        dst.write(heightmap, 1)
+    """
+    To do: return img directly instead of saving
+    """
+    return heightmap
 
 
 if __name__ == "__main__":

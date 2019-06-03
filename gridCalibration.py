@@ -32,7 +32,7 @@ def create_calibration_file(img_x, img_y, cut_points, path=""):
     # tygron project creation; empty world coordinates
     calibration['tygron_export'] = [0, 0], [1000, 0], [1000, -750],  [0, -750]
     # tygron project update; world coordinates once created
-    calibration['tygron_update'] = [0, 0], [1000, 0], [1000, 750],  [0, 750]
+    calibration['tygron_update'] = [0, 0], [1000, 0], [1000, -750],  [0, -750]
     # height range
     calibration['z'] = [0.0, 9.0]
     # height of game pieces; may be subject to change after interpolation

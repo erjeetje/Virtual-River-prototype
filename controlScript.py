@@ -88,6 +88,9 @@ def main_menu():
     # face grid to deal with roughness
     face_grid = None
     
+    # heightmap for Tygron
+    heightmap = None
+    
     pers = None
     
     img_x = None
@@ -106,10 +109,10 @@ def main_menu():
                 print("Calibrating Virtual River, preparing SandBox "
                       "and logging into Tygron")
                 #try:
-                token, hexagons_new, hex_sandbox, hex_tygron, hex_water, \
-                    hex_land, node_grid, filled_node_grid, face_grid, \
-                    transforms, pers, img_x, img_y, origins, radius, \
-                    model = initialize(turn, dir_path)
+                token, hexagons_new, hex_sandbox, hex_tygron_int, hex_tygron, \
+                    node_grid, filled_node_grid, face_grid, transforms, pers, \
+                    img_x, img_y, origins, radius, model, heightmap \
+                    = initialize(turn, dir_path)
                 #except TypeError:
                     #print("Calibration failed, closing application")
                     #time.sleep(2)
@@ -124,10 +127,10 @@ def main_menu():
         elif a == '1':
             if not start:
                 turn += 1
-                hexagons_new, node_grid, filled_node_grid = update(
-                        token, dir_path, transforms, pers, img_x, img_y,
-                        origins, radius, hexagons_new, node_grid,
-                        filled_node_grid, turn=turn)
+                hexagons_new, node_grid, filled_node_grid, heightmap = \
+                    update(token, dir_path, transforms, pers, img_x, img_y,
+                           origins, radius, hexagons_new, node_grid,
+                           filled_node_grid, turn=turn)
                 print("Update complete, waiting for next command")
             else:
                 print("No calibration run, please first calibrate Virtual "
@@ -182,7 +185,7 @@ def initialize(turn, dir_path, save=True):
         print("calibrated camera")
         hexagons = detect.detect_markers(img, pers, img_x, img_y,
                                          origins, radius, features,
-                                         method='LAB',path=dir_path)
+                                         method='LAB', path=dir_path)
         print("processed initial board state")
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,
@@ -193,10 +196,17 @@ def initialize(turn, dir_path, save=True):
                 geojson.dump(hexagons_sandbox, f, sort_keys=True,
                              indent=2)
             print("saved hexagon file (conditional)")
+        hexagons_tygron_int = detect.transform(hexagons, transforms,
+                                               export="tygron_initialize")
+        if save:
+            with open(os.path.join(dir_path,
+                                   'hexagons_tygron_initialization%d.geojson'
+                                   % turn), 'w') as f:
+                geojson.dump(hexagons_tygron_int, f, sort_keys=True,
+                             indent=2)
+            print("saved hexagon file (conditional)")
         hexagons_tygron = detect.transform(hexagons, transforms,
-                                           export="tygron_initialize")
-        hexagons_water, hexagons_land = detect.transform(hexagons, transforms,
-                                                         export="tygron")
+                                           export="tygron")
         print("prepared geojson files")
         model = D3D.initialize_model()
         node_grid = gridmap.read_node_grid(path=dir_path)
@@ -232,27 +242,26 @@ def initialize(turn, dir_path, save=True):
                              indent=2)
             print("saved interpolation files (conditional)")
         print("executed grid fill interpolation")
-        gridmap.create_geotiff(node_grid, turn=turn, path=dir_path)
+        heightmap = gridmap.create_geotiff(node_grid, turn=turn, path=dir_path)
         print("created geotiff")
         """
         This section is not very efficient, once the system is up and running
         replace this to either also check which hexagons need to change or make
         an empty project area that is either land or water only.
         """
-        tygron.set_terrain_type(token, hexagons_water, terrain_type="water")
-        tygron.set_terrain_type(token, hexagons_land, terrain_type="land")
+        hexagons_tygron = tygron.set_terrain_type(token, hexagons_tygron)
         tygron.hex_to_terrain(token, hexagons)
-        """
-        add call to method in tygron module to set building types
-        """
+        file_location = (dir_path + "\\grid_height_map" + str(turn) + ".tif")
+        tygron.set_elevation(file_location, token, turn=0)
         print("updated Tygron")
         print("stored initial board state")
         toc = time.time()
         print("Start up and calibration time: "+str(toc-tic))
     try:
-        return token, hexagons, hexagons_sandbox, hexagons_tygron, \
-            hexagons_water, hexagons_land, node_grid, filled_node_grid, \
-            face_grid, transforms, pers, img_x, img_y, origins, radius, model
+        return token, hexagons, hexagons_sandbox, hexagons_tygron_int, \
+            hexagons_tygron, node_grid, filled_node_grid, \
+            face_grid, transforms, pers, img_x, img_y, origins, radius, \
+            model, heightmap
     except UnboundLocalError:
         print("logging in to Tygron failed, closing application")
         quit()
@@ -276,8 +285,8 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
     # this next update should not be necessary if tygron IDs are
     # properly updated at an earlier stage
     hexagons_new = tygron.update_hexagons_tygron_id(token, hexagons_new)
-    hexagons_new, z_changed, landuse_changed, dike_moved = compare.compare_hex(
-            token, hexagons_old, hexagons_new)
+    hexagons_new, dike_moved = compare.compare_hex(token, hexagons_old,
+                                                   hexagons_new)
     hexagons_sandbox = detect.transform(hexagons_new, transforms,
                                         export="sandbox")
     if save:
@@ -286,13 +295,6 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
             geojson.dump(hexagons_sandbox, f, sort_keys=True,
                          indent=2)
         print("saved hexagon file for turn " + str(turn) + " (conditional)")
-    """
-    change code to transform all hexagons to tygron --> separate z_changed from
-    < 2 to >= 2 and from >= 2 to < 2 afterwards
-
-    changed the code to implement changes as outlined above, test if it works
-    properly
-    """
     hexagons_tygron = detect.transform(hexagons_new, transforms,
                                        export="tygron")
     hexagons_to_water, hexagons_to_land = compare.terrain_updates(
@@ -301,10 +303,6 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
     tygron.set_terrain_type(token, hexagons_to_land, terrain_type="land")
     tygron.hex_to_terrain(token, hexagons_tygron)
     tac = time.time()
-    """
-    changed the input in the next line from z_changed to hexagons_sandbox
-    check if it works properly
-    """
     node_grid = gridmap.update_node_grid(hexagons_sandbox, node_grid,
                                          turn=turn)
     node_grid = gridmap.interpolate_node_grid(hexagons_sandbox, node_grid,
@@ -325,16 +323,14 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
                 path=dir_path)
         print("updated complete grid, dike relocation detected")
     else:
-        """
-        changed the input in the next line from z_changed to hexagons_sandbox
-        check if it works properly
-        """
         filled_node_grid = gridmap.update_node_grid(
                 hexagons_sandbox, filled_node_grid, turn=turn)
         filled_node_grid = gridmap.interpolate_node_grid(
                 hexagons_sandbox, filled_node_grid, turn=turn, save=False,
                 path=dir_path)
-    gridmap.create_geotiff(node_grid, turn=turn, path=dir_path)
+    heightmap = gridmap.create_geotiff(node_grid, turn=turn, path=dir_path)
+    file_location = (dir_path + "\\grid_height_map" + str(turn) + ".tif")
+    tygron.set_elevation(file_location, token, turn=0)
     if save:
         with open(os.path.join(dir_path, 'node_grid%d.geojson' % turn),
                   'w') as f:
@@ -350,7 +346,7 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
           ". Comparison update time: " + str(tac-tic) +
           ". Interpolation update time: " + str(toc-tac) +
           ". Total update time: " + str(toc-tic))
-    return hexagons_new, node_grid, filled_node_grid
+    return hexagons_new, node_grid, filled_node_grid, heightmap
 
 
 if __name__ == '__main__':

@@ -173,6 +173,12 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         feature.properties["landuse"] = min(len(contoursEco), 9)
         if feature.properties["landuse"] == 0 & feature.properties["z"] >= 4:
             feature.properties["landuse"] = 10
+        if feature.properties["z"] < 2:
+            feature.properties["water"] = True
+            feature.properties["land"] = False
+        else:
+            feature.properties["water"] = False
+            feature.properties["land"] = True
     #cv2.imwrite('cells.jpg', warped)
     return features
 

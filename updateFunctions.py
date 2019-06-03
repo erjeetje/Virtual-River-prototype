@@ -51,6 +51,8 @@ def compare_hex(token, hexagons_old, hexagons_new):
             print("hexagon " + str(feature.id) + " land use value changed")
             feature.properties["landuse_changed"] = True
             landuse_changed.append(feature)
+        else:
+            feature.properties["landuse_changed"] = False
     """
     if becomes_water:
         waterbodies = geojson.FeatureCollection(becomes_water)
@@ -59,10 +61,10 @@ def compare_hex(token, hexagons_old, hexagons_new):
         landbodies = geojson.FeatureCollection(becomes_land)
         tygron.set_terrain_type(token, landbodies, terrain_type="land")
     """
-    z_changed = geojson.FeatureCollection(z_changed)
-    landuse_changed = geojson.FeatureCollection(landuse_changed)
+    #z_changed = geojson.FeatureCollection(z_changed)
+    #landuse_changed = geojson.FeatureCollection(landuse_changed)
     print("cells compared")
-    return hexagons_new, z_changed, dike_moved
+    return hexagons_new, dike_moved
 
 
 def terrain_updates(hexagons):
