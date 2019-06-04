@@ -233,7 +233,7 @@ def manning(h, n):
 
 
 if __name__ == '__main__':
-    hexagons = gridmap.read_hexagons(filename='hexagons0.geojson')
+    hexagons = gridmap.read_hexagons(filename='storing_files\\hexagons0.geojson')
     model = D3D.initialize_model()
     face_grid = gridmap.read_face_grid(model)
     face_grid = gridmap.index_face_grid(hexagons, face_grid)

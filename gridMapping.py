@@ -17,6 +17,7 @@ import modelInterface as D3D
 import updateRoughness as roughness
 from copy import deepcopy
 from scipy.spatial import cKDTree
+from scipy import interpolate
 from shapely import geometry
 from shapely.ops import unary_union
 from rasterio import open as opentif
@@ -507,12 +508,64 @@ def interpolate_node_grid(hexagons, grid, turn=0, save=False, path=""):
     return grid
 
 
-def create_geotiff(grid, turn=0, path=""):
+def create_geotiff(grid, turn=0, path="", save=False):
+    """
+    Function that creates a GeoTIFF from the grid as constructed in the
+    hex_to_points function, using interpolation to smoothen the heightmap.
+    """
+    tic = time.time()
+    x_coor = []
+    y_coor = []
+    data = []
+    step = 3 * 1.25
+    for feature in grid.features:
+        shape = geometry.asShape(feature.geometry)
+        x = (shape.centroid.x + 400) * 1.25
+        y = (shape.centroid.y + 300) * 1.25
+        if x < (0 - step) or x > (1000 + step):
+            continue
+        if y < (0 - step) or y > (750 + step):
+            continue
+        x_coor.append(x)
+        y_coor.append(y)
+        data.append((feature.properties["z"] * 4) - 6)
+    x_coor = np.array(x_coor)
+    y_coor = np.array(y_coor)
+    data = np.array(data)
+    xvalues = np.linspace(1, 1000, 1000)
+    yvalues = np.linspace(1, 750, 750)
+    xx, yy = np.meshgrid(xvalues, yvalues)
+    interpolated_data = interpolate.griddata((x_coor, y_coor), data, (xx, yy))
+    interpolated_data = cv2.flip(interpolated_data, 0)
+    if save:
+        with open('interpolated_data.csv', 'w') as f:
+            for line in interpolated_data:
+                f.write(str(line))
+                f.write('\n')
+    #plt.imshow(interpolated_data)
+
+    compression = {"compress": "LZW"}
+    filename = 'test_grid_height_map%d.tif' % turn
+    with opentif(os.path.join(path, filename), 'w',
+                 driver='GTiff', width=1000, height=750, count=1,
+                 dtype=interpolated_data.dtype, crs='EPSG:3857',
+                 transform=from_origin(0, 0, 1, 1), **compression) as dst:
+        dst.write(interpolated_data, 1)
+    """
+    To do: return img directly instead of saving, if possible (changing it to
+    raster and then to string is possible, but adding crs may be a challenge).
+    """
+    tac = time.time()
+    print(tac-tic)
+    return interpolated_data
+
+
+def create_geotiff_old(grid, turn=0, path=""):
     """
     Function that creates a GeoTIFF from the grid as constructed in the
     hex_to_points function
     """
-    d = turn
+    tic = time.time()
     features = []
     step = 3 * 1.25
     for feature in grid.features:
@@ -538,10 +591,10 @@ def create_geotiff(grid, turn=0, path=""):
                     feature in features['features']])
     heightmap = rasterize(zip(geometries, out), out_shape=(750, 1000))
     heightmap = cv2.flip(heightmap, 0)
-    plt.imshow(heightmap)
+    #plt.imshow(heightmap)
 
     compression = {"compress": "LZW"}
-    with opentif(os.path.join(path, 'grid_height_map%d.tif' % d), 'w',
+    with opentif(os.path.join(path, 'grid_height_map%d.tif' % turn), 'w',
                  driver='GTiff', width=1000, height=750, count=1,
                  dtype=heightmap.dtype, crs='EPSG:3857',
                  transform=from_origin(0, 0, 1, 1), **compression) as dst:
@@ -549,6 +602,8 @@ def create_geotiff(grid, turn=0, path=""):
     """
     To do: return img directly instead of saving
     """
+    tac = time.time()
+    print(tac-tic)
     return heightmap
 
 
@@ -606,7 +661,13 @@ if __name__ == "__main__":
     t8 = time.time()
     if save:
         print("Saved both grids: " + str(t8 - t7))
-    create_geotiff(node_grid)
+    heightmap = create_geotiff(node_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
     D3D.run_model(model, filled_node_grid, face_grid, hexagons)
+    """
+    with open('node_grid0.geojson', 'r') as f:
+        grid = geojson.load(f)
+    heightmap = create_geotiff(grid)
+    tygron.set_elevation(heightmap)
+    """

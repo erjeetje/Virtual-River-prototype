@@ -10,6 +10,8 @@ import base64
 import json
 import random
 from shapely import geometry
+import gridMapping as gridmap
+#from arcpy import NumPyArrayToRaster
 
 
 def join_session(username, password, application_type="EDITOR",
@@ -25,7 +27,7 @@ def join_session(username, password, application_type="EDITOR",
     session_id = -1
     sessions = sessions_data.json()
     for item in sessions:
-        if item["name"] == "virtual_river2":
+        if item["name"] == "virtual_river_world":
             session_id = item["id"]
             break
     if session_id > -1:
@@ -234,10 +236,6 @@ def set_elevation(tiff_file, api_key, turn=0, start=False):
     GeoTIFF as the elevation map. On turn updates, selects the newly updated
     GeoTIFF as the new elevation map.
     """
-    """
-    To fix: update heightmap from variable instead of from reading file. May
-    require Image.tobytes()
-    """
     with open(tiff_file, 'rb') as f:
         heightmap = f.read()
     # the "True" value in below's if statement should be "start"
@@ -261,6 +259,49 @@ def set_elevation(tiff_file, api_key, turn=0, start=False):
         api_endpoint = ("https://engine.tygron.com/api/session/event/"
                         "editormap/set_height_geotiff/?")
         r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])
+        return
+    else:
+        return
+
+
+def set_elevation2(heightmap, api_key, turn=0, start=False):
+    """
+    Function to update the elevation of the entire Tygron world. Uploads
+    a new GeoTIFF and in case of the initiating the session, selects the
+    GeoTIFF as the elevation map. On turn updates, selects the newly updated
+    GeoTIFF as the new elevation map.
+    """
+    """
+    To fix: update heightmap from variable instead of from reading file. This
+    may work with an approach as below, but installing arcpy will make many
+    changes to packages (upgrades and downgrades), including numpy which cannot
+    but upgraded until Fedor gives the green light to do so.
+    """
+    heightmap = NumPyArrayToRaster(heightmap, x_cell_size=1, y_cell_size=1)
+    heightmap = heightmap.tostring()
+    # the "True" value in below's if statement should be "start"
+    if True:
+        api_endpoint = ("https://engine.tygron.com/api/session/event/"
+                        "editorgeotiff/add/?")
+    else:
+        api_endpoint = ("https://engine.tygron.com/api/session/event/"
+                        "editorgeotiff/set_geotiff/?")
+    tiff_id = turn
+    tiff_base64 = base64.b64encode(heightmap).decode()
+    uploader = "r.j.denhaan@utwente.nl"
+    r = requests.post(url=api_endpoint+api_key, json=[tiff_id, tiff_base64,
+                                                      uploader])
+    print(r.text)
+    try:
+        heightmap_id = r.json()
+    except ValueError:
+        print("no content")
+    # the "True" value in below's if statement should be "start"
+    if True:
+        api_endpoint = ("https://engine.tygron.com/api/session/event/"
+                        "editormap/set_height_geotiff/?")
+        r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])
+        print(r)
         return
     else:
         return
@@ -294,7 +335,7 @@ def hex_to_terrain(api_key, hexagons):
     for feature in hexagons.features:
         if not feature.properties["landuse_changed"]:
             continue
-        if feature.properties["z"] < 2:
+        if feature.properties["water"]:
             continue
         if feature.properties["landuse"] == 0:
             # built environment / farm / factory
@@ -361,6 +402,11 @@ def hex_to_terrain(api_key, hexagons):
 
 
 if __name__ == '__main__':
+    """
+    with open('node_grid0.geojson', 'r') as f:
+        grid = geojson.load(f)
+    heightmap = gridmap.create_geotiff(grid)
+    """
     with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
         username = f.read()
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
@@ -381,4 +427,11 @@ if __name__ == '__main__':
         #set_terrain_type(api_key, hexagons, terrain_type="water")
         #tiff_file = "grid_height_map0.tif"
         #set_elevation(tiff_file, api_key, start=True)
-        set_function_value(api_key, 6, 12.0, function_value="FLOOR_HEIGHT_M")
+        #set_function_value(api_key, 6, 12.0, function_value="FLOOR_HEIGHT_M")
+        #set_elevation2(heightmap, api_key, start=True)
+    """
+    tiff_file = "test_grid_height_map0.tif"
+    with open(tiff_file, 'rb') as f:
+        heightmap = f.read()
+    print(heightmap)
+    """
