@@ -111,8 +111,8 @@ def main_menu():
                 #try:
                 token, hexagons_new, hex_sandbox, hex_tygron_int, hex_tygron, \
                     node_grid, filled_node_grid, face_grid, transforms, pers, \
-                    img_x, img_y, origins, radius, model, heightmap \
-                    = initialize(turn, dir_path)
+                    img_x, img_y, origins, radius, model, heightmap, \
+                    heightmap_id = initialize(turn, dir_path)
                 #except TypeError:
                     #print("Calibration failed, closing application")
                     #time.sleep(2)
@@ -252,7 +252,7 @@ def initialize(turn, dir_path, save=True):
         hexagons_tygron = tygron.set_terrain_type(token, hexagons_tygron)
         tygron.hex_to_terrain(token, hexagons)
         file_location = (dir_path + "\\grid_height_map" + str(turn) + ".tif")
-        tygron.set_elevation(file_location, token, turn=0)
+        heightmap_id = tygron.set_elevation(file_location, token, turn=0)
         print("updated Tygron")
         print("stored initial board state")
         toc = time.time()
@@ -261,7 +261,7 @@ def initialize(turn, dir_path, save=True):
         return token, hexagons, hexagons_sandbox, hexagons_tygron_int, \
             hexagons_tygron, node_grid, filled_node_grid, \
             face_grid, transforms, pers, img_x, img_y, origins, radius, \
-            model, heightmap
+            model, heightmap, heightmap_id
     except UnboundLocalError:
         print("logging in to Tygron failed, closing application")
         quit()
@@ -330,7 +330,7 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
                 path=dir_path)
     heightmap = gridmap.create_geotiff(node_grid, turn=turn, path=dir_path)
     file_location = (dir_path + "\\grid_height_map" + str(turn) + ".tif")
-    tygron.set_elevation(file_location, token, turn=0)
+    heightmap_id = tygron.set_elevation(file_location, token, turn=0)
     if save:
         with open(os.path.join(dir_path, 'node_grid%d.geojson' % turn),
                   'w') as f:

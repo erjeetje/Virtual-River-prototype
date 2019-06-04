@@ -9,6 +9,7 @@ import requests
 import base64
 import json
 import random
+import time
 from shapely import geometry
 import gridMapping as gridmap
 #from arcpy import NumPyArrayToRaster
@@ -229,7 +230,9 @@ def update_terrain(api_key, hexagons, terrain_type="land",
     return r
 
 
-def set_elevation(tiff_file, api_key, turn=0, start=False):
+def set_elevation(tiff_file, api_key, turn=0,
+                  api_endpoint=("https://engine.tygron.com/api/session/"
+                                "event/editorgeotiff/add/?")):
     """
     Function to update the elevation of the entire Tygron world. Uploads
     a new GeoTIFF and in case of the initiating the session, selects the
@@ -239,7 +242,54 @@ def set_elevation(tiff_file, api_key, turn=0, start=False):
     with open(tiff_file, 'rb') as f:
         heightmap = f.read()
     # the "True" value in below's if statement should be "start"
-    if True:
+    json = elevation_json(turn, heightmap)
+    r = requests.post(url=api_endpoint+api_key, json=json)
+    print(r)
+    try:
+        heightmap_id = r.json()
+        print(heightmap_id)
+    except ValueError:
+        print("no content")
+    api_endpoint = ("https://engine.tygron.com/api/session/event/"
+                    "editormap/set_height_geotiff/?")
+    r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])
+    return heightmap_id
+
+
+def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
+                     api_endpoint=("https://engine.tygron.com/api/session/"
+                                   "event/editorgeotiff/set_geotiff/?")):
+    json = elevation_json(heightmap_id, heightmap)
+    #json.append('EPSG:3857')
+    r = requests.post(url=api_endpoint+api_key, json=json)
+    print(r)
+    print(r.text)
+    try:
+        heightmap_id = r.json()
+        print(heightmap_id)
+    except ValueError:
+        print("no content")
+    return
+
+
+def elevation_json(tiff_id, heightmap):
+    tiff_base64 = base64.b64encode(heightmap).decode()
+    uploader = "r.j.denhaan@utwente.nl"
+    datapackage = [tiff_id, tiff_base64, uploader]
+    return datapackage
+
+
+def set_elevation3(tiff_file, api_key, turn=0, start=False):
+    """
+    Function to update the elevation of the entire Tygron world. Uploads
+    a new GeoTIFF and in case of the initiating the session, selects the
+    GeoTIFF as the elevation map. On turn updates, selects the newly updated
+    GeoTIFF as the new elevation map.
+    """
+    with open(tiff_file, 'rb') as f:
+        heightmap = f.read()
+    # the "True" value in below's if statement should be "start"
+    if start:
         api_endpoint = ("https://engine.tygron.com/api/session/event/"
                         "editorgeotiff/add/?")
     else:
@@ -250,18 +300,20 @@ def set_elevation(tiff_file, api_key, turn=0, start=False):
     uploader = "r.j.denhaan@utwente.nl"
     r = requests.post(url=api_endpoint+api_key, json=[tiff_id, tiff_base64,
                                                       uploader])
+    print(r)
     try:
         heightmap_id = r.json()
+        print(heightmap_id)
     except ValueError:
         print("no content")
     # the "True" value in below's if statement should be "start"
-    if True:
+    if False:
         api_endpoint = ("https://engine.tygron.com/api/session/event/"
                         "editormap/set_height_geotiff/?")
         r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])
         return
     else:
-        return
+        return heightmap_id
 
 
 def set_elevation2(heightmap, api_key, turn=0, start=False):
@@ -304,7 +356,7 @@ def set_elevation2(heightmap, api_key, turn=0, start=False):
         print(r)
         return
     else:
-        return
+        return heightmap_id
 
 
 """
@@ -402,11 +454,11 @@ def hex_to_terrain(api_key, hexagons):
 
 
 if __name__ == '__main__':
-    """
-    with open('node_grid0.geojson', 'r') as f:
+    
+    with open('storing_files\\node_grid1.geojson', 'r') as f:
         grid = geojson.load(f)
     heightmap = gridmap.create_geotiff(grid)
-    """
+    
     with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
         username = f.read()
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
@@ -426,7 +478,12 @@ if __name__ == '__main__':
         #hexagons = update_hexagons_tygron_id(api_key, hexagons)
         #set_terrain_type(api_key, hexagons, terrain_type="water")
         #tiff_file = "grid_height_map0.tif"
-        #set_elevation(tiff_file, api_key, start=True)
+        filename = 'test_grid_height_map0.tif'
+        heightmap_id = set_elevation(filename, api_key)
+        #print(heightmap_id)
+        #time.sleep(5)
+        #filename = 'test_grid_height_map.tif'
+        #update_elevation(filename, api_key, heightmap_id)
         #set_function_value(api_key, 6, 12.0, function_value="FLOOR_HEIGHT_M")
         #set_elevation2(heightmap, api_key, start=True)
     """
