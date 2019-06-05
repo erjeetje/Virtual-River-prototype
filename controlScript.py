@@ -127,10 +127,12 @@ def main_menu():
         elif a == '1':
             if not start:
                 turn += 1
-                hexagons_new, node_grid, filled_node_grid, heightmap = \
-                    update(token, dir_path, transforms, pers, img_x, img_y,
-                           origins, radius, hexagons_new, node_grid,
-                           filled_node_grid, turn=turn)
+                hexagons_new, node_grid, filled_node_grid, face_grid, \
+                    heightmap = update(token, dir_path, transforms, pers,
+                                       img_x, img_y, origins, radius,
+                                       hexagons_new, node_grid,
+                                       filled_node_grid, face_grid,
+                                       model, turn=turn)
                 print("Update complete, waiting for next command")
             else:
                 print("No calibration run, please first calibrate Virtual "
@@ -268,7 +270,8 @@ def initialize(turn, dir_path, save=True):
 
 
 def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
-           hexagons_new, node_grid, filled_node_grid, turn=1, save=True):
+           hexagons_new, node_grid, filled_node_grid, face_grid, model, turn=1,
+           save=True):
     """
     function that initiates and handles all update steps. Returns all update
     variables
@@ -289,6 +292,9 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
                                                    hexagons_new)
     hexagons_sandbox = detect.transform(hexagons_new, transforms,
                                         export="sandbox")
+    hexagons_sandbox, face_grid = roughness.hex_to_points(model,
+                                                          hexagons_sandbox,
+                                                          face_grid)
     if save:
         with open(os.path.join(dir_path, 'hexagons%d.geojson' % turn),
                   'w') as f:
@@ -346,7 +352,7 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
           ". Comparison update time: " + str(tac-tic) +
           ". Interpolation update time: " + str(toc-tac) +
           ". Total update time: " + str(toc-tic))
-    return hexagons_new, node_grid, filled_node_grid, heightmap
+    return hexagons_new, node_grid, filled_node_grid, face_grid, heightmap
 
 
 if __name__ == '__main__':

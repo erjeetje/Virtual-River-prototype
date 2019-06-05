@@ -9,8 +9,10 @@ import requests
 import base64
 import json
 import random
-import time
+import numpy as np
 from shapely import geometry
+from geojson import load
+from scipy import interpolate
 import gridMapping as gridmap
 #from arcpy import NumPyArrayToRaster
 
@@ -28,7 +30,7 @@ def join_session(username, password, application_type="EDITOR",
     session_id = -1
     sessions = sessions_data.json()
     for item in sessions:
-        if item["name"] == "virtual_river_world":
+        if item["name"] == "virtual_river2":
             session_id = item["id"]
             break
     if session_id > -1:
@@ -77,8 +79,6 @@ def update_hexagons_tygron_id(api_key, hexagons):
     for feature in hexagons.features:
         tygron_id = building_indices.get(feature.id, None)
         feature.properties["tygron_id"] = tygron_id
-        print(str(feature.id) + ": " +
-              str(feature.properties["tygron_id"]))
     return hexagons
 
 
@@ -260,7 +260,7 @@ def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
                      api_endpoint=("https://engine.tygron.com/api/session/"
                                    "event/editorgeotiff/set_geotiff/?")):
     json = elevation_json(heightmap_id, heightmap)
-    #json.append('EPSG:3857')
+    json.append("")
     r = requests.post(url=api_endpoint+api_key, json=json)
     print(r)
     print(r.text)
@@ -400,6 +400,8 @@ def hex_to_terrain(api_key, hexagons):
                 new_type = 851  # Caballero Fabriek
         elif feature.properties["landuse"] == 1:
             # agriculture; production meadow/crop field
+            new_type = 1000000
+            """
             rand = random.randint(1, 3)
             if rand == 1:
                 new_type = 728  # maisveld
@@ -407,15 +409,19 @@ def hex_to_terrain(api_key, hexagons):
                 new_type = 729  # graanveld
             else:
                 new_type = 889  # koeienveld
+            """
         elif feature.properties["landuse"] == 2:
             # natural grassland
-            new_type = 730  # grasland
+            new_type = 1000001
+            #new_type = 730  # grasland
         elif feature.properties["landuse"] == 3:
             # reed; 'ruigte'
-            new_type = 742  # riet
+            new_type = 1000003
+            #new_type = 742  # riet
         elif feature.properties["landuse"] == 4:
             # shrubs; hard-/softwood
-            new_type = 898  # struikgewas
+            new_type = 1000004
+            #new_type = 898  # struikgewas
             """
             rand = random.randint(1, 2)
             if rand == 1:
@@ -425,7 +431,8 @@ def hex_to_terrain(api_key, hexagons):
             """
         elif feature.properties["landuse"] == 5:
             # forest; hard-/softwood
-            new_type = 440  # loofbomen
+            new_type = 1000005
+            #new_type = 440  # loofbomen
             """
             rand = random.randint(1, 2)
             if rand == 1:
@@ -454,11 +461,9 @@ def hex_to_terrain(api_key, hexagons):
 
 
 if __name__ == '__main__':
-    
-    with open('storing_files\\node_grid1.geojson', 'r') as f:
-        grid = geojson.load(f)
+    with open('storing_files\\node_grid0.geojson', 'r') as f:
+        grid = load(f)
     heightmap = gridmap.create_geotiff(grid)
-    
     with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
         username = f.read()
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
@@ -469,7 +474,7 @@ if __name__ == '__main__':
     else:
         api_key = "token="+api_key
         #print(api_key)
-        #set_function(api_key, 60, 0)
+        #set_function(api_key, 60, 1000001)
         #add_standard(api_key)
         #buildings_json = get_buildings(api_key)
         #print(buildings_json)

@@ -528,7 +528,20 @@ def create_geotiff(grid, turn=0, path="", save=False):
             continue
         x_coor.append(x)
         y_coor.append(y)
-        data.append((feature.properties["z"] * 4) - 6)
+        """
+        The code below can be adjusted to 'manipulate' how the virtual world
+        will look in Tygron. Current implementation amplifies the dike segments
+        """
+        height = (feature.properties["z"] * 4) - 6
+        if height > 8:
+            height = height * 1.5
+        """
+        if feature.properties["z"] > 3.5:
+            height = (feature.properties["z"] * 8) - 8
+        else:
+            height = (feature.properties["z"] * 6) - 8
+        """
+        data.append(height)
     x_coor = np.array(x_coor)
     y_coor = np.array(y_coor)
     data = np.array(data)
@@ -545,7 +558,7 @@ def create_geotiff(grid, turn=0, path="", save=False):
     #plt.imshow(interpolated_data)
 
     compression = {"compress": "LZW"}
-    filename = 'test_grid_height_map%d.tif' % turn
+    filename = 'grid_height_map%d.tif' % turn
     with opentif(os.path.join(path, filename), 'w',
                  driver='GTiff', width=1000, height=750, count=1,
                  dtype=interpolated_data.dtype, crs='EPSG:3857',
@@ -639,7 +652,7 @@ if __name__ == "__main__":
     print("Interpolate grid: " + str(t4 - t3))
     filled_node_grid = deepcopy(node_grid)
     filled_hexagons = deepcopy(hexagons)
-    filled_hexagons = hexagons_to_fill(filled_hexagons)
+    filled_hexagons, dike_top, dike_bottom = hexagons_to_fill(filled_hexagons)
     t5 = time.time()
     print("Hexagons to fill: " + str(t5 - t4))
     test_print = []
