@@ -17,6 +17,7 @@ import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
+import createStructures as structures
 from copy import deepcopy
 #import plotHexagons as plotter
 
@@ -189,6 +190,8 @@ def initialize(turn, dir_path, save=True):
                                          origins, radius, features,
                                          method='LAB', path=dir_path)
         print("processed initial board state")
+        hexagons = structures.determine_dikes(hexagons)
+        hexagons = structures.determine_channel(hexagons)
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,
                                             export="sandbox", path=dir_path)
@@ -290,6 +293,8 @@ def update(token, dir_path, transforms, pers, img_x, img_y, origins, radius,
     hexagons_new = tygron.update_hexagons_tygron_id(token, hexagons_new)
     hexagons_new, dike_moved = compare.compare_hex(token, hexagons_old,
                                                    hexagons_new)
+    if dike_moved:
+        hexagons_new = structures.determine_dikes(hexagons_new)
     hexagons_sandbox = detect.transform(hexagons_new, transforms,
                                         export="sandbox")
     hexagons_sandbox, face_grid = roughness.hex_to_points(model,
