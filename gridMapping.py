@@ -99,27 +99,24 @@ def read_face_grid(model, save=False, path=""):
 
 
 def hexagons_to_fill(hexagons):
-    dikes_top = []
-    dikes_bottom = []
+    dikes_north = []
+    dikes_south = []
     for feature in hexagons.features:
-        if feature.properties["z"] >= 4:
-            shape = geometry.asShape(feature.geometry)
-            y_hex = shape.centroid.y
-            if y_hex >= 0:
-                dikes_top.append(feature)
-            else:
-                dikes_bottom.append(feature)
-    dikes_top = geojson.FeatureCollection(dikes_top)
-    dikes_bottom = geojson.FeatureCollection(dikes_bottom)
+        if feature.properties["north_dike"] is True:
+            dikes_north.append(feature)
+        elif feature.properties["south_dike"] is True:
+            dikes_south.append(feature)
+    dikes_north = geojson.FeatureCollection(dikes_north)
+    dikes_south = geojson.FeatureCollection(dikes_south)
 
     for feature in hexagons.features:
         try:
-            dike_top = dikes_top[feature.properties["column"]-1]
+            dike_top = dikes_north[feature.properties["column"]-1]
         except KeyError:
             print("area does not have a complete dike in the north")
             continue
         try:
-            dike_bottom = dikes_bottom[feature.properties["column"]-1]
+            dike_bottom = dikes_south[feature.properties["column"]-1]
         except KeyError:
             print("area does not have a complete dike in the south")
             continue
