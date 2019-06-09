@@ -64,7 +64,45 @@ def get_channel(hexagons, north_side=True):
 
 
 def create_groynes(hexagons, north_side=True):
-    return
+    height = 0.0
+    y_dist = 0.0
+    x_dist = 0.0
+    groynes = []
+    for feature in hexagons.features:
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        y_hex = shape.centroid.y
+        if feature.id == 0:
+            line = list(geojson.utils.coords(feature.geometry))
+            maxy = 0.0
+            for x, y in line:
+                y = abs(y)
+                if y > maxy:
+                    maxy = y
+            height = (maxy - abs(y_hex))
+            x_dist = (1/6) * height
+            y_dist = height * 0.25
+            if not north_side:
+                y_dist = y_dist * -1
+                height = height * -1
+        left_point_top = [x_hex-x_dist, y_hex+height]
+        right_point_top = [x_hex+x_dist, y_hex+height]
+        right_point_bottom = [x_hex+x_dist, y_hex+y_dist]
+        left_point_bottom = [x_hex-x_dist, y_hex+y_dist]
+        polygon = geojson.Polygon([[left_point_top, right_point_top,
+                                    right_point_bottom, left_point_bottom,
+                                    left_point_top]])
+        groyne = geojson.Feature(id=feature.id, geometry=polygon)
+        groyne.properties["active"] = True
+        groynes.append(groyne)
+    groynes = geojson.FeatureCollection(groynes)
+    if north_side:
+        with open('groynes_test_north.geojson', 'w') as f:
+            geojson.dump(groynes, f, sort_keys=True, indent=2)
+    else:
+        with open('groynes_test_south.geojson', 'w') as f:
+            geojson.dump(groynes, f, sort_keys=True, indent=2)
+    return groynes
 
 
 def create_LTDs(hexagons, north_side=True):
@@ -92,7 +130,6 @@ def create_LTDs(hexagons, north_side=True):
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
-        print(y_hex)
         if feature.id == 0:
             line = list(geojson.utils.coords(feature.geometry))
             maxy = 0.0
@@ -145,7 +182,6 @@ def create_LTDs(hexagons, north_side=True):
                     hex_right_north = True
         mid_point_top = [x_hex, y_hex+size]
         mid_point_bottom = [x_hex, y_hex-size]
-        print(mid_point_top, mid_point_bottom)
         if hex_left_north and hex_right_north:
             # shape: high to high: \_/
             x_top_left = x_hex - x_dist
@@ -210,5 +246,7 @@ if __name__ == '__main__':
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
     north_channel = get_channel(hexagons, north_side=True)
     south_channel = get_channel(hexagons, north_side=False)
-    ltd_features = create_LTDs(north_channel, north_side=True)
-    ltd_features = create_LTDs(south_channel, north_side=False)
+    groynes = create_groynes(north_channel, north_side=True)
+    groynes = create_groynes(south_channel, north_side=False)
+    #ltd_features = create_LTDs(north_channel, north_side=True)
+    #ltd_features = create_LTDs(south_channel, north_side=False)
