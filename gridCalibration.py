@@ -187,9 +187,9 @@ def create_features(height, width):
             origins.append([x, y])
             column.append(a)
     origins = np.array(origins)
-    dist = (radius/2)/np.cos(np.deg2rad(30))
-    x_jump = dist/2
     y_jump = radius/2
+    dist = y_jump/np.cos(np.deg2rad(30))
+    x_jump = dist/2
     features = []
     for i, (x, y) in enumerate(origins):
         point1 = [x+dist, y]
