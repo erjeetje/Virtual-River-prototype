@@ -48,9 +48,9 @@ def determine_channel(hexagons):
 
 
 def get_channel(hexagons, north_side=True):
-    hexagons_temp = deepcopy(hexagons)
+    hexagons_copy = deepcopy(hexagons)
     channel = []
-    for feature in hexagons_temp.features:
+    for feature in hexagons_copy.features:
         if north_side:
             if feature.properties["north_side_channel"]:
                 channel.append(feature)
@@ -80,7 +80,7 @@ def create_groynes(hexagons, north_side=True):
                 if y > maxy:
                     maxy = y
             height = (maxy - abs(y_hex))
-            x_dist = (1/6) * height
+            x_dist = (1/8) * height
             y_dist = height * 0.25
             if not north_side:
                 y_dist = y_dist * -1
@@ -131,6 +131,8 @@ def create_LTDs(hexagons, north_side=True):
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
         if feature.id == 0:
+            # determine hexagon size and reusable variables for other hexagons
+            # only for the first hexagon
             line = list(geojson.utils.coords(feature.geometry))
             maxy = 0.0
             for x, y in line:
@@ -183,7 +185,7 @@ def create_LTDs(hexagons, north_side=True):
         mid_point_top = [x_hex, y_hex+size]
         mid_point_bottom = [x_hex, y_hex-size]
         if hex_left_north and hex_right_north:
-            # shape: high to high: \_/
+            # LTD shape: high to high: \_/
             x_top_left = x_hex - x_dist
             y_top_left = y_hex + y_dist
             left_point_top = [x_top_left+x_jump, y_top_left+y_jump]
@@ -192,7 +194,7 @@ def create_LTDs(hexagons, north_side=True):
             right_point_top = [x_top_left-x_jump, y_top_left+y_jump]
             right_point_bottom = [x_top_left+x_jump, y_top_left-y_jump]
         elif hex_left_north and not hex_right_north:
-            # shape high to low: `-_
+            # LTD shape high to low: `-_
             x_top_left = x_hex - x_dist
             y_top_left = y_hex + y_dist
             left_point_top = [x_top_left+x_jump, y_top_left+y_jump]
@@ -202,7 +204,7 @@ def create_LTDs(hexagons, north_side=True):
             right_point_top = [x_top_left+x_jump, y_top_left+y_jump]
             right_point_bottom = [x_top_left-x_jump, y_top_left-y_jump]
         elif not hex_left_north and hex_right_north:
-            # shape low to high: _-`
+            # LTD shape low to high: _-`
             x_top_left = x_hex - x_dist
             y_top_left = y_hex - y_dist
             left_point_top = [x_top_left-x_jump, y_top_left+y_jump]
@@ -212,7 +214,7 @@ def create_LTDs(hexagons, north_side=True):
             right_point_top = [x_top_left-x_jump, y_top_left+y_jump]
             right_point_bottom = [x_top_left+x_jump, y_top_left-y_jump]
         else:
-            # shape low to high: /`\
+            # LTD shape low to high: /`\
             x_top_left = x_hex - x_dist
             y_top_left = y_hex - y_dist
             left_point_top = [x_top_left-x_jump, y_top_left+y_jump]
@@ -248,5 +250,5 @@ if __name__ == '__main__':
     south_channel = get_channel(hexagons, north_side=False)
     groynes = create_groynes(north_channel, north_side=True)
     groynes = create_groynes(south_channel, north_side=False)
-    #ltd_features = create_LTDs(north_channel, north_side=True)
-    #ltd_features = create_LTDs(south_channel, north_side=False)
+    ltd_features = create_LTDs(north_channel, north_side=True)
+    ltd_features = create_LTDs(south_channel, north_side=False)
