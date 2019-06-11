@@ -244,12 +244,10 @@ def set_elevation(tiff_file, api_key, turn=0,
     # the "True" value in below's if statement should be "start"
     json = elevation_json(turn, heightmap)
     r = requests.post(url=api_endpoint+api_key, json=json)
-    print(r)
     try:
         heightmap_id = r.json()
-        print(heightmap_id)
     except ValueError:
-        print("no content")
+        print("no heightmap id found")
     api_endpoint = ("https://engine.tygron.com/api/session/event/"
                     "editormap/set_height_geotiff/?")
     r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])

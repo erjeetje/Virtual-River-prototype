@@ -190,11 +190,36 @@ def initialize(turn, dir_path, save=True):
                                          origins, radius, features,
                                          method='LAB', path=dir_path)
         print("processed initial board state")
-        hexagons = structures.determine_dikes(hexagons)
-        hexagons = structures.determine_channel(hexagons)
         hexagons = tygron.update_hexagons_tygron_id(token, hexagons)
         hexagons_sandbox = detect.transform(hexagons, transforms,
                                             export="sandbox", path=dir_path)
+        hexagons_sandbox = structures.determine_dikes(hexagons_sandbox)
+        hexagons_sandbox = structures.determine_channel(hexagons_sandbox)
+        north_channel = structures.get_channel(hexagons_sandbox, north_side=True)
+        south_channel = structures.get_channel(hexagons_sandbox, north_side=False)
+        groynes_north = structures.create_groynes(north_channel,
+                                                  north_side=True)
+        groynes_south = structures.create_groynes(south_channel,
+                                                  north_side=False)
+        ltd_features_north = structures.create_LTDs(north_channel,
+                                                    north_side=True)
+        ltd_features_south = structures.create_LTDs(south_channel,
+                                                    north_side=False)
+        groynes_north_tygron = detect.transform(groynes_north, transforms,
+                                               export="sandbox2tygron")
+        groynes_south_tygron = detect.transform(groynes_south, transforms,
+                                               export="sandbox2tygron")
+        ltd_features_north_tygron = detect.transform(ltd_features_north,
+                                                     transforms,
+                                                     export="sandbox2tygron")
+        ltd_features_south_tygron = detect.transform(ltd_features_south,
+                                                     transforms,
+                                                     export="sandbox2tygron")
+        if True:
+            with open('groynes_test_north_tygron.geojson', 'w') as f:
+                geojson.dump(groynes_north_tygron, f, sort_keys=True, indent=2)
+            with open('groynes_test_south_tygron.geojson', 'w') as f:
+                geojson.dump(groynes_south_tygron, f, sort_keys=True, indent=2)
         if save:
             with open(os.path.join(dir_path, 'hexagons%d.geojson' % turn),
                       'w') as f:

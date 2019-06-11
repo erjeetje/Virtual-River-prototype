@@ -196,6 +196,8 @@ def transform(features, transforms, export=None, path=""):
         transform = transforms['img_post_cut2tygron_export']
     elif export == "tygron":
         transform = transforms['img_post_cut2tygron_update']
+    elif export == "sandbox2tygron":
+        transform = transforms['model2tygron_update']
     else:
         print("unknown export method, current supported are: 'sandbox', "
               "'tygron' & 'tygron_initialize'")
