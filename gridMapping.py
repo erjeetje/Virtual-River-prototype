@@ -510,7 +510,6 @@ def create_geotiff(grid, turn=0, path="", save=False):
     Function that creates a GeoTIFF from the grid as constructed in the
     hex_to_points function, using interpolation to smoothen the heightmap.
     """
-    tic = time.time()
     x_coor = []
     y_coor = []
     data = []
@@ -532,12 +531,6 @@ def create_geotiff(grid, turn=0, path="", save=False):
         height = (feature.properties["z"] * 4) - 6
         if height > 8:
             height = height * 1.5
-        """
-        if feature.properties["z"] > 3.5:
-            height = (feature.properties["z"] * 8) - 8
-        else:
-            height = (feature.properties["z"] * 6) - 8
-        """
         data.append(height)
     x_coor = np.array(x_coor)
     y_coor = np.array(y_coor)
@@ -565,8 +558,6 @@ def create_geotiff(grid, turn=0, path="", save=False):
     To do: return img directly instead of saving, if possible (changing it to
     raster and then to string is possible, but adding crs may be a challenge).
     """
-    tac = time.time()
-    print(tac-tic)
     return interpolated_data
 
 

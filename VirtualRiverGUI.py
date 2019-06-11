@@ -82,7 +82,7 @@ class runScript():
         except FileExistsError:
             print("Directory ", self.dir_path,
                   " already exists, overwriting files.")
-        self.start = True
+        self.initialized = False
         self.turn = 0
         self.save = False
         self.token = ""
@@ -100,20 +100,6 @@ class runScript():
         self.img_y = None
         self.origins = None
         self.radius = None
-
-    def getStart(self):
-        return self.start
-
-    def getTurn(self):
-        return self.turn
-
-    def updateStart(self):
-        self.start = False
-        return
-
-    def updateTurn(self):
-        self.turn += 1
-        return
 
     def initialize(self):
         tic = time.time()
@@ -258,6 +244,7 @@ class runScript():
             print("stored initial board state")
             toc = time.time()
             print("Start up and calibration time: "+str(toc-tic))
+            self.initialized = True
         return
 
     def update(self):
@@ -265,6 +252,9 @@ class runScript():
         function that initiates and handles all update steps. Returns all update
         variables
         """
+        if not self.initialized:
+            print("Virtual River is not yet calibrated, please first run initialize")
+            return
         tic = time.time()
         print("Updating board state")
         img = webcam.get_image(self.turn, mirror=True)
