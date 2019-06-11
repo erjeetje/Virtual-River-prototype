@@ -53,7 +53,7 @@ class GUI(QWidget):
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
         btn_exit.move(20, 170)
-        self.setWindowTitle('Test')
+        self.setWindowTitle('Virtual River interface')
         self.show()  # app.exec_()
 
     def on_update_button_clicked(self):
@@ -84,7 +84,7 @@ class runScript():
                   " already exists, overwriting files.")
         self.start = True
         self.turn = 0
-        self.save
+        self.save = False
         self.token = ""
         self.model = None
         self.hexagons = None
@@ -250,7 +250,7 @@ class runScript():
             replace this to either also check which hexagons need to change or make
             an empty project area that is either land or water only.
             """
-            self.hexagons_tygron = tygron.set_terrain_type(token, self.hexagons_tygron)
+            self.hexagons_tygron = tygron.set_terrain_type(self.token, self.hexagons_tygron)
             tygron.hex_to_terrain(self.token, self.hexagons)
             file_location = (self.dir_path + "\\grid_height_map" + str(self.turn) + ".tif")
             heightmap_id = tygron.set_elevation(file_location, self.token, turn=self.turn)
@@ -339,7 +339,7 @@ class runScript():
                              indent=2)
             print("saved grid files for turn " + str(self.turn) + " (conditional)")
         toc = time.time()
-        print("Updated to turn " + str(turn) +
+        print("Updated to turn " + str(self.turn) +
               ". Comparison update time: " + str(tac-tic) +
               ". Interpolation update time: " + str(toc-tac) +
               ". Total update time: " + str(toc-tic))
