@@ -120,6 +120,9 @@ def landuse_to_friction(landuse):
         friction = 1
     return friction
 
+def create_weir(model, geometry, weir_type="groyne"):
+    return
+
 
 if __name__ == "__main__":
     save = False
@@ -127,7 +130,7 @@ if __name__ == "__main__":
     plt.interactive(True)
     calibration = gridmap.read_calibration()
     t0 = time.time()
-    hexagons = gridmap.read_hexagons(filename='hexagons0.geojson')
+    hexagons = gridmap.read_hexagons(filename='storing_files\\hexagons0.geojson')
     for feature in hexagons.features:
         feature.properties["z_changed"] = True
         feature.properties["landuse_changed"] = True

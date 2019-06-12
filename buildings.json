@@ -29,7 +29,7 @@
       "coordinates": [
         62.484,
         -37.500000001524505,
-        14.025
+        8.579
       ],
       "type": "Point"
     },
@@ -41,7 +41,7 @@
     "id": 0,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 604,
+    "modelVersion": 1004,
     "name": "0",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -104,7 +104,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 604
+    "version": 1004
   },
   {
     "addresses": [],
@@ -136,7 +136,7 @@
       "coordinates": [
         62.484,
         -112.50000000637866,
-        2.828
+        8.579
       ],
       "type": "Point"
     },
@@ -144,11 +144,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000005,
     "id": 1,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 605,
+    "modelVersion": 1005,
     "name": "1",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -211,7 +211,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 605
+    "version": 1005
   },
   {
     "addresses": [],
@@ -243,7 +243,7 @@
       "coordinates": [
         62.484,
         -187.50000002765796,
-        2.0
+        2.169
       ],
       "type": "Point"
     },
@@ -251,11 +251,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000003,
     "id": 2,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 606,
+    "modelVersion": 1137,
     "name": "2",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -318,7 +318,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 606
+    "version": 1137
   },
   {
     "addresses": [],
@@ -350,7 +350,7 @@
       "coordinates": [
         62.484,
         -262.5000000741122,
-        1.621
+        2.169
       ],
       "type": "Point"
     },
@@ -362,7 +362,7 @@
     "id": 3,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 608,
+    "modelVersion": 1138,
     "name": "3",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -425,7 +425,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 608
+    "version": 1138
   },
   {
     "addresses": [],
@@ -462,7 +462,7 @@
     "id": 4,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 144,
+    "modelVersion": 648,
     "name": "4",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -492,7 +492,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 144
+    "version": 648
   },
   {
     "addresses": [],
@@ -529,7 +529,7 @@
     "id": 5,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 145,
+    "modelVersion": 649,
     "name": "5",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -559,7 +559,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 145
+    "version": 649
   },
   {
     "addresses": [],
@@ -591,7 +591,7 @@
       "coordinates": [
         62.484,
         -487.50000047540186,
-        1.12
+        1.576
       ],
       "type": "Point"
     },
@@ -599,11 +599,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000000,
     "id": 6,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 611,
+    "modelVersion": 1081,
     "name": "6",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -666,7 +666,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 611
+    "version": 1081
   },
   {
     "addresses": [],
@@ -698,7 +698,7 @@
       "coordinates": [
         62.484,
         -562.500000729895,
-        2.0
+        2.891
       ],
       "type": "Point"
     },
@@ -706,11 +706,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000005,
     "id": 7,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 544,
+    "modelVersion": 1139,
     "name": "7",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -773,7 +773,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 544
+    "version": 1139
   },
   {
     "addresses": [],
@@ -805,7 +805,7 @@
       "coordinates": [
         62.484,
         -637.5000010618194,
-        2.817
+        8.131
       ],
       "type": "Point"
     },
@@ -813,11 +813,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000000,
     "id": 8,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 545,
+    "modelVersion": 1140,
     "name": "8",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -880,7 +880,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 545
+    "version": 1140
   },
   {
     "addresses": [],
@@ -912,7 +912,7 @@
       "coordinates": [
         62.484,
         -712.5000014820529,
-        13.944
+        8.131
       ],
       "type": "Point"
     },
@@ -924,7 +924,7 @@
     "id": 9,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 489,
+    "modelVersion": 1091,
     "name": "9",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -987,7 +987,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 489
+    "version": 1091
   },
   {
     "addresses": [],
@@ -1019,7 +1019,7 @@
       "coordinates": [
         124.968,
         -75.00000000195844,
-        12.33
+        8.579
       ],
       "type": "Point"
     },
@@ -1031,7 +1031,7 @@
     "id": 10,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 614,
+    "modelVersion": 1014,
     "name": "10",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1094,7 +1094,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 614
+    "version": 1014
   },
   {
     "addresses": [],
@@ -1126,7 +1126,7 @@
       "coordinates": [
         124.968,
         -150.00000001348886,
-        2.788
+        5.347
       ],
       "type": "Point"
     },
@@ -1138,7 +1138,7 @@
     "id": 11,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 615,
+    "modelVersion": 1141,
     "name": "11",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1201,7 +1201,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 615
+    "version": 1141
   },
   {
     "addresses": [],
@@ -1233,7 +1233,7 @@
       "coordinates": [
         124.968,
         -225.00000004758965,
-        2.0
+        2.169
       ],
       "type": "Point"
     },
@@ -1245,7 +1245,7 @@
     "id": 12,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 616,
+    "modelVersion": 1142,
     "name": "12",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1308,7 +1308,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 616
+    "version": 1142
   },
   {
     "addresses": [],
@@ -1345,7 +1345,7 @@
     "id": 13,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 535,
+    "modelVersion": 650,
     "name": "13",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1375,7 +1375,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 535
+    "version": 650
   },
   {
     "addresses": [],
@@ -1412,7 +1412,7 @@
     "id": 14,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 146,
+    "modelVersion": 651,
     "name": "14",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1442,7 +1442,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 146
+    "version": 651
   },
   {
     "addresses": [],
@@ -1479,7 +1479,7 @@
     "id": 15,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 147,
+    "modelVersion": 652,
     "name": "15",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1509,7 +1509,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 147
+    "version": 652
   },
   {
     "addresses": [],
@@ -1541,7 +1541,7 @@
       "coordinates": [
         124.968,
         -525.0000005924985,
-        1.212
+        1.576
       ],
       "type": "Point"
     },
@@ -1549,11 +1549,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000001,
     "id": 16,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 621,
+    "modelVersion": 1143,
     "name": "16",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1616,7 +1616,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 621
+    "version": 1143
   },
   {
     "addresses": [],
@@ -1648,7 +1648,7 @@
       "coordinates": [
         124.968,
         -600.0000008848788,
-        2.328
+        1.576
       ],
       "type": "Point"
     },
@@ -1656,11 +1656,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000005,
     "id": 17,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 549,
+    "modelVersion": 1144,
     "name": "17",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1723,7 +1723,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 549
+    "version": 1144
   },
   {
     "addresses": [],
@@ -1755,7 +1755,7 @@
       "coordinates": [
         124.968,
         -675.0000012608373,
-        12.535
+        8.131
       ],
       "type": "Point"
     },
@@ -1767,7 +1767,7 @@
     "id": 18,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 495,
+    "modelVersion": 1097,
     "name": "18",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1830,7 +1830,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 495
+    "version": 1097
   },
   {
     "addresses": [],
@@ -1862,7 +1862,7 @@
       "coordinates": [
         187.451,
         -37.500000001524505,
-        3.452
+        8.579
       ],
       "type": "Point"
     },
@@ -1870,11 +1870,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000004,
     "id": 19,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 623,
+    "modelVersion": 1145,
     "name": "19",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -1937,7 +1937,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 623
+    "version": 1145
   },
   {
     "addresses": [],
@@ -1969,7 +1969,7 @@
       "coordinates": [
         187.451,
         -112.50000000637866,
-        11.547
+        8.579
       ],
       "type": "Point"
     },
@@ -1981,7 +1981,7 @@
     "id": 20,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 624,
+    "modelVersion": 1024,
     "name": "20",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2044,7 +2044,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 624
+    "version": 1024
   },
   {
     "addresses": [],
@@ -2076,7 +2076,7 @@
       "coordinates": [
         187.451,
         -187.50000002765796,
-        2.168
+        2.169
       ],
       "type": "Point"
     },
@@ -2084,11 +2084,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000001,
     "id": 21,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 625,
+    "modelVersion": 1146,
     "name": "21",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2151,7 +2151,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 625
+    "version": 1146
   },
   {
     "addresses": [],
@@ -2188,7 +2188,7 @@
     "id": 22,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 536,
+    "modelVersion": 653,
     "name": "22",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2218,7 +2218,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 536
+    "version": 653
   },
   {
     "addresses": [],
@@ -2250,7 +2250,7 @@
       "coordinates": [
         187.451,
         -337.5000001573246,
-        3.919
+        2.743
       ],
       "type": "Point"
     },
@@ -2258,11 +2258,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000005,
     "id": 23,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 627,
+    "modelVersion": 1027,
     "name": "23",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2325,7 +2325,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 627
+    "version": 1027
   },
   {
     "addresses": [],
@@ -2362,7 +2362,7 @@
     "id": 24,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 148,
+    "modelVersion": 654,
     "name": "24",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2392,7 +2392,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 148
+    "version": 654
   },
   {
     "addresses": [],
@@ -2429,7 +2429,7 @@
     "id": 25,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 149,
+    "modelVersion": 655,
     "name": "25",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2459,7 +2459,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 149
+    "version": 655
   },
   {
     "addresses": [],
@@ -2491,7 +2491,7 @@
       "coordinates": [
         187.451,
         -562.500000729895,
-        1.365
+        2.891
       ],
       "type": "Point"
     },
@@ -2503,7 +2503,7 @@
     "id": 26,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 552,
+    "modelVersion": 1147,
     "name": "26",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2566,7 +2566,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 552
+    "version": 1147
   },
   {
     "addresses": [],
@@ -2598,7 +2598,7 @@
       "coordinates": [
         187.451,
         -637.5000010618194,
-        2.936
+        8.131
       ],
       "type": "Point"
     },
@@ -2606,11 +2606,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000004,
     "id": 27,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 553,
+    "modelVersion": 1102,
     "name": "27",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2673,7 +2673,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 553
+    "version": 1102
   },
   {
     "addresses": [],
@@ -2705,7 +2705,7 @@
       "coordinates": [
         187.451,
         -712.5000014820529,
-        13.983
+        8.131
       ],
       "type": "Point"
     },
@@ -2717,7 +2717,7 @@
     "id": 28,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 501,
+    "modelVersion": 1103,
     "name": "28",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2780,7 +2780,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 501
+    "version": 1103
   },
   {
     "addresses": [],
@@ -2812,7 +2812,7 @@
       "coordinates": [
         249.935,
         -75.00000000195844,
-        12.116
+        8.579
       ],
       "type": "Point"
     },
@@ -2824,7 +2824,7 @@
     "id": 29,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 631,
+    "modelVersion": 1031,
     "name": "29",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2887,7 +2887,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 631
+    "version": 1031
   },
   {
     "addresses": [],
@@ -2919,7 +2919,7 @@
       "coordinates": [
         249.935,
         -150.00000001348886,
-        2.963
+        5.347
       ],
       "type": "Point"
     },
@@ -2927,11 +2927,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000001,
     "id": 30,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 632,
+    "modelVersion": 1148,
     "name": "30",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -2994,7 +2994,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 632
+    "version": 1148
   },
   {
     "addresses": [],
@@ -3031,7 +3031,7 @@
     "id": 31,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 537,
+    "modelVersion": 656,
     "name": "31",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3061,7 +3061,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 537
+    "version": 656
   },
   {
     "addresses": [],
@@ -3093,7 +3093,7 @@
       "coordinates": [
         249.935,
         -300.0000001115947,
-        4.321
+        2.743
       ],
       "type": "Point"
     },
@@ -3101,11 +3101,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000004,
     "id": 32,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 633,
+    "modelVersion": 1149,
     "name": "32",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3168,7 +3168,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 633
+    "version": 1149
   },
   {
     "addresses": [],
@@ -3205,7 +3205,7 @@
     "id": 33,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 150,
+    "modelVersion": 657,
     "name": "33",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3235,7 +3235,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 150
+    "version": 657
   },
   {
     "addresses": [],
@@ -3272,7 +3272,7 @@
     "id": 34,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 151,
+    "modelVersion": 658,
     "name": "34",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3302,7 +3302,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 151
+    "version": 658
   },
   {
     "addresses": [],
@@ -3334,7 +3334,7 @@
       "coordinates": [
         249.935,
         -525.0000005924985,
-        0.693
+        1.576
       ],
       "type": "Point"
     },
@@ -3342,11 +3342,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000004,
     "id": 35,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 634,
+    "modelVersion": 1150,
     "name": "35",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3409,7 +3409,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 634
+    "version": 1150
   },
   {
     "addresses": [],
@@ -3446,7 +3446,7 @@
     "id": 36,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 152,
+    "modelVersion": 659,
     "name": "36",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3476,7 +3476,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 152
+    "version": 659
   },
   {
     "addresses": [],
@@ -3508,7 +3508,7 @@
       "coordinates": [
         249.935,
         -675.0000012608373,
-        12.138
+        8.131
       ],
       "type": "Point"
     },
@@ -3520,7 +3520,7 @@
     "id": 37,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 505,
+    "modelVersion": 1107,
     "name": "37",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3583,7 +3583,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 505
+    "version": 1107
   },
   {
     "addresses": [],
@@ -3615,7 +3615,7 @@
       "coordinates": [
         312.419,
         -37.500000001524505,
-        3.419
+        8.579
       ],
       "type": "Point"
     },
@@ -3627,7 +3627,7 @@
     "id": 38,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 635,
+    "modelVersion": 1151,
     "name": "38",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3690,7 +3690,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 635
+    "version": 1151
   },
   {
     "addresses": [],
@@ -3722,7 +3722,7 @@
       "coordinates": [
         312.419,
         -112.50000000637866,
-        11.644
+        8.579
       ],
       "type": "Point"
     },
@@ -3734,7 +3734,7 @@
     "id": 39,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 636,
+    "modelVersion": 1036,
     "name": "39",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3797,7 +3797,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 636
+    "version": 1036
   },
   {
     "addresses": [],
@@ -3829,7 +3829,7 @@
       "coordinates": [
         312.419,
         -187.50000002765796,
-        2.021
+        2.169
       ],
       "type": "Point"
     },
@@ -3841,7 +3841,7 @@
     "id": 40,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 637,
+    "modelVersion": 1037,
     "name": "40",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3904,7 +3904,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 637
+    "version": 1037
   },
   {
     "addresses": [],
@@ -3941,7 +3941,7 @@
     "id": 41,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 538,
+    "modelVersion": 660,
     "name": "41",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -3971,7 +3971,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 538
+    "version": 660
   },
   {
     "addresses": [],
@@ -4003,7 +4003,7 @@
       "coordinates": [
         312.419,
         -337.5000001573246,
-        0.883
+        2.743
       ],
       "type": "Point"
     },
@@ -4011,11 +4011,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000000,
     "id": 42,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 638,
+    "modelVersion": 1152,
     "name": "42",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4078,7 +4078,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 638
+    "version": 1152
   },
   {
     "addresses": [],
@@ -4115,7 +4115,7 @@
     "id": 43,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 153,
+    "modelVersion": 661,
     "name": "43",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4145,7 +4145,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 153
+    "version": 661
   },
   {
     "addresses": [],
@@ -4182,7 +4182,7 @@
     "id": 44,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 154,
+    "modelVersion": 662,
     "name": "44",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4212,7 +4212,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 154
+    "version": 662
   },
   {
     "addresses": [],
@@ -4244,7 +4244,7 @@
       "coordinates": [
         312.419,
         -562.500000729895,
-        1.395
+        2.891
       ],
       "type": "Point"
     },
@@ -4252,11 +4252,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000004,
     "id": 45,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 506,
+    "modelVersion": 1108,
     "name": "45",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4319,7 +4319,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 506
+    "version": 1108
   },
   {
     "addresses": [],
@@ -4351,7 +4351,7 @@
       "coordinates": [
         312.419,
         -637.5000010618194,
-        2.913
+        8.131
       ],
       "type": "Point"
     },
@@ -4359,11 +4359,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000003,
     "id": 46,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 558,
+    "modelVersion": 1153,
     "name": "46",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4426,7 +4426,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 558
+    "version": 1153
   },
   {
     "addresses": [],
@@ -4458,7 +4458,7 @@
       "coordinates": [
         312.419,
         -712.5000014820529,
-        13.958
+        8.131
       ],
       "type": "Point"
     },
@@ -4470,7 +4470,7 @@
     "id": 47,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 508,
+    "modelVersion": 1110,
     "name": "47",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4533,7 +4533,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 508
+    "version": 1110
   },
   {
     "addresses": [],
@@ -4565,7 +4565,7 @@
       "coordinates": [
         374.903,
         -75.00000000195844,
-        12.384
+        8.579
       ],
       "type": "Point"
     },
@@ -4577,7 +4577,7 @@
     "id": 48,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 639,
+    "modelVersion": 1039,
     "name": "48",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4640,7 +4640,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 639
+    "version": 1039
   },
   {
     "addresses": [],
@@ -4672,7 +4672,7 @@
       "coordinates": [
         374.903,
         -150.00000001348886,
-        2.912
+        5.347
       ],
       "type": "Point"
     },
@@ -4680,11 +4680,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000004,
     "id": 49,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 640,
+    "modelVersion": 1154,
     "name": "49",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4747,7 +4747,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 640
+    "version": 1154
   },
   {
     "addresses": [],
@@ -4779,7 +4779,7 @@
       "coordinates": [
         374.903,
         -225.00000004758965,
-        2.018
+        2.169
       ],
       "type": "Point"
     },
@@ -4787,11 +4787,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000004,
+    "functionID": 1000001,
     "id": 50,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 641,
+    "modelVersion": 1155,
     "name": "50",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4854,7 +4854,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 641
+    "version": 1155
   },
   {
     "addresses": [],
@@ -4891,7 +4891,7 @@
     "id": 51,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 539,
+    "modelVersion": 663,
     "name": "51",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4921,7 +4921,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 539
+    "version": 663
   },
   {
     "addresses": [],
@@ -4958,7 +4958,7 @@
     "id": 52,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 155,
+    "modelVersion": 664,
     "name": "52",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -4988,7 +4988,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 155
+    "version": 664
   },
   {
     "addresses": [],
@@ -5025,7 +5025,7 @@
     "id": 53,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 156,
+    "modelVersion": 665,
     "name": "53",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5055,7 +5055,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 156
+    "version": 665
   },
   {
     "addresses": [],
@@ -5087,7 +5087,7 @@
       "coordinates": [
         374.903,
         -525.0000005924985,
-        1.295
+        1.576
       ],
       "type": "Point"
     },
@@ -5095,11 +5095,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000001,
     "id": 54,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 642,
+    "modelVersion": 1111,
     "name": "54",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5162,7 +5162,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 642
+    "version": 1111
   },
   {
     "addresses": [],
@@ -5194,7 +5194,7 @@
       "coordinates": [
         374.903,
         -600.0000008848788,
-        2.756
+        6.729
       ],
       "type": "Point"
     },
@@ -5202,11 +5202,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000004,
+    "functionID": 1000000,
     "id": 55,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 560,
+    "modelVersion": 1156,
     "name": "55",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5269,7 +5269,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 560
+    "version": 1156
   },
   {
     "addresses": [],
@@ -5301,7 +5301,7 @@
       "coordinates": [
         374.903,
         -675.0000012608373,
-        12.322
+        8.131
       ],
       "type": "Point"
     },
@@ -5313,7 +5313,7 @@
     "id": 56,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 511,
+    "modelVersion": 1113,
     "name": "56",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5376,7 +5376,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 511
+    "version": 1113
   },
   {
     "addresses": [],
@@ -5408,7 +5408,7 @@
       "coordinates": [
         437.386,
         -37.500000001524505,
-        14.179
+        8.579
       ],
       "type": "Point"
     },
@@ -5420,7 +5420,7 @@
     "id": 57,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 643,
+    "modelVersion": 1043,
     "name": "57",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5483,7 +5483,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 643
+    "version": 1043
   },
   {
     "addresses": [],
@@ -5515,7 +5515,7 @@
       "coordinates": [
         437.386,
         -112.50000000637866,
-        3.328
+        8.579
       ],
       "type": "Point"
     },
@@ -5523,11 +5523,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000001,
     "id": 58,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 644,
+    "modelVersion": 1157,
     "name": "58",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5590,7 +5590,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 644
+    "version": 1157
   },
   {
     "addresses": [],
@@ -5622,7 +5622,7 @@
       "coordinates": [
         437.386,
         -187.50000002765796,
-        4.853
+        2.169
       ],
       "type": "Point"
     },
@@ -5630,11 +5630,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000003,
     "id": 59,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 645,
+    "modelVersion": 1045,
     "name": "59",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5697,7 +5697,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 645
+    "version": 1045
   },
   {
     "addresses": [],
@@ -5729,7 +5729,7 @@
       "coordinates": [
         437.386,
         -262.5000000741122,
-        1.399
+        2.169
       ],
       "type": "Point"
     },
@@ -5737,11 +5737,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000003,
     "id": 60,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 646,
+    "modelVersion": 1046,
     "name": "60",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5804,7 +5804,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 646
+    "version": 1046
   },
   {
     "addresses": [],
@@ -5841,7 +5841,7 @@
     "id": 61,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 157,
+    "modelVersion": 666,
     "name": "61",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5871,7 +5871,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 157
+    "version": 666
   },
   {
     "addresses": [],
@@ -5908,7 +5908,7 @@
     "id": 62,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 158,
+    "modelVersion": 667,
     "name": "62",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -5938,7 +5938,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 158
+    "version": 667
   },
   {
     "addresses": [],
@@ -5970,7 +5970,7 @@
       "coordinates": [
         437.386,
         -487.50000047540186,
-        1.437
+        1.576
       ],
       "type": "Point"
     },
@@ -5978,11 +5978,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000005,
     "id": 63,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 647,
+    "modelVersion": 1114,
     "name": "63",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6045,7 +6045,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 647
+    "version": 1114
   },
   {
     "addresses": [],
@@ -6077,7 +6077,7 @@
       "coordinates": [
         437.386,
         -562.500000729895,
-        2.563
+        2.89
       ],
       "type": "Point"
     },
@@ -6085,11 +6085,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000003,
     "id": 64,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 483,
+    "modelVersion": 1085,
     "name": "64",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6152,7 +6152,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 483
+    "version": 1085
   },
   {
     "addresses": [],
@@ -6184,7 +6184,7 @@
       "coordinates": [
         437.386,
         -637.5000010618194,
-        11.574
+        8.131
       ],
       "type": "Point"
     },
@@ -6196,7 +6196,7 @@
     "id": 65,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 484,
+    "modelVersion": 1086,
     "name": "65",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6259,7 +6259,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 484
+    "version": 1086
   },
   {
     "addresses": [],
@@ -6291,7 +6291,7 @@
       "coordinates": [
         437.386,
         -712.5000014820529,
-        3.367
+        8.131
       ],
       "type": "Point"
     },
@@ -6299,11 +6299,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000004,
     "id": 66,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 564,
+    "modelVersion": 1158,
     "name": "66",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6366,7 +6366,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 564
+    "version": 1158
   },
   {
     "addresses": [],
@@ -6398,7 +6398,7 @@
       "coordinates": [
         499.87,
         -75.00000000195844,
-        9.956
+        8.37
       ],
       "type": "Point"
     },
@@ -6410,7 +6410,7 @@
     "id": 67,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 607,
+    "modelVersion": 1007,
     "name": "67",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6473,7 +6473,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 607
+    "version": 1007
   },
   {
     "addresses": [],
@@ -6505,7 +6505,7 @@
       "coordinates": [
         499.87,
         -150.00000001348886,
-        5.026
+        5.436
       ],
       "type": "Point"
     },
@@ -6513,11 +6513,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000004,
     "id": 68,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 609,
+    "modelVersion": 1009,
     "name": "68",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6580,7 +6580,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 609
+    "version": 1009
   },
   {
     "addresses": [],
@@ -6612,7 +6612,7 @@
       "coordinates": [
         499.87,
         -225.00000004758965,
-        1.863
+        2.552
       ],
       "type": "Point"
     },
@@ -6624,7 +6624,7 @@
     "id": 69,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 610,
+    "modelVersion": 1159,
     "name": "69",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6687,7 +6687,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 610
+    "version": 1159
   },
   {
     "addresses": [],
@@ -6724,7 +6724,7 @@
     "id": 70,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 159,
+    "modelVersion": 668,
     "name": "70",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6754,7 +6754,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 159
+    "version": 668
   },
   {
     "addresses": [],
@@ -6791,7 +6791,7 @@
     "id": 71,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 160,
+    "modelVersion": 669,
     "name": "71",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6821,7 +6821,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 160
+    "version": 669
   },
   {
     "addresses": [],
@@ -6853,7 +6853,7 @@
       "coordinates": [
         499.87,
         -450.0000003735271,
-        1.441
+        1.576
       ],
       "type": "Point"
     },
@@ -6861,11 +6861,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000000,
     "id": 72,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 612,
+    "modelVersion": 1160,
     "name": "72",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -6928,7 +6928,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 612
+    "version": 1160
   },
   {
     "addresses": [],
@@ -6960,7 +6960,7 @@
       "coordinates": [
         499.87,
         -525.0000005924985,
-        3.347
+        1.696
       ],
       "type": "Point"
     },
@@ -6968,11 +6968,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000004,
+    "functionID": 1000000,
     "id": 73,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 613,
+    "modelVersion": 1161,
     "name": "73",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7035,7 +7035,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 613
+    "version": 1161
   },
   {
     "addresses": [],
@@ -7067,7 +7067,7 @@
       "coordinates": [
         499.87,
         -600.0000008848788,
-        5.1
+        6.83
       ],
       "type": "Point"
     },
@@ -7075,11 +7075,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000004,
     "id": 74,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 568,
+    "modelVersion": 1092,
     "name": "74",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7142,7 +7142,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 568
+    "version": 1092
   },
   {
     "addresses": [],
@@ -7174,7 +7174,7 @@
       "coordinates": [
         499.87,
         -675.0000012608373,
-        10.292
+        8.224
       ],
       "type": "Point"
     },
@@ -7186,7 +7186,7 @@
     "id": 75,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 491,
+    "modelVersion": 1093,
     "name": "75",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7249,7 +7249,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 491
+    "version": 1093
   },
   {
     "addresses": [],
@@ -7281,7 +7281,7 @@
       "coordinates": [
         562.354,
         -37.500000001524505,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -7289,11 +7289,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000004,
+    "functionID": 1000001,
     "id": 76,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 617,
+    "modelVersion": 1162,
     "name": "76",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7356,7 +7356,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 617
+    "version": 1162
   },
   {
     "addresses": [],
@@ -7388,7 +7388,7 @@
       "coordinates": [
         562.354,
         -112.50000000637866,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -7400,7 +7400,7 @@
     "id": 77,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 618,
+    "modelVersion": 1055,
     "name": "77",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7463,7 +7463,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 618
+    "version": 1055
   },
   {
     "addresses": [],
@@ -7495,7 +7495,7 @@
       "coordinates": [
         562.354,
         -187.50000002765796,
-        4.507
+        2.928
       ],
       "type": "Point"
     },
@@ -7503,11 +7503,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000005,
     "id": 78,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 619,
+    "modelVersion": 1163,
     "name": "78",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7570,7 +7570,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 619
+    "version": 1163
   },
   {
     "addresses": [],
@@ -7602,7 +7602,7 @@
       "coordinates": [
         562.354,
         -262.5000000741122,
-        1.686
+        2.928
       ],
       "type": "Point"
     },
@@ -7610,11 +7610,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000004,
     "id": 79,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 620,
+    "modelVersion": 1164,
     "name": "79",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7677,7 +7677,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 620
+    "version": 1164
   },
   {
     "addresses": [],
@@ -7714,7 +7714,7 @@
     "id": 80,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 161,
+    "modelVersion": 670,
     "name": "80",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7744,7 +7744,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 161
+    "version": 670
   },
   {
     "addresses": [],
@@ -7781,7 +7781,7 @@
     "id": 81,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 162,
+    "modelVersion": 671,
     "name": "81",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7811,7 +7811,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 162
+    "version": 671
   },
   {
     "addresses": [],
@@ -7843,7 +7843,7 @@
       "coordinates": [
         562.354,
         -487.50000047540186,
-        1.807
+        1.813
       ],
       "type": "Point"
     },
@@ -7855,7 +7855,7 @@
     "id": 82,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 622,
+    "modelVersion": 1165,
     "name": "82",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -7918,7 +7918,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 622
+    "version": 1165
   },
   {
     "addresses": [],
@@ -7950,7 +7950,7 @@
       "coordinates": [
         562.354,
         -562.500000729895,
-        3.112
+        3.117
       ],
       "type": "Point"
     },
@@ -7958,11 +7958,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000001,
     "id": 83,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 573,
+    "modelVersion": 1129,
     "name": "83",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8025,7 +8025,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 573
+    "version": 1129
   },
   {
     "addresses": [],
@@ -8057,7 +8057,7 @@
       "coordinates": [
         562.354,
         -637.5000010618194,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -8069,7 +8069,7 @@
     "id": 84,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 574,
+    "modelVersion": 1130,
     "name": "84",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8132,7 +8132,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 574
+    "version": 1130
   },
   {
     "addresses": [],
@@ -8164,7 +8164,7 @@
       "coordinates": [
         562.354,
         -712.5000014820529,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -8176,7 +8176,7 @@
     "id": 85,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 529,
+    "modelVersion": 1131,
     "name": "85",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8239,7 +8239,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 529
+    "version": 1131
   },
   {
     "addresses": [],
@@ -8271,7 +8271,7 @@
       "coordinates": [
         624.838,
         -75.00000000195844,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -8279,11 +8279,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000001,
     "id": 86,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 626,
+    "modelVersion": 1166,
     "name": "86",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8346,7 +8346,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 626
+    "version": 1166
   },
   {
     "addresses": [],
@@ -8378,7 +8378,7 @@
       "coordinates": [
         624.838,
         -150.00000001348886,
-        7.277
+        5.524
       ],
       "type": "Point"
     },
@@ -8390,7 +8390,7 @@
     "id": 87,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 628,
+    "modelVersion": 1060,
     "name": "87",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8453,7 +8453,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 628
+    "version": 1060
   },
   {
     "addresses": [],
@@ -8485,7 +8485,7 @@
       "coordinates": [
         624.838,
         -225.00000004758965,
-        1.686
+        2.928
       ],
       "type": "Point"
     },
@@ -8493,11 +8493,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000001,
     "id": 88,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 629,
+    "modelVersion": 1167,
     "name": "88",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8560,7 +8560,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 629
+    "version": 1167
   },
   {
     "addresses": [],
@@ -8597,7 +8597,7 @@
     "id": 89,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 163,
+    "modelVersion": 672,
     "name": "89",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8627,7 +8627,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 163
+    "version": 672
   },
   {
     "addresses": [],
@@ -8664,7 +8664,7 @@
     "id": 90,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 164,
+    "modelVersion": 673,
     "name": "90",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8694,7 +8694,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 164
+    "version": 673
   },
   {
     "addresses": [],
@@ -8726,7 +8726,7 @@
       "coordinates": [
         624.838,
         -450.0000003735271,
-        1.807
+        1.813
       ],
       "type": "Point"
     },
@@ -8734,11 +8734,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000001,
     "id": 91,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 630,
+    "modelVersion": 1168,
     "name": "91",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8801,7 +8801,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 630
+    "version": 1168
   },
   {
     "addresses": [],
@@ -8838,7 +8838,7 @@
     "id": 92,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 165,
+    "modelVersion": 674,
     "name": "92",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8868,7 +8868,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 165
+    "version": 674
   },
   {
     "addresses": [],
@@ -8900,7 +8900,7 @@
       "coordinates": [
         624.838,
         -600.0000008848788,
-        6.923
+        6.927
       ],
       "type": "Point"
     },
@@ -8908,11 +8908,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000004,
     "id": 93,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 577,
+    "modelVersion": 1169,
     "name": "93",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -8975,7 +8975,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 577
+    "version": 1169
   },
   {
     "addresses": [],
@@ -9007,7 +9007,7 @@
       "coordinates": [
         624.838,
         -675.0000012608373,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -9019,7 +9019,7 @@
     "id": 94,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 534,
+    "modelVersion": 1136,
     "name": "94",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9082,7 +9082,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 534
+    "version": 1136
   },
   {
     "addresses": [],
@@ -9114,7 +9114,7 @@
       "coordinates": [
         687.322,
         -37.500000001524505,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -9122,11 +9122,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000003,
     "id": 95,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 578,
+    "modelVersion": 1170,
     "name": "95",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9189,7 +9189,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 578
+    "version": 1170
   },
   {
     "addresses": [],
@@ -9221,7 +9221,7 @@
       "coordinates": [
         687.322,
         -112.50000000637866,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -9233,7 +9233,7 @@
     "id": 96,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 469,
+    "modelVersion": 1064,
     "name": "96",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9296,7 +9296,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 469
+    "version": 1064
   },
   {
     "addresses": [],
@@ -9328,7 +9328,7 @@
       "coordinates": [
         687.322,
         -187.50000002765796,
-        4.507
+        2.928
       ],
       "type": "Point"
     },
@@ -9336,11 +9336,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000005,
     "id": 97,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 579,
+    "modelVersion": 1171,
     "name": "97",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9403,7 +9403,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 579
+    "version": 1171
   },
   {
     "addresses": [],
@@ -9440,7 +9440,7 @@
     "id": 98,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 166,
+    "modelVersion": 675,
     "name": "98",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9470,7 +9470,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 166
+    "version": 675
   },
   {
     "addresses": [],
@@ -9507,7 +9507,7 @@
     "id": 99,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 167,
+    "modelVersion": 676,
     "name": "99",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9537,7 +9537,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 167
+    "version": 676
   },
   {
     "addresses": [],
@@ -9574,7 +9574,7 @@
     "id": 100,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 168,
+    "modelVersion": 677,
     "name": "100",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9604,7 +9604,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 168
+    "version": 677
   },
   {
     "addresses": [],
@@ -9636,7 +9636,7 @@
       "coordinates": [
         687.322,
         -487.50000047540186,
-        1.807
+        1.813
       ],
       "type": "Point"
     },
@@ -9648,7 +9648,7 @@
     "id": 101,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 580,
+    "modelVersion": 1172,
     "name": "101",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9711,7 +9711,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 580
+    "version": 1172
   },
   {
     "addresses": [],
@@ -9743,7 +9743,7 @@
       "coordinates": [
         687.322,
         -562.500000729895,
-        3.113
+        3.118
       ],
       "type": "Point"
     },
@@ -9751,11 +9751,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000001,
     "id": 102,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 581,
+    "modelVersion": 1119,
     "name": "102",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9818,7 +9818,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 581
+    "version": 1119
   },
   {
     "addresses": [],
@@ -9850,7 +9850,7 @@
       "coordinates": [
         687.322,
         -637.5000010618194,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -9858,11 +9858,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000004,
+    "functionID": 1000005,
     "id": 103,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 582,
+    "modelVersion": 1173,
     "name": "103",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -9925,7 +9925,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 582
+    "version": 1173
   },
   {
     "addresses": [],
@@ -9957,7 +9957,7 @@
       "coordinates": [
         687.322,
         -712.5000014820529,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -9969,7 +9969,7 @@
     "id": 104,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 519,
+    "modelVersion": 1121,
     "name": "104",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10032,7 +10032,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 519
+    "version": 1121
   },
   {
     "addresses": [],
@@ -10064,7 +10064,7 @@
       "coordinates": [
         749.805,
         -75.00000000195844,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -10076,7 +10076,7 @@
     "id": 105,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 472,
+    "modelVersion": 1067,
     "name": "105",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10139,7 +10139,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 472
+    "version": 1067
   },
   {
     "addresses": [],
@@ -10171,7 +10171,7 @@
       "coordinates": [
         749.805,
         -150.00000001348886,
-        7.277
+        5.524
       ],
       "type": "Point"
     },
@@ -10179,11 +10179,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000003,
     "id": 106,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 583,
+    "modelVersion": 1174,
     "name": "106",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10246,7 +10246,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 583
+    "version": 1174
   },
   {
     "addresses": [],
@@ -10283,7 +10283,7 @@
     "id": 107,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 169,
+    "modelVersion": 678,
     "name": "107",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10313,7 +10313,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 169
+    "version": 678
   },
   {
     "addresses": [],
@@ -10345,7 +10345,7 @@
       "coordinates": [
         749.805,
         -300.0000001115947,
-        1.683
+        0.563
       ],
       "type": "Point"
     },
@@ -10353,11 +10353,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000001,
     "id": 108,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 474,
+    "modelVersion": 1175,
     "name": "108",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10420,7 +10420,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 474
+    "version": 1175
   },
   {
     "addresses": [],
@@ -10457,7 +10457,7 @@
     "id": 109,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 170,
+    "modelVersion": 679,
     "name": "109",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10487,7 +10487,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 170
+    "version": 679
   },
   {
     "addresses": [],
@@ -10524,7 +10524,7 @@
     "id": 110,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 171,
+    "modelVersion": 680,
     "name": "110",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10554,7 +10554,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 171
+    "version": 680
   },
   {
     "addresses": [],
@@ -10586,7 +10586,7 @@
       "coordinates": [
         749.805,
         -525.0000005924985,
-        1.807
+        1.813
       ],
       "type": "Point"
     },
@@ -10594,11 +10594,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000004,
+    "functionID": 1000000,
     "id": 111,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 524,
+    "modelVersion": 1176,
     "name": "111",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10661,7 +10661,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 524
+    "version": 1176
   },
   {
     "addresses": [],
@@ -10693,7 +10693,7 @@
       "coordinates": [
         749.805,
         -600.0000008848788,
-        6.923
+        6.927
       ],
       "type": "Point"
     },
@@ -10701,11 +10701,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000000,
     "id": 112,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 584,
+    "modelVersion": 1177,
     "name": "112",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10768,7 +10768,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 584
+    "version": 1177
   },
   {
     "addresses": [],
@@ -10800,7 +10800,7 @@
       "coordinates": [
         749.805,
         -675.0000012608373,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -10812,7 +10812,7 @@
     "id": 113,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 526,
+    "modelVersion": 1128,
     "name": "113",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10875,7 +10875,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 526
+    "version": 1128
   },
   {
     "addresses": [],
@@ -10907,7 +10907,7 @@
       "coordinates": [
         812.289,
         -37.500000001524505,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -10919,7 +10919,7 @@
     "id": 114,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 476,
+    "modelVersion": 1071,
     "name": "114",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -10982,7 +10982,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 476
+    "version": 1071
   },
   {
     "addresses": [],
@@ -11014,7 +11014,7 @@
       "coordinates": [
         812.289,
         -112.50000000637866,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -11026,7 +11026,7 @@
     "id": 115,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 477,
+    "modelVersion": 1178,
     "name": "115",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11089,7 +11089,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 477
+    "version": 1178
   },
   {
     "addresses": [],
@@ -11121,7 +11121,7 @@
       "coordinates": [
         812.289,
         -187.50000002765796,
-        6.601
+        2.928
       ],
       "type": "Point"
     },
@@ -11129,11 +11129,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000000,
+    "functionID": 1000003,
     "id": 116,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 478,
+    "modelVersion": 1179,
     "name": "116",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11196,7 +11196,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 478
+    "version": 1179
   },
   {
     "addresses": [],
@@ -11233,7 +11233,7 @@
     "id": 117,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 172,
+    "modelVersion": 681,
     "name": "117",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11263,7 +11263,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 172
+    "version": 681
   },
   {
     "addresses": [],
@@ -11295,7 +11295,7 @@
       "coordinates": [
         812.289,
         -337.5000001573246,
-        0.968
+        0.563
       ],
       "type": "Point"
     },
@@ -11303,11 +11303,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000004,
+    "functionID": 1000005,
     "id": 118,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 479,
+    "modelVersion": 1180,
     "name": "118",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11370,7 +11370,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 479
+    "version": 1180
   },
   {
     "addresses": [],
@@ -11407,7 +11407,7 @@
     "id": 119,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 173,
+    "modelVersion": 682,
     "name": "119",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11437,7 +11437,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 173
+    "version": 682
   },
   {
     "addresses": [],
@@ -11474,7 +11474,7 @@
     "id": 120,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 174,
+    "modelVersion": 683,
     "name": "120",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11504,7 +11504,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 174
+    "version": 683
   },
   {
     "addresses": [],
@@ -11536,7 +11536,7 @@
       "coordinates": [
         812.289,
         -562.500000729895,
-        3.113
+        3.118
       ],
       "type": "Point"
     },
@@ -11544,11 +11544,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000003,
     "id": 121,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 585,
+    "modelVersion": 1181,
     "name": "121",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11611,7 +11611,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 585
+    "version": 1181
   },
   {
     "addresses": [],
@@ -11643,7 +11643,7 @@
       "coordinates": [
         812.289,
         -637.5000010618194,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -11655,7 +11655,7 @@
     "id": 122,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 586,
+    "modelVersion": 1182,
     "name": "122",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11718,7 +11718,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 586
+    "version": 1182
   },
   {
     "addresses": [],
@@ -11750,7 +11750,7 @@
       "coordinates": [
         812.289,
         -712.5000014820529,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -11762,7 +11762,7 @@
     "id": 123,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 532,
+    "modelVersion": 1134,
     "name": "123",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11825,7 +11825,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 532
+    "version": 1134
   },
   {
     "addresses": [],
@@ -11857,7 +11857,7 @@
       "coordinates": [
         874.773,
         -75.00000000195844,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -11869,7 +11869,7 @@
     "id": 124,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 480,
+    "modelVersion": 1075,
     "name": "124",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -11932,7 +11932,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 480
+    "version": 1075
   },
   {
     "addresses": [],
@@ -11964,7 +11964,7 @@
       "coordinates": [
         874.773,
         -150.00000001348886,
-        7.277
+        2.928
       ],
       "type": "Point"
     },
@@ -11976,7 +11976,7 @@
     "id": 125,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 587,
+    "modelVersion": 1183,
     "name": "125",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12039,7 +12039,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 587
+    "version": 1183
   },
   {
     "addresses": [],
@@ -12071,7 +12071,7 @@
       "coordinates": [
         874.773,
         -225.00000004758965,
-        5.232
+        2.928
       ],
       "type": "Point"
     },
@@ -12079,11 +12079,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000005,
     "id": 126,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 588,
+    "modelVersion": 1184,
     "name": "126",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12146,7 +12146,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 588
+    "version": 1184
   },
   {
     "addresses": [],
@@ -12183,7 +12183,7 @@
     "id": 127,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 175,
+    "modelVersion": 684,
     "name": "127",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12213,7 +12213,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 175
+    "version": 684
   },
   {
     "addresses": [],
@@ -12250,7 +12250,7 @@
     "id": 128,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 176,
+    "modelVersion": 685,
     "name": "128",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12280,7 +12280,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 176
+    "version": 685
   },
   {
     "addresses": [],
@@ -12317,7 +12317,7 @@
     "id": 129,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 177,
+    "modelVersion": 686,
     "name": "129",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12347,7 +12347,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 177
+    "version": 686
   },
   {
     "addresses": [],
@@ -12379,7 +12379,7 @@
       "coordinates": [
         874.773,
         -525.0000005924985,
-        1.807
+        1.813
       ],
       "type": "Point"
     },
@@ -12387,11 +12387,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000003,
     "id": 130,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 589,
+    "modelVersion": 1185,
     "name": "130",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12454,7 +12454,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 589
+    "version": 1185
   },
   {
     "addresses": [],
@@ -12486,7 +12486,7 @@
       "coordinates": [
         874.773,
         -600.0000008848788,
-        6.924
+        1.813
       ],
       "type": "Point"
     },
@@ -12494,11 +12494,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000004,
     "id": 131,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 590,
+    "modelVersion": 1186,
     "name": "131",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12561,7 +12561,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 590
+    "version": 1186
   },
   {
     "addresses": [],
@@ -12593,7 +12593,7 @@
       "coordinates": [
         874.773,
         -675.0000012608373,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -12605,7 +12605,7 @@
     "id": 132,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 515,
+    "modelVersion": 1117,
     "name": "132",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12668,7 +12668,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 515
+    "version": 1117
   },
   {
     "addresses": [],
@@ -12700,7 +12700,7 @@
       "coordinates": [
         937.257,
         -37.500000001524505,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -12712,7 +12712,7 @@
     "id": 133,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 454,
+    "modelVersion": 1049,
     "name": "133",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12775,7 +12775,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 454
+    "version": 1049
   },
   {
     "addresses": [],
@@ -12807,7 +12807,7 @@
       "coordinates": [
         937.257,
         -112.50000000637866,
-        7.277
+        8.165
       ],
       "type": "Point"
     },
@@ -12815,11 +12815,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000004,
     "id": 134,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 591,
+    "modelVersion": 1187,
     "name": "134",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12882,7 +12882,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 591
+    "version": 1187
   },
   {
     "addresses": [],
@@ -12914,7 +12914,7 @@
       "coordinates": [
         937.257,
         -187.50000002765796,
-        4.825
+        2.928
       ],
       "type": "Point"
     },
@@ -12922,11 +12922,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000003,
+    "functionID": 1000005,
     "id": 135,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 592,
+    "modelVersion": 1188,
     "name": "135",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -12989,7 +12989,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 592
+    "version": 1188
   },
   {
     "addresses": [],
@@ -13021,7 +13021,7 @@
       "coordinates": [
         937.257,
         -262.5000000741122,
-        1.79
+        2.928
       ],
       "type": "Point"
     },
@@ -13029,11 +13029,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000001,
+    "functionID": 1000000,
     "id": 136,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 457,
+    "modelVersion": 1189,
     "name": "136",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -13096,7 +13096,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 457
+    "version": 1189
   },
   {
     "addresses": [],
@@ -13133,7 +13133,7 @@
     "id": 137,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 178,
+    "modelVersion": 687,
     "name": "137",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -13163,7 +13163,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 178
+    "version": 687
   },
   {
     "addresses": [],
@@ -13200,7 +13200,7 @@
     "id": 138,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 179,
+    "modelVersion": 688,
     "name": "138",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -13230,7 +13230,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 179
+    "version": 688
   },
   {
     "addresses": [],
@@ -13262,7 +13262,7 @@
       "coordinates": [
         937.257,
         -487.50000047540186,
-        1.807
+        1.813
       ],
       "type": "Point"
     },
@@ -13274,7 +13274,7 @@
     "id": 139,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 520,
+    "modelVersion": 1122,
     "name": "139",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -13337,7 +13337,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 520
+    "version": 1122
   },
   {
     "addresses": [],
@@ -13369,7 +13369,7 @@
       "coordinates": [
         937.257,
         -562.500000729895,
-        3.113
+        3.118
       ],
       "type": "Point"
     },
@@ -13377,11 +13377,11 @@
     "demolisherID": -1,
     "finishBuildingDate": null,
     "finishDemolishDate": null,
-    "functionID": 1000005,
+    "functionID": 1000001,
     "id": 140,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 593,
+    "modelVersion": 1190,
     "name": "140",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -13444,7 +13444,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 593
+    "version": 1190
   },
   {
     "addresses": [],
@@ -13476,7 +13476,7 @@
       "coordinates": [
         937.257,
         -637.5000010618194,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -13488,7 +13488,7 @@
     "id": 141,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 522,
+    "modelVersion": 1124,
     "name": "141",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -13551,7 +13551,7 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 522
+    "version": 1124
   },
   {
     "addresses": [],
@@ -13583,7 +13583,7 @@
       "coordinates": [
         937.257,
         -712.5000014820529,
-        8.313
+        8.316
       ],
       "type": "Point"
     },
@@ -13595,7 +13595,7 @@
     "id": 142,
     "maquetteOverride": null,
     "measureID": -1,
-    "modelVersion": 594,
+    "modelVersion": 1191,
     "name": "142",
     "overrideCategories": null,
     "overrideDecals": null,
@@ -13658,6 +13658,6 @@
     "upgradeID": -1,
     "upgradeOwnerID": -1,
     "vacant": false,
-    "version": 594
+    "version": 1191
   }
 ]

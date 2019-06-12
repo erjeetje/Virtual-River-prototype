@@ -215,14 +215,10 @@ def index_node_grid(hexagons, grid):
             minx = x
         elif x > maxx:
             maxx = x
-        else:
-            continue
         if y < miny:
             miny = y
         elif y > maxy:
             maxy = y
-        else:
-            continue
     bbox = geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny),
                              (minx, miny), (minx, maxy)])
 
