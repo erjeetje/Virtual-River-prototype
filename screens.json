@@ -1,0 +1,20 @@
+{
+    "settings": {
+        "fullscreen": true
+    },
+    "screens": [
+        {
+            "title": "Water levels",
+            "key": 1,
+            "layers": [
+                {
+                    "min": 0,
+                    "max": 2,
+                    "variable": "zs",
+                    "colormap": "viridis",
+                    "type": "imshow"
+                }
+            ]
+        }    
+    ]
+}
