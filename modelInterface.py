@@ -249,7 +249,7 @@ def geojson2pli(collection, name="groyne"):
 type                  = weir                # Type of structure
 id                    = ${feature.id}              # Name of the structure
 polylinefile          = ${feature.properties["pli_path"]}          # *.pli; Polyline geometry definition for 2D structure
-crest_level           = ${crest_level}            # Crest height in [m]
+crest_level           = ${feature.properties["crest_level"]}            # Crest height in [m]
 crest_width           = 
 lat_contr_coeff       = 1                   # Lateral contraction coefficient in 
 %endfor
@@ -263,8 +263,7 @@ lat_contr_coeff       = 1                   # Lateral contraction coefficient in
     path = pathlib.Path(name)
     structures_path = path.with_suffix('.ini').relative_to(path.parent)
     with structures_path.open('w') as f:
-        rendered = structures_template.render(features=collection.features,
-                                              crest_level=0)
+        rendered = structures_template.render(features=collection.features)
         f.write(rendered)
 
 

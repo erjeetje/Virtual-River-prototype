@@ -168,6 +168,7 @@ def create_structures(hexagons):
         ltd = geojson.Feature(id="LTD" + str(feature.id).zfill(2),
                               geometry=line)
         ltd.properties["active"] = False
+        ltd.properties["crest_level"] = 0.0
         structures.append(ltd)
 
         groyne_dist = height * 0.25
@@ -180,6 +181,7 @@ def create_structures(hexagons):
         groyne = geojson.Feature(id="groyne" + str(feature.id).zfill(2),
                                  geometry=line)
         groyne.properties["active"] = True
+        groyne.properties["crest_level"] = 3.0
         structures.append(groyne)
     structures = geojson.FeatureCollection(structures)
     with open('structures_test.geojson', 'w') as f:
