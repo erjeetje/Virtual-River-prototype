@@ -7,8 +7,10 @@ Created on Wed May 22 16:21:54 2019
 
 
 import time
+import pathlib
 import geojson
 import bmi.wrapper
+import mako.template
 import matplotlib.pyplot as plt
 import numpy as np
 import gridMapping as gridmap
@@ -55,7 +57,7 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
     for i in range(10):
         model.update()
         axes[0].set_title("{:2f}".format(model.get_current_time()))
-        sc.set_array(s1.copy())
+        sc.set_array(ucx.copy())
         sc_zk.set_array(zk.copy())
         plt.draw()
         plt.pause(0.00001)
@@ -104,7 +106,7 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
     for i in range(50):
         model.update(3)
         axes[0].set_title("{:2f}".format(model.get_current_time()))
-        sc.set_array(s1.copy() - s0)
+        sc.set_array(ucx.copy())
         sc_zk.set_array(zk.copy())
         qv.set_UVC(ucx.copy(), ucy.copy())
         plt.draw()
@@ -120,8 +122,165 @@ def landuse_to_friction(landuse):
         friction = 1
     return friction
 
-def create_weir(model, geometry, weir_type="groyne"):
+def set_crest_height(model, structure, height, weir_type="groyne"):
+    #model.set_compound_field
+    """
+    subroutine get_compound_field
+
+
+!> Sets the value for a specific field for a specific item in a set-variable of compound values.
+!!
+!! For example, all pumping stations in a model may be collected in a single compound variable set, named 'pumps',
+!! a single pump selected by its name, and the actual data by its field name.
+!!
+!! The input value enters as a generic pointer, and will be converted to the required data type, e.g., double.
+!! If necessary, use get_compound_field_type and get_compound_field_shape to determine which input is expected.
+subroutine set_compound_field(c_var_name, c_item_name, c_field_name, xptr) bind(C, name="set_compound_field")
+  !DEC$ ATTRIBUTES DLLEXPORT :: set_compound_field
+  use iso_c_binding, only: c_double, c_char, c_loc, c_f_pointer
+  use iso_c_utils
+  use unstruc_messages
+  use m_strucs
+  use m_wind
+
+  character(kind=c_char), intent(in) :: c_var_name(*)   !< Name of the set variable, e.g., 'pumps'
+  character(kind=c_char), intent(in) :: c_item_name(*)  !< Name of a single item's index/location, e.g., 'Pump01'
+  character(kind=c_char), intent(in) :: c_field_name(*) !< Name of the field to get, e.g., 'capacity'
+  type(c_ptr), value,     intent(in) :: xptr            !< Pointer (by value) to the C-compatible value data to be set.
+
+  real(c_double), pointer :: x_0d_double_ptr
+
+  integer :: item_index
+  integer :: iostat
+
+  ! The fortran name of the attribute name
+  character(len=MAXSTRLEN) :: var_name
+  character(len=MAXSTRLEN) :: item_name
+  character(len=MAXSTRLEN) :: field_name
+  ! Store the name
+  var_name   = char_array_to_string(c_var_name)
+  item_name  = char_array_to_string(c_item_name)
+  field_name = char_array_to_string(c_field_name)
+   ! Debugging printing only: guess that it's a scalar double value, for now.
+   call c_f_pointer(xptr, x_0d_double_ptr)
+   write(msgbuf, '(6a,f20.6,a)', iostat=iostat) 'set_compound_field for ', trim(var_name), '(', trim(item_name), ')::', trim(field_name), ', will be set to value = ', x_0d_double_ptr, '.'
+   call dbg_flush()
+  ! TODO: AvD: include "bmi_set_compound_field.inc"
+  select case(var_name)
+  ! PUMPS
+  case("pumps")
+     call getStructureIndex('pumps', item_name, item_index)
+     if (item_index == 0) then
+         return
+     endif
+     select case(field_name)
+     case("capacity")
+         call c_f_pointer(xptr, x_0d_double_ptr)
+         qpump(item_index) = x_0d_double_ptr
+        return
+     end select
+
+  ! WEIRS
+  case("weirs")
+     call getStructureIndex('weirs', item_name, item_index)
+     if (item_index == 0) then
+         return
+     endif
+     select case(field_name)
+     case("crest_level", "CrestLevel")
+         call c_f_pointer(xptr, x_0d_double_ptr)
+         zcgen((item_index-1)*3+1) = x_0d_double_ptr
+         return
+     case("lat_contr_coeff")
+         ! TODO: RTC: AvD: set this in weir params
+         return
+     end select
+     call update_zcgen_widths_and_heights()
+    """
+    """
+    use get_compound_field_type to determine the correct data type.
+    subroutine get_compound_field(c_var_name, c_item_name, c_field_name, x) bind(C, name="get_compound_field")
+    
+    character(kind=c_char), intent(in) :: c_var_name(*)   !< Name of the set variable, e.g., 'pumps'
+    character(kind=c_char), intent(in) :: c_item_name(*)  !< Name of a single item's index/location, e.g., 'Pump01'
+    character(kind=c_char), intent(in) :: c_field_name(*) !< Name of the field to get, e.g., 'capacity'
+    type(c_ptr),            intent(inout) :: x            !< Pointer (by reference) to requested value data, NULL if not available.
+    
+    integer :: item_index
+    
+    case("weirs")
+    call getStructureIndex('weirs', item_name, item_index)
+    if (item_index == 0) then
+        return
+    endif
+    if (item_index <= ncgensg) then 
+        ! DFlowFM type structures
+        select case(field_name)
+        case("crest_level", "CrestLevel")
+            x = c_loc(zcgen((item_index-1)*3+1))
+            return
+        case("lat_contr_coeff")
+            ! TODO: RTC: AvD: get this from weir params
+            return
+        end select
+    else
+        ! DFlowFM1D type structures
+        item_index = item_index - ncgensg
+        select case(field_name)
+        case("crest_level", "CrestLevel")
+            x = get_crest_level_c_loc(network%sts%struct(item_index))  
+            return
+        case("lat_contr_coeff")
+            ! TODO: RTC: AvD: get this from weir params (also for 1d?) 
+            return
+        end select
+    endif
+    """
     return
+
+
+def geojson2pli(collection, name="groyne"):
+    """
+    convert geojson input (FeatureCollection of linestring features) to a pli file
+    """
+    structures_template_text = '''
+%for feature in features:
+[structure]
+type                  = weir                # Type of structure
+id                    = ${feature.id}              # Name of the structure
+polylinefile          = ${feature.properties["pli_path"]}          # *.pli; Polyline geometry definition for 2D structure
+crest_level           = ${crest_level}            # Crest height in [m]
+crest_width           = 
+lat_contr_coeff       = 1                   # Lateral contraction coefficient in 
+%endfor
+    '''
+    for feature in collection.features:
+        path = pathlib.Path(feature.id)
+        pli_path = path.with_suffix('.pli').relative_to(path.parent)
+        create_pli(feature, pli_path)
+        feature.properties["pli_path"] = pli_path
+    structures_template = mako.template.Template(structures_template_text)
+    path = pathlib.Path(name)
+    structures_path = path.with_suffix('.ini').relative_to(path.parent)
+    with structures_path.open('w') as f:
+        rendered = structures_template.render(features=collection.features,
+                                              crest_level=0)
+        f.write(rendered)
+
+
+def create_pli(feature, pli_path):
+    pli_template_text = '''
+${structure_id}
+${len(coordinates)} 2
+%for point in coordinates:
+${point[0]} ${point[1]}
+%endfor
+'''
+    pli_template = mako.template.Template(pli_template_text)
+    with pli_path.open('w') as f:
+        rendered = pli_template.render(structure_id=feature.id,
+                                       coordinates=feature.geometry.coordinates)
+        f.write(rendered)
 
 
 if __name__ == "__main__":
@@ -157,12 +316,14 @@ if __name__ == "__main__":
     filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
     t5 = time.time()
     print("Hexagons to fill: " + str(t5 - t4))
-    filled_node_grid = gridmap.update_node_grid(filled_hexagons, filled_node_grid,
-                                        fill=True)
+    filled_node_grid = gridmap.update_node_grid(filled_hexagons,
+                                                filled_node_grid,
+                                                fill=True)
     t6 = time.time()
     print("Nodes to fill: " + str(t6 - t5))
-    filled_node_grid = gridmap.interpolate_node_grid(filled_hexagons, filled_node_grid,
-                                             turn=turn)
+    filled_node_grid = gridmap.interpolate_node_grid(filled_hexagons,
+                                                     filled_node_grid,
+                                                     turn=turn)
     t7 = time.time()
     print("Interpolated filled grid: " + str(t7 - t6))
     if save:
