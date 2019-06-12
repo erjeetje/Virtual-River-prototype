@@ -47,7 +47,19 @@ def determine_channel(hexagons):
     return hexagons
 
 
-def get_channel(hexagons, north_side=True):
+def get_channel(hexagons):
+    hexagons_copy = deepcopy(hexagons)
+    channel = []
+    for feature in hexagons_copy.features:
+        if feature.properties["main_channel"]:
+            channel.append(feature)
+    channel = geojson.FeatureCollection(channel)
+    for i, feature in enumerate(channel.features):
+        feature.id = i
+    return channel
+
+
+def get_channel_old(hexagons, north_side=True):
     hexagons_copy = deepcopy(hexagons)
     channel = []
     for feature in hexagons_copy.features:
@@ -63,7 +75,42 @@ def get_channel(hexagons, north_side=True):
     return channel
 
 
-def create_groynes(hexagons, north_side=True):
+def create_groynes(hexagons):
+    height = 0.0
+    y_dist = 0.0
+    groynes = []
+    for feature in hexagons.features:
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        y_hex = shape.centroid.y
+        if feature.id == 0:
+            line = list(geojson.utils.coords(feature.geometry))
+            maxy = 0.0
+            for x, y in line:
+                y = abs(y)
+                if y > maxy:
+                    maxy = y
+            height = (maxy - abs(y_hex))
+            y_dist = height * 0.25
+        if feature.properties["south_side_channel"]:
+            y_dist = y_dist * -1
+            height = height * -1
+        else:
+            y_dist = abs(y_dist)
+            height = abs(height)
+        top_point = [x_hex, y_hex+height]
+        bottom_point = [x_hex, y_hex+y_dist]
+        line = geojson.LineString([top_point, bottom_point])
+        groyne = geojson.Feature(id="groyne" + str(feature.id).zfill(2), geometry=line)
+        groyne.properties["active"] = True
+        groynes.append(groyne)
+    groynes = geojson.FeatureCollection(groynes)
+    with open('groynes_test_line.geojson', 'w') as f:
+        geojson.dump(groynes, f, sort_keys=True, indent=2)
+    return groynes
+
+
+def create_groynes_old(hexagons, north_side=True):
     height = 0.0
     y_dist = 0.0
     x_dist = 0.0
@@ -105,7 +152,119 @@ def create_groynes(hexagons, north_side=True):
     return groynes
 
 
-def create_LTDs(hexagons, north_side=True):
+def create_LTDs(hexagons):
+    """
+    Results are better with 59 degrees for some reason that I cannot figure
+    out yet.
+    """
+    sin = np.sin(np.deg2rad(60))
+    cosin = np.cos(np.deg2rad(60))
+    height = 0.0
+    x_dist = 0.0
+    y_dist = 0.0
+    ltd_features = []
+    for feature in hexagons.features:
+        """
+        Ideally would also want to do this with a try/except KeyError, but -1
+        index would find a hexagon.
+        """
+        edge = False
+        west_edge = False
+        east_edge = False
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        y_hex = shape.centroid.y
+        if feature.id == 0 or feature.id == 1:
+            # determine hexagon size and reusable variables for other hexagons
+            # only for the first hexagon
+            line = list(geojson.utils.coords(feature.geometry))
+            maxy = 0.0
+            for x, y in line:
+                y = abs(y)
+                if y > maxy:
+                    maxy = y
+            height = (maxy - abs(y_hex))
+            x_dist = sin * height
+            y_dist = cosin * height
+            edge = True
+            west_edge = True
+        else:
+            left_hex = hexagons[feature.id - 2]
+            shape = geometry.asShape(left_hex.geometry)
+            y_hex_left = shape.centroid.y
+        try:
+            right_hex = hexagons[feature.id + 2]
+            shape = geometry.asShape(right_hex.geometry)
+            y_hex_right = shape.centroid.y
+        except KeyError:
+            edge = True
+            east_edge = True
+        if not edge:
+            if y_hex < y_hex_left:
+                hex_left_north = True
+            else:
+                hex_left_north = False
+            if y_hex < y_hex_right:
+                hex_right_north = True
+            else:
+                hex_right_north = False
+        else:
+            if west_edge:
+                if y_hex < y_hex_right:
+                    hex_left_north = False
+                    hex_right_north = True
+                else:
+                    hex_left_north = True
+                    hex_right_north = False
+            if east_edge:
+                if y_hex < y_hex_left:
+                    hex_left_north = True
+                    hex_right_north = False
+                else:
+                    hex_left_north = False
+                    hex_right_north = True
+        mid_point = [x_hex, y_hex]
+        if hex_left_north and hex_right_north:
+            # LTD shape: high to high: \_/
+            x_top_left = x_hex - x_dist
+            y_top_left = y_hex + y_dist
+            left_point = [x_top_left, y_top_left]
+            x_top_left = x_hex + x_dist
+            right_point = [x_top_left, y_top_left]
+        elif hex_left_north and not hex_right_north:
+            # LTD shape high to low: `-_
+            x_top_left = x_hex - x_dist
+            y_top_left = y_hex + y_dist
+            left_point = [x_top_left, y_top_left]
+            x_top_left = x_hex + x_dist
+            y_top_left = y_hex - y_dist
+            right_point = [x_top_left, y_top_left]
+        elif not hex_left_north and hex_right_north:
+            # LTD shape low to high: _-`
+            x_top_left = x_hex - x_dist
+            y_top_left = y_hex - y_dist
+            left_point = [x_top_left, y_top_left]
+            x_top_left = x_hex + x_dist
+            y_top_left = y_hex + y_dist
+            right_point = [x_top_left, y_top_left]
+        else:
+            # LTD shape low to high: /`\
+            x_top_left = x_hex - x_dist
+            y_top_left = y_hex - y_dist
+            left_point = [x_top_left, y_top_left]
+            x_top_left = x_hex + x_dist
+            right_point = [x_top_left, y_top_left]
+        line = geojson.LineString([left_point, mid_point, right_point])
+        ltd = geojson.Feature(id="LTD" + str(feature.id).zfill(2), geometry=line)
+        ltd.properties["active"] = False
+        ltd_features.append(ltd)
+    ltd_features = geojson.FeatureCollection(ltd_features)
+    with open('ltds_test_line_correct.geojson', 'w') as f:
+        geojson.dump(ltd_features, f, sort_keys=True, indent=2)
+    return ltd_features
+
+
+def create_LTDs_old(hexagons, north_side=True):
     """
     Results are better with 59 degrees for some reason that I cannot figure
     out yet.
@@ -246,9 +405,6 @@ if __name__ == '__main__':
     hexagons = determine_channel(hexagons)
     with open('hexagons_with_structures.geojson', 'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
-    north_channel = get_channel(hexagons, north_side=True)
-    south_channel = get_channel(hexagons, north_side=False)
-    groynes = create_groynes(north_channel, north_side=True)
-    groynes = create_groynes(south_channel, north_side=False)
-    ltd_features = create_LTDs(north_channel, north_side=True)
-    ltd_features = create_LTDs(south_channel, north_side=False)
+    channel = get_channel(hexagons)
+    groynes = create_groynes(channel)
+    ltd_features = create_LTDs(channel)
