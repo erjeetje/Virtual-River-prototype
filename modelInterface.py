@@ -6,6 +6,7 @@ Created on Wed May 22 16:21:54 2019
 """
 
 
+import os
 import time
 import pathlib
 import geojson
@@ -20,7 +21,10 @@ from copy import deepcopy
 
 def initialize_model():
     model = bmi.wrapper.BMIWrapper('dflowfm')
-    model.initialize(r'C:\Users\HaanRJ\Documents\GitHub\sandbox-fm\models\sandbox\Waal_schematic\waal_with_side.mdu')
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    model_name = 'waal_with_side.mdu'
+    model_path = os.path.join(dir_path, 'models', 'Waal_schematic', model_name)
+    model.initialize(model_path)
     print('model initialized')
     return model
 
@@ -254,29 +258,33 @@ crest_width           =
 lat_contr_coeff       = 1                   # Lateral contraction coefficient in 
 %endfor
     '''
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    model_path = os.path.join(dir_path, 'models', 'Waal_schematic')
     for feature in collection.features:
-        path = pathlib.Path(feature.id)
-        pli_path = path.with_suffix('.pli').relative_to(path.parent)
+        filename = (str(feature.id) + '.pli')
+        #path = pathlib.Path(feature.id)
+        #pli_path = path.with_suffix('.pli').relative_to(path.parent)
+        pli_path = os.path.join(model_path, filename)
         create_pli(feature, pli_path)
         feature.properties["pli_path"] = pli_path
     structures_template = mako.template.Template(structures_template_text)
-    path = pathlib.Path(name)
-    structures_path = path.with_suffix('.ini').relative_to(path.parent)
-    with structures_path.open('w') as f:
+    #path = pathlib.Path(name)
+    #structures_path = path.with_suffix('.ini').relative_to(path.parent)
+    filename = (name + '.ini')
+    with open(os.path.join(model_path, filename), 'w') as f:
         rendered = structures_template.render(features=collection.features)
         f.write(rendered)
 
 
 def create_pli(feature, pli_path):
-    pli_template_text = '''
-${structure_id}
+    pli_template_text = '''${structure_id}
 ${len(coordinates)} 2
 %for point in coordinates:
 ${point[0]} ${point[1]}
 %endfor
 '''
     pli_template = mako.template.Template(pli_template_text)
-    with pli_path.open('w') as f:
+    with open(pli_path, 'w') as f:
         rendered = pli_template.render(structure_id=feature.id,
                                        coordinates=feature.geometry.coordinates)
         f.write(rendered)
