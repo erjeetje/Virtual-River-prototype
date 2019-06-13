@@ -13,8 +13,10 @@ import geojson
 import numpy as np
 import netCDF4
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
 import modelInterface as D3D
 import updateRoughness as roughness
+import createStructures as structures
 from copy import deepcopy
 from scipy.spatial import cKDTree
 from scipy import interpolate
@@ -23,6 +25,7 @@ from shapely.ops import unary_union
 from rasterio import open as opentif
 from rasterio.features import rasterize
 from rasterio.transform import from_origin
+from scipy.ndimage.filters import gaussian_filter
 
 
 def read_calibration(path=""):
@@ -541,7 +544,11 @@ def create_geotiff(grid, turn=0, path="", save=False):
             for line in interpolated_data:
                 f.write(str(line))
                 f.write('\n')
-    #plt.imshow(interpolated_data)
+    """
+    min_data = min(data)
+    max_data = max(data)
+    create_heatmap(interpolated_data, min_data, max_data, name="Elevation_plot", cmap="gist_earth", sigma=(5, 5, 1))
+    """
 
     compression = {"compress": "LZW"}
     filename = 'grid_height_map%d.tif' % turn
@@ -604,6 +611,73 @@ def create_geotiff_old(grid, turn=0, path=""):
     return heightmap
 
 
+def create_roughness_map(grid, turn=0, path="", save=False):
+    x_coor = []
+    y_coor = []
+    data = []
+    step = 3 * 1.25
+    for feature in grid.features:
+        shape = geometry.asShape(feature.geometry)
+        x = (shape.centroid.x + 400) * 1.25
+        y = (shape.centroid.y + 300) * 1.25
+        if x < (0 - step) or x > (1000 + step):
+            continue
+        if y < (0 - step) or y > (750 + step):
+            continue
+        x_coor.append(x)
+        y_coor.append(y)
+        try:
+            chezy = feature.properties["Chezy"]
+        except KeyError:
+            chezy = 45.0
+        data.append(chezy)
+    x_coor = np.array(x_coor)
+    y_coor = np.array(y_coor)
+    data = np.array(data)
+    xvalues = np.linspace(1, 1000, 1000)
+    yvalues = np.linspace(1, 750, 750)
+    xx, yy = np.meshgrid(xvalues, yvalues)
+    interpolated_data = interpolate.griddata((x_coor, y_coor), data, (xx, yy))
+    interpolated_data = cv2.flip(interpolated_data, 0)
+    #cv2.imshow('raw', np.uint8(interpolated_data * 256)[...,:3])
+    #cv2.imshow('heatmap', interpolated_data)
+    #heatmap = gaussian_filter(interpolated_data, sigma=1)
+    #heatmap = cv2.GaussianBlur(interpolated_data,(505,505),cv2.BORDER_DEFAULT)
+    #plt.imshow(interpolated_data)
+    #print(interpolated_data.dtype)
+    """
+    max_data = max(data)
+    min_data = min(data)
+    create_heatmap(interpolated_data, min_data, max_data, name="Chezy_plot", cmap="viridis", sigma=(16, 16, 1))
+    """
+    return interpolated_data
+
+
+def create_heatmap(data, min_data, max_data, name="plot", cmap="viridis", sigma=(16, 16, 1)):
+    """
+    This function is here temporarily. Should be handled by the vizualization module.
+    """
+    N = colors.Normalize(min_data, max_data)
+    cmap = getattr(plt.cm, cmap)
+    rgba = cmap(N(data))
+    heatmap_scipy = gaussian_filter(rgba, sigma=sigma)
+    kernel = sigma[0] * 8 * 4 + 1
+    heatmap_opencv = cv2.GaussianBlur(rgba, (kernel, kernel), cv2.BORDER_DEFAULT)
+    #correction = 255 / max_data
+    rgb = np.uint8(rgba * 256)[...,:3]
+    heatmap_scipy_rgb = np.uint8(heatmap_scipy * 256)[...,:3]
+    heatmap_opencv_rgb = np.uint8(heatmap_opencv * 256)[...,:3]
+    heatmap_scipy_name = (name + "scipy_heatmap")
+    heatmap_opencv_name = (name + "opencv_heatmap")
+    cv2.imwrite((name + '.jpg'), rgb)
+    cv2.imwrite((heatmap_scipy_name + '.jpg'), heatmap_scipy_rgb)
+    cv2.imwrite((heatmap_opencv_name + '.jpg'), heatmap_opencv_rgb)
+    cv2.imshow(name, rgb)
+    cv2.imshow(heatmap_scipy_name, heatmap_scipy_rgb)
+    cv2.imshow(heatmap_opencv_name, heatmap_opencv_rgb)
+    return
+
+
 if __name__ == "__main__":
     save = False
     turn = 0
@@ -614,6 +688,8 @@ if __name__ == "__main__":
     for feature in hexagons.features:
         feature.properties["z_changed"] = True
         feature.properties["landuse_changed"] = True
+    hexagons = structures.determine_dikes(hexagons)
+    hexagons = structures.determine_channel(hexagons)
     t1 = time.time()
     print("Read hexagons: " + str(t1 - t0))
     node_grid = read_node_grid()
@@ -636,7 +712,7 @@ if __name__ == "__main__":
     print("Interpolate grid: " + str(t4 - t3))
     filled_node_grid = deepcopy(node_grid)
     filled_hexagons = deepcopy(hexagons)
-    filled_hexagons, dike_top, dike_bottom = hexagons_to_fill(filled_hexagons)
+    filled_hexagons = hexagons_to_fill(filled_hexagons)
     t5 = time.time()
     print("Hexagons to fill: " + str(t5 - t4))
     test_print = []
@@ -659,9 +735,10 @@ if __name__ == "__main__":
     if save:
         print("Saved both grids: " + str(t8 - t7))
     heightmap = create_geotiff(node_grid)
+    heatmap = create_roughness_map(face_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
-    D3D.run_model(model, filled_node_grid, face_grid, hexagons)
+    #D3D.run_model(model, filled_node_grid, face_grid, hexagons)
     """
     with open('node_grid0.geojson', 'r') as f:
         grid = geojson.load(f)
