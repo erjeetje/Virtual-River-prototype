@@ -1,6 +1,8 @@
 {
     "settings": {
-        "fullscreen": true
+        "fullscreen": true,
+        "width": 600,
+        "height": 400
     },
     "screens": [
         {
@@ -10,7 +12,7 @@
                 {
                     "min": 0,
                     "max": 2,
-                    "variable": "zs",
+                    "variable": "s1",
                     "colormap": "viridis",
                     "type": "imshow"
                 }
