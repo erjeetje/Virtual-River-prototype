@@ -40,6 +40,8 @@ def blend_transparent(background_img, overlay_img):
     """blend 2 transparent images"""
 
     # TODO: this is now very slow..., optimize
+    # Perhaps check Pillow's alpha composite
+    # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#PIL.Image.alpha_composite
     
     # from: https://stackoverflow.com/questions/36921496/how-to-join-png-with-alpha-transparency-in-a-frame-in-realtime/37198079#37198079
 
