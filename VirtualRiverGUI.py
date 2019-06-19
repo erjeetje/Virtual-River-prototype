@@ -143,30 +143,12 @@ class runScript():
                                                      path=self.dir_path)
             self.hexagons_sandbox = structures.determine_dikes(self.hexagons_sandbox)
             self.hexagons_sandbox = structures.determine_channel(self.hexagons_sandbox)
-            north_channel = structures.get_channel(self.hexagons_sandbox,
-                                                   north_side=True)
-            south_channel = structures.get_channel(self.hexagons_sandbox,
-                                                   north_side=False)
-            groynes_north = structures.create_groynes(north_channel,
-                                                      north_side=True)
-            groynes_south = structures.create_groynes(south_channel,
-                                                      north_side=False)
-            ltd_features_north = structures.create_LTDs(north_channel,
-                                                        north_side=True)
-            ltd_features_south = structures.create_LTDs(south_channel,
-                                                        north_side=False)
-            groynes_north_tygron = detect.transform(groynes_north,
-                                                    self.transforms,
-                                                    export="sandbox2tygron")
-            groynes_south_tygron = detect.transform(groynes_south,
-                                                    self.transforms,
-                                                    export="sandbox2tygron")
-            ltd_features_north_tygron = detect.transform(ltd_features_north,
-                                                         self.transforms,
-                                                         export="sandbox2tygron")
-            ltd_features_south_tygron = detect.transform(ltd_features_south,
-                                                         self.transforms,
-                                                         export="sandbox2tygron")
+            channel = structures.get_channel(self.hexagons_sandbox)
+            weirs = structures.create_structures(channel)
+            """
+            structures_tygron = detect.transform(weirs,
+                                                 self.transforms,
+                                                 export="sandbox2tygron")
             if self.save:
                 with open('groynes_test_north_tygron.geojson', 'w') as f:
                     geojson.dump(groynes_north_tygron, f, sort_keys=True,
@@ -181,6 +163,7 @@ class runScript():
                     geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                                  indent=2)
                 print("saved hexagon file (conditional)")
+            """
             hexagons_tygron_int = detect.transform(self.hexagons,
                                                    self.transforms,
                                                    export="tygron_initialize")

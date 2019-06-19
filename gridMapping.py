@@ -5,6 +5,7 @@ Created on Thu Feb 28 16:07:11 2019
 @author: HaanRJ
 """
 
+
 import time
 import os
 import json
@@ -17,6 +18,7 @@ import matplotlib.colors as colors
 import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
+
 from copy import deepcopy
 from scipy.spatial import cKDTree
 from scipy import interpolate
@@ -745,3 +747,14 @@ if __name__ == "__main__":
     heightmap = create_geotiff(grid)
     tygron.set_elevation(heightmap)
     """
+    if save:
+        with open('hexagons_visualization_test.geojson', 'w') as f:
+            geojson.dump(hexagons, f, sort_keys=True,
+                         indent=2)
+        with open('node_grid_visualization_test.geojson', 'w') as f:
+            geojson.dump(node_grid, f, sort_keys=True,
+                         indent=2)
+        with open('face_grid_visualization_test.geojson', 'w') as f:
+            geojson.dump(face_grid, f, sort_keys=True,
+                         indent=2)
+        print("saved files")
