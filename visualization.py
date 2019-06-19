@@ -1,16 +1,24 @@
 import time
 import json
 import itertools
+import logging
+import functools
 
 import click
 import cv2
+import tqdm
 
 import numpy as np
 import matplotlib.cm
 import matplotlib.colors
 import netCDF4
 import scipy.spatial
+import skimage
 
+from models import available
+from physics import warp_flow
+
+logger = logging.getLogger(__name__)
 
 def transform(x, y, M):
     """perspective transform x,y with M"""
@@ -27,116 +35,36 @@ def transform(x, y, M):
     )
     return xy_t[:, 0], xy_t[:, 1]
 
-def dflowfm_compute(data):
-    """compute variables that are missing/buggy/not available"""
-    numk = data['zk'].shape[0]
-    data['numk'] = numk
-    # fix shapes
-    for var_name in dflowfm_vars:
-        arr = data[var_name]
-        if arr.shape[0] == data['numk']:
-            data[var_name] = arr[:data['numk']]
-        elif arr.shape[0] == data['ndx']:
-            "should be of shape ndx"
-            # ndxi:ndx are the boundary points
-            # (See  netcdf write code in unstruc)
-            data[var_name] = arr[:data['ndxi']]
-            # data should be off consistent shape now
-        elif arr.shape[0] == data['ndxi']:
-            # this is ok
-            pass
-        else:
-            msg = "unexpected data shape %s for variable %s" % (
-                arr.shape,
-                var_name
-            )
-            raise ValueError(msg)
-        # compute derivitave variables, should be consistent shape now.
-    data['is_wet'] = data['s1'] > data['bl']
 
-def update_height_dflowfm(idx, height_nodes_new, data, model):
-    nn = 0
-    for i in np.where(idx)[0]:
-        # Only update model where the bed level changed (by compute_delta_height)
-        if height_nodes_new[i] < data['bedlevel_update_maximum'] and np.abs(height_nodes_new[i] - data['HEIGHT_NODES'][i]) > data['bedlevel_update_threshold']:
-            nn += 1
-            model.set_var_slice('zk', [int(i+1)], [1], height_nodes_new[i:i + 1])
-    print('Total bed level updates', nn)
+def blend_transparent(background_img, overlay_img):
+    """blend 2 transparent images"""
 
-#  a list of mappings of variables
-# variables are not named consistently between models and between netcdf files and model
-dflowfm = {
-    "initial_vars": [
-        'xzw',
-        'yzw',
-        'xk',
-        'yk',
-        'zk',
-        'ndx',
-        'ndxi',             # number of internal points (no boundaries)
-        'flowelemnode'
-    ],
-    "vars": ['bl', 'ucx', 'ucy', 's1', 'zk'],
-    "mapping": dict(
-        X_NODES="xk",
-        Y_NODES="yk",
-        X_CELLS="xzw",
-        Y_CELLS="yzw",
-        HEIGHT_NODES="zk",
-        HEIGHT_CELLS="bl",
-        WATERLEVEL="s1",
-        U="ucx",
-        V="ucy"
-    ),
-    "compute": dflowfm_compute,
-    "update_nodes": update_height_dflowfm
-}
-dflowfm["reverse_mapping"] = {value: key for key, value in dflowfm["mapping"].items()}
+    # TODO: this is now very slow..., optimize
+    
+    # from: https://stackoverflow.com/questions/36921496/how-to-join-png-with-alpha-transparency-in-a-frame-in-realtime/37198079#37198079
 
+    # If overlay img is without alfa, return it
+    if overlay_img.shape[2] == 3:
+        return overlay_img
+    
+    # Split out the transparency mask from the colour info
+    overlay_bgr = overlay_img[:,:,:3] # Grab the BRG planes
+    overlay_mask = overlay_img[:,:,3:]  # And the alpha plane
 
-dflowfm_nc = {
-    "initial_vars": [
-        'mesh2d_face_x',
-        'mesh2d_face_y',
-        'mesh2d_node_x',
-        'mesh2d_node_y',
-        'mesh2d_node_z'
-    ],
-    "vars": ['mesh2d_flowelem_bl', 'mesh2d_ucx', 'mesh2d_ucy', 'mesh2d_s1', 'mesh2d_node_z'],
-    "mapping": dict(
-        X_NODES="mesh2d_node_x",
-        Y_NODES="mesh2d_node_y",
-        X_CELLS="mesh2d_face_x",
-        Y_CELLS="mesh2d_face_y",
-        HEIGHT_NODES="mesh2d_node_z",
-        HEIGHT_CELLS="mesh2d_flowelem_bl",
-        WATERLEVEL="mesh2d_s1",
-        U="mesh2d_ucx",
-        V="mesh2d_ucy"
-    ),
-    "compute": lambda x: x,
-    "update_nodes": lambda x: x
-}
-dflowfm_nc["reverse_mapping"] = {value: key for key, value in dflowfm["mapping"].items()}
+    # Again calculate the inverse mask
+    background_mask = 255 - overlay_mask
 
-available = {
-    "dflowfm": dflowfm,       # from memory
-    "dflowfm_nc": dflowfm_nc  # from file
-}
+    # Turn the masks into three channel, so we can use them as weights
+    overlay_mask = cv2.cvtColor(overlay_mask, cv2.COLOR_GRAY2BGR)
+    background_mask = cv2.cvtColor(background_mask, cv2.COLOR_GRAY2BGR)
 
+    # Create a masked out background image, and masked out overlay
+    # We convert the images to floating point in range 0.0 - 1.0
+    background_part = (background_img * (1 / 255.0)) * (background_mask * (1 / 255.0))
+    overlay_part = (overlay_bgr * (1 / 255.0)) * (overlay_mask * (1 / 255.0))
 
-def get_data(t=0, nx=500, ny=300):
-    """generate some initial data"""
-    # TODO: get this from the model
-    ds = netCDF4.Dataset('models/Waal_schematic/DFM_OUTPUT_waal_with_side/waal_with_side_map.nc')
-    ucx = ds.variables['mesh2d_ucx'][t].reshape(133, 200)
-    ucy = ds.variables['mesh2d_ucy'][t].reshape(133, 200)
-    s1 = ds.variables['mesh2d_s1'][t].reshape(133, 200)
-    return dict(
-        ucx=ucx,
-        ucy=ucy,
-        s1=s1
-    )
+    # And finally just add them together, and rescale it back to an 8bit integer image    
+    return np.uint8(cv2.addWeighted(background_part, 255.0, overlay_part, 255.0, 0.0))
 
 
 class Visualization():
@@ -146,7 +74,6 @@ class Visualization():
         self.data = {}
 
         self.config = self.read_config()
-        print(self.config)
 
         WIDTH = self.config['settings']['width']
         HEIGHT = self.config['settings']['height']
@@ -170,7 +97,7 @@ class Visualization():
             self.update_initial_vars()
         )
         self.grid = self.init_grid()
-        
+        self.init_screens()
         
     def read_config(self):
         with open("screens.json") as f:
@@ -231,19 +158,21 @@ class Visualization():
         return data
 
 
-    def update_vars(data, model=None, engine='dflowfm_nc', t=0):
+    def update_vars(self, model=None, engine='dflowfm_nc', t=0):
         """get the variables from the model and put them in the data dictionary"""
         meta = available[engine]
         for name in meta['vars']:
             if engine.endswith('_nc'):
-                # assume t is first dimension
-                data[name] = self.ds.variables[name][t]
+                # start looping from the start
+                t = (t % self.data['time'].shape[0])
+                self.data[name] = self.ds.variables[name][t]
+                self.data['t'] = self.data['time'][t]
             else:
-                data[name] = model.get_var(name)
+                self.data[name] = model.get_var(name)
         # do some stuff per model
-        meta["compute"](data)
+        meta["compute"](self.data)
         for key, val in meta["mapping"].items():
-            data[key] = data[val]
+            self.data[key] = self.data[val]
 
     def init_grid(self):
         """initialize grid variables"""
@@ -297,94 +226,169 @@ class Visualization():
         data['y_cells_box'] = y_cells_box
         return data
 
-def imshow_layer(data, layer, window='main'):
-    # get the variable for this layer
-    var = data[layer['variable']]
-    # get min and max if set
-    min = layer.get('min', var.min())
-    max = layer.get('max', var.max())
-    # the normalization function
-    N = matplotlib.colors.Normalize(var.min(), var.max())
-    # the colormap
-    cmap = getattr(matplotlib.cm, layer['colormap'])
-    # the colored image
-    rgba = cmap(N(var))
+    def init_screens(self):
+        # Initialize
+        self.screen = self.config['screens'][0]
+        # Create a debug screen so you can see what's going on.
+        cv2.namedWindow('debug', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
+        # Create a main window for the beamer
+        cv2.namedWindow('main', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
+        # make main window full screen
+        if self.config['settings'].get('fullscreen', False):
+            cv2.setWindowProperty('main', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
-    # TODO: check if we can do this with opencv (convert or something...)
-    rgb = np.uint8(rgba * 256)[...,:3]
-    
-    # this is one plot, other variants might include advection of colors 
-    cv2.imshow(window, rgb)
-
-
-
-def viz_loop():
-    """run the main visualization loop"""
-
-    # Read visualization configuration
-    # Visualization types -> list of layers
-    with open("screens.json") as f:
-        config = json.load(f)
-
-    print(config)
-    screens = config['screens']
-
-    # Initialize 
-    # Create a debug screen so you can see what's going on.
-    cv2.namedWindow('debug', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
-    # Create a main window for the beamer
-    cv2.namedWindow('main', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
-    # make main window full screen
-    if config['settings'].get('fullscreen', False):
-        cv2.setWindowProperty('main', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-
-    screen = screens[0]
-    
-    # Load initial data
-    initial_data = get_data(t=0)
-    # Create initial visualization (type)
-    for layer in screen['layers']:
-        imshow_layer(data=initial_data, layer=layer, window='main')
-
-    # for now create a list of variables:
-
-    # We have three event loops in parallel.
-    
-    # [VIZ] loop
-    # Process input (click, key)
-    # If visualization type changed: Create initial visualization
-    # Update visualization
-
-    for i in itertools.count():
-        key = cv2.waitKey(1)
-        if key in [ord('q'), ord('Q')]:
-            break
-        if key in [ord(x) for x in '0123456789']:
-            print('changing to screen', chr(key))
-        data = get_data(t=i/10) 
-        for layer in screen['layers']:
-            imshow_layer(data=data, layer=layer, window='main')
-    print(i)
+    def set_screen(self, key):
+        for screen in self.config['screens']:
+            if screen['key'] == key:
+                self.screen = screen
+                break
+        else:
+            logger.warn('screen %s not available', key)
+                
+            
+    def put_text(self, text, window='debug'):
+        WIDTH = self.config['settings']['width']
+        HEIGHT = self.config['settings']['height']
+        img = np.zeros((HEIGHT, WIDTH, 3), np.uint8)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        color = (255, 255, 255)
+        
+        scale = 1
+        for i, line in enumerate(text.split('\n')):
+            origin = (50, 50 + i * 50)
+            cv2.putText(img, line, origin, font, scale, color)
+        return img
 
     
-    # [ Sandbox ] Loop
-    # Read camera
-    # Send changes to [model]
+    def imshow(self, layer):
+        # get the variable for this layer
+        var = self.data[layer['variable']]
+        # get min and max if set
+        min = layer.get('min', var.min())
+        max = layer.get('max', var.max())
+        # the normalization function
+        N = matplotlib.colors.Normalize(var.min(), var.max())
+        # the colormap
+        cmap = getattr(matplotlib.cm, layer['colormap'])
+
+        # The gridded image
+        # TODO: use approriate lookup map for cells or nodes
+        arr = var[self.grid['ravensburger_cells']]
+        
+        # the colored image
+        rgba = cmap(N(arr))
+
+        # TODO: check if we can do this with opencv (convert or something...)
+        rgb = np.uint8(rgba * 256)[...,:3]
+
+        # this is one plot, other variants might include advection of colors 
+        return rgb
+
+    def seed_lic(self, layer):
+        
+        # Put in new white dots (to be plotted next time step)
+        n_dots = 4
+        size = 4
+        WIDTH = self.config['settings']['width']
+        HEIGHT = self.config['settings']['height']
+
+        coords = np.random.random((n_dots, 2)) * (HEIGHT, WIDTH)
+
+        if not 'lic' in self.data:
+            self.data['lic'] = np.zeros((HEIGHT, WIDTH, 4))
+
+        for x, y in coords:
+            # white
+            color = (1, 1, 1)
+            
+            # make sure outline has the same color
+            # create a little dot
+            r, c = skimage.draw.circle(y, x, size, shape=(HEIGHT, WIDTH))
+            # Don't plot on (nearly) dry cells
+            self.data['lic'][r, c] = 1
+        
+    def lic(self, layer):
+
+        scale = layer['scale']
+
+        # get the u,v vectors
+        u = self.data['U']
+        v = self.data['V']
+
+        # transform to matrices
+        U = u[self.grid['ravensburger_cells']]
+        V = v[self.grid['ravensburger_cells']]
+
+        # create an image to transform
+        self.seed_lic(layer)
+
+        flow = np.dstack([U, V]) * scale
+
+        self.data['lic'] = warp_flow(
+            self.data['lic'].astype('float32'),
+            flow.astype('float32')
+        )
+
+        return (self.data['lic'] * 256).astype('uint8')
+
+    def loop(self):
+        for i in tqdm.tqdm(itertools.count()):
+
+            # Process key input
+            key = cv2.waitKey(1)
+            # quit
+            if key in [ord('q'), ord('Q')]:
+                break
+            # switch screen
+            if key in [ord(x) for x in '0123456789']:
+                # key is a number, convert to corresponding letter
+                self.set_screen(chr(key))
+
+            # Process input
+            # You could process camera input here
+
+            # Model updates
+            # You could update the model here
+
+            # Update the variables
+            self.update_vars(t=i)
+
+            # Nowe we can render
+            rgbas = []
+            for layer in self.screen['layers']:
+                # We are rendering in RGBA
+                if layer['type'] == 'imshow':
+                    rgba = self.imshow(layer=layer)
+                if layer['type'] == 'lic':
+                    rgba = self.lic(layer)
+                rgbas.append(rgba)
+                
+            # merge the layers (can perhaps be done faster)
+            rgba = functools.reduce(blend_transparent, rgbas)
+
+            
+            # Open CV expects BGR, never found out why
+            bgr = cv2.cvtColor(rgba, cv2.COLOR_RGBA2BGR)
+            cv2.imshow('main', bgr)
+
+            img =  self.put_text('Timestep: %s\nT: %s' % (i, self.data['t']))
+            cv2.imshow('debug', img)
+
+    def close(self):
+        # Finalize
+        cv2.destroyAllWindows()
+    def __del__(self):
+        self.close()
+        
     
-    # [ Model ] Loop
-    # Process updates
-    # Timestep
-    # Send data to [viz]
-    
-    # Finalize
-    cv2.destroyAllWindows()
-    
+
 @click.command()
 def main():
+    logging.basicConfig(level=logging.DEBUG)
     ds = netCDF4.Dataset('models/Waal_schematic/DFM_OUTPUT_waal_with_side/waal_with_side_map.nc')
     viz = Visualization(ds)
-    print(vars(viz))
-    viz_loop()
+    viz.loop()
+    viz.close()
 
 
     

@@ -1,22 +1,37 @@
 {
     "settings": {
-        "fullscreen": true,
+        "fullscreen": false,
         "width": 600,
         "height": 400
     },
     "screens": [
         {
             "title": "Water levels",
-            "key": 1,
+            "key": "1",
+            "layers": [
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
+        {
+            "title": "Water levels",
+            "key": "2",
             "layers": [
                 {
                     "min": 0,
                     "max": 2,
-                    "variable": "s1",
+                    "variable": "WATERLEVEL",
                     "colormap": "viridis",
                     "type": "imshow"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
                 }
             ]
-        }    
+        }        
+        
     ]
 }
