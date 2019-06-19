@@ -51,9 +51,7 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
     s1 = model.get_var('s1')[:ndxi]
     ucx = model.get_var('ucx')[:ndxi]
     ucy = model.get_var('ucy')[:ndxi]
-    print(ucx)
 
-    """
     s1_t0 = s1.copy()
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
     sc = axes[0].scatter(xzw, yzw, c=s1, edgecolor='none', vmin=0, vmax=6, cmap='jet')
@@ -76,9 +74,6 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
             if feature.properties['changed']
     ]
     frcu = model.get_var('frcu')
-    test = np.unique(deepcopy(frcu))
-    print(test)
-    """
     """
     hexagons_by_id = {feature.id: feature for feature in hexagons.features}
     default_landuse = 8
@@ -100,7 +95,6 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
         friction = landuse_to_friction(feature.properties['landuse'])
         frcu[feature.id] = friction
     """
-    """
     if True:
         for feature in changed:
             zk_new = np.array([feature.properties['z']], dtype='float64') * 1.5
@@ -110,24 +104,33 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
                     [1],
                     zk_new
             )
-    s0 = s1.copy()
+    #s0 = s1.copy()
+    print("updated grid in model")
     model.update(60)
+    #print("set timesteps in model")
     for i in range(50):
+        t0 = time.time()
         model.update(3)
+        t1 = time.time()
+        print("model update: " + str(t1 - t0))
         axes[0].set_title("{:2f}".format(model.get_current_time()))
+        t2 = time.time()
+        print("axes title: " + str(t2 - t1))
         sc.set_array(ucx.copy())
+        t3 = time.time()
+        print("set sc: " + str(t3 - t2))
         sc_zk.set_array(zk.copy())
+        t4 = time.time()
+        print("set sc_zk: " + str(t4 - t3))
         qv.set_UVC(ucx.copy(), ucy.copy())
+        t5 = time.time()
+        print("set qv: " + str(t5 - t4))
         plt.draw()
+        t6 = time.time()
+        print("draw: " + str(t6 - t5))
         plt.pause(0.00001)
 
     print(model.get_current_time())
-    
-    ucx = model.get_var('ucx')[:ndxi]
-    ucy = model.get_var('ucy')[:ndxi]
-    generate_geojson(ucx)
-    generate_geojson(ucy)
-    """
     return
 
 
@@ -195,13 +198,10 @@ ${point[0]} ${point[1]}
 
 
 if __name__ == "__main__":
-    print("I am here 3")
     save = False
     turn = 0
     plt.interactive(True)
-    print("I am here 4")
     calibration = gridmap.read_calibration()
-    print("I am here 5")
     t0 = time.time()
     hexagons = gridmap.read_hexagons(filename='storing_files\\hexagons0.geojson')
     for feature in hexagons.features:
@@ -210,11 +210,8 @@ if __name__ == "__main__":
     t1 = time.time()
     print("Read hexagons: " + str(t1 - t0))
     model = initialize_model()
-    print("I am here 6")
     node_grid = gridmap.read_node_grid()
-    print("I am here 7")
     face_grid = gridmap.read_face_grid(model)
-    print("I am here 8")
     t2 = time.time()
     print("Load grid: " + str(t2 - t1))
     node_grid = gridmap.index_node_grid(hexagons, node_grid)

@@ -8,7 +8,6 @@ Created on Tue Jun 11 10:35:25 2019
 import sys
 import time
 import geojson
-#import keyboard
 import os
 import tygronInterface as tygron
 import gridCalibration as cali
@@ -74,14 +73,16 @@ class GUI(QWidget):
 class runScript():
     def __init__(self):
         super(runScript, self).__init__()
-        path = os.path.dirname(os.path.realpath(__file__))
-        self.dir_path = os.path.join(path, 'storing_files')
+        self.dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.store_path = os.path.join(path, 'storing_files')
         try:
-            os.mkdir(self.dir_path)
-            print("Directory ", self.dir_path, " Created.")
+            os.mkdir(self.store_path)
+            print("Directory ", self.store_path, " Created.")
         except FileExistsError:
-            print("Directory ", self.dir_path,
+            print("Directory ", self.store_path,
                   " already exists, overwriting files.")
+        self.model_path = os.path.join(self.dir_path, 'models',
+                                       'Waal_schematic')
         self.initialized = False
         self.turn = 0
         self.save = False
@@ -123,111 +124,111 @@ class runScript():
             self.pers, self.img_x, self.img_y, self.origins, self.radius, \
                 cut_points, features = cali.rotate_grid(canvas, thresh)
             # create the calibration file for use by other methods and store it
-            self.transforms = cali.create_calibration_file(self.img_x,
-                                                           self.img_y,
-                                                           cut_points,
-                                                           path=self.dir_path)
+            self.transforms = cali.create_calibration_file(
+                    self.img_x, self.img_y, cut_points, path=self.dir_path)
             print("calibrated camera")
-            self.hexagons = detect.detect_markers(img, self.pers, self.img_x,
-                                                  self.img_y, self.origins,
-                                                  self.radius, features,
-                                                  method='LAB',
-                                                  path=self.dir_path)
+            self.hexagons = detect.detect_markers(
+                    img, self.pers, self.img_x, self.img_y, self.origins,
+                    self.radius, features, method='LAB',path=self.dir_path)
             print("processed initial board state")
             
             self.hexagons = tygron.update_hexagons_tygron_id(self.token,
                                                              self.hexagons)
-            self.hexagons_sandbox = detect.transform(self.hexagons,
-                                                     self.transforms,
-                                                     export="sandbox",
-                                                     path=self.dir_path)
-            self.hexagons_sandbox = structures.determine_dikes(self.hexagons_sandbox)
-            self.hexagons_sandbox = structures.determine_channel(self.hexagons_sandbox)
+            self.hexagons_sandbox = detect.transform(
+                    self.hexagons, self.transforms, export="sandbox",
+                    path=self.dir_path)
+            self.hexagons_sandbox = structures.determine_dikes(
+                    self.hexagons_sandbox)
+            self.hexagons_sandbox = structures.determine_channel(
+                    self.hexagons_sandbox)
             channel = structures.get_channel(self.hexagons_sandbox)
             weirs = structures.create_structures(channel)
             """
             structures_tygron = detect.transform(weirs,
                                                  self.transforms,
                                                  export="sandbox2tygron")
-            if self.save:
-                with open('groynes_test_north_tygron.geojson', 'w') as f:
-                    geojson.dump(groynes_north_tygron, f, sort_keys=True,
-                                 indent=2)
-                with open('groynes_test_south_tygron.geojson', 'w') as f:
-                    geojson.dump(groynes_south_tygron, f, sort_keys=True,
-                                 indent=2)
-            if self.save:
-                with open(os.path.join(self.dir_path,
-                                       'hexagons%d.geojson' % self.turn),
-                          'w') as f:
-                    geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
-                                 indent=2)
-                print("saved hexagon file (conditional)")
             """
             hexagons_tygron_int = detect.transform(self.hexagons,
                                                    self.transforms,
                                                    export="tygron_initialize")
-            if self.save:
-                with open(os.path.join(self.dir_path,
-                                       'hexagons_tygron_initialization%d.geojson'
-                                       % self.turn), 'w') as f:
-                    geojson.dump(hexagons_tygron_int, f, sort_keys=True,
-                                 indent=2)
-                print("saved hexagon file (conditional)")
             self.hexagons_tygron = detect.transform(self.hexagons,
                                                     self.transforms,
                                                     export="tygron")
             print("prepared geojson files")
             self.model = D3D.initialize_model()
             self.node_grid = gridmap.read_node_grid(path=self.dir_path)
-            self.face_grid = gridmap.read_face_grid(self.model, path=self.dir_path)
+            self.face_grid = gridmap.read_face_grid(self.model,
+                                                    path=self.dir_path)
             print("loaded grid")
-            self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox, self.node_grid)
-            self.face_grid = gridmap.index_face_grid(self.hexagons_sandbox, self.face_grid)
-            self.node_grid = gridmap.interpolate_node_grid(self.hexagons_sandbox, self.node_grid,
-                                                      turn=self.turn, path=self.dir_path)
-            self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(self.model,
-                                                                  self.hexagons_sandbox,
-                                                                  self.face_grid)
+            self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox,
+                                                     self.node_grid)
+            self.face_grid = gridmap.index_face_grid(self.hexagons_sandbox,
+                                                     self.face_grid)
+            self.node_grid = gridmap.interpolate_node_grid(
+                    self.hexagons_sandbox, self.node_grid, turn=self.turn,
+                    path=self.dir_path)
+            self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
+                    self.model, self.hexagons_sandbox, self.face_grid)
             print("executed grid interpolation")
             self.filled_node_grid = deepcopy(self.node_grid)
             filled_hexagons = deepcopy(self.hexagons_sandbox)
             filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
-            self.filled_node_grid = gridmap.update_node_grid(filled_hexagons,
-                                                        self.filled_node_grid,
-                                                        fill=True)
-            self.filled_node_grid = gridmap.interpolate_node_grid(filled_hexagons,
-                                                             self.filled_node_grid,
-                                                             turn=self.turn,
-                                                             path=self.dir_path)
-            if self.save:
-                with open(os.path.join(self.dir_path, 'node_grid%d.geojson' % self.turn),
-                          'w') as f:
-                    geojson.dump(self.node_grid, f, sort_keys=True,
-                                 indent=2)
-                with open(os.path.join(dir_path,
-                                       'filled_node_grid%d.geojson' % turn),
-                          'w') as f:
-                    geojson.dump(self.filled_node_grid, f, sort_keys=True,
-                                 indent=2)
-                print("saved interpolation files (conditional)")
+            self.filled_node_grid = gridmap.update_node_grid(
+                    filled_hexagons, self.filled_node_grid, fill=True)
+            self.filled_node_grid = gridmap.interpolate_node_grid(
+                    filled_hexagons, self.filled_node_grid, turn=self.turn,
+                    path=self.dir_path)
             print("executed grid fill interpolation")
-            self.heightmap = gridmap.create_geotiff(self.node_grid, turn=self.turn, path=self.dir_path)
+            self.heightmap = gridmap.create_geotiff(
+                    self.node_grid, turn=self.turn, path=self.dir_path)
             print("created geotiff")
             """
-            This section is not very efficient, once the system is up and running
-            replace this to either also check which hexagons need to change or make
-            an empty project area that is either land or water only.
+            This section is not very efficient, once the system is up and
+            running replace this to either also check which hexagons need to
+            change or make an empty project area that is either land or water
+            only.
             """
-            self.hexagons_tygron = tygron.set_terrain_type(self.token, self.hexagons_tygron)
+            self.hexagons_tygron = tygron.set_terrain_type(
+                    self.token, self.hexagons_tygron)
             tygron.hex_to_terrain(self.token, self.hexagons)
-            file_location = (self.dir_path + "\\grid_height_map" + str(self.turn) + ".tif")
-            heightmap_id = tygron.set_elevation(file_location, self.token, turn=self.turn)
+            file_location = (self.dir_path + "\\grid_height_map" +
+                             str(self.turn) + ".tif")
+            heightmap_id = tygron.set_elevation(file_location, self.token,
+                                                turn=self.turn)
             print("updated Tygron")
             print("stored initial board state")
             toc = time.time()
             print("Start up and calibration time: "+str(toc-tic))
             self.initialized = True
+            if self.save:
+                with open(os.path.join(self.store_path,
+                                       'hexagons%d.geojson' % self.turn),
+                          'w') as f:
+                    geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
+                                 indent=2)
+                print("saved hexagon file (conditional)")
+                with open(os.path.join(self.dir_path,
+                                       'hexagons_tygron_initialization%d.geojson'
+                                       % self.turn), 'w') as f:
+                    geojson.dump(hexagons_tygron_int, f, sort_keys=True,
+                                 indent=2)
+                print("saved hexagon file (conditional)")
+                with open(os.path.join(self.store_path,
+                                       'node_grid%d.geojson' % self.turn),
+                          'w') as f:
+                    geojson.dump(self.node_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'filled_node_grid%d.geojson' % turn),
+                          'w') as f:
+                    geojson.dump(self.filled_node_grid, f, sort_keys=True,
+                                 indent=2)
+                print("saved interpolation files (conditional)")
+                with open(os.path.join(self.store_path,
+                                       'structures.geojson'), 'w') as f:
+                    geojson.dump(weirs, f, sort_keys=True,
+                                 indent=2)
+                print("saved structures file (conditional)")
         return
 
     def update(self):
@@ -259,11 +260,7 @@ class runScript():
         self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(self.model,
                                                               self.hexagons_sandbox,
                                                               self.face_grid)
-        if self.save:
-            with open(os.path.join(self.dir_path, 'hexagons%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
-                             indent=2)
+        
             print("saved hexagon file for turn " + str(self.turn) + " (conditional)")
         self.hexagons_tygron = detect.transform(self.hexagons, self.transforms,
                                            export="tygron")
@@ -302,6 +299,10 @@ class runScript():
         file_location = (self.dir_path + "\\grid_height_map" + str(self.turn) + ".tif")
         heightmap_id = tygron.set_elevation(file_location, self.token, turn=0)
         if self.save:
+            with open(os.path.join(self.store_path, 'hexagons%d.geojson' % self.turn),
+                      'w') as f:
+                geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
+                             indent=2)
             with open(os.path.join(self.dir_path, 'node_grid%d.geojson' % self.turn),
                       'w') as f:
                 geojson.dump(self.node_grid, f, sort_keys=True,
