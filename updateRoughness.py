@@ -13,7 +13,7 @@ import modelInterface as D3D
 from copy import deepcopy
 
 
-def hex_to_points(model, hexagons, grid, test=True):
+def hex_to_points(model, hexagons, grid, test=False):
     frcu = model.get_var('frcu')
     if test:
         hexagons = randomizer(hexagons)
