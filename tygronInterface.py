@@ -389,6 +389,8 @@ def hex_to_terrain(api_key, hexagons):
             continue
         if feature.properties["landuse"] == 0:
             # built environment / farm / factory
+            new_type = 936  # veehouderij
+            """
             rand = random.randint(1, 3)
             if rand == 1:
                 new_type = 936  # veehouderij
@@ -396,6 +398,7 @@ def hex_to_terrain(api_key, hexagons):
                 new_type = 941  # Van Nelle Fabriek
             else: 
                 new_type = 851  # Caballero Fabriek
+            """
         elif feature.properties["landuse"] == 1:
             # agriculture; production meadow/crop field
             new_type = 1000000
