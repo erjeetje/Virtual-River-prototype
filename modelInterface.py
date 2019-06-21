@@ -30,7 +30,8 @@ def initialize_model():
     return model
 
 
-def run_model(model, filled_node_grid, face_grid, hexagons):
+def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
+              axes=None, initialized=False):
     model.get_var('s1')
     #numk = model.get_var('numk')
     #ndx = model.get_var('ndx')
@@ -51,14 +52,25 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
     s1 = model.get_var('s1')[:ndxi]
     ucx = model.get_var('ucx')[:ndxi]
     ucy = model.get_var('ucy')[:ndxi]
+    #frcu = model.get_var('frcu')[:ndxi]
 
-    s1_t0 = s1.copy()
-    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
+    #s1_t0 = s1.copy()
+    
+    #print(min(frcu))
+    #print(max(frcu))
+
+    if fig is None:
+        fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
+        plt.figure()
     sc = axes[0].scatter(xzw, yzw, c=s1, edgecolor='none', vmin=0, vmax=6, cmap='jet')
     sc_zk = axes[1].scatter(xk, yk, c=zk, edgecolor='none', vmin=0, vmax=6, cmap='jet')
+    if not initialized:
+        fig.colorbar(sc, ax=axes[0])
+        fig.colorbar(sc_zk, ax=axes[1])
 
     plt.show()
-    zk_new = np.array([feature.properties['z'] for feature in filled_node_grid['features']])
+    #zk_new = np.array([feature.properties['z'] for feature in filled_node_grid['features']])
+    """
     for i in range(10):
         model.update()
         axes[0].set_title("{:2f}".format(model.get_current_time()))
@@ -66,6 +78,8 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
         sc_zk.set_array(zk.copy())
         plt.draw()
         plt.pause(0.00001)
+    """
+    #qv = axes[0].quiver(xzw, yzw, ucx, ucy)
     qv = axes[1].quiver(xzw, yzw, ucx, ucy)
     changed = [
             feature
@@ -73,28 +87,7 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
             in filled_node_grid.features
             if feature.properties['changed']
     ]
-    frcu = model.get_var('frcu')
-    """
-    hexagons_by_id = {feature.id: feature for feature in hexagons.features}
-    default_landuse = 8
-    for feature in filled_node_grid.features:
-        feature.properties["landuse"] = default_landuse
-        if feature.properties["board"]:
-            location = feature.properties["location"]
-        else:
-            continue
-        hexagon = hexagons_by_id[location]
-        landuse = hexagon.properties["landuse"]
-        # for now use z
-        if hexagon.properties['z'] == 0:
-            landuse = 9
-        else:
-            landuse = 8
-        feature.properties["landuse"] = landuse
-    for feature in filled_node_grid.features:
-        friction = landuse_to_friction(feature.properties['landuse'])
-        frcu[feature.id] = friction
-    """
+
     if True:
         for feature in changed:
             zk_new = np.array([feature.properties['z']], dtype='float64') * 1.5
@@ -106,32 +99,33 @@ def run_model(model, filled_node_grid, face_grid, hexagons):
             )
     #s0 = s1.copy()
     print("updated grid in model")
-    model.update(60)
+    if not initialized:
+        model.update(10)
     #print("set timesteps in model")
-    for i in range(50):
-        t0 = time.time()
-        model.update(3)
-        t1 = time.time()
-        print("model update: " + str(t1 - t0))
+    for i in range(100):
+        #t0 = time.time()
+        model.update(5)
+        #t1 = time.time()
+        #print("model update: " + str(t1 - t0))
         axes[0].set_title("{:2f}".format(model.get_current_time()))
-        t2 = time.time()
-        print("axes title: " + str(t2 - t1))
-        sc.set_array(ucx.copy())
-        t3 = time.time()
-        print("set sc: " + str(t3 - t2))
+        #t2 = time.time()
+        #print("axes title: " + str(t2 - t1))
+        sc.set_array(s1.copy())
+        #t3 = time.time()
+        #print("set sc: " + str(t3 - t2))
         sc_zk.set_array(zk.copy())
-        t4 = time.time()
-        print("set sc_zk: " + str(t4 - t3))
+        #t4 = time.time()
+        #print("set sc_zk: " + str(t4 - t3))
         qv.set_UVC(ucx.copy(), ucy.copy())
-        t5 = time.time()
-        print("set qv: " + str(t5 - t4))
+        #t5 = time.time()
+        #print("set qv: " + str(t5 - t4))
         plt.draw()
-        t6 = time.time()
-        print("draw: " + str(t6 - t5))
+        #t6 = time.time()
+        #print("draw: " + str(t6 - t5))
         plt.pause(0.00001)
 
     print(model.get_current_time())
-    return
+    return fig, axes
 
 
 def generate_geojson(data):
@@ -219,7 +213,8 @@ if __name__ == "__main__":
     t3 = time.time()
     print("Index grid: " + str(t3 - t2))
     node_grid = gridmap.interpolate_node_grid(hexagons, node_grid)
-    hexagons, face_grid = roughness.hex_to_points(model, hexagons, face_grid)
+    #hexagons, face_grid = roughness.hex_to_points(model, hexagons, face_grid,
+    #                                              test=True)
     with open('node_grid_before%d.geojson' % turn, 'w') as f:
         geojson.dump(node_grid, f, sort_keys=True,
                      indent=2)
@@ -253,4 +248,10 @@ if __name__ == "__main__":
     gridmap.create_geotiff(node_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
-    run_model(model, filled_node_grid, face_grid, hexagons)
+    fig, axes = run_model(model, filled_node_grid, face_grid, hexagons,
+                          initialized=False)
+    print("going to run it again!")
+    for feature in filled_node_grid.features:
+        feature.properties['changed'] = False
+    fig, axes = run_model(model, filled_node_grid, face_grid, hexagons,
+                          initialized=True, fig=fig, axes=axes)

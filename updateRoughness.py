@@ -14,7 +14,8 @@ from copy import deepcopy
 
 
 def hex_to_points(model, hexagons, grid, test=False):
-    frcu = model.get_var('frcu')
+    ndxi = model.get_var('ndxi')
+    frcu = model.get_var('frcu')[:ndxi]
     if test:
         hexagons = randomizer(hexagons)
     hexagons = landuse_to_friction(hexagons)

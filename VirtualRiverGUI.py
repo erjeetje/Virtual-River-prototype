@@ -48,10 +48,14 @@ class GUI(QWidget):
         btn_initialize.clicked.connect(self.on_initialize_button_clicked)
         btn_initialize.resize(180, 40)
         btn_initialize.move(20, 80)
+        btn_model = QPushButton('Run model', self)
+        btn_model.clicked.connect(self.on_model_button_clicked)
+        btn_model.resize(180, 40)
+        btn_model.move(20, 170)
         btn_exit = QPushButton('Exit', self)
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
-        btn_exit.move(20, 170)
+        btn_exit.move(20, 260)
         self.setWindowTitle('Virtual River interface')
         self.show()  # app.exec_()
 
@@ -60,8 +64,12 @@ class GUI(QWidget):
         self.script.update()
 
     def on_initialize_button_clicked(self):
-        print("Calling update function")
+        print("Calling initialize function")
         self.script.initialize()
+        
+    def on_model_button_clicked(self):
+        print("Calling model function")
+        self.script.run_model()
 
     def on_exit_button_clicked(self):
         alert = QMessageBox()
@@ -74,7 +82,7 @@ class runScript():
     def __init__(self):
         super(runScript, self).__init__()
         self.dir_path = os.path.dirname(os.path.realpath(__file__))
-        self.store_path = os.path.join(path, 'storing_files')
+        self.store_path = os.path.join(self.dir_path, 'storing_files')
         try:
             os.mkdir(self.store_path)
             print("Directory ", self.store_path, " Created.")
@@ -85,7 +93,7 @@ class runScript():
                                        'Waal_schematic')
         self.initialized = False
         self.turn = 0
-        self.save = False
+        self.save = True
         self.token = ""
         self.model = None
         self.hexagons = None
@@ -101,6 +109,8 @@ class runScript():
         self.img_y = None
         self.origins = None
         self.radius = None
+        self.fig = None
+        self.axes = None
 
     def initialize(self):
         tic = time.time()
@@ -124,12 +134,13 @@ class runScript():
             self.pers, self.img_x, self.img_y, self.origins, self.radius, \
                 cut_points, features = cali.rotate_grid(canvas, thresh)
             # create the calibration file for use by other methods and store it
+            # change dir_path to config_path
             self.transforms = cali.create_calibration_file(
                     self.img_x, self.img_y, cut_points, path=self.dir_path)
             print("calibrated camera")
             self.hexagons = detect.detect_markers(
                     img, self.pers, self.img_x, self.img_y, self.origins,
-                    self.radius, features, method='LAB',path=self.dir_path)
+                    self.radius, features, method='LAB', path=self.store_path)
             print("processed initial board state")
             
             self.hexagons = tygron.update_hexagons_tygron_id(self.token,
@@ -144,6 +155,8 @@ class runScript():
             channel = structures.get_channel(self.hexagons_sandbox)
             weirs = structures.create_structures(channel)
             """
+            # doesn't work properly after changing the shapes to linestrings
+            # instead of polygons --> to fix
             structures_tygron = detect.transform(weirs,
                                                  self.transforms,
                                                  export="sandbox2tygron")
@@ -196,7 +209,12 @@ class runScript():
             heightmap_id = tygron.set_elevation(file_location, self.token,
                                                 turn=self.turn)
             print("updated Tygron")
-            print("stored initial board state")
+            # made changes from this point on
+            """
+            self.fig, self.axes = D3D.run_model(
+                    self.model, self.filled_node_grid, self.face_grid,
+                    self.hexagons_sandbox, initialized=self.initialized)
+            """
             toc = time.time()
             print("Start up and calibration time: "+str(toc-tic))
             self.initialized = True
@@ -206,20 +224,19 @@ class runScript():
                           'w') as f:
                     geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                                  indent=2)
-                print("saved hexagon file (conditional)")
-                with open(os.path.join(self.dir_path,
+                with open(os.path.join(self.store_path,
                                        'hexagons_tygron_initialization%d.geojson'
                                        % self.turn), 'w') as f:
                     geojson.dump(hexagons_tygron_int, f, sort_keys=True,
                                  indent=2)
-                print("saved hexagon file (conditional)")
+                print("saved hexagon files (conditional)")
                 with open(os.path.join(self.store_path,
                                        'node_grid%d.geojson' % self.turn),
                           'w') as f:
                     geojson.dump(self.node_grid, f, sort_keys=True,
                                  indent=2)
                 with open(os.path.join(self.store_path,
-                                       'filled_node_grid%d.geojson' % turn),
+                                       'filled_node_grid%d.geojson' % self.turn),
                           'w') as f:
                     geojson.dump(self.filled_node_grid, f, sort_keys=True,
                                  indent=2)
@@ -229,6 +246,7 @@ class runScript():
                     geojson.dump(weirs, f, sort_keys=True,
                                  indent=2)
                 print("saved structures file (conditional)")
+                print("stored initial board state")
         return
 
     def update(self):
@@ -261,7 +279,7 @@ class runScript():
                                                               self.hexagons_sandbox,
                                                               self.face_grid)
         
-            print("saved hexagon file for turn " + str(self.turn) + " (conditional)")
+        print("saved hexagon file for turn " + str(self.turn) + " (conditional)")
         self.hexagons_tygron = detect.transform(self.hexagons, self.transforms,
                                            export="tygron")
         hexagons_to_water, hexagons_to_land = compare.terrain_updates(
@@ -298,16 +316,23 @@ class runScript():
         self.heightmap = gridmap.create_geotiff(self.node_grid, turn=self.turn, path=self.dir_path)
         file_location = (self.dir_path + "\\grid_height_map" + str(self.turn) + ".tif")
         heightmap_id = tygron.set_elevation(file_location, self.token, turn=0)
+        print("updated Tygron heightmap")
+        """
+        self.fig, self.axes = D3D.run_model(
+                    self.model, self.filled_node_grid, self.face_grid,
+                    self.hexagons_sandbox, initialized=self.initialized,
+                    fig=self.fig, axes=self.axes)
+        """
         if self.save:
             with open(os.path.join(self.store_path, 'hexagons%d.geojson' % self.turn),
                       'w') as f:
                 geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                              indent=2)
-            with open(os.path.join(self.dir_path, 'node_grid%d.geojson' % self.turn),
+            with open(os.path.join(self.store_path, 'node_grid%d.geojson' % self.turn),
                       'w') as f:
                 geojson.dump(self.node_grid, f, sort_keys=True,
                              indent=2)
-            with open(os.path.join(self.dir_path, 'filled_node_grid%d.geojson' % self.turn),
+            with open(os.path.join(self.store_path, 'filled_node_grid%d.geojson' % self.turn),
                       'w') as f:
                 geojson.dump(self.filled_node_grid, f, sort_keys=True,
                              indent=2)
@@ -318,7 +343,15 @@ class runScript():
               ". Interpolation update time: " + str(toc-tac) +
               ". Total update time: " + str(toc-tic))
         return
-
+    
+    def run_model(self):
+        if not self.initialized:
+            print("Virtual River is not yet calibrated, please first run initialize")
+            return
+        self.fig, self.axes = D3D.run_model(
+                    self.model, self.filled_node_grid, self.face_grid,
+                    self.hexagons_sandbox, initialized=self.initialized)
+        return
 
 def main():
     app = QApplication(sys.argv)
