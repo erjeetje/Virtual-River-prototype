@@ -152,7 +152,7 @@ class runScript():
         # create the calibration file for use by other methods and store it
         # change dir_path to config_path
         self.transforms = cali.create_calibration_file(
-                self.img_x, self.img_y, cut_points, path=self.dir_path)
+                self.img_x, self.img_y, cut_points, path=self.config_path)
         print("calibrated camera")
         # update the hexagons to initial board state.
         self.hexagons = detect.detect_markers(
