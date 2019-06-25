@@ -482,12 +482,14 @@ def update_node_grid(hexagons, grid, fill=False, turn=0):
             counter += 1
         else:
             feature.properties["changed"] = False
-    print("Hexagons updated are: "+str(indices_updated))
-    print("Number of gridpoints inside the board to update: "+str(counter))
+    if not fill:
+        print("Hexagons updated are: "+str(indices_updated))
+        print("Number of gridpoints inside the board to update: "+str(counter))
     return grid
 
 
-def interpolate_node_grid(hexagons, grid, turn=0, save=False, path=""):
+def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
+                          path=""):
     """ 
     Function that calculates the z variable for each grid point, based
     on stored indices and, if applicable, weight factors. Distinguishes
@@ -558,7 +560,7 @@ def interpolate_node_grid(hexagons, grid, turn=0, save=False, path=""):
                       weights_sum) + inside_point2.properties['z'] *
                       (weights[1] / weights_sum), 5)
         """
-    if turn != 0:
+    if (turn != 0 and not fill):
         print("Number of gridpoints outside the board updated: "+str(counter))
     if save:
         filename = 'interpolated_grid%d.geojson' % turn

@@ -15,7 +15,7 @@ import sandbox_fm.calibrate
 from sandbox_fm.calibration_wizard import NumpyEncoder
 
 
-def create_calibration_file(img_x, img_y, cut_points, path=""):
+def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", test=False):
     """
     Function that creates the calibration file (json format) and returns the
     transforms that can be used by other functions.
@@ -25,10 +25,11 @@ def create_calibration_file(img_x, img_y, cut_points, path=""):
     calibration['model_points'] = ([-400, 300 ], [400, 300], [400, -300], [-400, -300])
     # resolution camera; FullHD
     calibration['img_points'] = [0, 0], [1920, 0], [1920, 1080], [0, 1080]
-    # calibration points used to cut images
-    calibration['img_pre_cut_points'] = cut_points.tolist()
-    # corners of image after image cut
-    calibration['img_post_cut_points'] = [0, 0], [img_x, 0], [img_x, img_y],  [0, img_y]
+    if not test:
+        # calibration points used to cut images
+        calibration['img_pre_cut_points'] = cut_points.tolist()
+        # corners of image after image cut
+        calibration['img_post_cut_points'] = [0, 0], [img_x, 0], [img_x, img_y],  [0, img_y]
     # tygron project creation; empty world coordinates
     calibration['tygron_export'] = [0, 0], [1000, 0], [1000, -750],  [0, -750]
     # tygron project update; world coordinates once created

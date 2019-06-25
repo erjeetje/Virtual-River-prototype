@@ -143,39 +143,59 @@ class runScript():
         # calibrate camera
         # try - except TypeError --> if nothing returned by method, then go to
         # test mode.
-        canvas, thresh = cali.detect_corners(img, method='adaptive',
-                                             path=self.processing_path)
+        try:
+            canvas, thresh = cali.detect_corners(img, method='adaptive',
+                                                 path=self.processing_path)
+        except TypeError:
+            self.test = True
+            print("no camera detected, entering test mode")
         # adjust image, get the hexagons and store calibration values as global
         # variables.
-        self.pers, self.img_x, self.img_y, self.origins, self.radius, \
-            cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
-        # create the calibration file for use by other methods and store it
-        # change dir_path to config_path
-        self.transforms = cali.create_calibration_file(
-                self.img_x, self.img_y, cut_points, path=self.config_path)
-        print("calibrated camera")
-        # update the hexagons to initial board state.
-        self.hexagons = detect.detect_markers(
-                img, self.pers, self.img_x, self.img_y, self.origins,
-                self.radius, self.hexagons, method='LAB', path=self.store_path)
-        print("processed initial board state")
+        if not self.test:
+            self.pers, self.img_x, self.img_y, self.origins, self.radius, \
+                cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
+            print("calibrated camera")
+            # create the calibration file for use by other methods and store it
+            # change dir_path to config_path
+            self.transforms = cali.create_calibration_file(
+                    self.img_x, self.img_y, cut_points, path=self.config_path)
+            
+            # update the hexagons to initial board state.
+            self.hexagons = detect.detect_markers(
+                    img, self.pers, self.img_x, self.img_y, self.origins,
+                    self.radius, self.hexagons, method='LAB', path=self.store_path)
+            print("processed initial board state")
+        else:
+            self.transforms = cali.create_calibration_file(
+                    path=self.config_path, test = self.test)
         # update the tygron_ids of the hexagons. These must be updated to match
         # the hexagons to the correct hexagons in Tygron.
-        if self.tygron:
-            self.hexagons = tygron.update_hexagons_tygron_id(self.token,
-                                                             self.hexagons)
+        
         # transform the hexagons to sandbox coordinates
-        self.hexagons_sandbox = detect.transform(
-                self.hexagons, self.transforms, export="sandbox",
-                path=self.dir_path)
-        # detect where the main channel and dikes are located and construct
-        # both the groynes and longitudinal training dams for the model.
-        self.hexagons_sandbox = structures.determine_dikes(
-                self.hexagons_sandbox)
-        self.hexagons_sandbox = structures.determine_channel(
-                self.hexagons_sandbox)
+        if not self.test:
+            if self.tygron:
+                self.hexagons = tygron.update_hexagons_tygron_id(self.token,
+                                                                 self.hexagons)
+            self.hexagons_sandbox = detect.transform(
+                    self.hexagons, self.transforms, export="sandbox",
+                    path=self.dir_path)
+        
+            # detect where the main channel and dikes are located and construct
+            # both the groynes and longitudinal training dams for the model.
+            self.hexagons_sandbox = structures.determine_dikes(
+                    self.hexagons_sandbox)
+            self.hexagons_sandbox = structures.determine_channel(
+                    self.hexagons_sandbox)
+        else:
+            self.hexagons_sandbox = gridmap.read_hexagons(
+                    filename='hexagons%d.geojson' % self.turn,
+                    path=self.test_path)
+            if self.tygron:
+                self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
+                        self.token, self.hexagons_sandbox)
         channel = structures.get_channel(self.hexagons_sandbox)
         weirs = structures.create_structures(channel)
+        D3D.geojson2pli(weirs)
         """
         # doesn't work properly after changing the shapes to linestrings
         # instead of polygons --> to fix
@@ -188,13 +208,17 @@ class runScript():
             # transform the hexagons to tygron initialization coordinates -->
             # this may now be obsolete after the tygron LTS upgrade, transform
             # is the same, although correct CRS is still required.
-            hexagons_tygron_int = detect.transform(self.hexagons,
-                                                   self.transforms,
-                                                   export="tygron_initialize")
-            # transform hexagons to tygron coordinates.
-            self.hexagons_tygron = detect.transform(self.hexagons,
-                                                    self.transforms,
-                                                    export="tygron")
+            if not self.test:
+                hexagons_tygron_int = detect.transform(
+                        self.hexagons, self.transforms,
+                        export="tygron_initialize")
+                # transform hexagons to tygron coordinates.
+                self.hexagons_tygron = detect.transform(
+                        self.hexagons, self.transforms, export="tygron")
+            else:
+                self.hexagons_tygron = detect.transform(
+                        self.hexagons, self.transforms,
+                        export="sandbox2tygron")
         print("prepared geojson files")
         # initialize Delft3D-FM model
         self.model = D3D.initialize_model()
@@ -212,7 +236,7 @@ class runScript():
         # initiate the interpolation to get the initial elevation model.
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,
-                path=self.dir_path)
+                fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
         self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
@@ -227,7 +251,7 @@ class runScript():
                 filled_hexagons, self.filled_node_grid, fill=True)
         self.filled_node_grid = gridmap.interpolate_node_grid(
                 filled_hexagons, self.filled_node_grid, turn=self.turn,
-                path=self.dir_path)
+                fill=True, path=self.dir_path)
         print("executed grid fill interpolation")
         if self.tygron:
             # a geotiff of the node grid is required to set the elevation in
@@ -260,7 +284,8 @@ class runScript():
                       'w') as f:
                 geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                              indent=2)
-            if self.tygron:
+            # Could change this to a try/except UnboundLocalError
+            if (self.tygron and not self.test):
                 with open(os.path.join(
                         self.store_path,
                         'hexagons_tygron_initialization.geojson'), 'w') as f:
@@ -302,34 +327,47 @@ class runScript():
         print("Updating board state")
         self.turn += 1
         # get new image of board state from camera.
-        img = webcam.get_image(self.turn, mirror=True)
-        print("retrieved board image after turn " + str(self.turn))
-        # create a deepcopy of the previous board state to compare with the new
-        # board state.
-        hexagons_old = deepcopy(self.hexagons)
-        self.hexagons = detect.detect_markers(
-                img, self.pers, self.img_x, self.img_y, self.origins,
-                self.radius, self.hexagons, turn=self.turn, method='LAB',
-                path=self.store_path)
-        print("processed current board state")
-        if self.tygron:
-            # update hexagon ids to matching ids in tygron.
-            self.hexagons = tygron.update_hexagons_tygron_id(
-                    self.token, self.hexagons)
-        # compare the new board state to the old board state. Sets 'z_changed'
-        # and 'landuse_changed' to True or False accordingly. Also tracks if
-        # either or both of the dike locations changed.
-        self.hexagons, dike_moved = compare.compare_hex(
-                self.token, hexagons_old, self.hexagons)
-        if False:
-            # in case any of the dike locations changed, update the locations
-            # of the dikes.
-            self.hexagons = structures.determine_dikes(self.hexagons)
-        # transform the hexagons to the sandbox coordinates --> check if this
-        # is necessary, as the main hexagons are already updated, they should
-        # be linked in memory to the sandbox hexagons.
-        self.hexagons_sandbox = detect.transform(
-                self.hexagons, self.transforms, export="sandbox")
+        if not self.test:
+            img = webcam.get_image(self.turn, mirror=True)
+            print("retrieved board image after turn " + str(self.turn))
+            # create a deepcopy of the previous board state to compare with the new
+            # board state.
+            hexagons_old = deepcopy(self.hexagons)
+            self.hexagons = detect.detect_markers(
+                    img, self.pers, self.img_x, self.img_y, self.origins,
+                    self.radius, self.hexagons, turn=self.turn, method='LAB',
+                    path=self.store_path)
+            print("processed current board state")
+            if self.tygron:
+                # update hexagon ids to matching ids in tygron.
+                self.hexagons = tygron.update_hexagons_tygron_id(
+                        self.token, self.hexagons)
+            # compare the new board state to the old board state. Sets 'z_changed'
+            # and 'landuse_changed' to True or False accordingly. Also tracks if
+            # either or both of the dike locations changed.
+            self.hexagons, dike_moved = compare.compare_hex(
+                    self.token, hexagons_old, self.hexagons)
+            # transform the hexagons to the sandbox coordinates --> check if this
+            # is necessary, as the main hexagons are already updated, they should
+            # be linked in memory to the sandbox hexagons.
+            self.hexagons_sandbox = detect.transform(
+                    self.hexagons, self.transforms, export="sandbox")
+        else:
+            hexagons_sandbox_old = deepcopy(self.hexagons_sandbox)
+            try:
+                self.hexagons_sandbox = gridmap.read_hexagons(
+                        filename='hexagons%d.geojson' % self.turn,
+                        path=self.test_path)
+            except FileNotFoundError:
+                print("ran out of test files, aborting update function. "
+                      "Please restart the application to continue testing.")
+                return
+            if self.tygron:
+                # update hexagon ids to matching ids in tygron.
+                self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
+                        self.token, self.hexagons_sandbox)
+            self.hexagons_sandbox, dike_moved = compare.compare_hex(
+                    self.token, hexagons_sandbox_old, self.hexagons_sandbox)
         # update the Chezy coefficients of all hexagons.
         self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.face_grid)
@@ -338,8 +376,13 @@ class runScript():
             # transform the hexagons to the sandbox coordinates --> check if this
             # is necessary, as the main hexagons are already updated, they should
             # be linked in memory to the sandbox hexagons.
-            self.hexagons_tygron = detect.transform(
-                    self.hexagons, self.transforms, export="tygron")
+            if not self.test:
+                self.hexagons_tygron = detect.transform(
+                        self.hexagons, self.transforms, export="tygron")
+            else:
+                self.hexagons_tygron = detect.transform(
+                        self.hexagons_sandbox, self.transforms,
+                        export="sandbox2tygron")
             # get the hexagons that should be changed to water or land in
             # tygron.
             hexagons_to_water, hexagons_to_land = compare.terrain_updates(
@@ -360,8 +403,8 @@ class runScript():
         # update the elevation model by only performing interpolation for the
         # points that have changed.
         self.node_grid = gridmap.interpolate_node_grid(
-                self.hexagons_sandbox, self.node_grid, turn=self.turn,
-                save=False, path=self.dir_path)
+                self.hexagons_sandbox, self.node_grid, fill=False, 
+                turn=self.turn, save=False, path=self.dir_path)
         if dike_moved:
             # if the dike locations changed, the filled node grid needs to be
             # rebuild as the filled hexagon locations are changed as well.
@@ -374,7 +417,7 @@ class runScript():
                     filled_hexagons, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     filled_hexagons, self.filled_node_grid, turn=self.turn,
-                    save=False, path=self.dir_path)
+                    fill=True, save=False, path=self.dir_path)
             print("updated complete grid, dike relocation detected")
         else:
             # if the dike locations did not change, a simple update suffices.
@@ -383,13 +426,13 @@ class runScript():
                     turn=self.turn)
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
-                    turn=self.turn, save=False, path=self.dir_path)
+                    turn=self.turn, fill=True, save=False, path=self.dir_path)
             
         if self.tygron:
             # create a new geotiff and set the new elevation in tygron.
             self.heightmap = gridmap.create_geotiff(
-                    self.node_grid, turn=self.turn, path=self.dir_path)
-            file_location = (self.dir_path + "\\grid_height_map" +
+                    self.node_grid, turn=self.turn, path=self.store_path)
+            file_location = (self.store_path + "\\grid_height_map" +
                              str(self.turn) + ".tif")
             heightmap_id = tygron.set_elevation(
                     file_location, self.token, turn=0)

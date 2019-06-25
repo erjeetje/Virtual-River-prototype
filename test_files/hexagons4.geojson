@@ -38,13 +38,13 @@
       },
       "id": 0,
       "properties": {
-        "Chezy": 34.95978642350253,
+        "Chezy": 10.306058032383493,
         "column": 1,
         "land": true,
-        "landuse": 10,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
-        "north_dike": true,
+        "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
@@ -52,7 +52,7 @@
         "water": false,
         "x_center": 87,
         "y_center": 50,
-        "z": 4,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -95,13 +95,13 @@
       },
       "id": 1,
       "properties": {
-        "Chezy": 10.306058032383493,
+        "Chezy": 34.95978642350253,
         "column": 1,
         "land": true,
-        "landuse": 5,
+        "landuse": 10,
         "landuse_changed": false,
         "main_channel": false,
-        "north_dike": false,
+        "north_dike": true,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
@@ -109,7 +109,7 @@
         "water": false,
         "x_center": 87,
         "y_center": 150,
-        "z": 2,
+        "z": 4,
         "z_changed": false
       },
       "type": "Feature"
@@ -494,22 +494,22 @@
       },
       "id": 8,
       "properties": {
-        "Chezy": 34.95978642350253,
+        "Chezy": 4.970923993827387,
         "column": 1,
         "land": true,
-        "landuse": 10,
-        "landuse_changed": false,
+        "landuse": 4,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": true,
+        "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 8,
         "water": false,
         "x_center": 87,
         "y_center": 850,
-        "z": 4,
-        "z_changed": false
+        "z": 2,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -551,22 +551,22 @@
       },
       "id": 9,
       "properties": {
-        "Chezy": 40.979910326471284,
+        "Chezy": 34.95978642350253,
         "column": 1,
         "land": true,
-        "landuse": 1,
-        "landuse_changed": false,
+        "landuse": 10,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": false,
+        "south_dike": true,
         "south_side_channel": false,
         "tygron_id": 9,
         "water": false,
         "x_center": 87,
         "y_center": 950,
-        "z": 2,
-        "z_changed": false
+        "z": 4,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -608,13 +608,13 @@
       },
       "id": 10,
       "properties": {
-        "Chezy": 34.95978642350253,
+        "Chezy": 40.979910326471284,
         "column": 2,
         "land": true,
-        "landuse": 10,
+        "landuse": 1,
         "landuse_changed": false,
         "main_channel": false,
-        "north_dike": true,
+        "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
@@ -622,7 +622,7 @@
         "water": false,
         "x_center": 173,
         "y_center": 100,
-        "z": 4,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -665,13 +665,13 @@
       },
       "id": 11,
       "properties": {
-        "Chezy": 4.970923993827387,
+        "Chezy": 34.95978642350253,
         "column": 2,
         "land": true,
-        "landuse": 4,
+        "landuse": 10,
         "landuse_changed": false,
         "main_channel": false,
-        "north_dike": false,
+        "north_dike": true,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
@@ -679,7 +679,7 @@
         "water": false,
         "x_center": 173,
         "y_center": 200,
-        "z": 2,
+        "z": 4,
         "z_changed": false
       },
       "type": "Feature"
@@ -779,7 +779,7 @@
       },
       "id": 13,
       "properties": {
-        "Chezy": 35.04030746122806,
+        "Chezy": 37.59886372413391,
         "column": 2,
         "land": true,
         "landuse": 2,
@@ -794,7 +794,7 @@
         "x_center": 173,
         "y_center": 400,
         "z": 2,
-        "z_changed": true
+        "z_changed": false
       },
       "type": "Feature"
     },
@@ -1007,22 +1007,22 @@
       },
       "id": 17,
       "properties": {
-        "Chezy": 34.95978642350253,
+        "Chezy": 37.59886372413391,
         "column": 2,
         "land": true,
-        "landuse": 10,
-        "landuse_changed": false,
+        "landuse": 2,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": true,
+        "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 17,
         "water": false,
         "x_center": 173,
         "y_center": 800,
-        "z": 4,
-        "z_changed": false
+        "z": 2,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1064,22 +1064,22 @@
       },
       "id": 18,
       "properties": {
-        "Chezy": 40.979910326471284,
+        "Chezy": 34.95978642350253,
         "column": 2,
         "land": true,
-        "landuse": 1,
-        "landuse_changed": false,
+        "landuse": 10,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": false,
+        "south_dike": true,
         "south_side_channel": false,
         "tygron_id": 18,
         "water": false,
         "x_center": 173,
         "y_center": 900,
-        "z": 2,
-        "z_changed": false
+        "z": 4,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1463,7 +1463,7 @@
       },
       "id": 25,
       "properties": {
-        "Chezy": 5.755496949900733,
+        "Chezy": 9.922324891438999,
         "column": 3,
         "land": true,
         "landuse": 3,
@@ -1478,7 +1478,7 @@
         "x_center": 260,
         "y_center": 650,
         "z": 2,
-        "z_changed": true
+        "z_changed": false
       },
       "type": "Feature"
     },
@@ -1577,22 +1577,22 @@
       },
       "id": 27,
       "properties": {
-        "Chezy": 34.95978642350253,
+        "Chezy": 4.970923993827387,
         "column": 3,
         "land": true,
-        "landuse": 10,
-        "landuse_changed": false,
+        "landuse": 4,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": true,
+        "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 27,
         "water": false,
         "x_center": 260,
         "y_center": 850,
-        "z": 4,
-        "z_changed": false
+        "z": 2,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1634,22 +1634,22 @@
       },
       "id": 28,
       "properties": {
-        "Chezy": 35.04030746122806,
+        "Chezy": 34.95978642350253,
         "column": 3,
         "land": true,
-        "landuse": 0,
-        "landuse_changed": false,
+        "landuse": 10,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": false,
+        "south_dike": true,
         "south_side_channel": false,
         "tygron_id": 28,
         "water": false,
         "x_center": 260,
         "y_center": 950,
-        "z": 3,
-        "z_changed": false
+        "z": 4,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1805,10 +1805,10 @@
       },
       "id": 31,
       "properties": {
-        "Chezy": 9.922324891438999,
+        "Chezy": 37.59886372413391,
         "column": 4,
         "land": true,
-        "landuse": 3,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -2033,7 +2033,7 @@
       },
       "id": 35,
       "properties": {
-        "Chezy": 35.04030746122806,
+        "Chezy": 37.59886372413391,
         "column": 4,
         "land": true,
         "landuse": 2,
@@ -2048,7 +2048,7 @@
         "x_center": 346,
         "y_center": 700,
         "z": 2,
-        "z_changed": true
+        "z_changed": false
       },
       "type": "Feature"
     },
@@ -3572,7 +3572,7 @@
       },
       "id": 62,
       "properties": {
-        "Chezy": 10.306058032383493,
+        "Chezy": 11.626201002006951,
         "column": 7,
         "land": true,
         "landuse": 5,
@@ -3586,7 +3586,7 @@
         "water": false,
         "x_center": 606,
         "y_center": 550,
-        "z": 2,
+        "z": 3,
         "z_changed": false
       },
       "type": "Feature"
@@ -7562,10 +7562,10 @@
       },
       "id": 132,
       "properties": {
-        "Chezy": 4.970923993827387,
+        "Chezy": 10.306058032383493,
         "column": 14,
         "land": true,
-        "landuse": 4,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -8132,10 +8132,10 @@
       },
       "id": 142,
       "properties": {
-        "Chezy": 10.306058032383493,
+        "Chezy": 40.979910326471284,
         "column": 15,
         "land": true,
-        "landuse": 5,
+        "landuse": 1,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,

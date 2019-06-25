@@ -21,7 +21,8 @@
       "id": "LTD00",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD00.pli"
       },
       "type": "Feature"
     },
@@ -42,7 +43,8 @@
       "id": "groyne00",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne00.pli"
       },
       "type": "Feature"
     },
@@ -67,7 +69,8 @@
       "id": "LTD01",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD01.pli"
       },
       "type": "Feature"
     },
@@ -88,7 +91,8 @@
       "id": "groyne01",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne01.pli"
       },
       "type": "Feature"
     },
@@ -113,7 +117,8 @@
       "id": "LTD02",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD02.pli"
       },
       "type": "Feature"
     },
@@ -134,7 +139,8 @@
       "id": "groyne02",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne02.pli"
       },
       "type": "Feature"
     },
@@ -159,7 +165,8 @@
       "id": "LTD03",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD03.pli"
       },
       "type": "Feature"
     },
@@ -180,7 +187,8 @@
       "id": "groyne03",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne03.pli"
       },
       "type": "Feature"
     },
@@ -205,7 +213,8 @@
       "id": "LTD04",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD04.pli"
       },
       "type": "Feature"
     },
@@ -226,7 +235,8 @@
       "id": "groyne04",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne04.pli"
       },
       "type": "Feature"
     },
@@ -251,7 +261,8 @@
       "id": "LTD05",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD05.pli"
       },
       "type": "Feature"
     },
@@ -272,7 +283,8 @@
       "id": "groyne05",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne05.pli"
       },
       "type": "Feature"
     },
@@ -297,7 +309,8 @@
       "id": "LTD06",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD06.pli"
       },
       "type": "Feature"
     },
@@ -318,7 +331,8 @@
       "id": "groyne06",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne06.pli"
       },
       "type": "Feature"
     },
@@ -343,7 +357,8 @@
       "id": "LTD07",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD07.pli"
       },
       "type": "Feature"
     },
@@ -364,7 +379,8 @@
       "id": "groyne07",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne07.pli"
       },
       "type": "Feature"
     },
@@ -389,7 +405,8 @@
       "id": "LTD08",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD08.pli"
       },
       "type": "Feature"
     },
@@ -410,7 +427,8 @@
       "id": "groyne08",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne08.pli"
       },
       "type": "Feature"
     },
@@ -435,7 +453,8 @@
       "id": "LTD09",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD09.pli"
       },
       "type": "Feature"
     },
@@ -456,7 +475,8 @@
       "id": "groyne09",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne09.pli"
       },
       "type": "Feature"
     },
@@ -481,7 +501,8 @@
       "id": "LTD10",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD10.pli"
       },
       "type": "Feature"
     },
@@ -502,7 +523,8 @@
       "id": "groyne10",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne10.pli"
       },
       "type": "Feature"
     },
@@ -527,7 +549,8 @@
       "id": "LTD11",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD11.pli"
       },
       "type": "Feature"
     },
@@ -548,7 +571,8 @@
       "id": "groyne11",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne11.pli"
       },
       "type": "Feature"
     },
@@ -573,7 +597,8 @@
       "id": "LTD12",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD12.pli"
       },
       "type": "Feature"
     },
@@ -594,7 +619,8 @@
       "id": "groyne12",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne12.pli"
       },
       "type": "Feature"
     },
@@ -619,7 +645,8 @@
       "id": "LTD13",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD13.pli"
       },
       "type": "Feature"
     },
@@ -640,7 +667,8 @@
       "id": "groyne13",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne13.pli"
       },
       "type": "Feature"
     },
@@ -665,7 +693,8 @@
       "id": "LTD14",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD14.pli"
       },
       "type": "Feature"
     },
@@ -686,7 +715,8 @@
       "id": "groyne14",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne14.pli"
       },
       "type": "Feature"
     },
@@ -711,7 +741,8 @@
       "id": "LTD15",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD15.pli"
       },
       "type": "Feature"
     },
@@ -732,7 +763,8 @@
       "id": "groyne15",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne15.pli"
       },
       "type": "Feature"
     },
@@ -757,7 +789,8 @@
       "id": "LTD16",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD16.pli"
       },
       "type": "Feature"
     },
@@ -778,7 +811,8 @@
       "id": "groyne16",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne16.pli"
       },
       "type": "Feature"
     },
@@ -803,7 +837,8 @@
       "id": "LTD17",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD17.pli"
       },
       "type": "Feature"
     },
@@ -824,7 +859,8 @@
       "id": "groyne17",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne17.pli"
       },
       "type": "Feature"
     },
@@ -849,7 +885,8 @@
       "id": "LTD18",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD18.pli"
       },
       "type": "Feature"
     },
@@ -870,7 +907,8 @@
       "id": "groyne18",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne18.pli"
       },
       "type": "Feature"
     },
@@ -895,7 +933,8 @@
       "id": "LTD19",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD19.pli"
       },
       "type": "Feature"
     },
@@ -916,7 +955,8 @@
       "id": "groyne19",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne19.pli"
       },
       "type": "Feature"
     },
@@ -941,7 +981,8 @@
       "id": "LTD20",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD20.pli"
       },
       "type": "Feature"
     },
@@ -962,7 +1003,8 @@
       "id": "groyne20",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne20.pli"
       },
       "type": "Feature"
     },
@@ -987,7 +1029,8 @@
       "id": "LTD21",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD21.pli"
       },
       "type": "Feature"
     },
@@ -1008,7 +1051,8 @@
       "id": "groyne21",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne21.pli"
       },
       "type": "Feature"
     },
@@ -1033,7 +1077,8 @@
       "id": "LTD22",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD22.pli"
       },
       "type": "Feature"
     },
@@ -1054,7 +1099,8 @@
       "id": "groyne22",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne22.pli"
       },
       "type": "Feature"
     },
@@ -1079,7 +1125,8 @@
       "id": "LTD23",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD23.pli"
       },
       "type": "Feature"
     },
@@ -1100,7 +1147,8 @@
       "id": "groyne23",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne23.pli"
       },
       "type": "Feature"
     },
@@ -1125,7 +1173,8 @@
       "id": "LTD24",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD24.pli"
       },
       "type": "Feature"
     },
@@ -1146,7 +1195,8 @@
       "id": "groyne24",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne24.pli"
       },
       "type": "Feature"
     },
@@ -1171,7 +1221,8 @@
       "id": "LTD25",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD25.pli"
       },
       "type": "Feature"
     },
@@ -1192,7 +1243,8 @@
       "id": "groyne25",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne25.pli"
       },
       "type": "Feature"
     },
@@ -1217,7 +1269,8 @@
       "id": "LTD26",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD26.pli"
       },
       "type": "Feature"
     },
@@ -1238,7 +1291,8 @@
       "id": "groyne26",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne26.pli"
       },
       "type": "Feature"
     },
@@ -1263,7 +1317,8 @@
       "id": "LTD27",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD27.pli"
       },
       "type": "Feature"
     },
@@ -1284,7 +1339,8 @@
       "id": "groyne27",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne27.pli"
       },
       "type": "Feature"
     },
@@ -1309,7 +1365,8 @@
       "id": "LTD28",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD28.pli"
       },
       "type": "Feature"
     },
@@ -1330,7 +1387,8 @@
       "id": "groyne28",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne28.pli"
       },
       "type": "Feature"
     },
@@ -1355,7 +1413,8 @@
       "id": "LTD29",
       "properties": {
         "active": false,
-        "crest_level": 0.0
+        "crest_level": 0.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\LTD29.pli"
       },
       "type": "Feature"
     },
@@ -1376,7 +1435,8 @@
       "id": "groyne29",
       "properties": {
         "active": true,
-        "crest_level": 3.0
+        "crest_level": 3.0,
+        "pli_path": "C:\\Users\\HaanRJ\\Documents\\GitHub\\Virtual-River-prototype\\models\\Waal_schematic\\groyne29.pli"
       },
       "type": "Feature"
     }
