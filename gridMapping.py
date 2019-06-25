@@ -18,14 +18,12 @@ import matplotlib.colors as colors
 import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
-
 from copy import deepcopy
 from scipy.spatial import cKDTree
 from scipy import interpolate
 from shapely import geometry
 from shapely.ops import unary_union
 from rasterio import open as opentif
-from rasterio.features import rasterize
 from rasterio.transform import from_origin
 from scipy.ndimage.filters import gaussian_filter
 

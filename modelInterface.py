@@ -14,7 +14,6 @@ import mako.template
 import matplotlib.pyplot as plt
 import numpy as np
 import gridMapping as gridmap
-import updateRoughness as roughness
 from copy import deepcopy
 
 

@@ -8,11 +8,8 @@ Created on Wed Mar 27 11:25:35 2019
 import requests
 import base64
 import json
-import random
-import numpy as np
 from shapely import geometry
 from geojson import load
-from scipy import interpolate
 import gridMapping as gridmap
 
 

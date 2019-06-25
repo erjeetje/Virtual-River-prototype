@@ -13,7 +13,6 @@ import geojson
 import numpy as np
 import gridCalibration as cali
 import sandbox_fm.calibrate
-from shapely.geometry import asShape
 
 
 def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,

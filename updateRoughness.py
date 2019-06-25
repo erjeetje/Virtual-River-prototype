@@ -10,7 +10,6 @@ import random
 import numpy as np
 import gridMapping as gridmap
 import modelInterface as D3D
-from copy import deepcopy
 
 
 def hex_to_points(model, hexagons, grid, test=False):
