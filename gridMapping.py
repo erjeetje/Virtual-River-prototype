@@ -54,7 +54,7 @@ def read_calibration(path=""):
 def read_hexagons(filename='hexagons1.geojson', path=""):
     """
     function that loads and returns the hexagons. Currently not called in
-    the control script as the hexagons are stored internally.
+    the main script as the hexagons are stored internally.
     """
     with open(os.path.join(path, filename)) as f:
         features = geojson.load(f)
@@ -63,7 +63,8 @@ def read_hexagons(filename='hexagons1.geojson', path=""):
 
 def read_node_grid(save=False, path=""):
     """
-    function that loads and returns the grid.
+    function that loads and returns the node grid (corners of the cells) from
+    the netCDF file.
     """
     loc = r"D:\Werkzaamheden map\Onderzoek\Design 2018\Models\300x200_2_net.nc"
     ds = netCDF4.Dataset(loc)
@@ -86,7 +87,8 @@ def read_node_grid(save=False, path=""):
 
 def read_face_grid(model, save=False, path=""):
     """
-    function that loads and returns the grid.
+    function that loads and returns the face grid (centers of the cells) from
+    the model.
     """
     x = model.get_var('xzw')
     y = model.get_var('yzw')
@@ -104,6 +106,11 @@ def read_face_grid(model, save=False, path=""):
 
 
 def hexagons_to_fill(hexagons):
+    """
+    Functions that fills the hexagons behind the dike to the same height as the
+    dike in the same column and on the same size (north or south). Uses the
+    hexagon properties set in the createStructures script.
+    """
     dikes_north = []
     dikes_south = []
     for feature in hexagons.features:
@@ -137,20 +144,30 @@ def hexagons_to_fill(hexagons):
 
 
 def index_face_grid(hexagons, grid):
+    """
+    Function that indexes the face grid to the hexagons. Determines in which
+    hexagon a cell center is located.
+    """
     hex_coor = []
     polygons = []
+    # get x, y coordinates of each point and add it to hex_coor list to create
+    # a cKDTree. Also add the shape of the hexagon to polygons to create a
+    # single polygon of the game board.
     for feature in hexagons.features:
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
         hex_coor.append([x_hex, y_hex])
         polygons.append(shape)
+    # create cKDTree for indexing.
     hex_coor = np.array(hex_coor)
     hex_locations = cKDTree(hex_coor)
+    # create single polygon for the board.
     multipolygon = geometry.MultiPolygon(polygons)
     board_as_polygon = unary_union(multipolygon)
     board_shapely = geometry.mapping(board_as_polygon)
     board_feature = geojson.Feature(geometry=board_shapely)
+    # determine the bounding box of the board.
     line = list(geojson.utils.coords(board_feature))
     minx = 0.0
     miny = 0.0
@@ -171,6 +188,7 @@ def index_face_grid(hexagons, grid):
             continue
     bbox = geometry.Polygon([(minx, maxy), (maxx, maxy), (maxx, miny),
                              (minx, miny), (minx, maxy)])
+    # index the grid and add relevant properties to the grid features.
     for feature in grid.features:
         point = geometry.asShape(feature.geometry)
         x_point = point.centroid.x
@@ -189,25 +207,37 @@ def index_face_grid(hexagons, grid):
 
 
 def index_node_grid(hexagons, grid):
+    """
+    Function that indexes the node grid to the hexagons. Determines the three
+    closest hexagons to a point in the node grid. Also calculates weight
+    factors based on the distance to the hexagon centers.
+    """
     hex_coor = []
     polygons = []
+    # get x, y coordinates of each point and add it to hex_coor list to create
+    # a cKDTree. Also add the shape of the hexagon to polygons to create a
+    # single polygon of the game board.
     for feature in hexagons.features:
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
         hex_coor.append([x_hex, y_hex])
         polygons.append(shape)
+    # create cKDTree for indexing.
     hex_coor = np.array(hex_coor)
     hex_locations = cKDTree(hex_coor)
+    # create single polygon for the board.
     multipolygon = geometry.MultiPolygon(polygons)
     board_as_polygon = unary_union(multipolygon)
     board_shapely = geometry.mapping(board_as_polygon)
     board_feature = geojson.Feature(geometry=board_shapely)
-    """
-    board_featurecollection = geojson.FeatureCollection([board_feature])
-    with open('board_border.geojson', 'w') as f:
-        geojson.dump(board_featurecollection, f, sort_keys=True, indent=2)
-    """
+    if False:
+        # save board feature. Currently skipped. May be removed later.
+        board_featurecollection = geojson.FeatureCollection([board_feature])
+        with open('board_border.geojson', 'w') as f:
+            geojson.dump(board_featurecollection, f, sort_keys=True, indent=2)
+
+    # determine the bounding box of the board.
     line = list(geojson.utils.coords(board_feature))
 
     # determine the bounding box coordinates of the board.
@@ -232,6 +262,10 @@ def index_node_grid(hexagons, grid):
     inside_id = []
     inside_coor = []
     """
+    # this is an idea to fixate part of the sides of the board, so that the
+    # main channel is always in a proper position. If used, a better version
+    # of it should be developed. Therefore currently not in use.
+    
     border_id = []
     border_coor = []
     """
@@ -240,6 +274,10 @@ def index_node_grid(hexagons, grid):
     x_min = min(x_coor)
     x_max = max(x_coor)
     """
+    # this is an idea to fixate part of the sides of the board, so that the
+    # main channel is always in a proper position. If used, a better version
+    # of it should be developed. Therefore currently not in use.
+    
     y_coor = np.array([feature.geometry['coordinates'][1] for
                        feature in grid['features']])
     y_coor = np.unique(y_coor)
@@ -287,6 +325,9 @@ def index_node_grid(hexagons, grid):
             y_z[i] = 2
     border_values = np.array(list(zip(y_coor, y_z)))
     """
+    # set properties for the grid point features position in relation to the
+    # board. Points not in the board are not indexed later on and some other
+    # values can be set immediately.
     for feature in grid.features:
         point = geometry.asShape(feature.geometry)
         x_point = point.centroid.x
@@ -317,10 +358,15 @@ def index_node_grid(hexagons, grid):
             inside_id.append(feature.id)
             inside_coor.append([x_point, y_point])
 
-    # create a cKDTree of all the points that fall within the board bbox.
+    # create a cKDTree of all the points that fall within the board bbox. This
+    # tree is used to index the points left and right of the board.
     inside_coor = np.array(inside_coor)
     inside_locations = cKDTree(inside_coor)
     """
+    # this is an idea to fixate part of the sides of the board, so that the
+    # main channel is always in a proper position. If used, a better version
+    # of it should be developed. Therefore currently not in use.
+    
     border_coor = np.array(border_coor)
     border_locations = cKDTree(border_coor)
     """
@@ -384,6 +430,10 @@ def index_node_grid(hexagons, grid):
             feature.properties["location"] = None
             feature.properties["nearest"] = inside_id[indices]
         """
+        # this is an idea to fixate part of the sides of the board, so that the
+        # main channel is always in a proper position. If used, a better version
+        # of it should be developed. Therefore currently not in use.
+        
         else:
             dist1, indices1 = inside_locations.query(xy)
             dist2, indices2 = border_locations.query(xy)
@@ -395,20 +445,18 @@ def index_node_grid(hexagons, grid):
             feature.properties["weight"] = weights
             feature.properties["weight_sum"] = weights_sum
         """
-
-        # change this section to finding the nearest neighbour on the
-        # horizontal axis + another rule if no nearest neighbour on the
-        # horizontal axis
     return grid
 
 
 def update_node_grid(hexagons, grid, fill=False, turn=0):
-    # In case the method is called as an update, determine which grid
-    # points require updating based on which hexagons are changed. This
-    # way, only the grid points that need updating are updated, speeding
-    # up the updating process.
+    """ 
+    Function to update the grid: determine which grid points require updating
+    based on which hexagons are changed. This way, only the grid points that
+    need updating are updated, speeding up the updating process.
+    """
     indices_updated = []
     counter = 0
+    # add feature ids of the changed hexagons to a list.
     for feature in hexagons.features:
         if fill:
             if feature.properties["behind_dike"] or \
@@ -417,6 +465,8 @@ def update_node_grid(hexagons, grid, fill=False, turn=0):
         else:
             if feature.properties["z_changed"]:
                 indices_updated.append(feature.id)
+    # set the changed properties of the points in the grid indexed to a hexagon
+    # indices_updated to True. Set the points that should not change to False.
     for feature in grid.features:
         if not feature.properties["board"]:
             continue
@@ -438,17 +488,23 @@ def update_node_grid(hexagons, grid, fill=False, turn=0):
 
 
 def interpolate_node_grid(hexagons, grid, turn=0, save=False, path=""):
-    # block of code that calculates the z variable for each grid point, based
-    # on stored indices and, if applicable, weight factors. Distinguishes
-    # between start (updates all as all are changed) and update (updates only
-    # points connected to changed hexagons).
+    """ 
+    Function that calculates the z variable for each grid point, based
+    on stored indices and, if applicable, weight factors. Distinguishes
+    between start (updates all as all are changed) and update (updates only
+    points connected to changed hexagons).
+    """ 
     hexagons_by_id = {feature.id: feature for feature in hexagons.features}
+    # first interpolate the grid points that fall within the board.
     for feature in grid.features:
         if not feature.properties["board"]:
             continue
+        # skip points that did not change.
         if not feature.properties["changed"]:
             continue
         nearest = feature.properties["nearest"]
+        # interpolate z value for the point based on the indices and weight
+        # factors.
         if type(nearest) is int:
             hexagon = hexagons_by_id[nearest]
             feature.properties['z'] = hexagon.properties['z']
@@ -481,12 +537,17 @@ def interpolate_node_grid(hexagons, grid, turn=0, save=False, path=""):
     grid_by_id = {feature.id: feature for feature in grid.features}
     counter = 0
     for feature in grid.features:
+        # skip the points within the board or that are filled by default.
         if feature.properties["board"] or feature.properties["fill"]:
             continue
         nearest = feature.properties["nearest"]
         inside_point = grid_by_id[nearest]
         feature.properties["z"] = inside_point.properties["z"]
         """
+        # this is an idea to fixate part of the sides of the board, so that the
+        # main channel is always in a proper position. If used, a better version
+        # of it should be developed. Therefore currently not in use.
+    
         inside_point1 = grid_by_id[nearest[0]]
         inside_point2 = grid_by_id[nearest[1]]
         if inside_point1.properties["changed"] or inside_point2.properties["changed"]:
@@ -517,6 +578,8 @@ def create_geotiff(grid, turn=0, path="", save=False):
     step = 3 * 1.25
     for feature in grid.features:
         shape = geometry.asShape(feature.geometry)
+        # some adjustments to place the bottom left of the board to
+        # x, y = (0, 0)
         x = (shape.centroid.x + 400) * 1.25
         y = (shape.centroid.y + 300) * 1.25
         if x < (0 - step) or x > (1000 + step):
@@ -536,20 +599,18 @@ def create_geotiff(grid, turn=0, path="", save=False):
     x_coor = np.array(x_coor)
     y_coor = np.array(y_coor)
     data = np.array(data)
+    # create a meshgrid of equal size of (x, y) as the desired geotiff
     xvalues = np.linspace(1, 1000, 1000)
     yvalues = np.linspace(1, 750, 750)
     xx, yy = np.meshgrid(xvalues, yvalues)
+    # use scipys griddata function to interpolate for values at each point.
     interpolated_data = interpolate.griddata((x_coor, y_coor), data, (xx, yy))
     interpolated_data = cv2.flip(interpolated_data, 0)
-    if save:
-        with open('interpolated_data.csv', 'w') as f:
-            for line in interpolated_data:
-                f.write(str(line))
-                f.write('\n')
     """
     min_data = min(data)
     max_data = max(data)
-    create_heatmap(interpolated_data, min_data, max_data, name="Elevation_plot", cmap="gist_earth", sigma=(5, 5, 1))
+    create_heatmap(interpolated_data, min_data, max_data,
+                   name="Elevation_plot", cmap="gist_earth", sigma=(5, 5, 1))
     """
 
     compression = {"compress": "LZW"}
@@ -561,59 +622,17 @@ def create_geotiff(grid, turn=0, path="", save=False):
         dst.write(interpolated_data, 1)
     """
     To do: return img directly instead of saving, if possible (changing it to
-    raster and then to string is possible, but adding crs may be a challenge).
+    raster and then to base64 string if possible, but adding crs may be a
+    challenge).
     """
     return interpolated_data
 
 
-def create_geotiff_old(grid, turn=0, path=""):
-    """
-    Function that creates a GeoTIFF from the grid as constructed in the
-    hex_to_points function
-    """
-    tic = time.time()
-    features = []
-    step = 3 * 1.25
-    for feature in grid.features:
-        shape = geometry.asShape(feature.geometry)
-        x = (shape.centroid.x + 400) * 1.25
-        y = (shape.centroid.y + 300) * 1.25
-        if x < (0 - step) or x > (1000 + step):
-            continue
-        if y < (0 - step) or y > (750 + step):
-            continue
-        point1 = [x-step, y+step]
-        point2 = [x+step, y+step]
-        point3 = [x+step, y-step]
-        point4 = [x-step, y-step]
-        polygon = geojson.Polygon([[point1, point2, point3, point4, point1]])
-        new_feature = geojson.Feature(geometry=polygon)
-        # adjustment of z value to meters that range from -6m to 14m
-        new_feature.properties['z'] = (feature.properties['z'] * 4) - 6
-        features.append(new_feature)
-    features = geojson.FeatureCollection(features)
-    geometries = [feature.geometry for feature in features.features]
-    out = np.array([feature.properties['z'] for
-                    feature in features['features']])
-    heightmap = rasterize(zip(geometries, out), out_shape=(750, 1000))
-    heightmap = cv2.flip(heightmap, 0)
-    #plt.imshow(heightmap)
-
-    compression = {"compress": "LZW"}
-    with opentif(os.path.join(path, 'grid_height_map%d.tif' % turn), 'w',
-                 driver='GTiff', width=1000, height=750, count=1,
-                 dtype=heightmap.dtype, crs='EPSG:3857',
-                 transform=from_origin(0, 0, 1, 1), **compression) as dst:
-        dst.write(heightmap, 1)
-    """
-    To do: return img directly instead of saving
-    """
-    tac = time.time()
-    print(tac-tic)
-    return heightmap
-
-
 def create_roughness_map(grid, turn=0, path="", save=False):
+    """
+    This function is here temporarily and should be seen as trial. Should be
+    handled by the vizualization module.
+    """
     x_coor = []
     y_coor = []
     data = []
@@ -657,7 +676,8 @@ def create_roughness_map(grid, turn=0, path="", save=False):
 
 def create_heatmap(data, min_data, max_data, name="plot", cmap="viridis", sigma=(16, 16, 1)):
     """
-    This function is here temporarily. Should be handled by the vizualization module.
+    This function is here temporarily and should be seen as trial. Should be
+    handled by the vizualization module.
     """
     N = colors.Normalize(min_data, max_data)
     cmap = getattr(plt.cm, cmap)

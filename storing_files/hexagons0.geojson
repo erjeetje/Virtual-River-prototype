@@ -42,7 +42,7 @@
         "column": 1,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -53,7 +53,7 @@
         "x_center": 87,
         "y_center": 50,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -99,7 +99,7 @@
         "column": 1,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -110,7 +110,7 @@
         "x_center": 87,
         "y_center": 150,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -156,7 +156,7 @@
         "column": 1,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -167,7 +167,7 @@
         "x_center": 87,
         "y_center": 250,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -213,7 +213,7 @@
         "column": 1,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -224,7 +224,7 @@
         "x_center": 87,
         "y_center": 350,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -270,7 +270,7 @@
         "column": 1,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -281,7 +281,7 @@
         "x_center": 87,
         "y_center": 450,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -327,7 +327,7 @@
         "column": 1,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -338,7 +338,7 @@
         "x_center": 87,
         "y_center": 550,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -384,7 +384,7 @@
         "column": 1,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -395,7 +395,7 @@
         "x_center": 87,
         "y_center": 650,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -441,7 +441,7 @@
         "column": 1,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -452,7 +452,7 @@
         "x_center": 87,
         "y_center": 750,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -498,7 +498,7 @@
         "column": 1,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -509,7 +509,7 @@
         "x_center": 87,
         "y_center": 850,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -555,7 +555,7 @@
         "column": 1,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -566,7 +566,7 @@
         "x_center": 87,
         "y_center": 950,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -612,7 +612,7 @@
         "column": 2,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -623,7 +623,7 @@
         "x_center": 173,
         "y_center": 100,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -669,7 +669,7 @@
         "column": 2,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -680,7 +680,7 @@
         "x_center": 173,
         "y_center": 200,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -726,7 +726,7 @@
         "column": 2,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -737,7 +737,7 @@
         "x_center": 173,
         "y_center": 300,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -779,13 +779,13 @@
       },
       "id": 13,
       "properties": {
-        "Chezy": 37.59886372413391,
+        "Chezy": 31.307084374013794,
         "column": 2,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
-        "north_dike": false,
+        "north_dike": true,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
@@ -793,8 +793,8 @@
         "water": false,
         "x_center": 173,
         "y_center": 400,
-        "z": 3,
-        "z_changed": false
+        "z": 4,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -840,7 +840,7 @@
         "column": 2,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -851,7 +851,7 @@
         "x_center": 173,
         "y_center": 500,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -897,7 +897,7 @@
         "column": 2,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -908,7 +908,7 @@
         "x_center": 173,
         "y_center": 600,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -954,7 +954,7 @@
         "column": 2,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -965,7 +965,7 @@
         "x_center": 173,
         "y_center": 700,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1011,7 +1011,7 @@
         "column": 2,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1022,7 +1022,7 @@
         "x_center": 173,
         "y_center": 800,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1068,7 +1068,7 @@
         "column": 2,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1079,7 +1079,7 @@
         "x_center": 173,
         "y_center": 900,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1125,7 +1125,7 @@
         "column": 3,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1136,7 +1136,7 @@
         "x_center": 260,
         "y_center": 50,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1182,7 +1182,7 @@
         "column": 3,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -1193,7 +1193,7 @@
         "x_center": 260,
         "y_center": 150,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1239,7 +1239,7 @@
         "column": 3,
         "land": true,
         "landuse": 0,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1250,7 +1250,7 @@
         "x_center": 260,
         "y_center": 250,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1296,7 +1296,7 @@
         "column": 3,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1307,7 +1307,7 @@
         "x_center": 260,
         "y_center": 350,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1353,7 +1353,7 @@
         "column": 3,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -1364,7 +1364,7 @@
         "x_center": 260,
         "y_center": 450,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1410,7 +1410,7 @@
         "column": 3,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -1421,7 +1421,7 @@
         "x_center": 260,
         "y_center": 550,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1467,7 +1467,7 @@
         "column": 3,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1478,7 +1478,7 @@
         "x_center": 260,
         "y_center": 650,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1524,7 +1524,7 @@
         "column": 3,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1535,7 +1535,7 @@
         "x_center": 260,
         "y_center": 750,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1581,7 +1581,7 @@
         "column": 3,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1592,7 +1592,7 @@
         "x_center": 260,
         "y_center": 850,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1638,7 +1638,7 @@
         "column": 3,
         "land": true,
         "landuse": 0,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1649,7 +1649,7 @@
         "x_center": 260,
         "y_center": 950,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1695,7 +1695,7 @@
         "column": 4,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -1706,7 +1706,7 @@
         "x_center": 346,
         "y_center": 100,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1752,7 +1752,7 @@
         "column": 4,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1763,7 +1763,7 @@
         "x_center": 346,
         "y_center": 200,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1809,7 +1809,7 @@
         "column": 4,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1820,7 +1820,7 @@
         "x_center": 346,
         "y_center": 300,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1866,7 +1866,7 @@
         "column": 4,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -1877,7 +1877,7 @@
         "x_center": 346,
         "y_center": 400,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1923,7 +1923,7 @@
         "column": 4,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -1934,7 +1934,7 @@
         "x_center": 346,
         "y_center": 500,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -1980,7 +1980,7 @@
         "column": 4,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -1991,7 +1991,7 @@
         "x_center": 346,
         "y_center": 600,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2037,7 +2037,7 @@
         "column": 4,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2048,7 +2048,7 @@
         "x_center": 346,
         "y_center": 700,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2094,7 +2094,7 @@
         "column": 4,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2105,7 +2105,7 @@
         "x_center": 346,
         "y_center": 800,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2151,7 +2151,7 @@
         "column": 4,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2162,7 +2162,7 @@
         "x_center": 346,
         "y_center": 900,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2208,7 +2208,7 @@
         "column": 5,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2219,7 +2219,7 @@
         "x_center": 433,
         "y_center": 50,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2265,7 +2265,7 @@
         "column": 5,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -2276,7 +2276,7 @@
         "x_center": 433,
         "y_center": 150,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2322,7 +2322,7 @@
         "column": 5,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2333,7 +2333,7 @@
         "x_center": 433,
         "y_center": 250,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2379,7 +2379,7 @@
         "column": 5,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -2390,7 +2390,7 @@
         "x_center": 433,
         "y_center": 350,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2436,7 +2436,7 @@
         "column": 5,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -2447,7 +2447,7 @@
         "x_center": 433,
         "y_center": 450,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2493,7 +2493,7 @@
         "column": 5,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2504,7 +2504,7 @@
         "x_center": 433,
         "y_center": 550,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2550,7 +2550,7 @@
         "column": 5,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2561,7 +2561,7 @@
         "x_center": 433,
         "y_center": 650,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2607,7 +2607,7 @@
         "column": 5,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2618,7 +2618,7 @@
         "x_center": 433,
         "y_center": 750,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2664,7 +2664,7 @@
         "column": 5,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2675,7 +2675,7 @@
         "x_center": 433,
         "y_center": 850,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2721,7 +2721,7 @@
         "column": 5,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2732,7 +2732,7 @@
         "x_center": 433,
         "y_center": 950,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2778,7 +2778,7 @@
         "column": 6,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -2789,7 +2789,7 @@
         "x_center": 520,
         "y_center": 100,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2835,7 +2835,7 @@
         "column": 6,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -2846,7 +2846,7 @@
         "x_center": 520,
         "y_center": 200,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2892,7 +2892,7 @@
         "column": 6,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -2903,7 +2903,7 @@
         "x_center": 520,
         "y_center": 300,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2949,7 +2949,7 @@
         "column": 6,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -2960,7 +2960,7 @@
         "x_center": 520,
         "y_center": 400,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3006,7 +3006,7 @@
         "column": 6,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3017,7 +3017,7 @@
         "x_center": 520,
         "y_center": 500,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3063,7 +3063,7 @@
         "column": 6,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3074,7 +3074,7 @@
         "x_center": 520,
         "y_center": 600,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3116,11 +3116,11 @@
       },
       "id": 54,
       "properties": {
-        "Chezy": 37.59886372413391,
+        "Chezy": 11.626201002006951,
         "column": 6,
         "land": true,
-        "landuse": 2,
-        "landuse_changed": false,
+        "landuse": 5,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3130,8 +3130,8 @@
         "water": false,
         "x_center": 520,
         "y_center": 700,
-        "z": 2,
-        "z_changed": false
+        "z": 3,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3177,7 +3177,7 @@
         "column": 6,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3188,7 +3188,7 @@
         "x_center": 520,
         "y_center": 800,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3234,7 +3234,7 @@
         "column": 6,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3245,7 +3245,7 @@
         "x_center": 520,
         "y_center": 900,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3291,7 +3291,7 @@
         "column": 7,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3302,7 +3302,7 @@
         "x_center": 606,
         "y_center": 50,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3348,7 +3348,7 @@
         "column": 7,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -3359,7 +3359,7 @@
         "x_center": 606,
         "y_center": 150,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3405,7 +3405,7 @@
         "column": 7,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3416,7 +3416,7 @@
         "x_center": 606,
         "y_center": 250,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3462,7 +3462,7 @@
         "column": 7,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -3473,7 +3473,7 @@
         "x_center": 606,
         "y_center": 350,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3519,7 +3519,7 @@
         "column": 7,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -3530,7 +3530,7 @@
         "x_center": 606,
         "y_center": 450,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3576,7 +3576,7 @@
         "column": 7,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3587,7 +3587,7 @@
         "x_center": 606,
         "y_center": 550,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3629,10 +3629,10 @@
       },
       "id": 63,
       "properties": {
-        "Chezy": 11.626201002006951,
+        "Chezy": 5.714316024624509,
         "column": 7,
         "land": true,
-        "landuse": 5,
+        "landuse": 4,
         "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
@@ -3686,11 +3686,11 @@
       },
       "id": 64,
       "properties": {
-        "Chezy": 37.59886372413391,
+        "Chezy": 5.714316024624509,
         "column": 7,
         "land": true,
-        "landuse": 2,
-        "landuse_changed": false,
+        "landuse": 4,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3700,8 +3700,8 @@
         "water": false,
         "x_center": 606,
         "y_center": 750,
-        "z": 2,
-        "z_changed": false
+        "z": 3,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3747,7 +3747,7 @@
         "column": 7,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3758,7 +3758,7 @@
         "x_center": 606,
         "y_center": 850,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3804,7 +3804,7 @@
         "column": 7,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3815,7 +3815,7 @@
         "x_center": 606,
         "y_center": 950,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3861,7 +3861,7 @@
         "column": 8,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3872,7 +3872,7 @@
         "x_center": 693,
         "y_center": 100,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3918,7 +3918,7 @@
         "column": 8,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -3929,7 +3929,7 @@
         "x_center": 693,
         "y_center": 200,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3975,7 +3975,7 @@
         "column": 8,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -3986,7 +3986,7 @@
         "x_center": 693,
         "y_center": 300,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4032,7 +4032,7 @@
         "column": 8,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -4043,7 +4043,7 @@
         "x_center": 693,
         "y_center": 400,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4089,7 +4089,7 @@
         "column": 8,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -4100,7 +4100,7 @@
         "x_center": 693,
         "y_center": 500,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4146,7 +4146,7 @@
         "column": 8,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4157,7 +4157,7 @@
         "x_center": 693,
         "y_center": 600,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4203,7 +4203,7 @@
         "column": 8,
         "land": false,
         "landuse": 7,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4214,7 +4214,7 @@
         "x_center": 693,
         "y_center": 700,
         "z": 1,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4260,7 +4260,7 @@
         "column": 8,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4271,7 +4271,7 @@
         "x_center": 693,
         "y_center": 800,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4317,7 +4317,7 @@
         "column": 8,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4328,7 +4328,7 @@
         "x_center": 693,
         "y_center": 900,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4374,7 +4374,7 @@
         "column": 9,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4385,7 +4385,7 @@
         "x_center": 779,
         "y_center": 50,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4431,7 +4431,7 @@
         "column": 9,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -4442,7 +4442,7 @@
         "x_center": 779,
         "y_center": 150,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4488,7 +4488,7 @@
         "column": 9,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4499,7 +4499,7 @@
         "x_center": 779,
         "y_center": 250,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4545,7 +4545,7 @@
         "column": 9,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4556,7 +4556,7 @@
         "x_center": 779,
         "y_center": 350,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4602,7 +4602,7 @@
         "column": 9,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -4613,7 +4613,7 @@
         "x_center": 779,
         "y_center": 450,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4659,7 +4659,7 @@
         "column": 9,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -4670,7 +4670,7 @@
         "x_center": 779,
         "y_center": 550,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4716,7 +4716,7 @@
         "column": 9,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4727,7 +4727,7 @@
         "x_center": 779,
         "y_center": 650,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4773,7 +4773,7 @@
         "column": 9,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4784,7 +4784,7 @@
         "x_center": 779,
         "y_center": 750,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4830,7 +4830,7 @@
         "column": 9,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4841,7 +4841,7 @@
         "x_center": 779,
         "y_center": 850,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4887,7 +4887,7 @@
         "column": 9,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4898,7 +4898,7 @@
         "x_center": 779,
         "y_center": 950,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4944,7 +4944,7 @@
         "column": 10,
         "land": true,
         "landuse": 0,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -4955,7 +4955,7 @@
         "x_center": 866,
         "y_center": 100,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5001,7 +5001,7 @@
         "column": 10,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -5012,7 +5012,7 @@
         "x_center": 866,
         "y_center": 200,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5058,7 +5058,7 @@
         "column": 10,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5069,7 +5069,7 @@
         "x_center": 866,
         "y_center": 300,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5115,7 +5115,7 @@
         "column": 10,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5126,7 +5126,7 @@
         "x_center": 866,
         "y_center": 400,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5172,7 +5172,7 @@
         "column": 10,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -5183,7 +5183,7 @@
         "x_center": 866,
         "y_center": 500,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5229,7 +5229,7 @@
         "column": 10,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -5240,7 +5240,7 @@
         "x_center": 866,
         "y_center": 600,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5286,7 +5286,7 @@
         "column": 10,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5297,7 +5297,7 @@
         "x_center": 866,
         "y_center": 700,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5343,7 +5343,7 @@
         "column": 10,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5354,7 +5354,7 @@
         "x_center": 866,
         "y_center": 800,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5400,7 +5400,7 @@
         "column": 10,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5411,7 +5411,7 @@
         "x_center": 866,
         "y_center": 900,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5457,7 +5457,7 @@
         "column": 11,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5468,7 +5468,7 @@
         "x_center": 953,
         "y_center": 50,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5514,7 +5514,7 @@
         "column": 11,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -5525,7 +5525,7 @@
         "x_center": 953,
         "y_center": 150,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5571,7 +5571,7 @@
         "column": 11,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5582,7 +5582,7 @@
         "x_center": 953,
         "y_center": 250,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5628,7 +5628,7 @@
         "column": 11,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5639,7 +5639,7 @@
         "x_center": 953,
         "y_center": 350,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5681,11 +5681,11 @@
       },
       "id": 99,
       "properties": {
-        "Chezy": 37.59886372413391,
+        "Chezy": 5.755496949900733,
         "column": 11,
         "land": true,
-        "landuse": 2,
-        "landuse_changed": false,
+        "landuse": 3,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5695,8 +5695,8 @@
         "water": false,
         "x_center": 953,
         "y_center": 450,
-        "z": 2,
-        "z_changed": false
+        "z": 3,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5742,7 +5742,7 @@
         "column": 11,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -5753,7 +5753,7 @@
         "x_center": 953,
         "y_center": 550,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5799,7 +5799,7 @@
         "column": 11,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -5810,7 +5810,7 @@
         "x_center": 953,
         "y_center": 650,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5856,7 +5856,7 @@
         "column": 11,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5867,7 +5867,7 @@
         "x_center": 953,
         "y_center": 750,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5913,7 +5913,7 @@
         "column": 11,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5924,7 +5924,7 @@
         "x_center": 953,
         "y_center": 850,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -5970,7 +5970,7 @@
         "column": 11,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -5981,7 +5981,7 @@
         "x_center": 953,
         "y_center": 950,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6027,7 +6027,7 @@
         "column": 12,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -6038,7 +6038,7 @@
         "x_center": 1039,
         "y_center": 100,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6084,7 +6084,7 @@
         "column": 12,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6095,7 +6095,7 @@
         "x_center": 1039,
         "y_center": 200,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6141,7 +6141,7 @@
         "column": 12,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6152,7 +6152,7 @@
         "x_center": 1039,
         "y_center": 300,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6194,22 +6194,22 @@
       },
       "id": 108,
       "properties": {
-        "Chezy": 52.30641944047322,
+        "Chezy": 10.306058032383493,
         "column": 12,
-        "land": false,
-        "landuse": 7,
-        "landuse_changed": false,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 108,
-        "water": true,
+        "water": false,
         "x_center": 1039,
         "y_center": 400,
-        "z": 1,
-        "z_changed": false
+        "z": 2,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6255,7 +6255,7 @@
         "column": 12,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6266,7 +6266,7 @@
         "x_center": 1039,
         "y_center": 500,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6312,7 +6312,7 @@
         "column": 12,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -6323,7 +6323,7 @@
         "x_center": 1039,
         "y_center": 600,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6369,7 +6369,7 @@
         "column": 12,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -6380,7 +6380,7 @@
         "x_center": 1039,
         "y_center": 700,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6426,7 +6426,7 @@
         "column": 12,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6437,7 +6437,7 @@
         "x_center": 1039,
         "y_center": 800,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6483,7 +6483,7 @@
         "column": 12,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6494,7 +6494,7 @@
         "x_center": 1039,
         "y_center": 900,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6540,7 +6540,7 @@
         "column": 13,
         "land": true,
         "landuse": 1,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6551,7 +6551,7 @@
         "x_center": 1126,
         "y_center": 50,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6597,7 +6597,7 @@
         "column": 13,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -6608,7 +6608,7 @@
         "x_center": 1126,
         "y_center": 150,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6654,7 +6654,7 @@
         "column": 13,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6665,7 +6665,7 @@
         "x_center": 1126,
         "y_center": 250,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6707,22 +6707,22 @@
       },
       "id": 117,
       "properties": {
-        "Chezy": 10.306058032383493,
+        "Chezy": 52.30641944047322,
         "column": 13,
-        "land": true,
-        "landuse": 5,
-        "landuse_changed": false,
+        "land": false,
+        "landuse": 7,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 117,
-        "water": false,
+        "water": true,
         "x_center": 1126,
         "y_center": 350,
-        "z": 2,
-        "z_changed": false
+        "z": 1,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6768,7 +6768,7 @@
         "column": 13,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6779,7 +6779,7 @@
         "x_center": 1126,
         "y_center": 450,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6825,7 +6825,7 @@
         "column": 13,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -6836,7 +6836,7 @@
         "x_center": 1126,
         "y_center": 550,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6882,7 +6882,7 @@
         "column": 13,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -6893,7 +6893,7 @@
         "x_center": 1126,
         "y_center": 650,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6939,7 +6939,7 @@
         "column": 13,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -6950,7 +6950,7 @@
         "x_center": 1126,
         "y_center": 750,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -6996,7 +6996,7 @@
         "column": 13,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7007,7 +7007,7 @@
         "x_center": 1126,
         "y_center": 850,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7053,7 +7053,7 @@
         "column": 13,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7064,7 +7064,7 @@
         "x_center": 1126,
         "y_center": 950,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7110,7 +7110,7 @@
         "column": 14,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -7121,7 +7121,7 @@
         "x_center": 1212,
         "y_center": 100,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7167,7 +7167,7 @@
         "column": 14,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7178,7 +7178,7 @@
         "x_center": 1212,
         "y_center": 200,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7224,7 +7224,7 @@
         "column": 14,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7235,7 +7235,7 @@
         "x_center": 1212,
         "y_center": 300,
         "z": 3,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7281,7 +7281,7 @@
         "column": 14,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7292,7 +7292,7 @@
         "x_center": 1212,
         "y_center": 400,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7338,7 +7338,7 @@
         "column": 14,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -7349,7 +7349,7 @@
         "x_center": 1212,
         "y_center": 500,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7395,7 +7395,7 @@
         "column": 14,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -7406,7 +7406,7 @@
         "x_center": 1212,
         "y_center": 600,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7452,7 +7452,7 @@
         "column": 14,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7463,7 +7463,7 @@
         "x_center": 1212,
         "y_center": 700,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7509,7 +7509,7 @@
         "column": 14,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7520,7 +7520,7 @@
         "x_center": 1212,
         "y_center": 800,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7566,7 +7566,7 @@
         "column": 14,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7577,7 +7577,7 @@
         "x_center": 1212,
         "y_center": 900,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7623,7 +7623,7 @@
         "column": 15,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -7634,7 +7634,7 @@
         "x_center": 1299,
         "y_center": 50,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7680,7 +7680,7 @@
         "column": 15,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7691,7 +7691,7 @@
         "x_center": 1299,
         "y_center": 150,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7737,7 +7737,7 @@
         "column": 15,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7748,7 +7748,7 @@
         "x_center": 1299,
         "y_center": 250,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7794,7 +7794,7 @@
         "column": 15,
         "land": true,
         "landuse": 3,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7805,7 +7805,7 @@
         "x_center": 1299,
         "y_center": 350,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7851,7 +7851,7 @@
         "column": 15,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": true,
@@ -7862,7 +7862,7 @@
         "x_center": 1299,
         "y_center": 450,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7908,7 +7908,7 @@
         "column": 15,
         "land": false,
         "landuse": 9,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
@@ -7919,7 +7919,7 @@
         "x_center": 1299,
         "y_center": 550,
         "z": 0,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -7965,7 +7965,7 @@
         "column": 15,
         "land": true,
         "landuse": 2,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -7976,7 +7976,7 @@
         "x_center": 1299,
         "y_center": 650,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -8022,7 +8022,7 @@
         "column": 15,
         "land": true,
         "landuse": 10,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -8033,7 +8033,7 @@
         "x_center": 1299,
         "y_center": 750,
         "z": 4,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -8079,7 +8079,7 @@
         "column": 15,
         "land": true,
         "landuse": 4,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -8090,7 +8090,7 @@
         "x_center": 1299,
         "y_center": 850,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -8136,7 +8136,7 @@
         "column": 15,
         "land": true,
         "landuse": 5,
-        "landuse_changed": false,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
@@ -8147,7 +8147,7 @@
         "x_center": 1299,
         "y_center": 950,
         "z": 2,
-        "z_changed": false
+        "z_changed": true
       },
       "type": "Feature"
     }

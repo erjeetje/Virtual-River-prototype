@@ -8,7 +8,6 @@ Created on Wed May 22 16:21:54 2019
 
 import os
 import time
-import pathlib
 import geojson
 import bmi.wrapper
 import mako.template
@@ -20,6 +19,10 @@ from copy import deepcopy
 
 
 def initialize_model():
+    """
+    Function to initialize the model using bmi. If the Virtual River is copied
+    including the models folder, no changes are needed.
+    """
     model = bmi.wrapper.BMIWrapper('dflowfm')
     dir_path = os.path.dirname(os.path.realpath(__file__))
     model_name = 'waal_with_side.mdu'
@@ -32,6 +35,15 @@ def initialize_model():
 
 def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
               axes=None, initialized=False):
+    """
+    Function that runs the model. Currently gets the variables from the model,
+    updates the variables (e.g. zk to update the elevation model). Subsequently
+    updates the model.
+    
+    Once changes have been made (e.g. to running the model in the cloud), this
+    function should be updated. Should probably be separated into multiple
+    functions as well.
+    """
     model.get_var('s1')
     #numk = model.get_var('numk')
     #ndx = model.get_var('ndx')
@@ -128,23 +140,10 @@ def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
     return fig, axes
 
 
-def generate_geojson(data):
-    #for item in data:
-        # do something
-    return
-
-
-def landuse_to_friction(landuse):
-    if landuse == 9:
-        friction = 1000
-    else:
-        friction = 1
-    return friction
-
-
 def geojson2pli(collection, name="groyne"):
     """
-    convert geojson input (FeatureCollection of linestring features) to a pli file
+    convert geojson input (FeatureCollection of linestring features) to an ini
+    file listing all structures.
     """
     structures_template_text = '''
 %for feature in features:
@@ -177,6 +176,10 @@ lat_contr_coeff       = 1                   # Lateral contraction coefficient in
 
 
 def create_pli(feature, pli_path):
+    """
+    convert geojson input (FeatureCollection of linestring features) to a pli
+    file that is referenced to in the ini file.
+    """
     pli_template_text = '''${structure_id}
 ${len(coordinates)} 2
 %for point in coordinates:

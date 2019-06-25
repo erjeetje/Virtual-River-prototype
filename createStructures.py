@@ -13,6 +13,10 @@ import modelInterface as D3D
 
 
 def determine_dikes(hexagons):
+    """
+    Function that determines the dike locations (z value above dike level
+    threshold). Sets the feature properties accordingly.
+    """
     for feature in hexagons.features:
         if feature.properties["z"] >= 4:
             shape = geometry.asShape(feature.geometry)
@@ -30,6 +34,10 @@ def determine_dikes(hexagons):
 
 
 def determine_channel(hexagons):
+    """
+    Function that determines the main channel location (z value below main
+    channel threshold). Sets the feature properties accordingly.
+    """
     for feature in hexagons.features:
         if feature.properties["z"] == 0:
             next_hexagon = hexagons[feature.id + 1]
@@ -49,6 +57,9 @@ def determine_channel(hexagons):
 
 
 def get_channel(hexagons):
+    """
+    Function that only returns the main channel hexagons.
+    """
     hexagons_copy = deepcopy(hexagons)
     channel = []
     for feature in hexagons_copy.features:
@@ -62,8 +73,12 @@ def get_channel(hexagons):
 
 def create_structures(hexagons):
     """
-    Results are better with 59 degrees for some reason that I cannot figure
-    out yet.
+    Function that determines where the structures (groynes and ltds) should be
+    located in the main channel at the start of the game. Creates linestrings
+    for both and returns them as a single featurecollection.
+    
+    NOTE: Results are better with 59 degrees for some reason that I cannot
+    figure out yet.
     """
     sin = np.sin(np.deg2rad(60))
     cosin = np.cos(np.deg2rad(60))
@@ -184,8 +199,10 @@ def create_structures(hexagons):
         groyne.properties["crest_level"] = 3.0
         structures.append(groyne)
     structures = geojson.FeatureCollection(structures)
-    with open('structures_test.geojson', 'w') as f:
-        geojson.dump(structures, f, sort_keys=True, indent=2)
+    if False:
+        # saving is currently skipped, hence in if False statement.
+        with open('structures_test.geojson', 'w') as f:
+            geojson.dump(structures, f, sort_keys=True, indent=2)
     return structures
 
 

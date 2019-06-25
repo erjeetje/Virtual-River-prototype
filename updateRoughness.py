@@ -14,6 +14,13 @@ from copy import deepcopy
 
 
 def hex_to_points(model, hexagons, grid, test=False):
+    """
+    Function that sets the Chezy value of all the grid points (centers of
+    cells) based on the Chezy value of the hexagon where these are located.
+    
+    NOTE: frcu is much longer then expected (len 52k whereas 26k was expected),
+    meaning the slicing is not correct. Needs to be checked and updated.
+    """
     ndxi = model.get_var('ndxi')
     frcu = model.get_var('frcu')[:ndxi]
     if test:
@@ -27,12 +34,6 @@ def hex_to_points(model, hexagons, grid, test=False):
         hexagon = hexagons_by_id[location]
         feature.properties["Chezy"] = hexagon.properties["Chezy"]
         frcu[feature.id] = feature.properties["Chezy"]
-    """
-    if test:
-        copy = deepcopy(frcu)
-        copy = np.unique(copy)
-        print(copy)
-    """
     return hexagons, grid
 
 
@@ -40,6 +41,8 @@ def randomizer(hexagons):
     """
     temporary randomize function to add different trachytopes to the board for
     testing purposes. Remove at a later stage.
+    
+    the function is no longer called, can be removed.
     """
     for feature in hexagons.features:
         if feature.properties["landuse"] == 9:
@@ -48,31 +51,30 @@ def randomizer(hexagons):
             feature.properties["landuse"] = 10
         else:
             feature.properties["landuse"] = random.randint(1, 5)
-            """
-            rand = random.randint(1, 21)
-            # keep a few buildings in the floodplain (stone factory/farm)
-            if rand == 1:
-                continue
-            else:
-                feature.properties["landuse"] = random.randint(1, 5)
-            """
     return hexagons
 
 
-def landuse_to_friction(hexagons):
-    # landuse range between 0 and 9, with a subdivision for 0:
-    # 0: built environment
-    # 1: agriculture; production meadow/crop field
-    # 2: natural grassland
-    # 3: reed; 'ruigte'
-    # 4: shrubs; hard-/softwood
-    # 5: forest; hard-/softwood
-    # 6: mixtype class; mix between grass/reed/shrubs/forest
-    # 7: water body; sidechannel (connected to main channel) or lake
-    # 8: main channel; river bed with longitudinal training dams
-    # 9: main channel; river bed with groynes
-    # 10: dike
-    test_list = []
+def landuse_to_friction(hexagons, printing=False):
+    """
+    Function that turns the landuse into a trachytope.
+    
+    landuse range between 0 and 9, with a subdivision for 0:
+    0: built environment
+    1: agriculture; production meadow/crop field
+    2: natural grassland
+    3: reed; 'ruigte'
+    4: shrubs; hard-/softwood
+    5: forest; hard-/softwood
+    6: mixtype class; mix between grass/reed/shrubs/forest
+    7: water body; sidechannel (connected to main channel) or lake
+    8: main channel; river bed with longitudinal training dams
+    9: main channel; river bed with groynes
+    10: dike
+    """
+    if printing:
+        # the test_list is only added to print the Chezy calculations, set
+        # to False by default.
+        test_list = []
     for feature in hexagons.features:
         if not feature.properties["landuse_changed"]:
             continue
@@ -150,18 +152,27 @@ def landuse_to_friction(hexagons):
                 feature.properties["Chezy"] = klopstra(h, vegpar)
             print("cell: " + str(feature.id) + ". landuse: " + str(feature.properties["landuse"]) + ". h: " + str(h) + ". C: " +
                   str(feature.properties["Chezy"]))
-            test_list.append([name, h, feature.properties["Chezy"]])
-    test_list = np.array(test_list)
-    test_list = np.unique(test_list, axis=0)
-    for item in test_list:
-        print("trachytope: " + str(item[0]) + "     waterheight: "
-              + str(item[1]) + " m     Chezy: " + str(item[2]))
+            if printing:
+                # the test_list is only added to print the Chezy calculations,
+                # set to False by default.
+                test_list.append([name, h, feature.properties["Chezy"]])
+    if printing:
+        # the test_list is only added to print the Chezy calculations, set
+        # to False by default.
+        test_list = np.array(test_list)
+        test_list = np.unique(test_list, axis=0)
+        for item in test_list:
+            print("trachytope: " + str(item[0]) + "     waterheight: "
+                  + str(item[1]) + " m     Chezy: " + str(item[2]))
     return hexagons
 
 
 def klopstra(h, vegpar):
     """
-    Formula of Klopstra (1997), as implemented in Delft3D
+    Formula of Klopstra (1997), as implemented in Delft3D.
+    
+    Implementation should be correct (checked), but would be good to check
+    again, perhaps with Hermjan.
     """
     g = 9.81
     kappa = 0.4
@@ -221,7 +232,6 @@ def klopstra(h, vegpar):
         Chezy = (h ** (-3 / 2.)) * (T1 + T2 + T3)
     else:
         """ Emergent vegetation """
-        #kb = 0.05
         Cb = 18 * np.log10(12 * h / vegpar["kb"])
         Chezy = np.sqrt((vegpar["Cd"] * vegpar["n"] * h / (2 * g) +
                          Cb ** -2) ** -1)
@@ -229,6 +239,9 @@ def klopstra(h, vegpar):
 
 
 def manning(h, n):
+    """
+    Manning formula.
+    """
     Chezy = (h ** (1 / 6)) / n
     return Chezy
 

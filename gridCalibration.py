@@ -47,28 +47,33 @@ def create_calibration_file(img_x, img_y, cut_points, path=""):
 
 
 def detect_corners(img, method='standard', path=""):
-    # changed filename as variable to img
+    # TO DO: get path from main program
     """
     Function that detects the corners of the board (the four white circles)
     and returns their coordinates as a 2D array.
     """
-    #img = cv2.imread(filename)  # load image
     height, width, channels = img.shape
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # convert image to grayscale
     if method == 'adaptive':
-        blur = cv2.medianBlur(gray, 5)  # flur grayscale image
+        blur = cv2.medianBlur(gray, 5)  # blur grayscale image
         thresh = cv2.adaptiveThreshold(blur, 255,
                                        cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                        cv2.THRESH_BINARY, 11, 2)
-        cv2.imwrite('Adaptive_threshold.jpg', thresh)  # store threshold image
+        # store threshold image
+        cv2.imwrite(os.path.join(path, 'Adaptive_threshold.jpg'), thresh)
     else:
-        blur = cv2.GaussianBlur(gray, (5, 5), 0)  # flur grayscale image
+        blur = cv2.GaussianBlur(gray, (5, 5), 0)  # blur grayscale image
         # threshold grayscale image as binary
         ret, thresh = cv2.threshold(blur, 0, 255,
                                     cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        cv2.imwrite('Standard_threshold.jpg', thresh)  # store threshold image
+        # store threshold image
+        cv2.imwrite(os.path.join(path, 'Standard_threshold.jpg'), thresh)
 
-    # create mask to only search for circles in the corner
+    # create mask to only search for circles in the corner since we know that's
+    # where the circles are. The code is rather sensitive and sometimes it sees
+    # incorrect circles. This section prevents that from happening. Even when
+    # it does however, it still detects the real circles more clearly, thus
+    # lists them in index 0-3.
     mask = np.zeros((height, width), dtype="uint8") 
     margin_x = round(width * 0.2)
     margin_y = round(height * 0.14)
@@ -80,14 +85,16 @@ def detect_corners(img, method='standard', path=""):
     cv2.rectangle(mask, (width-margin_x, height-margin_y), (width, height),
                   (255, 255, 255), -1)
     masked_tresh = cv2.bitwise_and(thresh, thresh, mask=mask)
+
     # detect corner circles in the image (min/max radius ensures only
-    # finding those)
+    # finding those we want)
     circles = cv2.HoughCircles(masked_tresh, cv2.HOUGH_GRADIENT, 1, 200,
                                param1=50, param2=14, minRadius=18,
                                maxRadius=21)
 
     # ensure at least some circles were found, such falesafes (also for certain
-    # error types) should be build in in later versions
+    # error types) should be build in in later versions --> this should have
+    # the effect that the script either aborts or goes to test mode.
     if circles is None:
         print('no circles')
         return
@@ -96,6 +103,8 @@ def detect_corners(img, method='standard', path=""):
     # loop over the (x, y) coordinates and radius of the circles
     canvas = circles[:, :2]
 
+    # this drawing of the circles is not necessary for the program to run. Left
+    # in as it only happens in the initialization.
     for (x, y, r) in circles:
         # draw circle around detected corner
         cv2.circle(img, (x, y), r, (0, 255, 0), 4)
@@ -192,12 +201,14 @@ def create_features(height, width):
     x_jump = dist/2
     features = []
     for i, (x, y) in enumerate(origins):
+        # determine all the corner points of the hexagon
         point1 = [x+dist, y]
         point2 = [x+x_jump, y+y_jump]
         point3 = [x-x_jump, y+y_jump]
         point4 = [x-dist, y]
         point5 = [x-x_jump, y-y_jump]
         point6 = [x+x_jump, y-y_jump]
+        # create a geojson polygon for the hexagon
         polygon = geojson.Polygon([[point1, point2, point3, point4, point5,
                                     point6, point1]])
         feature = geojson.Feature(id=i, geometry=polygon)
@@ -205,9 +216,12 @@ def create_features(height, width):
         feature.properties["landuse_changed"] = True
         feature.properties["column"] = column[i]
         feature.properties["tygron_id"] = i
+        # these x and y centers are not actually relevant --> features are
+        # transformed to other coordinates.
         feature.properties["x_center"] = int(round(x))
         feature.properties["y_center"] = int(round(y))
         features.append(feature)
+    # create geojson featurecollection with all hexagons.
     features = geojson.FeatureCollection(features)
     return features, origins, radius
 

@@ -14,7 +14,6 @@ from shapely import geometry
 from geojson import load
 from scipy import interpolate
 import gridMapping as gridmap
-#from arcpy import NumPyArrayToRaster
 
 
 def join_session(username, password, application_type="EDITOR",
@@ -65,6 +64,15 @@ def get_buildings(api_key, api_endpoint=("https://engine.tygron.com/api/"
 
 
 def update_hexagons_tygron_id(api_key, hexagons):
+    """
+    Function to update the tygron ids of the hexagons.
+    
+    NOTE: this works now as the name of the hexagons are numbered. Could cause
+    problems when adding the groynes and LTDs to tygron, which may not have
+    numbers as names to distinguish.
+    
+    PROPOSED FIX: int(name) --> name and feature.id --> str(feature.id) (test!)
+    """
     buildings_json = get_buildings(api_key)
     building_indices = {}
     for building in buildings_json:
@@ -104,6 +112,10 @@ def set_function_value(api_key, building_id, value,
                        api_endpoint=("https://engine.tygron.com/api/session/"
                                      "event/editorbuilding/"
                                      "set_function_value/?")):
+    """
+    Function to update the values of a function, e.g. the height of trees. This
+    should not be necessary to call --> set functions correctly in Tygron.
+    """
     r = requests.post(url=api_endpoint+api_key, json=[building_id, function_value, value])
     return
 
@@ -111,6 +123,9 @@ def set_function_value(api_key, building_id, value,
 def set_name(api_key, tygron_id, hex_id,
              api_endpoint=("https://engine.tygron.com/api/session/event/"
                            "EditorBuildingEventType/SET_NAME/?")):
+    """
+    Function to set the name of a hexagon to the correct name (number).
+    """
     r = requests.post(url=api_endpoint+api_key, json=[tygron_id, str(hex_id)])
     return
 
@@ -198,6 +213,9 @@ def add_polygon(api_key, hexagon_id, hexagon_shape,
 def add_standard(api_key,
                  api_endpoint=("https://engine.tygron.com/api/session/event/"
                                "EditorBuildingEventType/ADD_STANDARD/?")):
+    """
+    Obsolete function, may be removed when we are sure it will not be used.
+    """
     r = requests.post(url=api_endpoint+api_key, json=[0])
     print("added standard " + str(r))
     return r.text
@@ -206,6 +224,9 @@ def add_standard(api_key,
 def add_section(api_key, hexagon_ids,
                 api_endpoint=("https://engine.tygron.com/api/session/event/"
                               "EditorBuildingEventType/ADD_SECTION/?")):
+    """
+    Obsolete function, may be removed when we are sure it will not be used.
+    """
     r = requests.post(url=api_endpoint+api_key, json=[hexagon_ids])
     print("added section " + str(r))
     return
@@ -257,6 +278,11 @@ def set_elevation(tiff_file, api_key, turn=0,
 def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
                      api_endpoint=("https://engine.tygron.com/api/session/"
                                    "event/editorgeotiff/set_geotiff/?")):
+    """
+    This function should override the initial geotiff and therefore update the
+    elevation in tygron. Doesn't seem to work. Workaround right now is to
+    upload new geotiffs and set these (this method is therefore not called).
+    """
     json = elevation_json(heightmap_id, heightmap)
     json.append("")
     r = requests.post(url=api_endpoint+api_key, json=json)
@@ -271,117 +297,33 @@ def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
 
 
 def elevation_json(tiff_id, heightmap):
+    """
+    Function that creates a base64 string for the geotiff that can be sent to
+    tygron to set the elevation.
+    """
     tiff_base64 = base64.b64encode(heightmap).decode()
     uploader = "r.j.denhaan@utwente.nl"
     datapackage = [tiff_id, tiff_base64, uploader]
     return datapackage
 
 
-def set_elevation3(tiff_file, api_key, turn=0, start=False):
-    """
-    Function to update the elevation of the entire Tygron world. Uploads
-    a new GeoTIFF and in case of the initiating the session, selects the
-    GeoTIFF as the elevation map. On turn updates, selects the newly updated
-    GeoTIFF as the new elevation map.
-    """
-    with open(tiff_file, 'rb') as f:
-        heightmap = f.read()
-    # the "True" value in below's if statement should be "start"
-    if start:
-        api_endpoint = ("https://engine.tygron.com/api/session/event/"
-                        "editorgeotiff/add/?")
-    else:
-        api_endpoint = ("https://engine.tygron.com/api/session/event/"
-                        "editorgeotiff/set_geotiff/?")
-    tiff_id = turn
-    tiff_base64 = base64.b64encode(heightmap).decode()
-    uploader = "r.j.denhaan@utwente.nl"
-    r = requests.post(url=api_endpoint+api_key, json=[tiff_id, tiff_base64,
-                                                      uploader])
-    print(r)
-    try:
-        heightmap_id = r.json()
-        print(heightmap_id)
-    except ValueError:
-        print("no content")
-    # the "True" value in below's if statement should be "start"
-    if False:
-        api_endpoint = ("https://engine.tygron.com/api/session/event/"
-                        "editormap/set_height_geotiff/?")
-        r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])
-        return
-    else:
-        return heightmap_id
-
-
-def set_elevation2(heightmap, api_key, turn=0, start=False):
-    """
-    Function to update the elevation of the entire Tygron world. Uploads
-    a new GeoTIFF and in case of the initiating the session, selects the
-    GeoTIFF as the elevation map. On turn updates, selects the newly updated
-    GeoTIFF as the new elevation map.
-    """
-    """
-    To fix: update heightmap from variable instead of from reading file. This
-    may work with an approach as below, but installing arcpy will make many
-    changes to packages (upgrades and downgrades), including numpy which cannot
-    but upgraded until Fedor gives the green light to do so.
-    """
-    heightmap = NumPyArrayToRaster(heightmap, x_cell_size=1, y_cell_size=1)
-    heightmap = heightmap.tostring()
-    # the "True" value in below's if statement should be "start"
-    if True:
-        api_endpoint = ("https://engine.tygron.com/api/session/event/"
-                        "editorgeotiff/add/?")
-    else:
-        api_endpoint = ("https://engine.tygron.com/api/session/event/"
-                        "editorgeotiff/set_geotiff/?")
-    tiff_id = turn
-    tiff_base64 = base64.b64encode(heightmap).decode()
-    uploader = "r.j.denhaan@utwente.nl"
-    r = requests.post(url=api_endpoint+api_key, json=[tiff_id, tiff_base64,
-                                                      uploader])
-    print(r.text)
-    try:
-        heightmap_id = r.json()
-    except ValueError:
-        print("no content")
-    # the "True" value in below's if statement should be "start"
-    if True:
-        api_endpoint = ("https://engine.tygron.com/api/session/event/"
-                        "editormap/set_height_geotiff/?")
-        r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])
-        print(r)
-        return
-    else:
-        return heightmap_id
-
-
-"""
-def add_building(api_key, hexagon_id, hexagon_shape,
-                 api_endpoint=("https://engine.tygron.com/api/session/event/"
-                               "EditorBuildingEventType/"
-                               "ADD_BUILDING_COLLECTION/?")):
-    r = requests.post(url=api_endpoint+api_key, json=[hexagon_id,
-                                                      hexagon_shape])
-    print(r, r.text)
-    return r
-"""
-
-
 def hex_to_terrain(api_key, hexagons):
-    # landuse range between 0 and 9, with a subdivision for 0:
-    # 0: built environment
-    # 1: agriculture; production meadow/crop field
-    # 2: natural grassland
-    # 3: reed; 'ruigte'
-    # 4: shrubs; hard-/softwood
-    # 5: forest; hard-/softwood
-    # 6: mixtype class; mix between grass/reed/shrubs/forest
-    # 7: water body; sidechannel (connected to main channel) or lake
-    # 8: main channel; river bed with longitudinal training dams
-    # 9: main channel; river bed with groynes
-    # 10: dike
+    """
+    Function that sets the terrain of the hexagons in tygron.
+    
+    landuse range between 0 and 9, with a subdivision for 0:
+    0: built environment
+    1: agriculture; production meadow/crop field
+    2: natural grassland
+    3: reed; 'ruigte'
+    4: shrubs; hard-/softwood
+    5: forest; hard-/softwood
+    6: mixtype class; mix between grass/reed/shrubs/forest
+    7: water body; sidechannel (connected to main channel) or lake
+    8: main channel; river bed with longitudinal training dams
+    9: main channel; river bed with groynes
+    10: dike
+    """
     for feature in hexagons.features:
         if not feature.properties["landuse_changed"]:
             continue
@@ -389,6 +331,8 @@ def hex_to_terrain(api_key, hexagons):
             continue
         if feature.properties["landuse"] == 0:
             # built environment / farm / factory
+            # this value should be changed to something that fits better, or a
+            # new function based on this type.
             new_type = 936  # veehouderij
             """
             rand = random.randint(1, 3)
@@ -456,6 +400,7 @@ def hex_to_terrain(api_key, hexagons):
             new_type = 0
         elif feature.properties["landuse"] == 10:
             # dike
+            # this value should be changed to something that fits better.
             new_type = 730
         set_function(api_key, feature.properties["tygron_id"], new_type)
     return

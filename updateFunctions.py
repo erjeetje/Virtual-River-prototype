@@ -14,14 +14,12 @@ def compare_hex(token, hexagons_old, hexagons_new):
     compares the current state of each location to the previous state, should
     handle:
         - isolate changed hexagons
-        - if hexagons_old >= 2 && hexagons_new < 2 --> update hexagon to water
-        - if hexagons_old < 2 && hexagons_new >= 2 --> update hexagon to land
-        - if hexagons_old.properties["landuse"] ||
-          hexagons_new.properties["landuse"] --> update hexagon land use type
-          (including Tygron functionID)
-        - grid interpolation --> only update grid points with indices to the
-          changed hexagons?
-        - initiate cost module to calculate the costs of all changes
+        - sets z_changed to True for hexagons that changed in elevation
+        - sets landuse_changed to True for hexagons that changed in land use
+        - sets both these properties to False if there is no change
+       
+    This function should also track what actually changed in order to initiate
+    the cost module correctly.
     """
     z_changed = []
     becomes_water = []
@@ -53,17 +51,6 @@ def compare_hex(token, hexagons_old, hexagons_new):
             landuse_changed.append(feature)
         else:
             feature.properties["landuse_changed"] = False
-    """
-    if becomes_water:
-        waterbodies = geojson.FeatureCollection(becomes_water)
-        tygron.set_terrain_type(token, waterbodies, terrain_type="water")
-    if becomes_land:
-        landbodies = geojson.FeatureCollection(becomes_land)
-        tygron.set_terrain_type(token, landbodies, terrain_type="land")
-    """
-    #z_changed = geojson.FeatureCollection(z_changed)
-    #landuse_changed = geojson.FeatureCollection(landuse_changed)
-    print("cells compared")
     return hexagons_new, dike_moved
 
 
