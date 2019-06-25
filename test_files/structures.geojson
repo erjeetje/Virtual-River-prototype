@@ -1,0 +1,1385 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -375.9937236071319,
+            44.999999999999915
+          ],
+          [
+            -350.0129614935986,
+            29.999999999999822
+          ],
+          [
+            -324.03219938006526,
+            14.99999999999973
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD00",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -350.0129614935986,
+            60.0
+          ],
+          [
+            -350.0129614935986,
+            37.499999999999865
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne00",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -375.99372360713204,
+            -15.000000000000085
+          ],
+          [
+            -350.0129614935987,
+            -30.000000000000178
+          ],
+          [
+            -324.0321993800654,
+            -45.00000000000027
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD01",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -350.0129614935987,
+            -60.000000000000355
+          ],
+          [
+            -350.0129614935987,
+            -37.50000000000022
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne01",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -326.0066867961505,
+            15.000000000000048
+          ],
+          [
+            -300.0259246826172,
+            -4.488004714539707e-14
+          ],
+          [
+            -274.04516256908386,
+            15.000000000000048
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD02",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -300.0259246826172,
+            30.00000000000013
+          ],
+          [
+            -300.0259246826172,
+            7.499999999999999
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne02",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -326.0066867961505,
+            -44.99999999999991
+          ],
+          [
+            -300.0259246826172,
+            -60.0
+          ],
+          [
+            -274.04516256908386,
+            -44.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD03",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -300.0259246826172,
+            -90.00000000000017
+          ],
+          [
+            -300.0259246826172,
+            -67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne03",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -276.0196533760116,
+            14.99999999999973
+          ],
+          [
+            -250.0388912624783,
+            29.999999999999822
+          ],
+          [
+            -224.058129148945,
+            44.999999999999915
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD04",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -250.0388912624783,
+            60.0
+          ],
+          [
+            -250.0388912624783,
+            37.499999999999865
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne04",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -276.0196533760116,
+            -45.00000000000027
+          ],
+          [
+            -250.0388912624783,
+            -30.000000000000178
+          ],
+          [
+            -224.058129148945,
+            -15.000000000000085
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD05",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -250.0388912624783,
+            -60.000000000000355
+          ],
+          [
+            -250.0388912624783,
+            -37.50000000000022
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne05",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -226.0326148696097,
+            44.99999999999991
+          ],
+          [
+            -200.05185275607639,
+            60.0
+          ],
+          [
+            -174.07109064254308,
+            75.00000000000009
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD06",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -200.05185275607639,
+            90.00000000000017
+          ],
+          [
+            -200.05185275607639,
+            67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne06",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -226.0326148696097,
+            -15.000000000000133
+          ],
+          [
+            -200.05185275607639,
+            -4.164544279669695e-14
+          ],
+          [
+            -174.07109064254308,
+            15.000000000000052
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD07",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -200.05185275607639,
+            -30.00000000000022
+          ],
+          [
+            -200.05185275607639,
+            -7.500000000000086
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne07",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -176.04557593935255,
+            74.99999999999991
+          ],
+          [
+            -150.06481382581924,
+            90.0
+          ],
+          [
+            -124.08405171228593,
+            105.00000000000009
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD08",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -150.06481382581924,
+            120.00000000000017
+          ],
+          [
+            -150.06481382581924,
+            97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne08",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -176.04557593935257,
+            14.999999999999755
+          ],
+          [
+            -150.06481382581927,
+            29.999999999999847
+          ],
+          [
+            -124.08405171228596,
+            44.99999999999994
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD09",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -150.06481382581927,
+            -3.304023721284466e-13
+          ],
+          [
+            -150.06481382581927,
+            22.4999999999998
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne09",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -126.05854124764734,
+            104.99999999999991
+          ],
+          [
+            -100.07777913411402,
+            120.0
+          ],
+          [
+            -74.09701702058071,
+            104.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD10",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -100.07777913411402,
+            150.00000000000017
+          ],
+          [
+            -100.07777913411402,
+            127.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne10",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -126.05854124764734,
+            44.99999999999991
+          ],
+          [
+            -100.07777913411402,
+            60.0
+          ],
+          [
+            -74.09701702058071,
+            44.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD11",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -100.07777913411402,
+            29.999999999999822
+          ],
+          [
+            -100.07777913411402,
+            52.49999999999996
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne11",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -76.0715118541339,
+            105.00000000000009
+          ],
+          [
+            -50.090749740600586,
+            90.0
+          ],
+          [
+            -24.109987627067273,
+            74.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD12",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -50.090749740600586,
+            120.00000000000017
+          ],
+          [
+            -50.090749740600586,
+            97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne12",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -76.0715118541339,
+            44.99999999999994
+          ],
+          [
+            -50.090749740600586,
+            29.999999999999847
+          ],
+          [
+            -24.109987627067273,
+            14.999999999999755
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD13",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -50.090749740600586,
+            -3.304023721284466e-13
+          ],
+          [
+            -50.090749740600586,
+            22.4999999999998
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne13",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -26.084469956889976,
+            75.00000000000009
+          ],
+          [
+            -0.10370784335666233,
+            60.0
+          ],
+          [
+            25.87705427017665,
+            44.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD14",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -0.10370784335666233,
+            90.00000000000017
+          ],
+          [
+            -0.10370784335666233,
+            67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne14",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -26.084469956889976,
+            15.000000000000053
+          ],
+          [
+            -0.10370784335666233,
+            -3.8410834305646813e-14
+          ],
+          [
+            25.87705427017665,
+            -15.000000000000131
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD15",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -0.10370784335666233,
+            -30.000000000000217
+          ],
+          [
+            -0.10370784335666233,
+            -7.500000000000083
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne15",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            23.902574589449177,
+            44.99999999999994
+          ],
+          [
+            49.88333670298249,
+            29.999999999999847
+          ],
+          [
+            75.8640988165158,
+            14.999999999999755
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD16",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            49.88333670298249,
+            60.00000000000003
+          ],
+          [
+            49.88333670298249,
+            37.49999999999989
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne16",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            23.90257458944919,
+            -15.00000000000006
+          ],
+          [
+            49.883336702982504,
+            -30.000000000000153
+          ],
+          [
+            75.86409881651582,
+            -45.00000000000024
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD17",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            49.883336702982504,
+            -60.00000000000033
+          ],
+          [
+            49.883336702982504,
+            -37.5000000000002
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne17",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            73.88960853940735,
+            15.000000000000053
+          ],
+          [
+            99.87037065294066,
+            -3.841084822919945e-14
+          ],
+          [
+            125.85113276647398,
+            -15.000000000000131
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD18",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            99.87037065294066,
+            30.00000000000014
+          ],
+          [
+            99.87037065294066,
+            7.500000000000006
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne18",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            73.88960853940733,
+            -44.99999999999991
+          ],
+          [
+            99.87037065294065,
+            -60.0
+          ],
+          [
+            125.85113276647397,
+            -75.00000000000009
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD19",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            99.87037065294065,
+            -90.00000000000017
+          ],
+          [
+            99.87037065294065,
+            -67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne19",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            123.8766466219537,
+            -15.00000000000006
+          ],
+          [
+            149.857408735487,
+            -30.000000000000153
+          ],
+          [
+            175.83817084902032,
+            -45.00000000000024
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD20",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            149.857408735487,
+            2.4868995751603507e-14
+          ],
+          [
+            149.857408735487,
+            -22.500000000000107
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne20",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            123.87664662195373,
+            -74.99999999999991
+          ],
+          [
+            149.85740873548704,
+            -90.0
+          ],
+          [
+            175.83817084902034,
+            -105.00000000000009
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD21",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            149.85740873548704,
+            -120.00000000000017
+          ],
+          [
+            149.85740873548704,
+            -97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne21",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            173.8636736842648,
+            -44.99999999999991
+          ],
+          [
+            199.8444357977981,
+            -60.0
+          ],
+          [
+            225.8251979113314,
+            -44.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD22",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            199.8444357977981,
+            -29.999999999999822
+          ],
+          [
+            199.8444357977981,
+            -52.49999999999996
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne22",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            173.8636736842648,
+            -104.99999999999991
+          ],
+          [
+            199.8444357977981,
+            -120.0
+          ],
+          [
+            225.8251979113314,
+            -104.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD23",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            199.8444357977981,
+            -150.00000000000017
+          ],
+          [
+            199.8444357977981,
+            -127.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne23",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            223.85070032272,
+            -45.00000000000021
+          ],
+          [
+            249.8314624362533,
+            -30.00000000000012
+          ],
+          [
+            275.8122245497866,
+            -15.000000000000028
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD24",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            249.8314624362533,
+            5.684341886080802e-14
+          ],
+          [
+            249.8314624362533,
+            -22.500000000000078
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne24",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            223.85070032272003,
+            -105.00000000000009
+          ],
+          [
+            249.83146243625333,
+            -90.0
+          ],
+          [
+            275.81222454978666,
+            -74.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD25",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            249.83146243625333,
+            -120.00000000000017
+          ],
+          [
+            249.83146243625333,
+            -97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne25",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            273.8377345905682,
+            -15.000000000000124
+          ],
+          [
+            299.8184967041015,
+            -3.234597992461051e-14
+          ],
+          [
+            325.79925881763484,
+            15.00000000000006
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD26",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            299.8184967041015,
+            30.000000000000146
+          ],
+          [
+            299.8184967041015,
+            7.500000000000012
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne26",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            273.83773459056823,
+            -75.00000000000009
+          ],
+          [
+            299.81849670410156,
+            -60.0
+          ],
+          [
+            325.7992588176349,
+            -44.99999999999991
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD27",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            299.81849670410156,
+            -90.00000000000017
+          ],
+          [
+            299.81849670410156,
+            -67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne27",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            323.8247900511771,
+            14.99999999999978
+          ],
+          [
+            349.80555216471043,
+            29.999999999999872
+          ],
+          [
+            375.78631427824376,
+            44.999999999999964
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD28",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            349.80555216471043,
+            60.00000000000005
+          ],
+          [
+            349.80555216471043,
+            37.499999999999915
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne28",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            323.8247900511771,
+            -45.00000000000021
+          ],
+          [
+            349.80555216471043,
+            -30.00000000000012
+          ],
+          [
+            375.78631427824376,
+            -15.000000000000028
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "LTD29",
+      "properties": {
+        "active": false,
+        "crest_level": 0.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            349.80555216471043,
+            -60.0000000000003
+          ],
+          [
+            349.80555216471043,
+            -37.50000000000016
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne29",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

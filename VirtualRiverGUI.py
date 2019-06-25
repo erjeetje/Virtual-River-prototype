@@ -260,11 +260,12 @@ class runScript():
                       'w') as f:
                 geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                              indent=2)
-            with open(os.path.join(self.store_path,
-                                   'hexagons_tygron_initialization%d.geojson'
-                                   % self.turn), 'w') as f:
-                geojson.dump(hexagons_tygron_int, f, sort_keys=True,
-                             indent=2)
+            if self.tygron:
+                with open(os.path.join(
+                        self.store_path,
+                        'hexagons_tygron_initialization.geojson'), 'w') as f:
+                    geojson.dump(hexagons_tygron_int, f, sort_keys=True,
+                                 indent=2)
             print("saved hexagon files (conditional)")
             with open(os.path.join(self.store_path,
                                    'node_grid%d.geojson' % self.turn),
@@ -320,7 +321,7 @@ class runScript():
         # either or both of the dike locations changed.
         self.hexagons, dike_moved = compare.compare_hex(
                 self.token, hexagons_old, self.hexagons)
-        if dike_moved:
+        if False:
             # in case any of the dike locations changed, update the locations
             # of the dikes.
             self.hexagons = structures.determine_dikes(self.hexagons)
@@ -332,8 +333,7 @@ class runScript():
         # update the Chezy coefficients of all hexagons.
         self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.face_grid)
-        
-        print("saved hexagon file for turn " + str(self.turn) + " (conditional)")
+
         if self.tygron:
             # transform the hexagons to the sandbox coordinates --> check if this
             # is necessary, as the main hexagons are already updated, they should
@@ -365,14 +365,16 @@ class runScript():
         if dike_moved:
             # if the dike locations changed, the filled node grid needs to be
             # rebuild as the filled hexagon locations are changed as well.
+            self.hexagons_sandbox = structures.determine_dikes(
+                self.hexagons_sandbox)
             filled_hexagons = deepcopy(self.hexagons_sandbox)
             self.filled_node_grid = deepcopy(self.node_grid)
             filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
             self.filled_node_grid = gridmap.update_node_grid(
                     filled_hexagons, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
-                    filled_hexagons, self.filled_node_grid, turn=self.turn, save=False,
-                    path=self.dir_path)
+                    filled_hexagons, self.filled_node_grid, turn=self.turn,
+                    save=False, path=self.dir_path)
             print("updated complete grid, dike relocation detected")
         else:
             # if the dike locations did not change, a simple update suffices.
@@ -408,6 +410,8 @@ class runScript():
                       'w') as f:
                 geojson.dump(
                         self.hexagons_sandbox, f, sort_keys=True, indent=2)
+            print("saved hexagon file for turn " + str(self.turn) +
+                  " (conditional)")
             with open(os.path.join(self.store_path,
                                    'node_grid%d.geojson' % self.turn),
                       'w') as f:
