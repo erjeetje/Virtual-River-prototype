@@ -98,7 +98,7 @@ class runScript():
         # update in the initialization depending on whether or not a camera
         # is detected and a tygron session is found.
         self.initialized = False
-        self.save = True
+        self.save = False
         self.test = False
         self.tygron = True
         # Virtual River variables
@@ -217,7 +217,7 @@ class runScript():
                         self.hexagons, self.transforms, export="tygron")
             else:
                 self.hexagons_tygron = detect.transform(
-                        self.hexagons, self.transforms,
+                        self.hexagons_sandbox, self.transforms,
                         export="sandbox2tygron")
         print("prepared geojson files")
         # initialize Delft3D-FM model
@@ -261,7 +261,7 @@ class runScript():
             print("created geotiff")
             self.hexagons_tygron = tygron.set_terrain_type(
                     self.token, self.hexagons_tygron)
-            tygron.hex_to_terrain(self.token, self.hexagons)
+            tygron.hex_to_terrain(self.token, self.hexagons_tygron)
             file_location = (self.store_path + "\\grid_height_map" +
                              str(self.turn) + ".tif")
             heightmap_id = tygron.set_elevation(
@@ -389,9 +389,11 @@ class runScript():
                     self.hexagons_tygron)
             # update tygron terrain
             tygron.set_terrain_type(
-                    self.token, hexagons_to_water, terrain_type="water")
-            tygron.set_terrain_type(
-                    self.token, hexagons_to_land, terrain_type="land")
+                    self.token, self.hexagons_tygron)
+            #tygron.set_terrain_type(
+            #        self.token, hexagons_to_water)
+            #tygron.set_terrain_type(
+            #        self.token, hexagons_to_land)
             tygron.hex_to_terrain(self.token, self.hexagons_tygron)
 
         tac = time.time()

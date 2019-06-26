@@ -9,7 +9,7 @@ import requests
 import base64
 import json
 from shapely import geometry
-from geojson import load
+from geojson import load, FeatureCollection
 import gridMapping as gridmap
 
 
@@ -36,15 +36,15 @@ def join_session(username, password, application_type="EDITOR",
                           "Virtual River application script"],
                           auth=(username, password))
     else:
-        print("no session to join")
+        print("Did not find a Tygron session to join.")
     try:
         pastebin_url = r.json()
         return pastebin_url["apiToken"]
     except UnboundLocalError:
-        print("no content")
+        print("LOGIN FAILED: Received no content from Tygron.")
         return None
     except json.decoder.JSONDecodeError:
-        print("JSON decode error")
+        print("LOGIN FAILED: Received faulty response from Tygron.")
         return None
 
 
@@ -78,8 +78,9 @@ def update_hexagons_tygron_id(api_key, hexagons):
         try:
             building_indices.update({int(name): tygron_id})
         except ValueError:
-            print("faulty building name for building with ID " +
-                  str(building["id"]))
+            print("ERROR: Faulty hexagon name for hexagon with ID " +
+                  str(building["id"]) + ". Unable to match hexagon to Tygron" +
+                  " id.")
             continue
     for feature in hexagons.features:
         tygron_id = building_indices.get(feature.id, None)
@@ -127,7 +128,7 @@ def set_name(api_key, tygron_id, hex_id,
     return
 
 
-def set_terrain_type(api_key, hexagons, terrain_type="land"):
+def set_terrain_type(api_key, hexagons):
     """
     Function that updates terrain in Tygron. Mainly, it updates terrain from
     land to water and visa versa. In case of water to land, first changes the
@@ -136,18 +137,20 @@ def set_terrain_type(api_key, hexagons, terrain_type="land"):
     first removes any building (the land use) from the hexagon and then changes
     the terrain to water.
     """
-    print("updating terrain")
+    print("Updating terrain in Tygron")
     water = []
     land = []
+    new_land_hexagons = []
     for feature in hexagons.features:
-        shape = geometry.asShape(feature.geometry)
-        if feature.properties["water"] & feature.properties["z_changed"]:
+        if (feature.properties["water"] and feature.properties["z_changed"]):
             shape = geometry.asShape(feature.geometry)
             water.append(shape)
             if feature.properties["tygron_id"] is not None:
                 remove_polygon(api_key, feature.properties["tygron_id"], shape)
-        elif feature.properties["land"] & feature.properties["z_changed"]:
+        elif (feature.properties["land"] and feature.properties["z_changed"]):
+            shape = geometry.asShape(feature.geometry)
             land.append(shape)
+            new_land_hexagons.append(feature)
         else:
             continue
     water_multipolygon = geometry.MultiPolygon(water)
@@ -159,25 +162,23 @@ def set_terrain_type(api_key, hexagons, terrain_type="land"):
         pastebin_url = r.json()
         print(pastebin_url)
     except ValueError:
-        print("water terrain updated")
+        print("Water terrain updated in Tygron")
     r = update_terrain(api_key, becomes_land, terrain_type="land")
 
-    for feature in hexagons.features:
-        if feature.properties["land"]:
-            if feature.properties["tygron_id"] is None:
-                tygron_id = add_standard(api_key)
-                feature.properties["tygron_id"] = tygron_id
-                set_name(api_key, tygron_id, feature.id)
-            shape = geometry.asShape(feature.geometry)
-            add_polygon(api_key, feature.properties["tygron_id"], shape)
-            set_function(api_key, feature.properties["tygron_id"], 0)
-        else:
-            continue
+    new_land_hexagons = FeatureCollection(new_land_hexagons)
+    for feature in new_land_hexagons.features:
+        if feature.properties["tygron_id"] is None:
+            tygron_id = add_standard(api_key)
+            feature.properties["tygron_id"] = tygron_id
+            set_name(api_key, tygron_id, feature.id)
+        shape = geometry.asShape(feature.geometry)
+        add_polygon(api_key, feature.properties["tygron_id"], shape)
+        set_function(api_key, feature.properties["tygron_id"], 0)
     try:
         pastebin_url = r.json()
         print(pastebin_url)
     except ValueError:
-        print("land terrain updated")
+        print("Land terrain updated in Tygron")
     return hexagons
 
 
