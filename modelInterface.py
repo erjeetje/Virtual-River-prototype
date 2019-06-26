@@ -28,7 +28,7 @@ def initialize_model():
     model_path = os.path.join(dir_path, 'models', 'Waal_schematic', model_name)
     model.initialize(model_path)
     #model.initialize(r'C:\Users\HaanRJ\Documents\GitHub\sandbox-fm\models\sandbox\Waal_schematic\waal_with_side.mdu')
-    print('model initialized')
+    print('Initialized Delft3D FM model.')
     return model
 
 

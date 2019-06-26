@@ -149,8 +149,10 @@ def landuse_to_friction(hexagons, printing=False):
                 for the polygon?
                 """
                 feature.properties["Chezy"] = klopstra(h, vegpar)
-            print("cell: " + str(feature.id) + ". landuse: " + str(feature.properties["landuse"]) + ". h: " + str(h) + ". C: " +
-                  str(feature.properties["Chezy"]))
+            print("Chezy coefficient calculation for cell: " +
+                  str(feature.id) + ". landuse: " +
+                  str(feature.properties["landuse"]) + ". h: " +
+                  str(h) + ". C: " + str(feature.properties["Chezy"]))
             if printing:
                 # the test_list is only added to print the Chezy calculations,
                 # set to False by default.

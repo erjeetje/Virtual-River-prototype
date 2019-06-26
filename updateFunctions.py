@@ -29,7 +29,7 @@ def compare_hex(token, hexagons_old, hexagons_new):
     for feature in hexagons_new.features:
         reference_hex = hexagons_old[feature.id]
         if feature.properties["z"] != reference_hex.properties["z"]:
-            print("hexagon " + str(feature.id) + " z value changed")
+            print("Hexagon " + str(feature.id) + " z value changed")
             feature.properties["z_changed"] = True
             z_changed.append(feature)
             if (feature.properties["z"] < 2 and
@@ -46,7 +46,7 @@ def compare_hex(token, hexagons_old, hexagons_new):
             feature.properties["z_changed"] = False
         if (feature.properties["landuse"] !=
             reference_hex.properties["landuse"]):
-            print("hexagon " + str(feature.id) + " land use value changed")
+            print("Hexagon " + str(feature.id) + " land use value changed")
             feature.properties["landuse_changed"] = True
             landuse_changed.append(feature)
         else:
@@ -55,6 +55,14 @@ def compare_hex(token, hexagons_old, hexagons_new):
 
 
 def terrain_updates(hexagons):
+    """
+    This function previously separated the hexagons into featurecollections
+    of hexagons that should be turned into either water or land in Tygron.
+    The function is no longer called as changes are handled from the feature
+    properties instead.
+    
+    Function may be removed at a later stage.
+    """
     becomes_water = []
     becomes_land = []
     for feature in hexagons.features:

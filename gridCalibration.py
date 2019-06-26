@@ -97,7 +97,7 @@ def detect_corners(img, method='standard', path=""):
     # error types) should be build in in later versions --> this should have
     # the effect that the script either aborts or goes to test mode.
     if circles is None:
-        print('no circles')
+        print('ERROR: No circles were detected in the image')
         return
     # convert the (x, y) coordinates and radius of the circles to integers
     circles = np.round(circles[0, :]).astype("int")

@@ -132,14 +132,15 @@ class runScript():
             password = g.read()
         api_key = tygron.join_session(username, password)
         if api_key is None:
-            print("logging in to Tygron failed, unable to make changes in Tygron")
+            print("logging in to Tygron failed, running Virtual River without "
+                  "Tygron")
             self.tygron = False
         else:
             self.token = "token=" + api_key
             print("logged in to Tygron")
         # get image from camera
         img = webcam.get_image(self.turn, mirror=True)
-        print("retrieved initial board image")
+        print("Retrieved initial board image")
         # calibrate camera
         # try - except TypeError --> if nothing returned by method, then go to
         # test mode.
@@ -148,13 +149,13 @@ class runScript():
                                                  path=self.processing_path)
         except TypeError:
             self.test = True
-            print("no camera detected, entering test mode")
+            print("TEST MODE: No camera detected, entering test mode")
         # adjust image, get the hexagons and store calibration values as global
         # variables.
         if not self.test:
             self.pers, self.img_x, self.img_y, self.origins, self.radius, \
                 cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
-            print("calibrated camera")
+            print("Calibrated camera.")
             # create the calibration file for use by other methods and store it
             # change dir_path to config_path
             self.transforms = cali.create_calibration_file(
@@ -164,7 +165,7 @@ class runScript():
             self.hexagons = detect.detect_markers(
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, method='LAB', path=self.store_path)
-            print("processed initial board state")
+            print("Processed initial board state.")
         else:
             self.transforms = cali.create_calibration_file(
                     path=self.config_path, test = self.test)
@@ -182,20 +183,23 @@ class runScript():
         
             # detect where the main channel and dikes are located and construct
             # both the groynes and longitudinal training dams for the model.
-            self.hexagons_sandbox = structures.determine_dikes(
-                    self.hexagons_sandbox)
-            self.hexagons_sandbox = structures.determine_channel(
-                    self.hexagons_sandbox)
         else:
+            print("TEST MODE: Getting new board state from test folder.")
             self.hexagons_sandbox = gridmap.read_hexagons(
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
             if self.tygron:
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
+            print("Received current board state.")
+        self.hexagons_sandbox = structures.determine_dikes(
+                self.hexagons_sandbox)
+        self.hexagons_sandbox = structures.determine_channel(
+                self.hexagons_sandbox)
         channel = structures.get_channel(self.hexagons_sandbox)
         weirs = structures.create_structures(channel)
         D3D.geojson2pli(weirs)
+        print("Created structure files (groynes and ltds).")
         """
         # doesn't work properly after changing the shapes to linestrings
         # instead of polygons --> to fix
@@ -219,15 +223,16 @@ class runScript():
                 self.hexagons_tygron = detect.transform(
                         self.hexagons_sandbox, self.transforms,
                         export="sandbox2tygron")
-        print("prepared geojson files")
+        print("Prepared and transformed geojson featurecollections.")
         # initialize Delft3D-FM model
+        tac = time.time()
         self.model = D3D.initialize_model()
         # get node grid (cell corner coordinates) and face grid (cell
         # center coordinates)
         self.node_grid = gridmap.read_node_grid(path=self.dir_path)
         self.face_grid = gridmap.read_face_grid(self.model,
                                                 path=self.dir_path)
-        print("loaded grid")
+        print("Loaded grids (cell corners and cell centers).")
         # index both grids to the hexagons.
         self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox,
                                                  self.node_grid)
@@ -241,7 +246,7 @@ class runScript():
         # and trachytopes) 
         self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.face_grid)
-        print("executed grid interpolation")
+        print("Executed grid interpolation.")
         # create a deepcopy of the node grid and fill the grid behind the
         # dikes. The filled node grid is for the hydrodynamic model.
         self.filled_node_grid = deepcopy(self.node_grid)
@@ -252,13 +257,15 @@ class runScript():
         self.filled_node_grid = gridmap.interpolate_node_grid(
                 filled_hexagons, self.filled_node_grid, turn=self.turn,
                 fill=True, path=self.dir_path)
-        print("executed grid fill interpolation")
+        print("Executed grid fill interpolation.")
+        tec = time.time()
         if self.tygron:
             # a geotiff of the node grid is required to set the elevation in
             # tygron.
+            t0 = time.time()
             self.heightmap = gridmap.create_geotiff(
                 self.node_grid, turn=self.turn, path=self.store_path)
-            print("created geotiff")
+            print("Created geotiff elevation map")
             self.hexagons_tygron = tygron.set_terrain_type(
                     self.token, self.hexagons_tygron)
             tygron.hex_to_terrain(self.token, self.hexagons_tygron)
@@ -266,7 +273,8 @@ class runScript():
                              str(self.turn) + ".tif")
             heightmap_id = tygron.set_elevation(
                     file_location, self.token, turn=self.turn)
-            print("updated Tygron")
+            t1 = time.time()
+            print("Updated Tygron world from current board state.")
         """
         # run the model. --> this is currently separate from the initialization
         # as the whole system becomes rather slow. Added a temporary run model
@@ -291,7 +299,7 @@ class runScript():
                         'hexagons_tygron_initialization.geojson'), 'w') as f:
                     geojson.dump(hexagons_tygron_int, f, sort_keys=True,
                                  indent=2)
-            print("saved hexagon files (conditional)")
+            print("Saved hexagon files (conditional).")
             with open(os.path.join(self.store_path,
                                    'node_grid%d.geojson' % self.turn),
                       'w') as f:
@@ -302,17 +310,33 @@ class runScript():
                       'w') as f:
                 geojson.dump(self.filled_node_grid, f, sort_keys=True,
                              indent=2)
-            print("saved interpolation files (conditional)")
+            print("Saved interpolation files (conditional).")
             with open(os.path.join(self.store_path,
                                    'structures.geojson'), 'w') as f:
                 geojson.dump(weirs, f, sort_keys=True,
                              indent=2)
-            print("saved structures file (conditional)")
+            print("Saved structures file (conditional).")
         toc = time.time()
-        print("Start up and calibration time: "+str(toc-tic))
+        try:
+            print("Finished startup and calibration" +
+                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
+                  " seconds. Indexing and interpolation time: " +
+                  str(round(tec-tac, 2)) +
+                  " seconds. Tygron terrain update time: " +
+                  str(round(t1-t0, 2)) +
+                  " seconds. Total initialization time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        except UnboundLocalError:
+            print("Finished startup and calibration" +
+                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
+                  " seconds. Indexing and interpolation time: " +
+                  str(round(tec-tac, 2)) +
+                  " seconds. Total initialization time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
         # system is now initialized
         self.initialized = True
         return
+
 
     def update(self):
         """
@@ -320,7 +344,7 @@ class runScript():
         variables
         """
         if not self.initialized:
-            print("Virtual River is not yet calibrated, "
+            print("ERROR: Virtual River is not yet calibrated, "
                   "please first run initialize")
             return
         tic = time.time()
@@ -329,7 +353,7 @@ class runScript():
         # get new image of board state from camera.
         if not self.test:
             img = webcam.get_image(self.turn, mirror=True)
-            print("retrieved board image after turn " + str(self.turn))
+            print("Retrieved board image after turn " + str(self.turn) + ".")
             # create a deepcopy of the previous board state to compare with the new
             # board state.
             hexagons_old = deepcopy(self.hexagons)
@@ -337,7 +361,7 @@ class runScript():
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, turn=self.turn, method='LAB',
                     path=self.store_path)
-            print("processed current board state")
+            print("Processed current board state.")
             if self.tygron:
                 # update hexagon ids to matching ids in tygron.
                 self.hexagons = tygron.update_hexagons_tygron_id(
@@ -355,12 +379,14 @@ class runScript():
         else:
             hexagons_sandbox_old = deepcopy(self.hexagons_sandbox)
             try:
+                print("TEST MODE: Getting new board state from test folder.")
                 self.hexagons_sandbox = gridmap.read_hexagons(
                         filename='hexagons%d.geojson' % self.turn,
                         path=self.test_path)
+                print("Received current board state.")
             except FileNotFoundError:
-                print("ran out of test files, aborting update function. "
-                      "Please restart the application to continue testing.")
+                print("ERROR: Ran out of test files, aborting update function."
+                      " Please restart the application to continue testing.")
                 return
             if self.tygron:
                 # update hexagon ids to matching ids in tygron.
@@ -372,10 +398,12 @@ class runScript():
         self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.face_grid)
 
+        tac = time.time()
         if self.tygron:
             # transform the hexagons to the sandbox coordinates --> check if this
             # is necessary, as the main hexagons are already updated, they should
             # be linked in memory to the sandbox hexagons.
+            t0 = time.time()
             if not self.test:
                 self.hexagons_tygron = detect.transform(
                         self.hexagons, self.transforms, export="tygron")
@@ -391,13 +419,15 @@ class runScript():
             tygron.set_terrain_type(
                     self.token, self.hexagons_tygron)
             tygron.hex_to_terrain(self.token, self.hexagons_tygron)
+            t1 = time.time()
 
-        tac = time.time()
+        tec = time.time()
         # set the 'changed' property of each node grid point to True or False
         # based on the comparison with the previous turn (only update what
         # needs to be updated).
         self.node_grid = gridmap.update_node_grid(
-                self.hexagons_sandbox, self.node_grid, turn=self.turn)
+                self.hexagons_sandbox, self.node_grid, turn=self.turn,
+                printing=True)
         # update the elevation model by only performing interpolation for the
         # points that have changed.
         self.node_grid = gridmap.interpolate_node_grid(
@@ -425,16 +455,18 @@ class runScript():
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
                     turn=self.turn, fill=True, save=False, path=self.dir_path)
-            
+        toc = time.time()
         if self.tygron:
             # create a new geotiff and set the new elevation in tygron.
+            t2 = time.time()
             self.heightmap = gridmap.create_geotiff(
                     self.node_grid, turn=self.turn, path=self.store_path)
             file_location = (self.store_path + "\\grid_height_map" +
                              str(self.turn) + ".tif")
             heightmap_id = tygron.set_elevation(
                     file_location, self.token, turn=0)
-            print("updated Tygron heightmap")
+            print("Updated Tygron heightmap.")
+            t3 = time.time()
         """
         # run the model. --> this is currently separate from the initialization
         # as the whole system becomes rather slow. Added a temporary run model
@@ -463,11 +495,21 @@ class runScript():
                         self.filled_node_grid, f, sort_keys=True, indent=2)
             print("saved grid files for turn " + str(self.turn) +
                   " (conditional)")
-        toc = time.time()
-        print("Updated to turn " + str(self.turn) +
-              ". Comparison update time: " + str(tac-tic) +
-              ". Interpolation update time: " + str(toc-tac) +
-              ". Total update time: " + str(toc-tic))
+
+        try:
+            print("Updated to turn " + str(self.turn) +
+              ". Comparison update time: " + str(round(tac-tic, 2)) +
+              " seconds. Interpolation update time: " +
+              str(round(toc-tec, 2)) + " seconds. Tygron update time: " +
+              str(round((t1-t0)+(t3-t2), 2)) +
+              " seconds. Total update time: " + str(round(t3-tic, 2)) +
+              " seconds.")
+        except UnboundLocalError:
+            print("Updated to turn " + str(self.turn) +
+              ". Comparison update time: " + str(round(tac-tic, 2)) +
+              " seconds. Interpolation update time: " +
+              str(round(toc-tec, 2)) + " seconds. Total update time: " +
+              str(round(toc-tic, 2)) + " seconds.")
         return
     
     def run_model(self):
@@ -485,7 +527,7 @@ class runScript():
 
 def main():
     app = QApplication(sys.argv)
-    ex = GUI()
+    gui = GUI()
     sys.exit(app.exec_())
 
 

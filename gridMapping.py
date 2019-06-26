@@ -446,7 +446,7 @@ def index_node_grid(hexagons, grid):
     return grid
 
 
-def update_node_grid(hexagons, grid, fill=False, turn=0):
+def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False):
     """ 
     Function to update the grid: determine which grid points require updating
     based on which hexagons are changed. This way, only the grid points that
@@ -480,7 +480,7 @@ def update_node_grid(hexagons, grid, fill=False, turn=0):
             counter += 1
         else:
             feature.properties["changed"] = False
-    if not fill:
+    if printing:
         print("Hexagons updated are: "+str(indices_updated))
         print("Number of gridpoints inside the board to update: "+str(counter))
     return grid

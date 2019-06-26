@@ -35,8 +35,6 @@ def join_session(username, password, application_type="EDITOR",
         r = requests.post(url=join_url, json=[session_id, application_type,
                           "Virtual River application script"],
                           auth=(username, password))
-    else:
-        print("Did not find a Tygron session to join.")
     try:
         pastebin_url = r.json()
         return pastebin_url["apiToken"]
@@ -215,7 +213,7 @@ def add_standard(api_key,
     Obsolete function, may be removed when we are sure it will not be used.
     """
     r = requests.post(url=api_endpoint+api_key, json=[0])
-    print("added standard " + str(r))
+    print("Added standard " + str(r) + " in Tygron.")
     return r.text
 
 
@@ -266,7 +264,7 @@ def set_elevation(tiff_file, api_key, turn=0,
     try:
         heightmap_id = r.json()
     except ValueError:
-        print("no heightmap id found")
+        print("UPLOAD FAILED: Received no heightmap id from Tygron.")
     api_endpoint = ("https://engine.tygron.com/api/session/event/"
                     "editormap/set_height_geotiff/?")
     r = requests.post(url=api_endpoint+api_key, json=[heightmap_id])
@@ -290,7 +288,7 @@ def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
         heightmap_id = r.json()
         print(heightmap_id)
     except ValueError:
-        print("no content")
+        print("UPLOAD FAILED: Received no heightmap id from Tygron.")
     return
 
 
@@ -401,6 +399,7 @@ def hex_to_terrain(api_key, hexagons):
             # this value should be changed to something that fits better.
             new_type = 730
         set_function(api_key, feature.properties["tygron_id"], new_type)
+    print("Updated all land uses in Tygron.")
     return
 
 
