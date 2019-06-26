@@ -137,7 +137,7 @@ def set_terrain_type(api_key, hexagons):
     first removes any building (the land use) from the hexagon and then changes
     the terrain to water.
     """
-    print("Updating terrain in Tygron")
+    print("Updating terrain in Tygron.")
     water = []
     land = []
     new_land_hexagons = []
@@ -162,7 +162,7 @@ def set_terrain_type(api_key, hexagons):
         pastebin_url = r.json()
         print(pastebin_url)
     except ValueError:
-        print("Water terrain updated in Tygron")
+        print("Water terrain updated in Tygron.")
     r = update_terrain(api_key, becomes_land, terrain_type="land")
 
     new_land_hexagons = FeatureCollection(new_land_hexagons)
@@ -178,7 +178,7 @@ def set_terrain_type(api_key, hexagons):
         pastebin_url = r.json()
         print(pastebin_url)
     except ValueError:
-        print("Land terrain updated in Tygron")
+        print("Land terrain updated in Tygron.")
     return hexagons
 
 

@@ -385,15 +385,11 @@ class runScript():
                         export="sandbox2tygron")
             # get the hexagons that should be changed to water or land in
             # tygron.
-            hexagons_to_water, hexagons_to_land = compare.terrain_updates(
-                    self.hexagons_tygron)
+            #hexagons_to_water, hexagons_to_land = compare.terrain_updates(
+            #        self.hexagons_tygron)
             # update tygron terrain
             tygron.set_terrain_type(
                     self.token, self.hexagons_tygron)
-            #tygron.set_terrain_type(
-            #        self.token, hexagons_to_water)
-            #tygron.set_terrain_type(
-            #        self.token, hexagons_to_land)
             tygron.hex_to_terrain(self.token, self.hexagons_tygron)
 
         tac = time.time()
