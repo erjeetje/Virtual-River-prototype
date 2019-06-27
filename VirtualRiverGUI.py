@@ -524,9 +524,20 @@ class runScript():
         if not self.initialized:
             print("Virtual River is not yet calibrated, please first run initialize")
             return
+        if self.turn == 0:
+            print("Running model after initialization, updating the elevation "
+                  "in the model will take some time.")
         self.fig, self.axes = D3D.run_model(
                     self.model, self.filled_node_grid, self.face_grid,
                     self.hexagons_sandbox, turn=self.turn)
+        if self.turn == 0:
+            print("Finished running the model after initialization.")
+            print("NOTE: If you are running tests, make sure to first press "
+                  "'Update'. Otherwise the elevation in the model will be "
+                  "updated again (which is slow).")
+        else:
+            print("Finished running the model after turn " + str(self.turn) +
+                  ".")
         return
 
 def main():
