@@ -210,7 +210,7 @@ def create_structures(hexagons):
         structures.append(groyne)
         
     structures = geojson.FeatureCollection(structures)
-    if True:
+    if False:
         # saving is currently skipped, hence in if False statement.
         with open('structures_test.geojson', 'w') as f:
             geojson.dump(structures, f, sort_keys=True, indent=2)

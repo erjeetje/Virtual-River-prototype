@@ -5,11 +5,13 @@ Created on Fri Mar 29 09:26:52 2019
 @author: HaanRJ
 """
 
+import os
 import geojson
-import tygronInterface as tygron
+import costModule_copy as costs
+import gridMapping as gridmap
 
 
-def compare_hex(token, hexagons_old, hexagons_new):
+def compare_hex(cost, hexagons_old, hexagons_new):
     """
     compares the current state of each location to the previous state, should
     handle:
@@ -25,6 +27,7 @@ def compare_hex(token, hexagons_old, hexagons_new):
     becomes_water = []
     becomes_land = []
     landuse_changed = []
+    costs = 0
     dike_moved = False
     for feature in hexagons_new.features:
         reference_hex = hexagons_old[feature.id]
@@ -51,7 +54,13 @@ def compare_hex(token, hexagons_old, hexagons_new):
             landuse_changed.append(feature)
         else:
             feature.properties["landuse_changed"] = False
-    return hexagons_new, dike_moved
+        if (feature.properties["z_changed"] or feature.properties["landuse"]):
+            z_cost, l_cost = cost.calc_Costs(
+                    feature, reference_hex,
+                    z_changed=feature.properties["z_changed"],
+                    landuse_changed=feature.properties["landuse_changed"])
+            costs = costs + z_cost + l_cost
+    return hexagons_new, costs, dike_moved
 
 
 def terrain_updates(hexagons):
@@ -78,17 +87,15 @@ def terrain_updates(hexagons):
 
 
 if __name__ == '__main__':
-    with open('hexagons_tygron_update_transformed_test2.geojson') as f:
-        hexagons_old = geojson.load(f)
-    with open('hexagons_tygron_update_transformed_test1.geojson') as g:
-        hexagons_new = geojson.load(g)
-    with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
-        username = f.read()
-    with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
-        password = g.read()
-    token = tygron.join_session(username, password)
-    if token is None:
-        print("logging in to Tygron failed, unable to make changes in Tygron")
-    else:
-        token = "token=" + token
-        z = compare_hex(token, hexagons_old, hexagons_new)
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    test_path = os.path.join(dir_path, 'test_files')
+    turn = 0
+    hexagons_old = gridmap.read_hexagons(
+            filename='hexagons%d.geojson' % turn,
+            path=test_path)
+    turn += 1
+    hexagons_new = gridmap.read_hexagons(
+            filename='hexagons%d.geojson' % turn,
+            path=test_path)
+    cost = costs.Costs()
+    hexagons_new, dike_moved = compare_hex(hexagons_old, hexagons_new)

@@ -18,6 +18,7 @@ import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
+import costModule as costs
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -123,6 +124,9 @@ class runScript():
         # temporary variables in relation to colormap plots
         self.fig = None
         self.axes = None
+        # cost module
+        self.cost_module = costs.Costs()
+        self.costs = 0
 
     def initialize(self):
         if self.initialized:
@@ -373,8 +377,9 @@ class runScript():
             # compare the new board state to the old board state. Sets 'z_changed'
             # and 'landuse_changed' to True or False accordingly. Also tracks if
             # either or both of the dike locations changed.
-            self.hexagons, dike_moved = compare.compare_hex(
-                    self.token, hexagons_old, self.hexagons)
+            self.hexagons, turn_costs, dike_moved = compare.compare_hex(
+                    self.cost_module, hexagons_old, self.hexagons)
+            self.costs = self.costs + turn_costs
             # transform the hexagons to the sandbox coordinates --> check if this
             # is necessary, as the main hexagons are already updated, they should
             # be linked in memory to the sandbox hexagons.
@@ -396,8 +401,10 @@ class runScript():
                 # update hexagon ids to matching ids in tygron.
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
-            self.hexagons_sandbox, dike_moved = compare.compare_hex(
-                    self.token, hexagons_sandbox_old, self.hexagons_sandbox)
+            self.hexagons_sandbox, turn_costs, dike_moved = compare.compare_hex(
+                    self.cost_module, hexagons_sandbox_old,
+                    self.hexagons_sandbox)
+            self.costs = self.costs + turn_costs
         # update the Chezy coefficients of all hexagons.
         self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.face_grid)
@@ -500,6 +507,8 @@ class runScript():
             print("saved grid files for turn " + str(self.turn) +
                   " (conditional)")
 
+        print("Turn costs: " + str(turn_costs) + ". Total costs: " +
+              str(self.costs))
         try:
             print("Updated to turn " + str(self.turn) +
               ". Comparison update time: " + str(round(tac-tic, 2)) +

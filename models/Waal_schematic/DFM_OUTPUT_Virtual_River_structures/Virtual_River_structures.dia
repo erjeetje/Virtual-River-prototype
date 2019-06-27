@@ -148,187 +148,96 @@
 ** DEBUG  :           66  2.6706999E-02  ru   (lnkx)
 ** DEBUG  :           66  2.6706999E-02  rich(lnkx)
 ** INFO   : Start initializing external forcings...
-** INFO   : Opened file : LTD00.pli
-** INFO   : Closed file : LTD00.pli
-** INFO   :  LTD00.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne00.pli
 ** INFO   : Closed file : groyne00.pli
 ** INFO   :  groyne00.pli       4 nr of weir cells
-** INFO   : Opened file : LTD01.pli
-** INFO   : Closed file : LTD01.pli
-** INFO   :  LTD01.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne01.pli
 ** INFO   : Closed file : groyne01.pli
 ** INFO   :  groyne01.pli       3 nr of weir cells
-** INFO   : Opened file : LTD02.pli
-** INFO   : Closed file : LTD02.pli
-** INFO   :  LTD02.pli      12 nr of weir cells
 ** INFO   : Opened file : groyne02.pli
 ** INFO   : Closed file : groyne02.pli
 ** INFO   :  groyne02.pli       4 nr of weir cells
-** INFO   : Opened file : LTD03.pli
-** INFO   : Closed file : LTD03.pli
-** INFO   :  LTD03.pli      12 nr of weir cells
 ** INFO   : Opened file : groyne03.pli
 ** INFO   : Closed file : groyne03.pli
 ** INFO   :  groyne03.pli       3 nr of weir cells
-** INFO   : Opened file : LTD04.pli
-** INFO   : Closed file : LTD04.pli
-** INFO   :  LTD04.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne04.pli
 ** INFO   : Closed file : groyne04.pli
 ** INFO   :  groyne04.pli       4 nr of weir cells
-** INFO   : Opened file : LTD05.pli
-** INFO   : Closed file : LTD05.pli
-** INFO   :  LTD05.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne05.pli
 ** INFO   : Closed file : groyne05.pli
 ** INFO   :  groyne05.pli       3 nr of weir cells
-** INFO   : Opened file : LTD06.pli
-** INFO   : Closed file : LTD06.pli
-** INFO   :  LTD06.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne06.pli
 ** INFO   : Closed file : groyne06.pli
 ** INFO   :  groyne06.pli       4 nr of weir cells
-** INFO   : Opened file : LTD07.pli
-** INFO   : Closed file : LTD07.pli
-** INFO   :  LTD07.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne07.pli
 ** INFO   : Closed file : groyne07.pli
 ** INFO   :  groyne07.pli       3 nr of weir cells
-** INFO   : Opened file : LTD08.pli
-** INFO   : Closed file : LTD08.pli
-** INFO   :  LTD08.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne08.pli
 ** INFO   : Closed file : groyne08.pli
 ** INFO   :  groyne08.pli       4 nr of weir cells
-** INFO   : Opened file : LTD09.pli
-** INFO   : Closed file : LTD09.pli
-** INFO   :  LTD09.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne09.pli
 ** INFO   : Closed file : groyne09.pli
 ** INFO   :  groyne09.pli       3 nr of weir cells
-** INFO   : Opened file : LTD10.pli
-** INFO   : Closed file : LTD10.pli
-** INFO   :  LTD10.pli      15 nr of weir cells
 ** INFO   : Opened file : groyne10.pli
 ** INFO   : Closed file : groyne10.pli
 ** INFO   :  groyne10.pli       4 nr of weir cells
-** INFO   : Opened file : LTD11.pli
-** INFO   : Closed file : LTD11.pli
-** INFO   :  LTD11.pli      15 nr of weir cells
 ** INFO   : Opened file : groyne11.pli
 ** INFO   : Closed file : groyne11.pli
 ** INFO   :  groyne11.pli       3 nr of weir cells
-** INFO   : Opened file : LTD12.pli
-** INFO   : Closed file : LTD12.pli
-** INFO   :  LTD12.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne12.pli
 ** INFO   : Closed file : groyne12.pli
 ** INFO   :  groyne12.pli       4 nr of weir cells
-** INFO   : Opened file : LTD13.pli
-** INFO   : Closed file : LTD13.pli
-** INFO   :  LTD13.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne13.pli
 ** INFO   : Closed file : groyne13.pli
 ** INFO   :  groyne13.pli       3 nr of weir cells
-** INFO   : Opened file : LTD14.pli
-** INFO   : Closed file : LTD14.pli
-** INFO   :  LTD14.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne14.pli
 ** INFO   : Closed file : groyne14.pli
 ** INFO   :  groyne14.pli       4 nr of weir cells
-** INFO   : Opened file : LTD15.pli
-** INFO   : Closed file : LTD15.pli
-** INFO   :  LTD15.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne15.pli
 ** INFO   : Closed file : groyne15.pli
 ** INFO   :  groyne15.pli       3 nr of weir cells
-** INFO   : Opened file : LTD16.pli
-** INFO   : Closed file : LTD16.pli
-** INFO   :  LTD16.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne16.pli
 ** INFO   : Closed file : groyne16.pli
 ** INFO   :  groyne16.pli       4 nr of weir cells
-** INFO   : Opened file : LTD17.pli
-** INFO   : Closed file : LTD17.pli
-** INFO   :  LTD17.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne17.pli
 ** INFO   : Closed file : groyne17.pli
 ** INFO   :  groyne17.pli       3 nr of weir cells
-** INFO   : Opened file : LTD18.pli
-** INFO   : Closed file : LTD18.pli
-** INFO   :  LTD18.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne18.pli
 ** INFO   : Closed file : groyne18.pli
 ** INFO   :  groyne18.pli       4 nr of weir cells
-** INFO   : Opened file : LTD19.pli
-** INFO   : Closed file : LTD19.pli
-** INFO   :  LTD19.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne19.pli
 ** INFO   : Closed file : groyne19.pli
 ** INFO   :  groyne19.pli       3 nr of weir cells
-** INFO   : Opened file : LTD20.pli
-** INFO   : Closed file : LTD20.pli
-** INFO   :  LTD20.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne20.pli
 ** INFO   : Closed file : groyne20.pli
 ** INFO   :  groyne20.pli       4 nr of weir cells
-** INFO   : Opened file : LTD21.pli
-** INFO   : Closed file : LTD21.pli
-** INFO   :  LTD21.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne21.pli
 ** INFO   : Closed file : groyne21.pli
 ** INFO   :  groyne21.pli       3 nr of weir cells
-** INFO   : Opened file : LTD22.pli
-** INFO   : Closed file : LTD22.pli
-** INFO   :  LTD22.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne22.pli
 ** INFO   : Closed file : groyne22.pli
 ** INFO   :  groyne22.pli       4 nr of weir cells
-** INFO   : Opened file : LTD23.pli
-** INFO   : Closed file : LTD23.pli
-** INFO   :  LTD23.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne23.pli
 ** INFO   : Closed file : groyne23.pli
 ** INFO   :  groyne23.pli       3 nr of weir cells
-** INFO   : Opened file : LTD24.pli
-** INFO   : Closed file : LTD24.pli
-** INFO   :  LTD24.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne24.pli
 ** INFO   : Closed file : groyne24.pli
 ** INFO   :  groyne24.pli       4 nr of weir cells
-** INFO   : Opened file : LTD25.pli
-** INFO   : Closed file : LTD25.pli
-** INFO   :  LTD25.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne25.pli
 ** INFO   : Closed file : groyne25.pli
 ** INFO   :  groyne25.pli       3 nr of weir cells
-** INFO   : Opened file : LTD26.pli
-** INFO   : Closed file : LTD26.pli
-** INFO   :  LTD26.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne26.pli
 ** INFO   : Closed file : groyne26.pli
 ** INFO   :  groyne26.pli       4 nr of weir cells
-** INFO   : Opened file : LTD27.pli
-** INFO   : Closed file : LTD27.pli
-** INFO   :  LTD27.pli      13 nr of weir cells
 ** INFO   : Opened file : groyne27.pli
 ** INFO   : Closed file : groyne27.pli
 ** INFO   :  groyne27.pli       3 nr of weir cells
-** INFO   : Opened file : LTD28.pli
-** INFO   : Closed file : LTD28.pli
-** INFO   :  LTD28.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne28.pli
 ** INFO   : Closed file : groyne28.pli
 ** INFO   :  groyne28.pli       4 nr of weir cells
-** INFO   : Opened file : LTD29.pli
-** INFO   : Closed file : LTD29.pli
-** INFO   :  LTD29.pli      14 nr of weir cells
 ** INFO   : Opened file : groyne29.pli
 ** INFO   : Closed file : groyne29.pli
 ** INFO   :  groyne29.pli       3 nr of weir cells
-** DEBUG  :           66  4.6170000E-03  zcgen(ncgensg*kx), kcgen(4,ncgen)
 ** INFO   : External Forcing or Initialising 'frictioncoefficient' from file 'frictioncoefficient_Set_value_1.pol'.
 ** DEBUG  :           66  5.2974001E-02  zh(nx)
 ** INFO   : Opened file : frictioncoefficient_Set_value_1.pol
@@ -337,7 +246,7 @@
 ** INFO   : Done initializing external forcings.
 ** DEBUG  :           67  5.2974001E-02  klnup(6,lnx)
 ** DEBUG  :           67  5.2974001E-02  slnup(6,lnx)
-** DEBUG  :           68  2.6706999E-02  ij(nodtot)
+** DEBUG  :           67  2.6706999E-02  ij(nodtot)
 ** DEBUG  :           68  2.6706999E-02  nodbr2(nodtot)
 ** DEBUG  :           68  2.6706999E-02  nbrstk(nodtot)
 ** DEBUG  :           68  2.6706999E-02  nodstk(nodtot)
@@ -349,16 +258,16 @@
 ** DEBUG  :           70  2.6706999E-02  jagauss(nodtot)
 ** DEBUG  :           72  0.1061290      ccr(0:ijstck)
 ** DEBUG  :           73  0.1061290      bbl(0:ijstck)
-** DEBUG  :           74  5.3413998E-02  bbr(nodtot), ddr(nodtot)
+** DEBUG  :           73  5.3413998E-02  bbr(nodtot), ddr(nodtot)
 ** DEBUG  :           75  0.1335350      d0(nodtot), zkr(nodtot),pk(0:nodtot), apk(nodtot), rk(nodtot)
 ** INFO   : nogauss , nocg :          13420         13287
 ** DEBUG  :           80  0.7297890      iao(nn+1)
 ** DEBUG  :           83  0.3046050      ao(na)
 ** DEBUG  :           89  0.7972200      wk(nwk)
-** INFO   : Modelinit finished   at: 10:28:29, 27-06-2019
+** INFO   : Modelinit finished   at: 18:03:27, 27-06-2019
 ** INFO   : ** Model initialization was successful **
 ** INFO   : * Active Model definition:
-# Generated on 10:28:29, 27-06-2019
+# Generated on 18:03:27, 27-06-2019
 # Deltares, D-Flow FM Version 1.2.38.63172M, Feb 14 2019, 18:49:17
 # Source:https://svn.oss.deltares.nl/repos/delft3d/trunk/
 

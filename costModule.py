@@ -6,47 +6,256 @@ Created on Wed Jun 26 14:20:02 2019
 """
 
 
+import os
+import gridMapping as gridmap
+import updateFunctions_copy as update
+from numpy import sqrt
 
-class costModule():
+class Costs():  
     def __init__(self):
-        super(costModule, self).__init__()
-        acqi_m2 = {
+        super(Costs, self).__init__()
+        self.acqi_m2 = None
+        self.acqi_type = None
+        self.demo_type = None
+        self.floodplain_lowering_m2 = None
+        self.sidechannel_m3 = None
+        self.minor_embankment_m3 = None
+        self.roughness_smooth_m3 = None
+        self.structures_m = None
+        self.total_costs = None
+        self.hexagon_height = None
+        self.hexagon_area = None
+        self.set_variables()
+
+    def set_variables(self):
+        self.acqi_m2 = {
                 "agriculture": 6.7,
                 "nature": 1.2,
                 "water": 0.8,
                 "build_envi": 190
                 }
-        acqi_type = {
+        self.acqi_type = {
                 "house": 500000,
                 "farm": 900000,
                 "business": 1400000
                 }
-        demo_type = {
+        self.demo_type = {
                 "house": 20000,
                 "farm": 40000,
                 "business": 120000
                 }
-        floodplain_lowering_m2 = {
+        self.floodplain_lowering_m3 = {
                 "storage": 7.2,
                 "polluted": 10.2,
                 "local_use": 3.1
                 }
-        sidechannel_m2 = {
+        self.sidechannel_m3 = {
                 "storage": 8.1,
                 "polluted": 10.2,
                 "local_use": 3.1
                 }
-        minor_embankment_m2 = {
+        self.minor_embankment_m3 = {
                 "storage": 6.9,
                 "polluted": 10.2,
                 "local_use": 3.1
                 }
-        roughness_smooth_m2 = {
+        self.roughness_smooth_m2 = {
                 "grass": 0.054,
                 "herbaceous": 0.081,
                 "forest": 0.133
                 }
-        structures_m = {
+        self.structures_m = {
                 "lower": 650,
                 "ltd": 1900
                 }
+        self.total_costs = 0
+        self.hexagon_height = 250
+        a = (2 / sqrt(3)) * (self.hexagon_height / 2)
+        self.hexagon_area = ((3 * sqrt(3)) / 2) * (a * a)
+        return  
+
+    def calc_Costs(self, hexagon_new, hexagon_old, z_changed=False,
+                   landuse_changed=False):
+        z_cost = 0
+        l_cost = 0
+        if z_changed:
+            if hexagon_old.properties["z"] >= 5:
+                if hexagon_new.properties["z"] >= 4:
+                    z_type = "lowered reinforced dike [NEEDS costs calculation]"
+                    # dike lowering (for whatever reason)
+                else:
+                    z_type = "removed reinforced dike [NEEDS costs calculation]"
+                    # dike relocation of reinforced dike
+            elif hexagon_new.properties["z"] >= 5:
+                if hexagon_old.properties["z"] >= 4:
+                    z_type = "reinforced existing dike [NEEDS costs calculation]"
+                else:
+                    z_type = "reinforced new dike [NEEDS costs calculation]"
+            elif hexagon_old.properties["z"] >= 4:
+                z_type = "removed standard dike [NEEDS costs calculation]"
+            elif hexagon_new.properties["z"] >= 4:
+                z_type = "constructed standard dike [NEEDS costs calculation]"
+            elif hexagon_old.properties["z"] >= 3:
+                if hexagon_new.properties["z"] == 2:
+                    z_type = "lowered floodplain"
+                    z_cost = ((self.hexagon_area *
+                               (hexagon_old.properties["z"] -
+                                hexagon_new.properties["z"]))
+                              * self.floodplain_lowering_m3["storage"])
+                else:
+                    z_type = "constructed sidechannel"
+                    z_cost = ((self.hexagon_area *
+                               (hexagon_old.properties["z"] -
+                                hexagon_new.properties["z"]))
+                              * self.sidechannel_m3["storage"])
+            elif hexagon_new.properties["z"] >= 3:
+                if hexagon_old.properties["z"] == 2:
+                    z_type = "raised floodplain"
+                    z_cost = ((self.hexagon_area *
+                               (hexagon_old.properties["z"] -
+                                hexagon_new.properties["z"]))
+                              * self.floodplain_lowering_m3["storage"])
+                else:
+                    z_type = "filled up sidechannel (for whatever reason)"
+                    z_cost = ((self.hexagon_area *
+                               (hexagon_old.properties["z"] -
+                                hexagon_new.properties["z"]))
+                              * self.sidechannel_m3["storage"])
+            elif hexagon_old.properties["z"] >= 2:
+                z_type = "constructed sidechannel"
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
+                                                  hexagon_new.properties["z"]))
+                          * self.sidechannel_m3["storage"])
+            elif hexagon_new.properties["z"] >= 2:
+                z_type = "filled up sidechannel (for whatever reason)"
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
+                                                  hexagon_new.properties["z"]))
+                          * self.sidechannel_m3["storage"])
+            elif hexagon_old.properties["z"] >= 1:
+                z_type = "deepened existing sidechannel"
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
+                                                  hexagon_new.properties["z"]))
+                          * self.sidechannel_m3["storage"])
+            elif hexagon_new.properties["z"] >= 1:
+                z_type = "undeepened existing sidechannel"
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
+                                                  hexagon_new.properties["z"]))
+                          * self.sidechannel_m3["storage"])
+            try:
+                z_cost = int(round(abs(z_cost)))
+                print("Costs for hexagon " + str(hexagon_new.id) + " for " + z_type + ": " + str(z_cost) + " Euros")
+            except UnboundLocalError:
+                print("No costs calculated. Perhaps a missing costs scenario?")
+        if landuse_changed:
+            if hexagon_old.properties["landuse"] == 0:
+                l_type = "building acquisition and demolition"
+                l_cost = self.acqi_type["farm"] + self.demo_type["farm"]
+            elif hexagon_old.properties["landuse"] == 1:
+                l_type = "production grass removal"
+                l_cost = self.hexagon_area * self.roughness_smooth_m2["grass"]
+            elif hexagon_old.properties["landuse"] == 2:
+                l_type = "natural grass removal"
+                l_cost = self.hexagon_area * self.roughness_smooth_m2["grass"]
+            elif hexagon_old.properties["landuse"] == 3:
+                l_type = "herbaceous vegetation removal"
+                l_cost = self.hexagon_area * self.roughness_smooth_m2["herbaceous"]
+            elif hexagon_old.properties["landuse"] == 4:
+                l_type = "forest clearing and removal"
+                l_cost = self.hexagon_area * self.roughness_smooth_m2["forest"]
+            elif hexagon_old.properties["landuse"] == 5:
+                l_type = "forest clearing and removal"
+                l_cost = self.hexagon_area * self.roughness_smooth_m2["forest"]
+            elif hexagon_old.properties["landuse"] == 6:
+                l_type = "vegetation mixtype removal"
+            elif hexagon_old.properties["landuse"] == 7:
+                l_type = "changing sidechannel to floodplain"
+                # no costs in land use changed, all in z changed
+                pass
+            elif hexagon_old.properties["landuse"] == 8:
+                if hexagon_new.properties["landuse"] == 9:
+                    l_type = "replacing ltd with groyne"
+                    l_cost = self.hexagon_height * self.structures_m["ltd"]
+                else:
+                    print("INVALID MOVE, no costs calculated")
+            elif hexagon_old.properties["landuse"] == 9:
+                if hexagon_new.properties["landuse"] == 8:
+                    l_type = "replacing groyne with ltd"
+                    l_cost = self.hexagon_height * self.structures_m["ltd"]
+                else:
+                    print("INVALID MOVE, no costs calculated")
+            else:
+                print("dike relocation")
+                # no costs in land use changed, all in z changed
+            """
+            # These could be added to add costs for construction/planting of
+            # different land uses.
+            
+            if hexagon_new.properties["landuse"] == 0:
+                print("new building")
+                # no costs currently
+            elif hexagon_new.properties["landuse"] == 1:
+                print("production grass planted")
+                # no costs currently
+            elif hexagon_new.properties["landuse"] == 2:
+                print("natural grass planted")
+                # no costs currently
+            elif hexagon_new.properties["landuse"] == 3:
+                print("herbaceous vegetation planted")
+                # no costs currently
+            elif hexagon_new.properties["landuse"] == 4:
+                print("shrubs planted")
+                # no costs currently
+            elif hexagon_new.properties["landuse"] == 5:
+                print("forest planted")
+                # no costs currently
+            elif hexagon_new.properties["landuse"] == 6:
+                print("mixtype removal")
+                # no costs currently
+            elif hexagon_new.properties["landuse"] == 7:
+                print("changed sidechannel to floodplain")
+                # no costs in land use changed, all in z changed
+                pass
+            elif hexagon_new.properties["landuse"] == 8:
+                if hexagon_old.properties["landuse"] == 9:
+                    print("replaced groyne with ltd")
+                    # no costs in land use changed, already covered above
+                else:
+                    print("INVALID MOVE, no costs calculated")
+            elif hexagon_new.properties["landuse"] == 9:
+                if hexagon_old.properties["landuse"] == 8:
+                    print("replaced ltd with groyne")
+                    # no costs in land use changed, already covered above
+                else:
+                    print("INVALID MOVE, no costs calculated")
+            else:
+                print("dike relocation")
+                # no costs in land use changed, all in z changed
+            """
+            try:
+                l_cost = int(round(l_cost))
+                print("Costs for hexagon " + str(hexagon_new.id) + " for " + l_type + ": " + str(l_cost) + " Euros")
+            except UnboundLocalError:
+                print("No costs calculated. Perhaps a missing costs scenario?")
+        if (z_changed and landuse_changed):
+            # exceptional situations if they exist?
+            pass
+        return z_cost, l_cost
+
+
+def main():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    test_path = os.path.join(dir_path, 'test_files')
+    turn = 0
+    hexagons_old = gridmap.read_hexagons(
+            filename='hexagons%d.geojson' % turn,
+            path=test_path)
+    turn += 1
+    hexagons_new = gridmap.read_hexagons(
+            filename='hexagons%d.geojson' % turn,
+            path=test_path)
+    cost = Costs()
+    print(cost.acqi_m2)
+
+
+if __name__ == '__main__':
+    main()
