@@ -125,6 +125,10 @@ class runScript():
         self.axes = None
 
     def initialize(self):
+        if self.initialized:
+            print("Virtual River is already initialized, please use Update "
+                  "instead.")
+            return
         tic = time.time()
         with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
             username = f.read()
@@ -522,7 +526,7 @@ class runScript():
             return
         self.fig, self.axes = D3D.run_model(
                     self.model, self.filled_node_grid, self.face_grid,
-                    self.hexagons_sandbox, initialized=self.initialized)
+                    self.hexagons_sandbox, turn=self.turn)
         return
 
 def main():

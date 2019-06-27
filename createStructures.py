@@ -110,6 +110,15 @@ def create_structures(hexagons):
             y_dist = cosin * height
         # Ideally would also want to do this with a try/except KeyError, but -1
         # index would find a hexagon
+        """
+        # The combination of groynes and ltds makes the model extremely slow,
+        # especially at crest height 0 for the ltds. With a crest height of 3,
+        # same as the groynes, the model runs smoother, albeit still ~5 slower.
+        # ltds are therefore currently placed in this comment block.
+        # 
+        # TODO: figure out a fix to make the model be able to smoothly
+        # transition from groynes to ltds.
+        
         if feature.id == 0 or feature.id == 1:
             edge = True
             west_edge = True
@@ -183,8 +192,9 @@ def create_structures(hexagons):
         ltd = geojson.Feature(id="LTD" + str(feature.id).zfill(2),
                               geometry=line)
         ltd.properties["active"] = False
-        ltd.properties["crest_level"] = 0.0
+        ltd.properties["crest_level"] = 0.00000001
         structures.append(ltd)
+        """
 
         groyne_dist = height * 0.25
         if feature.properties["south_side_channel"]:
@@ -198,8 +208,9 @@ def create_structures(hexagons):
         groyne.properties["active"] = True
         groyne.properties["crest_level"] = 3.0
         structures.append(groyne)
+        
     structures = geojson.FeatureCollection(structures)
-    if False:
+    if True:
         # saving is currently skipped, hence in if False statement.
         with open('structures_test.geojson', 'w') as f:
             geojson.dump(structures, f, sort_keys=True, indent=2)

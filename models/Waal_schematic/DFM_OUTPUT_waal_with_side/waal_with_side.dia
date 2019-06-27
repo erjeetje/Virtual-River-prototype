@@ -172,10 +172,10 @@
 ** DEBUG  :           80  0.7297890      iao(nn+1)
 ** DEBUG  :           83  0.3046050      ao(na)
 ** DEBUG  :           89  0.7972200      wk(nwk)
-** INFO   : Modelinit finished   at: 11:42:12, 26-06-2019
+** INFO   : Modelinit finished   at: 15:25:06, 26-06-2019
 ** INFO   : ** Model initialization was successful **
 ** INFO   : * Active Model definition:
-# Generated on 11:42:12, 26-06-2019
+# Generated on 15:25:06, 26-06-2019
 # Deltares, D-Flow FM Version 1.2.38.63172M, Feb 14 2019, 18:49:17
 # Source:https://svn.oss.deltares.nl/repos/delft3d/trunk/
 
@@ -452,7 +452,7 @@ CrsFile                           =                     # Polyline file *_crs.pl
 FouFile                           =                     # Fourier analysis input file *.fou
 FouUpdateStep                     = 0                   # Fourier update step type: 0=every user time step, 1=every computational timestep.
 HisFile                           =                     # HisFile name *_his.nc
-MapFile                           = 0                   # MapFile name *_map.nc
+MapFile                           =                     # MapFile name *_map.nc
 HisInterval                       = 120. 0. 8640000.    # History output times, given as "interval" "start period" "end period" (s)
 XLSInterval                       = 0.                  # Interval (s) between XLS history
 MapInterval                       = 1200. 0. 8640000.   # Map file output, given as "interval" "start period" "end period" (s)
@@ -548,7 +548,23 @@ ProcessFluxIntegration            = 1                   # Process fluxes integra
 ** INFO   : **
 ** INFO   : Writing initial output to file(s)...
 ** DEBUG  : Opened NetCDF file 'DFM_OUTPUT_waal_with_side\waal_with_side_his.nc' as #131072.
-** DEBUG  : Opened NetCDF file 'DFM_OUTPUT_waal_with_side\0' as #196608.
+** DEBUG  : Opened NetCDF file 'DFM_OUTPUT_waal_with_side\waal_with_side_map.nc' as #196608.
 ** INFO   :    Sim. time done   Sim. time left   Real time used   Real time left Steps left Complete% Interval-averaged time step
 ** INFO   :               0d  0:0             99d 23:5              0d  0:0         ??d ??:??:??    8639999     0.0%     0.00000
 ** INFO   : Done writing initial output to file(s).
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              7d 11:1    8639940     0.0%     0.00000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              8d  2:2    8639880     0.0%     0.25974
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              7d  1:0    8639820     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              6d 15:3    8639760     0.0%     0.43478
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              6d 16:0    8639700     0.0%     0.33898
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              6d 11:4    8639640     0.0%     0.40816
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              6d  5:3    8639580     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              6d  0:5    8639520     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d 21:3    8639460     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:5              0d  0:0              5d 18:5    8639400     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 16:4    8639340     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 14:4    8639280     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 13:0    8639220     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 11:5    8639160     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 10:2    8639100     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 10:0    8639040     0.0%     0.50000

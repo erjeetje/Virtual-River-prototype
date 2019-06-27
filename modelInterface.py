@@ -24,16 +24,15 @@ def initialize_model():
     """
     model = bmi.wrapper.BMIWrapper('dflowfm')
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    model_name = 'waal_with_side.mdu'
+    model_name = 'Virtual_River_structures.mdu'
     model_path = os.path.join(dir_path, 'models', 'Waal_schematic', model_name)
     model.initialize(model_path)
-    #model.initialize(r'C:\Users\HaanRJ\Documents\GitHub\sandbox-fm\models\sandbox\Waal_schematic\waal_with_side.mdu')
     print('Initialized Delft3D FM model.')
     return model
 
 
 def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
-              axes=None, initialized=False):
+              axes=None, turn=0):
     """
     Function that runs the model. Currently gets the variables from the model,
     updates the variables (e.g. zk to update the elevation model). Subsequently
@@ -72,12 +71,10 @@ def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
 
     if fig is None:
         fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
-        plt.figure()
     sc = axes[0].scatter(xzw, yzw, c=s1, edgecolor='none', vmin=0, vmax=6, cmap='jet')
     sc_zk = axes[1].scatter(xk, yk, c=zk, edgecolor='none', vmin=0, vmax=6, cmap='jet')
-    if not initialized:
-        fig.colorbar(sc, ax=axes[0])
-        fig.colorbar(sc_zk, ax=axes[1])
+    fig.colorbar(sc, ax=axes[0])
+    fig.colorbar(sc_zk, ax=axes[1])
 
     plt.show()
     #zk_new = np.array([feature.properties['z'] for feature in filled_node_grid['features']])
@@ -110,14 +107,18 @@ def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
             )
     #s0 = s1.copy()
     print("updated grid in model")
-    if not initialized:
-        model.update(10)
+    #if turn == 1:
+    #    model.update(10)
     #print("set timesteps in model")
-    for i in range(100):
-        #t0 = time.time()
-        model.update(5)
-        #t1 = time.time()
-        #print("model update: " + str(t1 - t0))
+    if turn == 0:
+        step = 50
+    else:
+        step = 25
+    for i in range(step):
+        t0 = time.time()
+        model.update(10)
+        t1 = time.time()
+        print("model update: " + str(t1 - t0))
         axes[0].set_title("{:2f}".format(model.get_current_time()))
         #t2 = time.time()
         #print("axes title: " + str(t2 - t1))
@@ -135,11 +136,12 @@ def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
         #print("draw: " + str(t6 - t5))
         plt.pause(0.00001)
 
-    print(model.get_current_time())
+    print("Finished run model. Current time in model: " +
+          str(model.get_current_time()))
     return fig, axes
 
 
-def geojson2pli(collection, name="groyne"):
+def geojson2pli(collection, name="structures"):
     """
     convert geojson input (FeatureCollection of linestring features) to an ini
     file listing all structures.
@@ -163,7 +165,8 @@ lat_contr_coeff       = 1                   # Lateral contraction coefficient in
         #pli_path = path.with_suffix('.pli').relative_to(path.parent)
         pli_path = os.path.join(model_path, filename)
         create_pli(feature, pli_path)
-        feature.properties["pli_path"] = pli_path
+        #feature.properties["pli_path"] = pli_path
+        feature.properties["pli_path"] = filename
     structures_template = mako.template.Template(structures_template_text)
     #path = pathlib.Path(name)
     #structures_path = path.with_suffix('.ini').relative_to(path.parent)
