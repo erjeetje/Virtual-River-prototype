@@ -112,7 +112,7 @@ class runScript():
         self.transforms = None
         self.node_grid = None
         self.filled_node_grid = None
-        self.face_grid = None
+        self.flow_grid = None
         self.heightmap = None
         self.pers = None
         # may not be necessary to store these, but some methods would need to
@@ -238,22 +238,22 @@ class runScript():
         # get node grid (cell corner coordinates) and face grid (cell
         # center coordinates)
         self.node_grid = gridmap.read_node_grid(path=self.dir_path)
-        self.face_grid = gridmap.read_face_grid(self.model,
-                                                path=self.dir_path)
+        self.flow_grid = gridmap.create_flow_grid(self.model,
+                                                  path=self.dir_path)
         print("Loaded grids (cell corners and cell centers).")
         # index both grids to the hexagons.
         self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox,
                                                  self.node_grid)
-        self.face_grid = gridmap.index_face_grid(self.hexagons_sandbox,
-                                                 self.face_grid)
+        self.flow_grid = gridmap.index_flow_grid(self.hexagons_sandbox,
+                                                 self.flow_grid)
         # initiate the interpolation to get the initial elevation model.
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
-        self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
-                self.model, self.hexagons_sandbox, self.face_grid)
+        self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
         print("Executed grid interpolation.")
         # create a deepcopy of the node grid and fill the grid behind the
         # dikes. The filled node grid is for the hydrodynamic model.
@@ -288,7 +288,7 @@ class runScript():
         # as the whole system becomes rather slow. Added a temporary run model
         # button to the Virtual River GUI to run the model instead.
         self.fig, self.axes = D3D.run_model(
-                self.model, self.filled_node_grid, self.face_grid,
+                self.model, self.filled_node_grid, self.flow_grid,
                 self.hexagons_sandbox, initialized=self.initialized)
         """
 
@@ -406,8 +406,8 @@ class runScript():
                     self.hexagons_sandbox)
             self.costs = self.costs + turn_costs
         # update the Chezy coefficients of all hexagons.
-        self.hexagons_sandbox, self.face_grid = roughness.hex_to_points(
-                self.model, self.hexagons_sandbox, self.face_grid)
+        self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
 
         tac = time.time()
         if self.tygron:
@@ -483,7 +483,7 @@ class runScript():
         # as the whole system becomes rather slow. Added a temporary run model
         # button to the Virtual River GUI to run the model instead.
         self.fig, self.axes = D3D.run_model(
-                    self.model, self.filled_node_grid, self.face_grid,
+                    self.model, self.filled_node_grid, self.flow_grid,
                     self.hexagons_sandbox, initialized=self.initialized,
                     fig=self.fig, axes=self.axes)
         """
@@ -537,7 +537,7 @@ class runScript():
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time.")
         self.fig, self.axes = D3D.run_model(
-                    self.model, self.filled_node_grid, self.face_grid,
+                    self.model, self.filled_node_grid, self.flow_grid,
                     self.hexagons_sandbox, turn=self.turn)
         if self.turn == 0:
             print("Finished running the model after initialization.")

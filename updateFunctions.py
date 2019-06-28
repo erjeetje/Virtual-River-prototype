@@ -7,7 +7,7 @@ Created on Fri Mar 29 09:26:52 2019
 
 import os
 import geojson
-import costModule_copy as costs
+import costModule as costs
 import gridMapping as gridmap
 
 

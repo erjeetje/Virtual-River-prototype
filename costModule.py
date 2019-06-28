@@ -8,7 +8,7 @@ Created on Wed Jun 26 14:20:02 2019
 
 import os
 import gridMapping as gridmap
-import updateFunctions_copy as update
+import updateFunctions as update
 from numpy import sqrt
 
 class Costs():  

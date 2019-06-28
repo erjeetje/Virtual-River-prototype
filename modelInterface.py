@@ -31,7 +31,7 @@ def initialize_model():
     return model
 
 
-def run_model(model, filled_node_grid, face_grid, hexagons, fig=None,
+def run_model(model, filled_node_grid, flow_grid, hexagons, fig=None,
               axes=None, turn=0):
     """
     Function that runs the model. Currently gets the variables from the model,

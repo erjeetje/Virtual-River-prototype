@@ -83,6 +83,38 @@ def read_node_grid(save=False, path=""):
     return feature_collection
 
 
+def create_flow_grid(model, save=False, path=""):
+    ln = model.get_var('ln')
+    x = model.get_var('xzw')
+    y = model.get_var('yzw')
+    flow_links = []
+    skipped = 0
+    for cells in ln:
+        try:
+            cell1_x = x[cells[0]-1]
+            cell1_y = y[cells[0]-1]
+            cell2_x = x[cells[1]-1]
+            cell2_y = y[cells[1]-1]
+            flow_x = (cell1_x + cell2_x) / 2.0
+            flow_y = (cell1_y + cell2_y) / 2.0
+            flow_links.append([flow_x, flow_y])
+        except IndexError:
+            skipped += 1
+            continue
+    print("NOTE:", str(skipped), "flow links skipped as unknown cells were",
+          "called. Skipped cells are irrelevant for the board.")
+    features = []
+    for i, xy in enumerate(flow_links):
+        pt = geojson.Point(coordinates=xy)
+        feature = geojson.Feature(geometry=pt, id=i)
+        features.append(feature)
+    feature_collection = geojson.FeatureCollection(features)
+    if save:
+        with open(os.path.join(path, 'flowlinks_grid.geojson'), 'w') as f:
+            geojson.dump(feature_collection, f, sort_keys=True, indent=2)
+    return feature_collection
+
+
 def read_face_grid(model, save=False, path=""):
     """
     function that loads and returns the face grid (centers of the cells) from
@@ -141,7 +173,7 @@ def hexagons_to_fill(hexagons):
     return hexagons
 
 
-def index_face_grid(hexagons, grid):
+def index_flow_grid(hexagons, grid):
     """
     Function that indexes the face grid to the hexagons. Determines in which
     hexagon a cell center is located.
@@ -704,9 +736,15 @@ if __name__ == "__main__":
     save = False
     turn = 0
     plt.interactive(True)
-    calibration = read_calibration()
+    #calibration = read_calibration()
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    test_path = os.path.join(dir_path, 'test_files')
+    temp_path = os.path.join(dir_path, 'temp_files')
+    turn = 0
+    hexagons = read_hexagons(
+            filename='hexagons%d.geojson' % turn, path=test_path)
     t0 = time.time()
-    hexagons = read_hexagons(filename='hexagons0.geojson')
+    #hexagons = read_hexagons(filename='hexagons0.geojson')
     for feature in hexagons.features:
         feature.properties["z_changed"] = True
         feature.properties["landuse_changed"] = True
@@ -716,20 +754,19 @@ if __name__ == "__main__":
     print("Read hexagons: " + str(t1 - t0))
     node_grid = read_node_grid()
     model = D3D.initialize_model()
-    face_grid = read_face_grid(model)
+    flow_grid = create_flow_grid(model)
     t2 = time.time()
-    print("Load node and face grids: " + str(t2 - t1))
+    print("Load node and flow grids: " + str(t2 - t1))
     node_grid = index_node_grid(hexagons, node_grid)
-    face_grid = index_face_grid(hexagons, face_grid)
+    flow_grid = index_flow_grid(hexagons, flow_grid)
     t3 = time.time()
     print("Index node and face grid: " + str(t3 - t2))
     node_grid = interpolate_node_grid(hexagons, node_grid)
-    hexagons, face_grid = roughness.hex_to_points(model, hexagons, face_grid)
-    with open('node_grid_before%d.geojson' % turn, 'w') as f:
-        geojson.dump(node_grid, f, sort_keys=True,
-                     indent=2)
-    with open('face_grid_vegetation.geojson', 'w') as f:
-        geojson.dump(face_grid, f, sort_keys=True, indent=2)
+    hexagons, flow_grid = roughness.hex_to_points(model, hexagons, flow_grid)
+    with open(os.path.join(temp_path, 'node_grid_before%d.geojson' % turn), 'w') as f:
+        geojson.dump(node_grid, f, sort_keys=True, indent=2)
+    with open(os.path.join(temp_path, 'face_grid_vegetation.geojson'), 'w') as f:
+        geojson.dump(flow_grid, f, sort_keys=True, indent=2)
     t4 = time.time()
     print("Interpolate grid: " + str(t4 - t3))
     filled_node_grid = deepcopy(node_grid)
@@ -747,17 +784,17 @@ if __name__ == "__main__":
     t7 = time.time()
     print("Interpolated filled grid: " + str(t7 - t6))
     if save:
-        with open('node_grid_after%d.geojson' % turn, 'w') as f:
+        with open(os.path.join(temp_path, 'node_grid_after%d.geojson' % turn), 'w') as f:
             geojson.dump(node_grid, f, sort_keys=True,
                          indent=2)
-        with open('filled_node_grid%d.geojson' % turn, 'w') as f:
+        with open(os.path.join(temp_path, 'filled_node_grid%d.geojson' % turn), 'w') as f:
             geojson.dump(filled_node_grid, f, sort_keys=True,
                          indent=2)
     t8 = time.time()
     if save:
         print("Saved both grids: " + str(t8 - t7))
     heightmap = create_geotiff(node_grid)
-    heatmap = create_roughness_map(face_grid)
+    heatmap = create_roughness_map(flow_grid)
     t9 = time.time()
     print("Created geotiff: " + str(t9 - t8))
     #D3D.run_model(model, filled_node_grid, face_grid, hexagons)
@@ -768,13 +805,13 @@ if __name__ == "__main__":
     tygron.set_elevation(heightmap)
     """
     if save:
-        with open('hexagons_visualization_test.geojson', 'w') as f:
+        with open(os.path.join(temp_path, 'hexagons_visualization_test.geojson'), 'w') as f:
             geojson.dump(hexagons, f, sort_keys=True,
                          indent=2)
-        with open('node_grid_visualization_test.geojson', 'w') as f:
+        with open(os.path.join(temp_path, 'node_grid_visualization_test.geojson'), 'w') as f:
             geojson.dump(node_grid, f, sort_keys=True,
                          indent=2)
-        with open('face_grid_visualization_test.geojson', 'w') as f:
-            geojson.dump(face_grid, f, sort_keys=True,
+        with open(os.path.join(temp_path, 'face_grid_visualization_test.geojson'), 'w') as f:
+            geojson.dump(flow_grid, f, sort_keys=True,
                          indent=2)
         print("saved files")

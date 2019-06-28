@@ -20,8 +20,7 @@ def hex_to_points(model, hexagons, grid, test=False):
     NOTE: frcu is much longer then expected (len 52k whereas 26k was expected),
     meaning the slicing is not correct. Needs to be checked and updated.
     """
-    ndxi = model.get_var('ndxi')
-    frcu = model.get_var('frcu')[:ndxi]
+    frcu = model.get_var('frcu')
     if test:
         hexagons = randomizer(hexagons)
     hexagons = landuse_to_friction(hexagons)
