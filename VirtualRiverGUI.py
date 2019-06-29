@@ -99,7 +99,7 @@ class runScript():
         # update in the initialization depending on whether or not a camera
         # is detected and a tygron session is found.
         self.initialized = False
-        self.save = True
+        self.save = False
         self.test = False
         self.tygron = True
         # Virtual River variables
@@ -204,7 +204,7 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = structures.determine_channel(
                 self.hexagons_sandbox)
-        self.hexagons_sandbox = structures.hexagons_behind_dikes(
+        self.hexagons_sandbox = structures.determine_floodplains_and_behind_dikes(
                 self.hexagons_sandbox)
         channel = structures.get_channel(self.hexagons_sandbox)
         weirs = structures.create_structures(channel)
@@ -454,7 +454,7 @@ class runScript():
             # rebuild as the filled hexagon locations are changed as well.
             self.hexagons_sandbox = structures.determine_dikes(
                 self.hexagons_sandbox)
-            self.hexagons_sandbox = structures.hexagons_behind_dikes(
+            self.hexagons_sandbox = structures.determine_floodplains_and_behind_dikes(
                 self.hexagons_sandbox)
             filled_hexagons = deepcopy(self.hexagons_sandbox)
             self.filled_node_grid = deepcopy(self.node_grid)
