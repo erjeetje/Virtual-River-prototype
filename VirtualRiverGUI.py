@@ -113,6 +113,7 @@ class runScript():
         self.node_grid = None
         self.filled_node_grid = None
         self.flow_grid = None
+        self.face_grid = None
         self.heightmap = None
         self.pers = None
         # may not be necessary to store these, but some methods would need to
@@ -239,21 +240,27 @@ class runScript():
         self.model = D3D.initialize_model()
         # get node grid (cell corner coordinates) and face grid (cell
         # center coordinates)
-        self.node_grid = gridmap.read_node_grid(path=self.dir_path)
+        self.node_grid = gridmap.read_node_grid(path=self.store_path)
         self.flow_grid = gridmap.create_flow_grid(self.model,
-                                                  path=self.dir_path)
+                                                  path=self.store_path)
+        self.face_grid = gridmap.read_face_grid(self.model,
+                                                path=self.store_path)
         print("Loaded grids (cell corners and cell centers).")
         # index both grids to the hexagons.
         self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox,
                                                  self.node_grid)
         self.flow_grid = gridmap.index_flow_grid(self.hexagons_sandbox,
                                                  self.flow_grid)
+        self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
+                                                       self.face_grid)
         # initiate the interpolation to get the initial elevation model.
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
+        self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
         print("Executed grid interpolation.")
@@ -411,6 +418,8 @@ class runScript():
                     self.hexagons_sandbox)
             self.costs = self.costs + turn_costs
         # update the Chezy coefficients of all hexagons.
+        self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
 

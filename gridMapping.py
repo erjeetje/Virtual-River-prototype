@@ -188,6 +188,25 @@ def hexagons_to_fill2(hexagons):
     return hexagons
 
 
+def index_hexagons(hexagons, grid):
+    grid_coor = []
+    for feature in grid.features:
+        point = geometry.asShape(feature.geometry)
+        x = point.centroid.x
+        y = point.centroid.y
+        grid_coor.append([x, y])
+    grid_coor = np.array(grid_coor)
+    grid_tree = cKDTree(grid_coor)
+    for feature in hexagons.features:
+        midpoint = geometry.asShape(feature.geometry)
+        x = midpoint.centroid.x
+        y = midpoint.centroid.y
+        xy = np.array([x, y])
+        dist, index = grid_tree.query(xy)
+        feature.properties["face_cell"] = index
+    return hexagons
+
+
 def index_flow_grid(hexagons, grid):
     """
     Function that indexes the face grid to the hexagons. Determines in which

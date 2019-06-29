@@ -67,136 +67,6 @@ def remove_values_from_array(array, val):
    return [value for value in array if value != val]
 
 
-def determine_floodplains(hexagons):
-    north_channel = []
-    south_channel = []
-    dikes_north = []
-    dikes_south = []
-    for feature in hexagons.features:
-        if feature.properties["north_side_channel"]:
-            north_channel.append(feature)
-        elif feature.properties["south_side_channel"]:
-            south_channel.append(feature)
-        elif feature.properties["north_dike"] is True:
-            dikes_north.append(feature)
-        elif feature.properties["south_dike"] is True:
-            dikes_south.append(feature)
-    north_channel = geojson.FeatureCollection(north_channel)
-    south_channel = geojson.FeatureCollection(south_channel)
-    dikes_north = geojson.FeatureCollection(dikes_north)
-    dikes_south = geojson.FeatureCollection(dikes_south)
-    for feature in hexagons.features:
-        try:
-            channel_north = north_channel[feature.properties["column"]-1]
-        except KeyError:
-            print("area does not have a main channel in the north")
-            continue
-        try:
-            channel_south = south_channel[feature.properties["column"]-1]
-        except KeyError:
-            print("area does not have a main channel in the south")
-            continue
-        try:
-            dike_top = dikes_north[feature.properties["column"]-1]
-        except KeyError:
-            print("area does not have a complete dike in the north")
-            continue
-        try:
-            dike_bottom = dikes_south[feature.properties["column"]-1]
-        except KeyError:
-            print("area does not have a complete dike in the south")
-            continue
-        if feature.id < dike_top.id:
-            feature.properties["behind_dike"] = True
-            feature.properties["dike_reference"] = dike_top.id
-        elif feature.id > dike_bottom.id:
-            feature.properties["behind_dike"] = True
-            feature.properties["dike_reference"] = dike_bottom.id
-        else:
-            feature.properties["behind_dike"] = False
-            feature.properties["dike_reference"] = None
-        if (feature.properties["north_dike"] or
-            feature.properties["south_dike"] or
-            feature.properties["main_channel"] or
-            feature.properties["behind_dike"]):
-            feature.properties["floodplain_north"] = False
-            feature.properties["floodplain_south"] = False
-        else:
-            if (feature.id < channel_north.id and
-                feature.id > dike_top.id):
-                feature.properties["floodplain_north"] = True
-                feature.properties["floodplain_south"] = False
-            elif (feature.id > channel_south.id and
-                  feature.id < dike_bottom.id):
-                feature.properties["floodplain_north"] = False
-                feature.properties["floodplain_south"] = True
-            else:
-                feature.properties["floodplain_north"] = False
-                feature.properties["floodplain_south"] = False
-    return hexagons
-
-
-def determine_floodplains2(hexagons):
-    north_channel = []
-    south_channel = []
-    dikes_north = []
-    dikes_south = []
-    for feature in hexagons.features:
-        if feature.properties["north_side_channel"]:
-            north_channel.append(feature)
-        elif feature.properties["south_side_channel"]:
-            south_channel.append(feature)
-        elif feature.properties["north_dike"] is True:
-            dikes_north.append(feature)
-        elif feature.properties["south_dike"] is True:
-            dikes_south.append(feature)
-    north_channel = geojson.FeatureCollection(north_channel)
-    south_channel = geojson.FeatureCollection(south_channel)
-    dikes_north = geojson.FeatureCollection(dikes_north)
-    dikes_south = geojson.FeatureCollection(dikes_south)
-    for feature in hexagons.features:
-        if (feature.properties["north_dike"] or
-            feature.properties["south_dike"] or
-            feature.properties["main_channel"] or
-            feature.properties["behind_dike"]):
-            feature.properties["floodplain_north"] = False
-            feature.properties["floodplain_south"] = False
-        else:
-            try:
-                channel_north = north_channel[feature.properties["column"]-1]
-            except KeyError:
-                print("area does not have a complete dike in the north")
-                continue
-            try:
-                channel_south = south_channel[feature.properties["column"]-1]
-            except KeyError:
-                print("area does not have a complete dike in the south")
-                continue
-            try:
-                dike_top = dikes_north[feature.properties["column"]-1]
-            except KeyError:
-                print("area does not have a complete dike in the north")
-                continue
-            try:
-                dike_bottom = dikes_south[feature.properties["column"]-1]
-            except KeyError:
-                print("area does not have a complete dike in the south")
-                continue
-            #feature.properties["floodplain_north"] = True
-            if (feature.id < channel_north.id and
-                feature.id > dike_top.id):
-                feature.properties["floodplain_north"] = True
-                feature.properties["floodplain_south"] = False
-            elif (feature.id > channel_south.id and
-                  feature.id < dike_bottom.id):
-                feature.properties["floodplain_north"] = False
-                feature.properties["floodplain_south"] = True
-            else:
-                feature.properties["floodplain_north"] = False
-                feature.properties["floodplain_south"] = False
-    return hexagons
-
-
 def owners(hexagons):
     count = 0
     for feature in hexagons.features:
@@ -377,7 +247,8 @@ if __name__ == '__main__':
     hexagons = determine_ownership(hexagons)
     """
     hexagons = determine_neighbours(hexagons)
-    hexagons = determine_floodplains(hexagons)
     #hexagons = random_points(hexagons)
+    """
     with open('floodplain_test.geojson', 'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
+    """

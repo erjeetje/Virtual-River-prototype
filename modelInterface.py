@@ -141,6 +141,14 @@ def run_model(model, filled_node_grid, flow_grid, hexagons, fig=None,
     return fig, axes
 
 
+def update_waterlevel(model, hexagons):
+    s1 = model.get_var('s1')
+    for feature in hexagons.features:
+        index = feature.properties["face_cell"]
+        feature.properties["water_level"] = s1[index]
+    return hexagons
+
+
 def geojson2pli(collection, name="structures"):
     """
     convert geojson input (FeatureCollection of linestring features) to an ini
