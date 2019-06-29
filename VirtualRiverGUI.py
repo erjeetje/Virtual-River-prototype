@@ -99,7 +99,7 @@ class runScript():
         # update in the initialization depending on whether or not a camera
         # is detected and a tygron session is found.
         self.initialized = False
-        self.save = False
+        self.save = True
         self.test = False
         self.tygron = True
         # Virtual River variables
@@ -203,6 +203,8 @@ class runScript():
         self.hexagons_sandbox = structures.determine_dikes(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = structures.determine_channel(
+                self.hexagons_sandbox)
+        self.hexagons_sandbox = structures.hexagons_behind_dikes(
                 self.hexagons_sandbox)
         channel = structures.get_channel(self.hexagons_sandbox)
         weirs = structures.create_structures(channel)
@@ -319,6 +321,9 @@ class runScript():
                 geojson.dump(self.filled_node_grid, f, sort_keys=True,
                              indent=2)
             print("Saved interpolation files (conditional).")
+            """
+            Not sure it makes sense to store the structures ?
+            """
             with open(os.path.join(self.store_path,
                                    'structures.geojson'), 'w') as f:
                 geojson.dump(weirs, f, sort_keys=True,
@@ -448,6 +453,8 @@ class runScript():
             # if the dike locations changed, the filled node grid needs to be
             # rebuild as the filled hexagon locations are changed as well.
             self.hexagons_sandbox = structures.determine_dikes(
+                self.hexagons_sandbox)
+            self.hexagons_sandbox = structures.hexagons_behind_dikes(
                 self.hexagons_sandbox)
             filled_hexagons = deepcopy(self.hexagons_sandbox)
             self.filled_node_grid = deepcopy(self.node_grid)

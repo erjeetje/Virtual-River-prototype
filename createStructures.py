@@ -33,6 +33,40 @@ def determine_dikes(hexagons):
     return hexagons
 
 
+def hexagons_behind_dikes(hexagons):
+    dikes_north = []
+    dikes_south = []
+    for feature in hexagons.features:
+        if feature.properties["north_dike"] is True:
+            dikes_north.append(feature)
+        elif feature.properties["south_dike"] is True:
+            dikes_south.append(feature)
+    dikes_north = geojson.FeatureCollection(dikes_north)
+    dikes_south = geojson.FeatureCollection(dikes_south)
+
+    for feature in hexagons.features:
+        try:
+            dike_top = dikes_north[feature.properties["column"]-1]
+        except KeyError:
+            print("area does not have a complete dike in the north")
+            continue
+        try:
+            dike_bottom = dikes_south[feature.properties["column"]-1]
+        except KeyError:
+            print("area does not have a complete dike in the south")
+            continue
+        if feature.id < dike_top.id:
+            feature.properties["behind_dike"] = True
+            feature.properties["dike_reference"] = dike_top.id
+        elif feature.id > dike_bottom.id:
+            feature.properties["behind_dike"] = True
+            feature.properties["dike_reference"] = dike_bottom.id
+        else:
+            feature.properties["behind_dike"] = False
+            feature.properties["dike_reference"] = None
+    return hexagons
+
+
 def determine_channel(hexagons):
     """
     Function that determines the main channel location (z value below main

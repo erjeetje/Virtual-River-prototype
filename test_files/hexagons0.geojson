@@ -39,7 +39,9 @@
       "id": 0,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": true,
         "column": 1,
+        "dike_reference": 1,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -96,7 +98,9 @@
       "id": 1,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -153,7 +157,9 @@
       "id": 2,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -210,7 +216,9 @@
       "id": 3,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -267,7 +275,9 @@
       "id": 4,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -324,7 +334,9 @@
       "id": 5,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -381,7 +393,9 @@
       "id": 6,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -438,7 +452,9 @@
       "id": 7,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -495,7 +511,9 @@
       "id": 8,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 1,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -552,7 +570,9 @@
       "id": 9,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 1,
+        "dike_reference": 8,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -609,7 +629,9 @@
       "id": 10,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 2,
+        "dike_reference": 11,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -666,7 +688,9 @@
       "id": 11,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 2,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -723,7 +747,9 @@
       "id": 12,
       "properties": {
         "Chezy": 38.51898121148092,
+        "behind_dike": false,
         "column": 2,
+        "dike_reference": null,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -780,7 +806,9 @@
       "id": 13,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 2,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -837,7 +865,9 @@
       "id": 14,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 2,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -894,7 +924,9 @@
       "id": 15,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 2,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -951,7 +983,9 @@
       "id": 16,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 2,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -1008,7 +1042,9 @@
       "id": 17,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 2,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -1065,7 +1101,9 @@
       "id": 18,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 2,
+        "dike_reference": 17,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -1122,7 +1160,9 @@
       "id": 19,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 3,
+        "dike_reference": 20,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -1179,7 +1219,9 @@
       "id": 20,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -1236,7 +1278,9 @@
       "id": 21,
       "properties": {
         "Chezy": 35.04030746122806,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": true,
         "landuse": 0,
         "landuse_changed": true,
@@ -1293,7 +1337,9 @@
       "id": 22,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -1350,7 +1396,9 @@
       "id": 23,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -1407,7 +1455,9 @@
       "id": 24,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -1464,7 +1514,9 @@
       "id": 25,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -1521,7 +1573,9 @@
       "id": 26,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -1578,7 +1632,9 @@
       "id": 27,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 3,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -1635,7 +1691,9 @@
       "id": 28,
       "properties": {
         "Chezy": 35.04030746122806,
+        "behind_dike": true,
         "column": 3,
+        "dike_reference": 27,
         "land": true,
         "landuse": 0,
         "landuse_changed": true,
@@ -1692,7 +1750,9 @@
       "id": 29,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -1749,7 +1809,9 @@
       "id": 30,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -1806,7 +1868,9 @@
       "id": 31,
       "properties": {
         "Chezy": 38.51898121148092,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -1863,7 +1927,9 @@
       "id": 32,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -1920,7 +1986,9 @@
       "id": 33,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -1977,7 +2045,9 @@
       "id": 34,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -2034,7 +2104,9 @@
       "id": 35,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -2091,7 +2163,9 @@
       "id": 36,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -2148,7 +2222,9 @@
       "id": 37,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 4,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -2205,7 +2281,9 @@
       "id": 38,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 5,
+        "dike_reference": 39,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -2262,7 +2340,9 @@
       "id": 39,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -2319,7 +2399,9 @@
       "id": 40,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -2376,7 +2458,9 @@
       "id": 41,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -2433,7 +2517,9 @@
       "id": 42,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -2490,7 +2576,9 @@
       "id": 43,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -2547,7 +2635,9 @@
       "id": 44,
       "properties": {
         "Chezy": 11.626201002006951,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -2604,7 +2694,9 @@
       "id": 45,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -2661,7 +2753,9 @@
       "id": 46,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 5,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -2718,7 +2812,9 @@
       "id": 47,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 5,
+        "dike_reference": 46,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -2775,7 +2871,9 @@
       "id": 48,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -2832,7 +2930,9 @@
       "id": 49,
       "properties": {
         "Chezy": 5.755496949900733,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -2889,7 +2989,9 @@
       "id": 50,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -2946,7 +3048,9 @@
       "id": 51,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -3003,7 +3107,9 @@
       "id": 52,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -3060,7 +3166,9 @@
       "id": 53,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -3117,7 +3225,9 @@
       "id": 54,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -3174,7 +3284,9 @@
       "id": 55,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -3231,7 +3343,9 @@
       "id": 56,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 6,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -3288,7 +3402,9 @@
       "id": 57,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": true,
         "column": 7,
+        "dike_reference": 58,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -3345,7 +3461,9 @@
       "id": 58,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -3402,7 +3520,9 @@
       "id": 59,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -3459,7 +3579,9 @@
       "id": 60,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -3516,7 +3638,9 @@
       "id": 61,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -3573,7 +3697,9 @@
       "id": 62,
       "properties": {
         "Chezy": 11.626201002006951,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -3630,7 +3756,9 @@
       "id": 63,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -3687,7 +3815,9 @@
       "id": 64,
       "properties": {
         "Chezy": 11.626201002006951,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -3744,7 +3874,9 @@
       "id": 65,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -3801,7 +3933,9 @@
       "id": 66,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 7,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -3858,7 +3992,9 @@
       "id": 67,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": true,
         "column": 8,
+        "dike_reference": 68,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -3915,7 +4051,9 @@
       "id": 68,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -3972,7 +4110,9 @@
       "id": 69,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -4029,7 +4169,9 @@
       "id": 70,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -4086,7 +4228,9 @@
       "id": 71,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -4143,7 +4287,9 @@
       "id": 72,
       "properties": {
         "Chezy": 35.04030746122806,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -4200,7 +4346,9 @@
       "id": 73,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -4257,7 +4405,9 @@
       "id": 74,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -4314,7 +4464,9 @@
       "id": 75,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 8,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -4371,7 +4523,9 @@
       "id": 76,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 9,
+        "dike_reference": 77,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -4428,7 +4582,9 @@
       "id": 77,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -4485,7 +4641,9 @@
       "id": 78,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -4542,7 +4700,9 @@
       "id": 79,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -4599,7 +4759,9 @@
       "id": 80,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -4656,7 +4818,9 @@
       "id": 81,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -4713,7 +4877,9 @@
       "id": 82,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -4770,7 +4936,9 @@
       "id": 83,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -4827,7 +4995,9 @@
       "id": 84,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 9,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -4884,7 +5054,9 @@
       "id": 85,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 9,
+        "dike_reference": 84,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -4941,7 +5113,9 @@
       "id": 86,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": true,
         "column": 10,
+        "dike_reference": 87,
         "land": true,
         "landuse": 0,
         "landuse_changed": true,
@@ -4998,7 +5172,9 @@
       "id": 87,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -5055,7 +5231,9 @@
       "id": 88,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -5112,7 +5290,9 @@
       "id": 89,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -5169,7 +5349,9 @@
       "id": 90,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -5226,7 +5408,9 @@
       "id": 91,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -5283,7 +5467,9 @@
       "id": 92,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -5340,7 +5526,9 @@
       "id": 93,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -5397,7 +5585,9 @@
       "id": 94,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 10,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -5454,7 +5644,9 @@
       "id": 95,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 11,
+        "dike_reference": 96,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -5511,7 +5703,9 @@
       "id": 96,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -5568,7 +5762,9 @@
       "id": 97,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -5625,7 +5821,9 @@
       "id": 98,
       "properties": {
         "Chezy": 35.04030746122806,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": true,
         "landuse": 0,
         "landuse_changed": true,
@@ -5682,7 +5880,9 @@
       "id": 99,
       "properties": {
         "Chezy": 5.755496949900733,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -5739,7 +5939,9 @@
       "id": 100,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -5796,7 +5998,9 @@
       "id": 101,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -5853,7 +6057,9 @@
       "id": 102,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -5910,7 +6116,9 @@
       "id": 103,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 11,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -5967,7 +6175,9 @@
       "id": 104,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 11,
+        "dike_reference": 103,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -6024,7 +6234,9 @@
       "id": 105,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -6081,7 +6293,9 @@
       "id": 106,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -6138,7 +6352,9 @@
       "id": 107,
       "properties": {
         "Chezy": 38.51898121148092,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -6195,7 +6411,9 @@
       "id": 108,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -6252,7 +6470,9 @@
       "id": 109,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -6309,7 +6529,9 @@
       "id": 110,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -6366,7 +6588,9 @@
       "id": 111,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -6423,7 +6647,9 @@
       "id": 112,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -6480,7 +6706,9 @@
       "id": 113,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 12,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -6537,7 +6765,9 @@
       "id": 114,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 13,
+        "dike_reference": 115,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,
@@ -6594,7 +6824,9 @@
       "id": 115,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -6651,7 +6883,9 @@
       "id": 116,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -6708,7 +6942,9 @@
       "id": 117,
       "properties": {
         "Chezy": 52.30641944047322,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": false,
         "landuse": 7,
         "landuse_changed": true,
@@ -6765,7 +7001,9 @@
       "id": 118,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -6822,7 +7060,9 @@
       "id": 119,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -6879,7 +7119,9 @@
       "id": 120,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -6936,7 +7178,9 @@
       "id": 121,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -6993,7 +7237,9 @@
       "id": 122,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 13,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -7050,7 +7296,9 @@
       "id": 123,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": true,
         "column": 13,
+        "dike_reference": 122,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -7107,7 +7355,9 @@
       "id": 124,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -7164,7 +7414,9 @@
       "id": 125,
       "properties": {
         "Chezy": 5.714316024624509,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -7221,7 +7473,9 @@
       "id": 126,
       "properties": {
         "Chezy": 35.04030746122806,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -7278,7 +7532,9 @@
       "id": 127,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -7335,7 +7591,9 @@
       "id": 128,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -7392,7 +7650,9 @@
       "id": 129,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -7449,7 +7709,9 @@
       "id": 130,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -7506,7 +7768,9 @@
       "id": 131,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 14,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -7563,7 +7827,9 @@
       "id": 132,
       "properties": {
         "Chezy": 10.306058032383493,
+        "behind_dike": true,
         "column": 14,
+        "dike_reference": 131,
         "land": true,
         "landuse": 5,
         "landuse_changed": true,
@@ -7620,7 +7886,9 @@
       "id": 133,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -7677,7 +7945,9 @@
       "id": 134,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -7734,7 +8004,9 @@
       "id": 135,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -7791,7 +8063,9 @@
       "id": 136,
       "properties": {
         "Chezy": 9.922324891438999,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": true,
         "landuse": 3,
         "landuse_changed": true,
@@ -7848,7 +8122,9 @@
       "id": 137,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -7905,7 +8181,9 @@
       "id": 138,
       "properties": {
         "Chezy": 53.9202461838911,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": false,
         "landuse": 9,
         "landuse_changed": true,
@@ -7962,7 +8240,9 @@
       "id": 139,
       "properties": {
         "Chezy": 37.59886372413391,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": true,
         "landuse": 2,
         "landuse_changed": true,
@@ -8019,7 +8299,9 @@
       "id": 140,
       "properties": {
         "Chezy": 34.95978642350253,
+        "behind_dike": false,
         "column": 15,
+        "dike_reference": null,
         "land": true,
         "landuse": 10,
         "landuse_changed": true,
@@ -8076,7 +8358,9 @@
       "id": 141,
       "properties": {
         "Chezy": 4.970923993827387,
+        "behind_dike": true,
         "column": 15,
+        "dike_reference": 140,
         "land": true,
         "landuse": 4,
         "landuse_changed": true,
@@ -8133,7 +8417,9 @@
       "id": 142,
       "properties": {
         "Chezy": 40.979910326471284,
+        "behind_dike": true,
         "column": 15,
+        "dike_reference": 140,
         "land": true,
         "landuse": 1,
         "landuse_changed": true,

@@ -14,7 +14,116 @@ from shapely.ops import unary_union
 import gridMapping as gridmap
 
 
+"""
+To do:
+    - get the number of floodplain hexagon cells
+    - declare owners (water, nature, <third>)
+    - establish number of hexagons per player
+    - generate patches of size 3 to 5
+    - update hexagon properties
+"""
+
+
+def determine_neighbours(hexagons):
+    hex_coor = []
+    polygons = []
+    hexagon0_y = 0
+    hexagon1_y = 0
+    for feature in hexagons.features:
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        y_hex = shape.centroid.y
+        if feature.id == 0:
+            hexagon0_y = y_hex
+        if feature.id == 1:
+            hexagon1_y = y_hex
+        hex_coor.append([x_hex, y_hex])
+        polygons.append(shape)
+    hex_coor = np.array(hex_coor)
+    hex_locations = cKDTree(hex_coor)
+    limit = abs((hexagon0_y - hexagon1_y) * 1.5)
+    total_hex = len(hexagons.features)
+    for feature in hexagons.features:
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        y_hex = shape.centroid.y
+        xy = np.array([x_hex, y_hex])
+        # find all hexagons within the limit radius
+        dist, indices = hex_locations.query(
+                xy, k=7, distance_upper_bound=limit)
+        # remove missing neighbours (return as self.n, equal to total_hex)
+        indices = remove_values_from_array(indices, total_hex)
+        # remove itself
+        indices.pop(0)
+        print("Neighbouring hexagons for hexagon " + str(feature.id) +
+              " are: " + str(indices))
+        feature.properties["neighbours"] = indices.tolist()
+    return hexagons
+
+
+def remove_values_from_array(array, val):
+   return [value for value in array if value != val]
+
+
+def hexagons_behind_dikes(hexagons):
+    dikes_north = []
+    dikes_south = []
+    for feature in hexagons.features:
+        if feature.properties["north_dike"] is True:
+            dikes_north.append(feature)
+        elif feature.properties["south_dike"] is True:
+            dikes_south.append(feature)
+    dikes_north = geojson.FeatureCollection(dikes_north)
+    dikes_south = geojson.FeatureCollection(dikes_south)
+
+    for feature in hexagons.features:
+        try:
+            dike_top = dikes_north[feature.properties["column"]-1]
+        except KeyError:
+            print("area does not have a complete dike in the north")
+            continue
+        try:
+            dike_bottom = dikes_south[feature.properties["column"]-1]
+        except KeyError:
+            print("area does not have a complete dike in the south")
+            continue
+        if feature.id < dike_top.id:
+            feature.properties["behind_dike"] = True
+        elif feature.id > dike_bottom.id:
+            feature.properties["behind_dike"] = True
+        else:
+            feature.properties["behind_dike"] = False
+    return hexagons
+
+
 def determine_ownership(hexagons):
+    owner = ["red", "green" ,"blue"]
+    count = 0
+    for feature in hexagons.features:
+        if (feature.properties["north_dike"] or
+            feature.properties["south_dike"] or
+            feature.properties["main_channel"] or
+            feature.properties["behind_dike"]):
+            continue
+        count += 1
+    ownership = random.choices(owner, k=count)
+    count = 0
+    for feature in hexagons.features:
+        if (feature.properties["north_dike"] or
+            feature.properties["south_dike"] or
+            feature.properties["main_channel"] or
+            feature.properties["behind_dike"]):
+            feature.properties["owner"] = None
+        else:
+            feature.properties["owner"] = ownership[count]
+            count += 1
+    with open('ownership_test.geojson', 'w') as f:
+        geojson.dump(hexagons, f, sort_keys=True, indent=2)
+    return hexagons
+
+
+
+def determine_ownership4(hexagons):
     owner = ["red", "green" ,"blue"]
     count = 0
     for feature in hexagons.features:
@@ -157,5 +266,6 @@ if __name__ == '__main__':
     hexagons = gridmap.hexagons_to_fill(hexagons)
     hexagons = determine_ownership(hexagons)
     """
-    #determine_ownership3()
-    hexagons = random_points(hexagons)
+    hexagons = hexagons_behind_dikes(hexagons)
+    hexagons = determine_neighbours(hexagons)
+    #hexagons = random_points(hexagons)

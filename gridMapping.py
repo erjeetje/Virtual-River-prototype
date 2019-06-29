@@ -141,6 +141,21 @@ def hexagons_to_fill(hexagons):
     dike in the same column and on the same size (north or south). Uses the
     hexagon properties set in the createStructures script.
     """
+    for feature in hexagons.features:
+        if not feature.properties["behind_dike"]:
+            continue
+        else:
+            dike = hexagons[feature.properties["dike_reference"]]
+            feature.properties["z"] = dike.properties["z"]
+    return hexagons
+
+
+def hexagons_to_fill2(hexagons):
+    """
+    Functions that fills the hexagons behind the dike to the same height as the
+    dike in the same column and on the same size (north or south). Uses the
+    hexagon properties set in the createStructures script.
+    """
     dikes_north = []
     dikes_south = []
     for feature in hexagons.features:
