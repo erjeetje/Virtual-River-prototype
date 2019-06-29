@@ -30,8 +30,14 @@ def hex_to_points(model, hexagons, grid, test=False):
             continue
         location = feature.properties["location"]
         hexagon = hexagons_by_id[location]
-        feature.properties["Chezy"] = hexagon.properties["Chezy"]
-        frcu[feature.id] = feature.properties["Chezy"]
+        if (hexagon.properties["z_changed"] or
+            hexagon.properties["landuse_changed"]):
+            feature.properties["Chezy"] = hexagon.properties["Chezy"]
+            try:
+                frcu[feature.id] = feature.properties["Chezy"]
+            except IndexError:
+                print("ERROR: It appears that the feature id is out of range of",
+                      "the number of grid points.")
     return hexagons, grid
 
 
