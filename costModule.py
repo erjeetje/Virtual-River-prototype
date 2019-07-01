@@ -22,6 +22,7 @@ class Costs():
         self.minor_embankment_m3 = None
         self.roughness_smooth_m3 = None
         self.structures_m = None
+        self.dike_m = None
         self.total_costs = None
         self.hexagon_height = None
         self.hexagon_area = None
@@ -68,6 +69,10 @@ class Costs():
                 "lower": 650,
                 "ltd": 1900
                 }
+        self.dike_m = {
+                "raise": 3550,
+                "relocate": 4400
+                }
         self.total_costs = 0
         self.hexagon_height = 250
         a = (2 / sqrt(3)) * (self.hexagon_height / 2)
@@ -81,20 +86,35 @@ class Costs():
         if z_changed:
             if hexagon_old.properties["z"] >= 5:
                 if hexagon_new.properties["z"] >= 4:
-                    z_type = "lowered reinforced dike [NEEDS costs calculation]"
                     # dike lowering (for whatever reason)
+                    z_type = "lowered reinforced dike [NEEDS costs calculation]"
                 else:
-                    z_type = "removed reinforced dike [NEEDS costs calculation]"
-                    # dike relocation of reinforced dike
+                    # relocated reinforced dike from this hexagon
+                    z_type = "relocated reinforced dike (removal)"
+                    # since dike relocation involves two hexagon changes, costs
+                    # are split
+                    z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
             elif hexagon_new.properties["z"] >= 5:
                 if hexagon_old.properties["z"] >= 4:
-                    z_type = "reinforced existing dike [NEEDS costs calculation]"
+                    # dike reinforcement
+                    z_type = "reinforced dike"
+                    z_cost = self.hexagon_height * self.dike_m["raise"]
                 else:
-                    z_type = "reinforced new dike [NEEDS costs calculation]"
+                    # relocated reinforced dike to this hexagon
+                    z_type = "relocated reinforced dike (construction)"
+                    # since dike relocation involves two hexagon changes, costs
+                    # are split
+                    z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
             elif hexagon_old.properties["z"] >= 4:
-                z_type = "removed standard dike [NEEDS costs calculation]"
+                z_type = "dike relocation (removal)"
+                # since dike relocation involves two hexagon changes, costs
+                # are split
+                z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
             elif hexagon_new.properties["z"] >= 4:
-                z_type = "constructed standard dike [NEEDS costs calculation]"
+                z_type = "dike relocation (construction)"
+                # since dike relocation involves two hexagon changes, costs
+                # are split
+                z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
             elif hexagon_old.properties["z"] >= 3:
                 if hexagon_new.properties["z"] == 2:
                     z_type = "lowered floodplain"
