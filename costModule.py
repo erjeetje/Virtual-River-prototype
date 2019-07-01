@@ -83,6 +83,10 @@ class Costs():
                    landuse_changed=False):
         z_cost = 0
         l_cost = 0
+        # in case of a floodplain lowering, landuse might not change, even
+        # though costs for removal (e.g. a building) should be calculated.
+        # In such a scenario, landuse_trigger activates the landuse loop.
+        landuse_trigger = False
         if z_changed:
             if hexagon_old.properties["z"] >= 5:
                 if hexagon_new.properties["z"] >= 4:
@@ -122,6 +126,7 @@ class Costs():
                                (hexagon_old.properties["z"] -
                                 hexagon_new.properties["z"]))
                               * self.floodplain_lowering_m3["storage"])
+                    landuse_trigger = True
                 else:
                     z_type = "constructed sidechannel"
                     z_cost = ((self.hexagon_area *
@@ -165,8 +170,9 @@ class Costs():
                 z_cost = int(round(abs(z_cost)))
                 print("Costs for hexagon " + str(hexagon_new.id) + " for " + z_type + ": " + str(z_cost) + " Euros")
             except UnboundLocalError:
-                print("No costs calculated. Perhaps a missing costs scenario?")
-        if landuse_changed:
+                print("No costs calculated. Perhaps a missing costs scenario"
+                      "(elevation change)?")
+        if (landuse_changed or landuse_trigger):
             if hexagon_old.properties["landuse"] == 0:
                 l_type = "building acquisition and demolition"
                 l_cost = self.acqi_type["farm"] + self.demo_type["farm"]
@@ -255,7 +261,8 @@ class Costs():
                 l_cost = int(round(l_cost))
                 print("Costs for hexagon " + str(hexagon_new.id) + " for " + l_type + ": " + str(l_cost) + " Euros")
             except UnboundLocalError:
-                print("No costs calculated. Perhaps a missing costs scenario?")
+                print("No costs calculated. Perhaps a missing costs scenario"
+                      "(landuse change)?")
         if (z_changed and landuse_changed):
             # exceptional situations if they exist?
             pass
