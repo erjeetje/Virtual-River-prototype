@@ -580,10 +580,29 @@ class runScript():
             return
         if self.turn == 0:
             print("Running model after initialization, updating the elevation "
-                  "in the model will take some time.")
-        self.fig, self.axes = D3D.run_model(
-                    self.model, self.filled_node_grid, self.flow_grid,
-                    self.hexagons_sandbox, turn=self.turn)
+                  "in the model will take some time. Running three loops to "
+                  "stabilize.")
+            self.fig, self.axes = D3D.run_model(
+                    self.model, self.filled_node_grid, turn=self.turn)
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
+            print("Executed first model loop, updating roughness")
+            temp_grid = deepcopy(self.filled_node_grid)
+            temp_grid = gridmap.set_change_false(temp_grid)
+            self.fig, self.axes = D3D.run_model(
+                    self.model, temp_grid, turn=self.turn)
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
+            print("Executed second model loop, updating roughness")
+            self.fig, self.axes = D3D.run_model(
+                    self.model, temp_grid, turn=self.turn)
+        else:
+            self.fig, self.axes = D3D.run_model(
+                    self.model, self.filled_node_grid, turn=self.turn)
         if self.model_save:
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)

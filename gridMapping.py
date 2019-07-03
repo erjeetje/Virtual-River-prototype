@@ -650,6 +650,12 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
     return grid
 
 
+def set_change_false(grid):
+    for feature in grid.features:
+        feature.properties["changed"] = False
+    return grid
+
+
 def create_geotiff(grid, turn=0, path="", save=False):
     """
     Function that creates a GeoTIFF from the grid as constructed in the

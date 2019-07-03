@@ -31,7 +31,7 @@ def initialize_model():
     return model
 
 
-def run_model(model, filled_node_grid, flow_grid, hexagons, fig=None,
+def run_model(model, filled_node_grid, fig=None,
               axes=None, turn=0):
     """
     Function that runs the model. Currently gets the variables from the model,
@@ -69,13 +69,15 @@ def run_model(model, filled_node_grid, flow_grid, hexagons, fig=None,
     #print(min(frcu))
     #print(max(frcu))
 
+    colorbar = False
     if fig is None:
         fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
+        colorbar = True
     sc = axes[0].scatter(xzw, yzw, c=s1, edgecolor='none', vmin=0, vmax=6, cmap='jet')
     sc_zk = axes[1].scatter(xk, yk, c=zk, edgecolor='none', vmin=0, vmax=6, cmap='jet')
-    fig.colorbar(sc, ax=axes[0])
-    fig.colorbar(sc_zk, ax=axes[1])
-
+    if colorbar:
+        fig.colorbar(sc, ax=axes[0])
+        fig.colorbar(sc_zk, ax=axes[1])
     plt.show()
     #zk_new = np.array([feature.properties['z'] for feature in filled_node_grid['features']])
     """
@@ -110,10 +112,7 @@ def run_model(model, filled_node_grid, flow_grid, hexagons, fig=None,
     #if turn == 1:
     #    model.update(10)
     #print("set timesteps in model")
-    if turn == 0:
-        step = 75
-    else:
-        step = 30
+    step = 30
     for i in range(step):
         t0 = time.time()
         model.update(10)
@@ -135,6 +134,8 @@ def run_model(model, filled_node_grid, flow_grid, hexagons, fig=None,
         #t6 = time.time()
         #print("draw: " + str(t6 - t5))
         plt.pause(0.00001)
+        t2 = time.time()
+        print("loop time: " + str(t2 - t0))
 
     print("Finished run model. Current time in model: " +
           str(model.get_current_time()))
