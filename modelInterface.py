@@ -134,8 +134,8 @@ def run_model(model, filled_node_grid, fig=None,
         #t6 = time.time()
         #print("draw: " + str(t6 - t5))
         plt.pause(0.00001)
-        t2 = time.time()
-        print("loop time: " + str(t2 - t0))
+        #t7 = time.time()
+        #print("loop time: " + str(t7 - t0))
 
     print("Finished run model. Current time in model: " +
           str(model.get_current_time()))

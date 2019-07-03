@@ -56,6 +56,13 @@ def randomizer(hexagons):
     return hexagons
 
 
+def update_Chezy_values(hexagons, filled_hexagons):
+    for feature in hexagons.features:
+        reference_hex = filled_hexagons[feature.id]
+        feature.properties["Chezy"] = reference_hex.properties["Chezy"]
+    return hexagons
+
+
 def landuse_to_friction(hexagons, printing=False):
     """
     Function that turns the landuse into a trachytope.
@@ -80,12 +87,30 @@ def landuse_to_friction(hexagons, printing=False):
     for feature in hexagons.features:
         # this would require water height to be stored per hexagon    
         try:
+            water_level = feature.properties["water_level"]
+        except KeyError:
+            water_level = 6
+        try:
+            if feature.properties["behind_dike"]:
+                dike = hexagons[feature.properties["dike_reference"]]
+                z = dike.properties["z"]
+            else:
+                z = feature.properties["z"]
+        except KeyError:
+            try:
+                z = feature.properties["z"]
+            except KeyError:
+                z = 3
+        h = water_level - z
+        """try:
             h = feature.properties["water_level"] - (feature.properties["z"] * 1.5)
         except KeyError:
             try:
                 h = 6 - feature.properties["z"]
             except KeyError:
                 h = 6
+        if feature.properties["behind_dike"]:
+        """    
         if h < 0:
             h = 0.0001
         if feature.properties["landuse"] == 0:

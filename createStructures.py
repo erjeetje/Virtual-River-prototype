@@ -56,8 +56,8 @@ def determine_floodplains_and_behind_dikes(hexagons):
     dikes_north = geojson.FeatureCollection(dikes_north)
     dikes_south = geojson.FeatureCollection(dikes_south)
     for feature in hexagons.features:
-        if feature.properties["ghost_hexagon"]:
-            continue
+        #if feature.properties["ghost_hexagon"]:
+        #    continue
         try:
             channel_north = north_channel[feature.properties["column"]-1]
         except KeyError:

@@ -23,6 +23,8 @@ def water_levels(turn=0):
     water_level_columns = [[] for i in range(15)]
     x_values = []
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         if (feature.properties["behind_dike"] or
             feature.properties["north_dike"] or
             feature.properties["south_dike"]):
@@ -81,6 +83,7 @@ def main():
     water_level4, x4 = water_levels(turn=4)
     water_level5, x5 = water_levels(turn=5)
     water_level6, x6 = water_levels(turn=6)
+    water_level7, x7 = water_levels(turn=7)
     fig, ax = plot_water_levels(x0, water_level0, turn=0)
     fig, ax = plot_water_levels(x1, water_level1, turn=1, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x2, water_level2, turn=2, fig=fig, ax=ax)
@@ -88,6 +91,7 @@ def main():
     fig, ax = plot_water_levels(x4, water_level4, turn=4, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x5, water_level5, turn=5, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x6, water_level6, turn=6, fig=fig, ax=ax)
+    fig, ax = plot_water_levels(x7, water_level7, turn=7, fig=fig, ax=ax)
     return
 
 

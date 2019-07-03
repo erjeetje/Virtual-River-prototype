@@ -19,6 +19,7 @@ import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
+import waterModule as water
 import ghostCells as ghosts
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
@@ -104,7 +105,7 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = False
+        self.save = True
         self.model_save = False
         # Virtual River variables
         self.turn = 0
@@ -130,7 +131,7 @@ class runScript():
         self.fig = None
         self.axes = None
         # water safety module
-        # TODO
+        self.water_module = water.Water_module()
         # cost module
         self.cost_module = costs.Costs()
         self.costs = 0
@@ -282,6 +283,10 @@ class runScript():
         self.filled_node_grid = deepcopy(self.node_grid)
         filled_hexagons = deepcopy(self.hexagons_sandbox)
         filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
+        #filled_hexagons, self.flow_grid = roughness.hex_to_points(
+        #        self.model, filled_hexagons, self.flow_grid)
+        #self.hexagons_sandbox = roughness.update_Chezy_values(
+        #        self.hexagons_sandbox, filled_hexagons)
         self.filled_node_grid = gridmap.update_node_grid(
                 filled_hexagons, self.filled_node_grid, fill=True)
         self.filled_node_grid = gridmap.interpolate_node_grid(
@@ -339,6 +344,11 @@ class runScript():
                                    'filled_node_grid%d.geojson' % self.turn),
                       'w') as f:
                 geojson.dump(self.filled_node_grid, f, sort_keys=True,
+                             indent=2)
+            with open(os.path.join(self.store_path,
+                                   'flow_grid%d.geojson' % self.turn),
+                      'w') as f:
+                geojson.dump(self.flow_grid, f, sort_keys=True,
                              indent=2)
             print("Saved interpolation files (conditional).")
             """
@@ -449,6 +459,12 @@ class runScript():
                                                       self.hexagons_sandbox)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
+        #filled_hexagons = deepcopy(self.hexagons_sandbox)
+        #filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
+        #filled_hexagons, self.flow_grid = roughness.hex_to_points(
+        #        self.model, filled_hexagons, self.flow_grid)
+        #self.hexagons_sandbox = roughness.update_Chezy_values(
+        #        self.hexagons_sandbox, filled_hexagons)
 
         tac = time.time()
         if self.tygron:
@@ -493,8 +509,8 @@ class runScript():
             self.hexagons_sandbox = structures.determine_floodplains_and_behind_dikes(
                 self.hexagons_sandbox)
             filled_hexagons = deepcopy(self.hexagons_sandbox)
-            self.filled_node_grid = deepcopy(self.node_grid)
             filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
+            self.filled_node_grid = deepcopy(self.node_grid)
             self.filled_node_grid = gridmap.update_node_grid(
                     filled_hexagons, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
@@ -549,6 +565,10 @@ class runScript():
                       'w') as f:
                 geojson.dump(
                         self.filled_node_grid, f, sort_keys=True, indent=2)
+            with open(os.path.join(self.store_path,
+                                   'flow_grid%d.geojson' % self.turn),
+                      'w') as f:
+                geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
             print("saved grid files for turn " + str(self.turn) +
                   " (conditional)")
 
