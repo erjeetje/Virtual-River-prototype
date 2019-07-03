@@ -19,6 +19,7 @@ import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
+import ghostCells as ghosts
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -99,9 +100,12 @@ class runScript():
         # update in the initialization depending on whether or not a camera
         # is detected and a tygron session is found.
         self.initialized = False
-        self.save = False
         self.test = False
         self.tygron = True
+        self.ghost_hexagons_fixed = False
+        # save variables, adjust as you wish how to run Virtual River
+        self.save = False
+        self.model_save = False
         # Virtual River variables
         self.turn = 0
         self.token = ""
@@ -125,9 +129,16 @@ class runScript():
         # temporary variables in relation to colormap plots
         self.fig = None
         self.axes = None
+        # water safety module
+        # TODO
         # cost module
         self.cost_module = costs.Costs()
         self.costs = 0
+        # BIOSAFE module
+        # TODO
+        # visualization
+        # TODO
+        
 
     def initialize(self):
         if self.initialized:
@@ -174,6 +185,7 @@ class runScript():
             self.hexagons = detect.detect_markers(
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, method='LAB', path=self.store_path)
+            self.hexagons = ghosts.set_values(self.hexagons)
             print("Processed initial board state.")
         else:
             self.transforms = cali.create_calibration_file(
@@ -197,6 +209,7 @@ class runScript():
             self.hexagons_sandbox = gridmap.read_hexagons(
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
+            self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
             if self.tygron:
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
@@ -397,6 +410,12 @@ class runScript():
             # be linked in memory to the sandbox hexagons.
             self.hexagons_sandbox = detect.transform(
                     self.hexagons, self.transforms, export="sandbox")
+            # THIS SHOULD BE MOVED TO INITIALIZE AFTER MODEL IS FIXED TO INITIALIZATION
+            if not self.ghost_hexagons_fixed:
+                self.hexagons_sandbox = ghosts.update_values(
+                        self.hexagons_sandbox)
+                self.ghost_hexagons_fixed = True
+                print("Fixed the ghost cell values")
         else:
             hexagons_sandbox_old = deepcopy(self.hexagons_sandbox)
             try:
@@ -404,11 +423,19 @@ class runScript():
                 self.hexagons_sandbox = gridmap.read_hexagons(
                         filename='hexagons%d.geojson' % self.turn,
                         path=self.test_path)
+                self.hexagons_sandbox = ghosts.set_values(
+                        self.hexagons_sandbox)
                 print("Received current board state.")
             except FileNotFoundError:
                 print("ERROR: Ran out of test files, aborting update function."
                       " Please restart the application to continue testing.")
                 return
+            # THIS SHOULD BE MOVED TO INITIALIZE AFTER MODEL IS FIXED TO INITIALIZATION
+            if not self.ghost_hexagons_fixed:
+                self.hexagons_sandbox = ghosts.update_values(
+                        self.hexagons_sandbox)
+                self.ghost_hexagons_fixed = True
+                print("Fixed the ghost cell values")
             if self.tygron:
                 # update hexagon ids to matching ids in tygron.
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
@@ -478,7 +505,7 @@ class runScript():
             # if the dike locations did not change, a simple update suffices.
             self.filled_node_grid = gridmap.update_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
-                    turn=self.turn)
+                    turn=self.turn, grid_type="filled")
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
                     turn=self.turn, fill=True, save=False, path=self.dir_path)
@@ -504,6 +531,8 @@ class runScript():
                     fig=self.fig, axes=self.axes)
         """
         if self.save:
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
             # if save is set to True, store the files related to this turn.
             with open(os.path.join(self.store_path,
                                    'hexagons%d.geojson' % self.turn),
@@ -555,6 +584,16 @@ class runScript():
         self.fig, self.axes = D3D.run_model(
                     self.model, self.filled_node_grid, self.flow_grid,
                     self.hexagons_sandbox, turn=self.turn)
+        if self.model_save:
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
+            with open(os.path.join(self.store_path,
+                                   'hexagons_with_model_output%d.geojson' %
+                                   self.turn),
+                      'w') as f:
+                geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
+                             indent=2)
+            print("stored hexagon files with model output (conditional)")
         if self.turn == 0:
             print("Finished running the model after initialization.")
             print("NOTE: If you are running tests, make sure to first press "

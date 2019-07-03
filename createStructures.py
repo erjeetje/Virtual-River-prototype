@@ -18,6 +18,8 @@ def determine_dikes(hexagons):
     threshold). Sets the feature properties accordingly.
     """
     for feature in hexagons.features:
+        #if feature.properties["ghost_hexagon"]:
+        #    continue
         if feature.properties["z"] >= 4:
             shape = geometry.asShape(feature.geometry)
             y_hex = shape.centroid.y
@@ -39,6 +41,8 @@ def determine_floodplains_and_behind_dikes(hexagons):
     dikes_north = []
     dikes_south = []
     for feature in hexagons.features:
+        #if feature.properties["ghost_hexagon"]:
+        #    continue
         if feature.properties["north_side_channel"]:
             north_channel.append(feature)
         elif feature.properties["south_side_channel"]:
@@ -52,6 +56,8 @@ def determine_floodplains_and_behind_dikes(hexagons):
     dikes_north = geojson.FeatureCollection(dikes_north)
     dikes_south = geojson.FeatureCollection(dikes_south)
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         try:
             channel_north = north_channel[feature.properties["column"]-1]
         except KeyError:
@@ -108,6 +114,8 @@ def determine_channel(hexagons):
     channel threshold). Sets the feature properties accordingly.
     """
     for feature in hexagons.features:
+        #if feature.properties["ghost_hexagon"]:
+        #    continue
         if feature.properties["z"] == 0:
             next_hexagon = hexagons[feature.id + 1]
             if next_hexagon.properties["z"] == 0:
@@ -132,6 +140,8 @@ def get_channel(hexagons):
     hexagons_copy = deepcopy(hexagons)
     channel = []
     for feature in hexagons_copy.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         if feature.properties["main_channel"]:
             channel.append(feature)
     channel = geojson.FeatureCollection(channel)
@@ -157,6 +167,8 @@ def create_structures(hexagons):
     groyne_dist = 0.0
     structures = []
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         height = abs(height)
         groyne_dist = abs(groyne_dist)
         edge = False

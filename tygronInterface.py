@@ -81,6 +81,8 @@ def update_hexagons_tygron_id(api_key, hexagons):
                   " id.")
             continue
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         tygron_id = building_indices.get(feature.id, None)
         feature.properties["tygron_id"] = tygron_id
     return hexagons
@@ -140,6 +142,8 @@ def set_terrain_type(api_key, hexagons):
     land = []
     new_land_hexagons = []
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         if (feature.properties["water"] and feature.properties["z_changed"]):
             shape = geometry.asShape(feature.geometry)
             water.append(shape)
@@ -321,6 +325,8 @@ def hex_to_terrain(api_key, hexagons):
     10: dike
     """
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         if not feature.properties["landuse_changed"]:
             continue
         if feature.properties["water"]:

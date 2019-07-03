@@ -269,8 +269,46 @@ class Costs():
         return z_cost, l_cost
 
 
+    def cost_per_hex(self):
+        all_costs = []
+        costs = self.getCost(self.acqi_type["farm"], 1, "farm acquisition")
+        all_costs.append(costs)
+        costs = self.getCost(self.acqi_type["business"], 1, "business acquisition")
+        all_costs.append(costs)
+        costs = self.getCost(self.demo_type["farm"], 1, "farm demolition")
+        all_costs.append(costs)
+        costs = self.getCost(self.demo_type["business"], 1, "business demolition")
+        all_costs.append(costs)
+        costs = self.getCost(self.floodplain_lowering_m3["storage"], self.hexagon_area, "floodplain lowering")
+        all_costs.append(costs)
+        costs = self.getCost(self.sidechannel_m3["storage"], self.hexagon_area, "digging sidechannel")
+        all_costs.append(costs)
+        costs = self.getCost(self.roughness_smooth_m2["grass"], self.hexagon_area, "grass smoothing")
+        all_costs.append(costs)
+        costs = self.getCost(self.roughness_smooth_m2["herbaceous"], self.hexagon_area, "herbaceous smoothing")
+        all_costs.append(costs)
+        costs = self.getCost(self.roughness_smooth_m2["forest"], self.hexagon_area, "forest smoothing")
+        all_costs.append(costs)
+        costs = self.getCost(self.structures_m["ltd"], self.hexagon_height, "ltd construction")
+        all_costs.append(costs)
+        costs = self.getCost(self.dike_m["raise"], self.hexagon_height, "dike reinforcement")
+        all_costs.append(costs)
+        costs = self.getCost(self.dike_m["relocate"], self.hexagon_height, "dike relocation")
+        all_costs.append(costs)
+        with open('costs_test.txt', 'w') as f:
+            for item in all_costs:
+                f.write(item)
+                f.write("\n")
+        return
+            
+    def getCost(self, cost_type, multiplier, what):
+        calc = cost_type * multiplier
+        string = ("Costs for " + str(what) + " per hexagon are: " + str(calc))
+        return string
+
+
 def main():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
+    """dir_path = os.path.dirname(os.path.realpath(__file__))
     test_path = os.path.join(dir_path, 'test_files')
     turn = 0
     hexagons_old = gridmap.read_hexagons(
@@ -280,8 +318,9 @@ def main():
     hexagons_new = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
+    """
     cost = Costs()
-    print(cost.acqi_m2)
+    cost.cost_per_hex()
 
 
 if __name__ == '__main__':

@@ -40,26 +40,26 @@ def plot(hexagons, turn=0):
 
 if __name__ == '__main__':
     try:
-        with open('hexagons0.geojson') as f:
+        with open('test_files\\hexagons3.geojson') as f:
             hexagons0 = geojson.load(f)
-        plot(hexagons0, turn=0)
+        plot(hexagons0, turn=3)
     except FileNotFoundError:
         pass
     try:
-        with open('hexagons1.geojson') as f:
+        with open('test_files\\hexagons4.geojson') as f:
             hexagons1 = geojson.load(f)
-        plot(hexagons1, turn=1)
+        plot(hexagons1, turn=4)
     except FileNotFoundError:
         pass
     try:
-        with open('hexagons2.geojson') as f:
+        with open('test_files\\hexagons5.geojson') as f:
             hexagons2 = geojson.load(f)
-        plot(hexagons2, turn=2)
+        plot(hexagons2, turn=5)
     except FileNotFoundError:
         pass
     try:
-        with open('hexagons3.geojson') as f:
+        with open('test_files\\hexagons6.geojson') as f:
             hexagons3 = geojson.load(f)
-        plot(hexagons3, turn=3)
+        plot(hexagons3, turn=6)
     except FileNotFoundError:
         pass

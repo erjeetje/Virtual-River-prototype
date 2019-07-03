@@ -26,18 +26,16 @@ def hex_to_points(model, hexagons, grid, test=False):
     hexagons = landuse_to_friction(hexagons)
     hexagons_by_id = {feature.id: feature for feature in hexagons.features}
     for feature in grid.features:
-        if not feature.properties["board"]:
+        if feature.properties["fill"]:
             continue
         location = feature.properties["location"]
         hexagon = hexagons_by_id[location]
-        if (hexagon.properties["z_changed"] or
-            hexagon.properties["landuse_changed"]):
-            feature.properties["Chezy"] = hexagon.properties["Chezy"]
-            try:
-                frcu[feature.id] = feature.properties["Chezy"]
-            except IndexError:
-                print("ERROR: It appears that the feature id is out of range of",
-                      "the number of grid points.")
+        feature.properties["Chezy"] = hexagon.properties["Chezy"]
+        try:
+            frcu[feature.id] = feature.properties["Chezy"]
+        except IndexError:
+            print("ERROR: It appears that the feature id is out of range of",
+                  "the number of grid points.")
     return hexagons, grid
 
 

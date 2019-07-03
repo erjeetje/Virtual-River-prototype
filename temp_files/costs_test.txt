@@ -1,0 +1,12 @@
+Costs for farm acquisition per hexagon are: 900000
+Costs for business acquisition per hexagon are: 1400000
+Costs for farm demolition per hexagon are: 40000
+Costs for business demolition per hexagon are: 120000
+Costs for floodplain lowering per hexagon are: 389711.4317029974
+Costs for digging sidechannel per hexagon are: 438425.3606658721
+Costs for grass smoothing per hexagon are: 2922.8357377724806
+Costs for herbaceous smoothing per hexagon are: 4384.253606658721
+Costs for forest smoothing per hexagon are: 7198.836168958147
+Costs for ltd construction per hexagon are: 475000
+Costs for dike reinforcement per hexagon are: 887500
+Costs for dike relocation per hexagon are: 1100000

@@ -142,6 +142,8 @@ def hexagons_to_fill(hexagons):
     hexagon properties set in the createStructures script.
     """
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         if not feature.properties["behind_dike"]:
             continue
         else:
@@ -159,6 +161,8 @@ def hexagons_to_fill2(hexagons):
     dikes_north = []
     dikes_south = []
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         if feature.properties["north_dike"] is True:
             dikes_north.append(feature)
         elif feature.properties["south_dike"] is True:
@@ -263,9 +267,16 @@ def index_flow_grid(hexagons, grid):
             dist, index = hex_locations.query(xy)
             feature.properties["location"] = index
             feature.properties["changed"] = True
+            feature.properties["fill"] = False
         else:
+            if (y_point > maxy or y_point < miny):
+                feature.properties["fill"] = True
+                feature.properties["location"] = None
+            else:
+                feature.properties["fill"] = False
+                dist, index = hex_locations.query(xy)
+                feature.properties["location"] = index
             feature.properties["board"] = False
-            feature.properties["location"] = None
             feature.properties["changed"] = True
     return grid
 
@@ -401,10 +412,10 @@ def index_node_grid(hexagons, grid):
             feature.properties["border"] = False
             feature.properties["changed"] = True
             feature.properties["fill"] = False
-            if y_point > maxy or y_point < miny:
+            if (y_point > maxy or y_point < miny):
                 feature.properties["fill"] = True
                 feature.properties["z"] = 4.0
-            elif x_point == x_min or x_point == x_max:
+            elif (x_point == x_min or x_point == x_max):
                 feature.properties["border"] = True
                 """
                 index = np.where(border_values[:, 0] == y_point)
@@ -512,7 +523,7 @@ def index_node_grid(hexagons, grid):
     return grid
 
 
-def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False):
+def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_type="node"):
     """ 
     Function to update the grid: determine which grid points require updating
     based on which hexagons are changed. This way, only the grid points that
@@ -522,12 +533,18 @@ def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False):
     counter = 0
     # add feature ids of the changed hexagons to a list.
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            if not turn == 0:
+                continue
         if fill:
-            if feature.properties["behind_dike"] or \
-                    feature.properties["z_changed"]:
+            if (feature.properties["behind_dike"] or
+                feature.properties["z_changed"]):
                 indices_updated.append(feature.id)
         else:
             if feature.properties["z_changed"]:
+                if (grid_type == "filled" and
+                    feature.properties["behind_dike"]):
+                        continue
                 indices_updated.append(feature.id)
     # set the changed properties of the points in the grid indexed to a hexagon
     # indices_updated to True. Set the points that should not change to False.

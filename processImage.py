@@ -146,6 +146,8 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         # some adjustments to adjust for the distance of the camera to the
         # side. This is not a necessity, but increases robustness. Alternative
         # would be to improve the perspective warp.
+        if feature.properties["ghost_hexagon"]:
+            continue
         x = feature.properties["x_center"]
         y = feature.properties["y_center"]
         if i < 10:

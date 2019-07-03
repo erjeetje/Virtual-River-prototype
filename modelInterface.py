@@ -111,7 +111,7 @@ def run_model(model, filled_node_grid, flow_grid, hexagons, fig=None,
     #    model.update(10)
     #print("set timesteps in model")
     if turn == 0:
-        step = 60
+        step = 75
     else:
         step = 30
     for i in range(step):
