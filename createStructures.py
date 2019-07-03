@@ -140,8 +140,8 @@ def get_channel(hexagons):
     hexagons_copy = deepcopy(hexagons)
     channel = []
     for feature in hexagons_copy.features:
-        if feature.properties["ghost_hexagon"]:
-            continue
+        #if feature.properties["ghost_hexagon"]:
+        #    continue
         if feature.properties["main_channel"]:
             channel.append(feature)
     channel = geojson.FeatureCollection(channel)
@@ -167,8 +167,8 @@ def create_structures(hexagons):
     groyne_dist = 0.0
     structures = []
     for feature in hexagons.features:
-        if feature.properties["ghost_hexagon"]:
-            continue
+        #if feature.properties["ghost_hexagon"]:
+        #    continue
         height = abs(height)
         groyne_dist = abs(groyne_dist)
         edge = False

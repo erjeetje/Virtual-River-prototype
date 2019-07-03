@@ -1,0 +1,841 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -350.0129614935986,
+            60.0
+          ],
+          [
+            -350.0129614935986,
+            37.499999999999865
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne00",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne00.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -350.0129614935987,
+            -60.000000000000355
+          ],
+          [
+            -350.0129614935987,
+            -37.50000000000022
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne01",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne01.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -300.0259246826172,
+            30.00000000000013
+          ],
+          [
+            -300.0259246826172,
+            7.499999999999999
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne02",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne02.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -300.0259246826172,
+            -90.00000000000017
+          ],
+          [
+            -300.0259246826172,
+            -67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne03",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne03.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -250.0388912624783,
+            60.0
+          ],
+          [
+            -250.0388912624783,
+            37.499999999999865
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne04",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne04.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -250.0388912624783,
+            -60.000000000000355
+          ],
+          [
+            -250.0388912624783,
+            -37.50000000000022
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne05",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne05.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -200.05185275607639,
+            90.00000000000017
+          ],
+          [
+            -200.05185275607639,
+            67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne06",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne06.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -200.05185275607639,
+            -30.00000000000022
+          ],
+          [
+            -200.05185275607639,
+            -7.500000000000086
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne07",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne07.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -150.06481382581924,
+            120.00000000000017
+          ],
+          [
+            -150.06481382581924,
+            97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne08",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne08.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -150.06481382581927,
+            -3.304023721284466e-13
+          ],
+          [
+            -150.06481382581927,
+            22.4999999999998
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne09",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne09.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -100.07777913411402,
+            150.00000000000017
+          ],
+          [
+            -100.07777913411402,
+            127.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne10",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne10.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -100.07777913411402,
+            29.999999999999822
+          ],
+          [
+            -100.07777913411402,
+            52.49999999999996
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne11",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne11.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -50.090749740600586,
+            120.00000000000017
+          ],
+          [
+            -50.090749740600586,
+            97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne12",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne12.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -50.090749740600586,
+            -3.304023721284466e-13
+          ],
+          [
+            -50.090749740600586,
+            22.4999999999998
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne13",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne13.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -0.10370784335666233,
+            90.00000000000017
+          ],
+          [
+            -0.10370784335666233,
+            67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne14",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne14.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -0.10370784335666233,
+            -30.000000000000217
+          ],
+          [
+            -0.10370784335666233,
+            -7.500000000000083
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne15",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne15.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            49.88333670298249,
+            60.00000000000003
+          ],
+          [
+            49.88333670298249,
+            37.49999999999989
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne16",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne16.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            49.883336702982504,
+            -60.00000000000033
+          ],
+          [
+            49.883336702982504,
+            -37.5000000000002
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne17",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne17.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            99.87037065294066,
+            30.00000000000014
+          ],
+          [
+            99.87037065294066,
+            7.500000000000006
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne18",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne18.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            99.87037065294065,
+            -90.00000000000017
+          ],
+          [
+            99.87037065294065,
+            -67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne19",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne19.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            149.857408735487,
+            2.4868995751603507e-14
+          ],
+          [
+            149.857408735487,
+            -22.500000000000107
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne20",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne20.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            149.85740873548704,
+            -120.00000000000017
+          ],
+          [
+            149.85740873548704,
+            -97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne21",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne21.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            199.8444357977981,
+            -29.999999999999822
+          ],
+          [
+            199.8444357977981,
+            -52.49999999999996
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne22",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne22.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            199.8444357977981,
+            -150.00000000000017
+          ],
+          [
+            199.8444357977981,
+            -127.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne23",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne23.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            249.8314624362533,
+            5.684341886080802e-14
+          ],
+          [
+            249.8314624362533,
+            -22.500000000000078
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne24",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne24.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            249.83146243625333,
+            -120.00000000000017
+          ],
+          [
+            249.83146243625333,
+            -97.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne25",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne25.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            299.8184967041015,
+            30.000000000000146
+          ],
+          [
+            299.8184967041015,
+            7.500000000000012
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne26",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne26.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            299.81849670410156,
+            -90.00000000000017
+          ],
+          [
+            299.81849670410156,
+            -67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne27",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne27.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            349.80555216471043,
+            60.00000000000005
+          ],
+          [
+            349.80555216471043,
+            37.499999999999915
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne28",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne28.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            349.80555216471043,
+            -60.0000000000003
+          ],
+          [
+            349.80555216471043,
+            -37.50000000000016
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne29",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne29.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -449.9870385064014,
+            60.0
+          ],
+          [
+            -449.9870385064014,
+            37.499999999999865
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne30",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne30.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -449.98703850640135,
+            -60.000000000000355
+          ],
+          [
+            -449.98703850640135,
+            -37.50000000000022
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne31",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne31.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -400.0,
+            90.00000000000017
+          ],
+          [
+            -400.0,
+            67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne32",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne32.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            -400.0,
+            -30.000000000000224
+          ],
+          [
+            -400.0,
+            -7.50000000000009
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne33",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne33.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            399.7926025390625,
+            30.000000000000146
+          ],
+          [
+            399.7926025390625,
+            7.500000000000012
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne34",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne34.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            399.7926025390625,
+            -90.00000000000017
+          ],
+          [
+            399.7926025390625,
+            -67.50000000000004
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne35",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne35.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            449.7796393500424,
+            60.00000000000005
+          ],
+          [
+            449.7796393500424,
+            37.499999999999915
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne36",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne36.pli"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            449.7796393500424,
+            -60.0000000000003
+          ],
+          [
+            449.7796393500424,
+            -37.50000000000016
+          ]
+        ],
+        "type": "LineString"
+      },
+      "id": "groyne37",
+      "properties": {
+        "active": true,
+        "crest_level": 3.0,
+        "pli_path": "groyne37.pli"
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

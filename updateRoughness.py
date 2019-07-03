@@ -86,6 +86,7 @@ def landuse_to_friction(hexagons, printing=False):
         test_list = []
     for feature in hexagons.features:
         # this would require water height to be stored per hexagon    
+        """
         try:
             water_level = feature.properties["water_level"]
         except KeyError:
@@ -93,24 +94,23 @@ def landuse_to_friction(hexagons, printing=False):
         try:
             if feature.properties["behind_dike"]:
                 dike = hexagons[feature.properties["dike_reference"]]
-                z = dike.properties["z"]
+                z = dike.properties["z"] * 1.5
             else:
-                z = feature.properties["z"]
+                z = feature.properties["z"] * 1.5
         except KeyError:
             try:
-                z = feature.properties["z"]
+                z = feature.properties["z"] * 1.5
             except KeyError:
                 z = 3
         h = water_level - z
-        """try:
+        """
+        try:
             h = feature.properties["water_level"] - (feature.properties["z"] * 1.5)
         except KeyError:
             try:
-                h = 6 - feature.properties["z"]
+                h = 6 - (feature.properties["z"] * 1.5)
             except KeyError:
-                h = 6
-        if feature.properties["behind_dike"]:
-        """    
+                h = 6    
         if h < 0:
             h = 0.0001
         if feature.properties["landuse"] == 0:
@@ -153,7 +153,7 @@ def landuse_to_friction(hexagons, printing=False):
             n = 0.025  # check approach with Koen
             handler = "bed"
             name = "side channel      "
-        elif feature.properties["landuse"] == 8 or feature.properties["landuse"] == 9:
+        elif (feature.properties["landuse"] == 8 or feature.properties["landuse"] == 9):
             # main channel
             n = 0.025  # check approach with Koen
             handler = "bed"

@@ -238,6 +238,55 @@
 ** INFO   : Opened file : groyne29.pli
 ** INFO   : Closed file : groyne29.pli
 ** INFO   :  groyne29.pli       3 nr of weir cells
+** INFO   : Opened file : groyne30.pli
+** INFO   : Closed file : groyne30.pli
+** INFO   :  groyne30.pli       4 nr of weir cells
+** INFO   : Opened file : groyne31.pli
+** INFO   : Closed file : groyne31.pli
+** INFO   :  groyne31.pli       3 nr of weir cells
+** INFO   : Opened file : groyne32.pli
+** INFO   : Closed file : groyne32.pli
+** INFO   :  groyne32.pli       4 nr of weir cells
+** INFO   : Opened file : groyne33.pli
+** INFO   : Closed file : groyne33.pli
+** INFO   :  groyne33.pli       3 nr of weir cells
+** INFO   : Opened file : groyne34.pli
+** INFO   : Closed file : groyne34.pli
+** INFO   :  groyne34.pli       4 nr of weir cells
+** INFO   : Opened file : groyne35.pli
+** INFO   : Closed file : groyne35.pli
+** INFO   :  groyne35.pli       3 nr of weir cells
+** INFO   : Opened file : groyne36.pli
+** INFO   : Closed file : groyne36.pli
+** INFO   :  groyne36.pli       4 nr of weir cells
+** INFO   : Opened file : groyne37.pli
+** INFO   : Closed file : groyne37.pli
+** INFO   :  groyne37.pli       3 nr of weir cells
+** INFO   : Opened file : groyne38.pli
+** INFO   : Closed file : groyne38.pli
+** INFO   :  groyne38.pli       4 nr of weir cells
+** INFO   : Opened file : groyne39.pli
+** INFO   : Closed file : groyne39.pli
+** INFO   :  groyne39.pli       3 nr of weir cells
+** INFO   : Opened file : groyne40.pli
+** INFO   : Closed file : groyne40.pli
+** INFO   :  groyne40.pli       4 nr of weir cells
+** INFO   : Opened file : groyne41.pli
+** INFO   : Closed file : groyne41.pli
+** INFO   :  groyne41.pli       3 nr of weir cells
+** INFO   : Opened file : groyne42.pli
+** INFO   : Closed file : groyne42.pli
+** INFO   :  groyne42.pli       4 nr of weir cells
+** INFO   : Opened file : groyne43.pli
+** INFO   : Closed file : groyne43.pli
+** INFO   :  groyne43.pli       3 nr of weir cells
+** INFO   : Opened file : groyne44.pli
+** INFO   : Closed file : groyne44.pli
+** INFO   :  groyne44.pli       4 nr of weir cells
+** INFO   : Opened file : groyne45.pli
+** INFO   : Closed file : groyne45.pli
+** INFO   :  groyne45.pli       3 nr of weir cells
+** DEBUG  :           66  1.4490000E-03  zcgen(ncgensg*kx), kcgen(4,ncgen)
 ** INFO   : External Forcing or Initialising 'frictioncoefficient' from file 'frictioncoefficient_Set_value_1.pol'.
 ** DEBUG  :           66  5.2974001E-02  zh(nx)
 ** INFO   : Opened file : frictioncoefficient_Set_value_1.pol
@@ -258,16 +307,16 @@
 ** DEBUG  :           70  2.6706999E-02  jagauss(nodtot)
 ** DEBUG  :           72  0.1061290      ccr(0:ijstck)
 ** DEBUG  :           73  0.1061290      bbl(0:ijstck)
-** DEBUG  :           73  5.3413998E-02  bbr(nodtot), ddr(nodtot)
+** DEBUG  :           74  5.3413998E-02  bbr(nodtot), ddr(nodtot)
 ** DEBUG  :           75  0.1335350      d0(nodtot), zkr(nodtot),pk(0:nodtot), apk(nodtot), rk(nodtot)
 ** INFO   : nogauss , nocg :          13420         13287
 ** DEBUG  :           80  0.7297890      iao(nn+1)
 ** DEBUG  :           83  0.3046050      ao(na)
 ** DEBUG  :           89  0.7972200      wk(nwk)
-** INFO   : Modelinit finished   at: 16:00:27, 03-07-2019
+** INFO   : Modelinit finished   at: 19:07:49, 03-07-2019
 ** INFO   : ** Model initialization was successful **
 ** INFO   : * Active Model definition:
-# Generated on 16:00:27, 03-07-2019
+# Generated on 19:07:49, 03-07-2019
 # Deltares, D-Flow FM Version 1.2.38.63172M, Feb 14 2019, 18:49:17
 # Source:https://svn.oss.deltares.nl/repos/delft3d/trunk/
 
@@ -644,18 +693,53 @@ ProcessFluxIntegration            = 1                   # Process fluxes integra
 ** INFO   :    Sim. time done   Sim. time left   Real time used   Real time left Steps left Complete% Interval-averaged time step
 ** INFO   :               0d  0:0             99d 23:5              0d  0:0         ??d ??:??:??    8639999     0.0%     0.00000
 ** INFO   : Done writing initial output to file(s).
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d 19:3    8639940     0.0%     0.00000
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d 17:5    8639880     0.0%     0.38710
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d  9:1    8639820     0.0%     0.50000
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d  5:2    8639760     0.0%     0.50000
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d  3:0    8639700     0.0%     0.50000
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d  1:5    8639640     0.0%     0.50000
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d  5:0    8639580     0.0%     0.38217
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d  9:5    8639520     0.0%     0.33333
-** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d 13:4    8639460     0.0%     0.33333
-** INFO   :               0d  0:1             99d 23:5              0d  0:0              5d 16:5    8639400     0.0%     0.33333
-** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 19:3    8639340     0.0%     0.33333
-** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 20:5    8639280     0.0%     0.36145
-** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 18:4    8639220     0.0%     0.50000
-** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 17:0    8639160     0.0%     0.50000
-** INFO   :               0d  0:1             99d 23:4              0d  0:0              5d 15:2    8639100     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              5d  7:4    8639940     0.0%     0.00000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 21:0    8639880     0.0%     0.48000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 16:2    8639820     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 14:3    8639760     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 13:3    8639700     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 13:1    8639640     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 12:4    8639580     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 12:2    8639520     0.0%     0.50000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 12:1    8639460     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:5              0d  0:0              4d 12:1    8639400     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 12:3    8639340     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 12:2    8639280     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 12:3    8639220     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 12:3    8639160     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 12:4    8639100     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 12:5    8639040     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 13:1    8638980     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 13:1    8638920     0.0%     0.50000
+** INFO   :               0d  0:1             99d 23:4              0d  0:0              4d 13:1    8638860     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:4              0d  0:0              4d 13:2    8638800     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:3    8638740     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:4    8638680     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:4    8638620     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:4    8638560     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:4    8638500     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:5    8638440     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:5    8638380     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:5    8638320     0.0%     0.50000
+** INFO   :               0d  0:2             99d 23:3              0d  0:0              4d 13:5    8638260     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:3              0d  0:0              4d 13:5    8638200     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 13:5    8638140     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 13:5    8638080     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 13:5    8638020     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 13:5    8637960     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 13:5    8637900     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 14:0    8637840     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 14:1    8637780     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 14:1    8637720     0.0%     0.50000
+** INFO   :               0d  0:3             99d 23:2              0d  0:0              4d 14:1    8637660     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:2              0d  0:0              4d 14:1    8637600     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:1    8637540     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:1    8637480     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:1    8637420     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:1    8637360     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:1    8637300     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:2    8637240     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:3    8637180     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:3    8637120     0.0%     0.50000
+** INFO   :               0d  0:4             99d 23:1              0d  0:0              4d 14:3    8637060     0.0%     0.50000
+** INFO   :               0d  0:5             99d 23:1              0d  0:0              4d 14:3    8637000     0.0%     0.50000

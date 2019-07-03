@@ -142,8 +142,6 @@ def hexagons_to_fill(hexagons):
     hexagon properties set in the createStructures script.
     """
     for feature in hexagons.features:
-        if feature.properties["ghost_hexagon"]:
-            continue
         if not feature.properties["behind_dike"]:
             continue
         else:

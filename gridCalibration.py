@@ -227,20 +227,64 @@ def create_features(height, width):
         feature.properties["y_center"] = int(round(y))
         feature.properties["ghost_hexagon"] = False
         features.append(feature)
-    x_left = origins[0][0] - x_step
-    x_right = origins[-1][0] + x_step
+    x_left = origins[0][0] - (x_step * 5)
     ghost_origins = []
+    ghost_columns = []
+    next_column = max(column)
+    for a in range(1, 5):  # range reflects gridsize in x direction
+        x = x_left + (x_step * a)
+        next_column += 1
+        for b in range(1, 11):  # range reflects gridsize in y direction
+            if a % 2 == 0:
+                if b == 10:
+                    continue
+                y = (radius * b)
+            else:
+                y = (radius * (b - 0.5))
+            ghost_origins.append([x, y])
+            ghost_columns.append(next_column)
+    x_right = origins[-1][0] + x_step
+    for a in range(0, 4):  # range reflects gridsize in x direction
+        x = x_right + (x_step * a)
+        next_column += 1
+        for b in range(1, 11):  # range reflects gridsize in y direction
+            if a % 2 == 0:
+                if b == 10:
+                    continue
+                y = (radius * b)
+            else:
+                y = (radius * (b - 0.5))
+            ghost_origins.append([x, y])
+            ghost_columns.append(next_column)
+    """
+    for b in range(1,11):
+        x = x_left
+        y = (radius * (b - 0.5))
+        ghost_origins.append([x, y])
+        ghost_columns.append(next_column)
+    x_left += x_step
+    next_column += 1
     for b in range(1,10):
         x = x_left
         y = radius * b
         ghost_origins.append([x, y])
+        ghost_columns.append(next_column)
+    next_column += 1
     for b in range(1,10):
         x = x_right
         y = radius * b
         ghost_origins.append([x, y])
-    vert_middle = width / 2
-    min_column = min(column)
-    max_column = max(column)
+        ghost_columns.append(next_column)
+    x_right += x_step
+    next_column += 1
+    for b in range(1,11):
+        x = x_right
+        y = (radius * (b - 0.5))
+        ghost_origins.append([x, y])
+        ghost_columns.append(next_column)
+    #vert_middle = width / 2
+    #min_column = min(column)
+    """
     for i, (x, y) in enumerate(ghost_origins):
         # determine all the corner points of the hexagon
         point1 = [x+dist, y]
@@ -256,16 +300,14 @@ def create_features(height, width):
         feature = geojson.Feature(id=ghost_id, geometry=polygon)
         feature.properties["z_changed"] = True
         feature.properties["landuse_changed"] = True
-        if x < vert_middle:
-            feature.properties["column"] = min_column - 1
-        else:
-            feature.properties["column"] = max_column + 1
+        feature.properties["column"] = ghost_columns[i]
         feature.properties["tygron_id"] = None
         # these x and y centers are not actually relevant --> features are
         # transformed to other coordinates.
         feature.properties["x_center"] = int(round(x))
         feature.properties["y_center"] = int(round(y))
         feature.properties["ghost_hexagon"] = True
+        
         features.append(feature)
     # create geojson featurecollection with all hexagons.
     features = geojson.FeatureCollection(features)

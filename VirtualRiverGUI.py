@@ -20,7 +20,7 @@ import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
 import waterModule as water
-import ghostCells as ghosts
+import ghostCells_test as ghosts
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -107,6 +107,7 @@ class runScript():
         # save variables, adjust as you wish how to run Virtual River
         self.save = True
         self.model_save = False
+        self.model_ini_save = False
         # Virtual River variables
         self.turn = 0
         self.token = ""
@@ -602,6 +603,17 @@ class runScript():
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time. Running three loops to "
                   "stabilize.")
+            if self.model_ini_save:
+                with open(os.path.join(self.store_path,
+                                      'flow_grid_model_ini1.geojson'),
+                         'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'hexagons_model_ini1.geojson'),
+                          'w') as f:
+                    geojson.dump(
+                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
             self.fig, self.axes = D3D.run_model(
                     self.model, self.filled_node_grid, turn=self.turn)
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
@@ -609,6 +621,17 @@ class runScript():
             self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
             print("Executed first model loop, updating roughness")
+            if self.model_ini_save:
+                with open(os.path.join(self.store_path,
+                                       'flow_grid_model_ini2.geojson'),
+                          'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'hexagons_model_ini2.geojson'),
+                          'w') as f:
+                    geojson.dump(
+                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
             temp_grid = deepcopy(self.filled_node_grid)
             temp_grid = gridmap.set_change_false(temp_grid)
             self.fig, self.axes = D3D.run_model(
@@ -618,8 +641,34 @@ class runScript():
             self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
             print("Executed second model loop, updating roughness")
+            if self.model_ini_save:
+                with open(os.path.join(self.store_path,
+                                       'flow_grid_model_ini3.geojson'),
+                          'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'hexagons_model_ini3.geojson'),
+                          'w') as f:
+                    geojson.dump(
+                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
             self.fig, self.axes = D3D.run_model(
                     self.model, temp_grid, turn=self.turn)
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
+            if self.model_ini_save:
+                with open(os.path.join(self.store_path,
+                                       'flow_grid_model_ini4.geojson'),
+                          'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'hexagons_model_ini4.geojson'),
+                          'w') as f:
+                    geojson.dump(
+                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
         else:
             self.fig, self.axes = D3D.run_model(
                     self.model, self.filled_node_grid, turn=self.turn)

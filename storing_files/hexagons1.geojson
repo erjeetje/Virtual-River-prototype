@@ -38,7 +38,7 @@
       },
       "id": 0,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 5.649394894855787,
         "behind_dike": true,
         "column": 1,
         "dike_reference": 1,
@@ -47,7 +47,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 5,
+        "landuse": 4,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -56,7 +56,7 @@
         "south_side_channel": false,
         "tygron_id": 0,
         "water": false,
-        "water_level": 6.067742835197292,
+        "water_level": 6.072077252708424,
         "x_center": 87,
         "y_center": 50,
         "z": 2,
@@ -102,7 +102,7 @@
       },
       "id": 1,
       "properties": {
-        "Chezy": 2.376351291742679,
+        "Chezy": 2.6508050507070564,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -120,7 +120,7 @@
         "south_side_channel": false,
         "tygron_id": 1,
         "water": false,
-        "water_level": 6.041348737296915,
+        "water_level": 6.032313187552523,
         "x_center": 87,
         "y_center": 150,
         "z": 4,
@@ -166,7 +166,7 @@
       },
       "id": 2,
       "properties": {
-        "Chezy": 35.63820803461153,
+        "Chezy": 6.489449156991952,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -175,7 +175,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 1,
+        "landuse": 4,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -184,7 +184,7 @@
         "south_side_channel": false,
         "tygron_id": 2,
         "water": false,
-        "water_level": 5.158416479946514,
+        "water_level": 5.297288993459277,
         "x_center": 87,
         "y_center": 250,
         "z": 2,
@@ -230,7 +230,7 @@
       },
       "id": 3,
       "properties": {
-        "Chezy": 35.67909237134454,
+        "Chezy": 32.52563280814095,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -239,7 +239,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 1,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -248,7 +248,7 @@
         "south_side_channel": false,
         "tygron_id": 3,
         "water": false,
-        "water_level": 5.168390626038488,
+        "water_level": 5.278507243662922,
         "x_center": 87,
         "y_center": 350,
         "z": 2,
@@ -294,7 +294,7 @@
       },
       "id": 4,
       "properties": {
-        "Chezy": 52.57779550727336,
+        "Chezy": 52.81818132644241,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -312,7 +312,7 @@
         "south_side_channel": false,
         "tygron_id": 4,
         "water": true,
-        "water_level": 5.157678768193474,
+        "water_level": 5.300791366137612,
         "x_center": 87,
         "y_center": 450,
         "z": 0,
@@ -358,7 +358,7 @@
       },
       "id": 5,
       "properties": {
-        "Chezy": 52.520162847815584,
+        "Chezy": 52.731099961350886,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -376,7 +376,7 @@
         "south_side_channel": true,
         "tygron_id": 5,
         "water": true,
-        "water_level": 5.123850340149108,
+        "water_level": 5.248570515716199,
         "x_center": 87,
         "y_center": 550,
         "z": 0,
@@ -422,7 +422,7 @@
       },
       "id": 6,
       "properties": {
-        "Chezy": 1.3810694941613777,
+        "Chezy": 2.3357477449432844,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -440,7 +440,7 @@
         "south_side_channel": false,
         "tygron_id": 6,
         "water": false,
-        "water_level": 5.131512026654251,
+        "water_level": 5.302643861200333,
         "x_center": 87,
         "y_center": 650,
         "z": 2,
@@ -486,7 +486,7 @@
       },
       "id": 7,
       "properties": {
-        "Chezy": 6.625910222201546,
+        "Chezy": 6.401978580611437,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -504,7 +504,7 @@
         "south_side_channel": false,
         "tygron_id": 7,
         "water": false,
-        "water_level": 5.197941889841316,
+        "water_level": 5.3642569227760015,
         "x_center": 87,
         "y_center": 750,
         "z": 2,
@@ -550,7 +550,7 @@
       },
       "id": 8,
       "properties": {
-        "Chezy": 0.20633817127188286,
+        "Chezy": 3.1140725485902454,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -568,7 +568,7 @@
         "south_side_channel": false,
         "tygron_id": 8,
         "water": false,
-        "water_level": 6.061464087476314,
+        "water_level": 6.016533104338552,
         "x_center": 87,
         "y_center": 850,
         "z": 4,
@@ -614,7 +614,7 @@
       },
       "id": 9,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 35.08760805973866,
         "behind_dike": true,
         "column": 1,
         "dike_reference": 8,
@@ -623,7 +623,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 1,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -632,7 +632,7 @@
         "south_side_channel": false,
         "tygron_id": 9,
         "water": false,
-        "water_level": 6.04926400333944,
+        "water_level": 6.015789819031571,
         "x_center": 87,
         "y_center": 950,
         "z": 2,
@@ -678,7 +678,7 @@
       },
       "id": 10,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 11.510655356503085,
         "behind_dike": true,
         "column": 2,
         "dike_reference": 11,
@@ -696,7 +696,7 @@
         "south_side_channel": false,
         "tygron_id": 10,
         "water": false,
-        "water_level": 6.076545686708031,
+        "water_level": 6.075196823583045,
         "x_center": 173,
         "y_center": 100,
         "z": 2,
@@ -742,7 +742,7 @@
       },
       "id": 11,
       "properties": {
-        "Chezy": 2.0320636587879837,
+        "Chezy": 2.963835247648009,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -760,7 +760,7 @@
         "south_side_channel": false,
         "tygron_id": 11,
         "water": false,
-        "water_level": 6.05759909569229,
+        "water_level": 6.024044268288499,
         "x_center": 173,
         "y_center": 200,
         "z": 4,
@@ -806,7 +806,7 @@
       },
       "id": 12,
       "properties": {
-        "Chezy": 35.419190674917004,
+        "Chezy": 35.919872449404366,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -824,7 +824,7 @@
         "south_side_channel": false,
         "tygron_id": 12,
         "water": false,
-        "water_level": 5.105828307042042,
+        "water_level": 5.228157709639652,
         "x_center": 173,
         "y_center": 300,
         "z": 2,
@@ -870,7 +870,7 @@
       },
       "id": 13,
       "properties": {
-        "Chezy": 35.25089123016383,
+        "Chezy": 35.92688750702139,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -888,7 +888,7 @@
         "south_side_channel": false,
         "tygron_id": 13,
         "water": false,
-        "water_level": 5.066366332941122,
+        "water_level": 5.229925637717662,
         "x_center": 173,
         "y_center": 400,
         "z": 2,
@@ -934,7 +934,7 @@
       },
       "id": 14,
       "properties": {
-        "Chezy": 52.46547642493864,
+        "Chezy": 52.71111518586918,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -952,7 +952,7 @@
         "south_side_channel": false,
         "tygron_id": 14,
         "water": true,
-        "water_level": 5.091922413383617,
+        "water_level": 5.23664675491974,
         "x_center": 173,
         "y_center": 500,
         "z": 0,
@@ -998,7 +998,7 @@
       },
       "id": 15,
       "properties": {
-        "Chezy": 52.5254504634086,
+        "Chezy": 52.696638173716295,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -1016,7 +1016,7 @@
         "south_side_channel": true,
         "tygron_id": 15,
         "water": true,
-        "water_level": 5.126946267832774,
+        "water_level": 5.228023264699245,
         "x_center": 173,
         "y_center": 600,
         "z": 0,
@@ -1062,7 +1062,7 @@
       },
       "id": 16,
       "properties": {
-        "Chezy": 31.83994002954238,
+        "Chezy": 32.29326167224383,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -1080,7 +1080,7 @@
         "south_side_channel": false,
         "tygron_id": 16,
         "water": false,
-        "water_level": 5.116821436849452,
+        "water_level": 5.222222118146111,
         "x_center": 173,
         "y_center": 700,
         "z": 2,
@@ -1126,7 +1126,7 @@
       },
       "id": 17,
       "properties": {
-        "Chezy": 2.8049898470470747,
+        "Chezy": 0.30114963110603543,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -1144,7 +1144,7 @@
         "south_side_channel": false,
         "tygron_id": 17,
         "water": false,
-        "water_level": 6.028103655161386,
+        "water_level": 6.008017944569197,
         "x_center": 173,
         "y_center": 800,
         "z": 4,
@@ -1190,7 +1190,7 @@
       },
       "id": 18,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 11.604687634618923,
         "behind_dike": true,
         "column": 2,
         "dike_reference": 17,
@@ -1199,7 +1199,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 1,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -1208,7 +1208,7 @@
         "south_side_channel": false,
         "tygron_id": 18,
         "water": false,
-        "water_level": 6.055910071892629,
+        "water_level": 6.013849961588312,
         "x_center": 173,
         "y_center": 900,
         "z": 2,
@@ -1254,7 +1254,7 @@
       },
       "id": 19,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 11.500221363141973,
         "behind_dike": true,
         "column": 3,
         "dike_reference": 20,
@@ -1272,7 +1272,7 @@
         "south_side_channel": false,
         "tygron_id": 19,
         "water": false,
-        "water_level": 6.079567259117624,
+        "water_level": 6.082086586349403,
         "x_center": 260,
         "y_center": 50,
         "z": 2,
@@ -1318,7 +1318,7 @@
       },
       "id": 20,
       "properties": {
-        "Chezy": 2.0054807597940667,
+        "Chezy": 2.46166289516372,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1336,7 +1336,7 @@
         "south_side_channel": false,
         "tygron_id": 20,
         "water": false,
-        "water_level": 6.059193824464287,
+        "water_level": 6.038266169988877,
         "x_center": 260,
         "y_center": 150,
         "z": 4,
@@ -1382,7 +1382,7 @@
       },
       "id": 21,
       "properties": {
-        "Chezy": 17.21078530886168,
+        "Chezy": 20.618689257210615,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1400,7 +1400,7 @@
         "south_side_channel": false,
         "tygron_id": 21,
         "water": false,
-        "water_level": 5.011966322339422,
+        "water_level": 5.195365900426118,
         "x_center": 260,
         "y_center": 250,
         "z": 3,
@@ -1446,7 +1446,7 @@
       },
       "id": 22,
       "properties": {
-        "Chezy": 35.087832149052026,
+        "Chezy": 35.84110976071693,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1464,7 +1464,7 @@
         "south_side_channel": false,
         "tygron_id": 22,
         "water": false,
-        "water_level": 5.028900981636945,
+        "water_level": 5.208412231275467,
         "x_center": 260,
         "y_center": 350,
         "z": 2,
@@ -1510,7 +1510,7 @@
       },
       "id": 23,
       "properties": {
-        "Chezy": 52.44117812040509,
+        "Chezy": 52.694286663353445,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1528,7 +1528,7 @@
         "south_side_channel": false,
         "tygron_id": 23,
         "water": true,
-        "water_level": 5.077789471894728,
+        "water_level": 5.226623663519911,
         "x_center": 260,
         "y_center": 450,
         "z": 0,
@@ -1574,7 +1574,7 @@
       },
       "id": 24,
       "properties": {
-        "Chezy": 52.526106119498486,
+        "Chezy": 52.71774289321506,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1592,7 +1592,7 @@
         "south_side_channel": true,
         "tygron_id": 24,
         "water": true,
-        "water_level": 5.127330266646658,
+        "water_level": 5.240598620521033,
         "x_center": 260,
         "y_center": 550,
         "z": 0,
@@ -1638,7 +1638,7 @@
       },
       "id": 25,
       "properties": {
-        "Chezy": 1.2105554271053027,
+        "Chezy": 1.933080548718866,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1656,7 +1656,7 @@
         "south_side_channel": false,
         "tygron_id": 25,
         "water": false,
-        "water_level": 5.104701932298878,
+        "water_level": 5.227449216263898,
         "x_center": 260,
         "y_center": 650,
         "z": 2,
@@ -1702,7 +1702,7 @@
       },
       "id": 26,
       "properties": {
-        "Chezy": 31.7290762864566,
+        "Chezy": 32.17527078280307,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1720,7 +1720,7 @@
         "south_side_channel": false,
         "tygron_id": 26,
         "water": false,
-        "water_level": 5.091901448210088,
+        "water_level": 5.194236160914367,
         "x_center": 260,
         "y_center": 750,
         "z": 2,
@@ -1766,7 +1766,7 @@
       },
       "id": 27,
       "properties": {
-        "Chezy": 2.3971313594835832,
+        "Chezy": 14.458634595175226,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1784,7 +1784,7 @@
         "south_side_channel": false,
         "tygron_id": 27,
         "water": false,
-        "water_level": 6.04057100553519,
+        "water_level": 6.000591939685123,
         "x_center": 260,
         "y_center": 850,
         "z": 4,
@@ -1830,7 +1830,7 @@
       },
       "id": 28,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 11.626201002006951,
         "behind_dike": true,
         "column": 3,
         "dike_reference": 27,
@@ -1839,7 +1839,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 0,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -1848,10 +1848,10 @@
         "south_side_channel": false,
         "tygron_id": 28,
         "water": false,
-        "water_level": 6.058004021158333,
+        "water_level": 6.0,
         "x_center": 260,
         "y_center": 950,
-        "z": 3,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -1894,7 +1894,7 @@
       },
       "id": 29,
       "properties": {
-        "Chezy": 0.30096693046339323,
+        "Chezy": 0.501292436265293,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -1912,7 +1912,7 @@
         "south_side_channel": false,
         "tygron_id": 29,
         "water": false,
-        "water_level": 6.062630272987569,
+        "water_level": 6.065300643734941,
         "x_center": 346,
         "y_center": 100,
         "z": 4,
@@ -1958,7 +1958,7 @@
       },
       "id": 30,
       "properties": {
-        "Chezy": 13.50336203653285,
+        "Chezy": 32.14392562451099,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -1967,7 +1967,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 5,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -1976,7 +1976,7 @@
         "south_side_channel": false,
         "tygron_id": 30,
         "water": false,
-        "water_level": 5.000196586595299,
+        "water_level": 5.186867651853462,
         "x_center": 346,
         "y_center": 200,
         "z": 2,
@@ -2022,7 +2022,7 @@
       },
       "id": 31,
       "properties": {
-        "Chezy": 31.31347305252227,
+        "Chezy": 24.673713653588045,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2031,7 +2031,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 2,
+        "landuse": 1,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -2040,10 +2040,10 @@
         "south_side_channel": false,
         "tygron_id": 31,
         "water": false,
-        "water_level": 5.001357213619406,
+        "water_level": 5.1762611058751355,
         "x_center": 346,
         "y_center": 300,
-        "z": 2,
+        "z": 3,
         "z_changed": false
       },
       "type": "Feature"
@@ -2086,7 +2086,7 @@
       },
       "id": 32,
       "properties": {
-        "Chezy": 52.359836064281424,
+        "Chezy": 52.66019784427905,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2104,7 +2104,7 @@
         "south_side_channel": false,
         "tygron_id": 32,
         "water": true,
-        "water_level": 5.030715074477353,
+        "water_level": 5.2063693016750205,
         "x_center": 346,
         "y_center": 400,
         "z": 0,
@@ -2150,7 +2150,7 @@
       },
       "id": 33,
       "properties": {
-        "Chezy": 52.395264812228675,
+        "Chezy": 52.72936395757512,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2168,7 +2168,7 @@
         "south_side_channel": true,
         "tygron_id": 33,
         "water": true,
-        "water_level": 5.051173546349453,
+        "water_level": 5.247533846082769,
         "x_center": 346,
         "y_center": 500,
         "z": 0,
@@ -2214,7 +2214,7 @@
       },
       "id": 34,
       "properties": {
-        "Chezy": 10.430796483477225,
+        "Chezy": 49.83169892511393,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2222,21 +2222,21 @@
         "floodplain_north": false,
         "floodplain_south": true,
         "ghost_hexagon": false,
-        "land": true,
-        "landuse": 3,
-        "landuse_changed": false,
+        "land": false,
+        "landuse": 7,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 34,
-        "water": false,
-        "water_level": 5.063352011599945,
+        "water": true,
+        "water_level": 5.238300558854078,
         "x_center": 346,
         "y_center": 600,
-        "z": 3,
-        "z_changed": false
+        "z": 1,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2278,7 +2278,7 @@
       },
       "id": 35,
       "properties": {
-        "Chezy": 31.590099414570243,
+        "Chezy": 16.042507645298798,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2287,7 +2287,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 2,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -2296,10 +2296,10 @@
         "south_side_channel": false,
         "tygron_id": 35,
         "water": false,
-        "water_level": 5.061123775494217,
+        "water_level": 5.14225140341076,
         "x_center": 346,
         "y_center": 700,
-        "z": 2,
+        "z": 3,
         "z_changed": false
       },
       "type": "Feature"
@@ -2342,7 +2342,7 @@
       },
       "id": 36,
       "properties": {
-        "Chezy": 6.825861994168321,
+        "Chezy": 6.792756618371741,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2360,7 +2360,7 @@
         "south_side_channel": false,
         "tygron_id": 36,
         "water": false,
-        "water_level": 5.062730115153544,
+        "water_level": 5.08431692147651,
         "x_center": 346,
         "y_center": 800,
         "z": 2,
@@ -2406,7 +2406,7 @@
       },
       "id": 37,
       "properties": {
-        "Chezy": 0.42179194538101566,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2424,7 +2424,7 @@
         "south_side_channel": false,
         "tygron_id": 37,
         "water": false,
-        "water_level": 6.064235492450296,
+        "water_level": 6.0,
         "x_center": 346,
         "y_center": 900,
         "z": 4,
@@ -2470,7 +2470,7 @@
       },
       "id": 38,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 38.76952027070738,
         "behind_dike": true,
         "column": 5,
         "dike_reference": 39,
@@ -2488,7 +2488,7 @@
         "south_side_channel": false,
         "tygron_id": 38,
         "water": false,
-        "water_level": 6.085314397299563,
+        "water_level": 6.0883746550592,
         "x_center": 433,
         "y_center": 50,
         "z": 2,
@@ -2534,7 +2534,7 @@
       },
       "id": 39,
       "properties": {
-        "Chezy": 2.511081495912849,
+        "Chezy": 2.5705627427731437,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2552,7 +2552,7 @@
         "south_side_channel": false,
         "tygron_id": 39,
         "water": false,
-        "water_level": 6.036604444982817,
+        "water_level": 6.034709913634032,
         "x_center": 433,
         "y_center": 150,
         "z": 4,
@@ -2598,7 +2598,7 @@
       },
       "id": 40,
       "properties": {
-        "Chezy": 31.307960753466485,
+        "Chezy": 32.1363366361429,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2616,7 +2616,7 @@
         "south_side_channel": false,
         "tygron_id": 40,
         "water": false,
-        "water_level": 5.0001861174602205,
+        "water_level": 5.185087808333251,
         "x_center": 433,
         "y_center": 250,
         "z": 2,
@@ -2662,7 +2662,7 @@
       },
       "id": 41,
       "properties": {
-        "Chezy": 52.31656033943585,
+        "Chezy": 52.62738589183902,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2680,7 +2680,7 @@
         "south_side_channel": false,
         "tygron_id": 41,
         "water": true,
-        "water_level": 5.005819065138635,
+        "water_level": 5.186935429871286,
         "x_center": 433,
         "y_center": 350,
         "z": 0,
@@ -2726,7 +2726,7 @@
       },
       "id": 42,
       "properties": {
-        "Chezy": 52.35355209333282,
+        "Chezy": 52.70188589133519,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2744,7 +2744,7 @@
         "south_side_channel": true,
         "tygron_id": 42,
         "water": true,
-        "water_level": 5.027093590582256,
+        "water_level": 5.231147792777991,
         "x_center": 433,
         "y_center": 450,
         "z": 0,
@@ -2790,7 +2790,7 @@
       },
       "id": 43,
       "properties": {
-        "Chezy": 31.500973127332003,
+        "Chezy": 32.44698099842535,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2808,7 +2808,7 @@
         "south_side_channel": false,
         "tygron_id": 43,
         "water": false,
-        "water_level": 5.04165238548451,
+        "water_level": 5.25928044378658,
         "x_center": 433,
         "y_center": 550,
         "z": 2,
@@ -2854,7 +2854,7 @@
       },
       "id": 44,
       "properties": {
-        "Chezy": 5.812591457834821,
+        "Chezy": 49.513870427829,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2862,21 +2862,21 @@
         "floodplain_north": false,
         "floodplain_south": true,
         "ghost_hexagon": false,
-        "land": true,
-        "landuse": 3,
-        "landuse_changed": false,
+        "land": false,
+        "landuse": 7,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 44,
-        "water": false,
-        "water_level": 4.9790985559731995,
+        "water": true,
+        "water_level": 5.0975041783334945,
         "x_center": 433,
         "y_center": 650,
-        "z": 2,
-        "z_changed": false
+        "z": 1,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -2918,7 +2918,7 @@
       },
       "id": 45,
       "properties": {
-        "Chezy": 7.056128892346873,
+        "Chezy": 31.293492360732373,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2927,7 +2927,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 4,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -2936,7 +2936,7 @@
         "south_side_channel": false,
         "tygron_id": 45,
         "water": false,
-        "water_level": 4.920650064003333,
+        "water_level": 4.997115932244013,
         "x_center": 433,
         "y_center": 750,
         "z": 2,
@@ -2982,28 +2982,28 @@
       },
       "id": 46,
       "properties": {
-        "Chezy": 1.4030133260610704,
+        "Chezy": 6.9200310939129475,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
         "face_cell": 5596,
         "floodplain_north": false,
-        "floodplain_south": false,
+        "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 10,
+        "landuse": 4,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": true,
+        "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 46,
         "water": false,
-        "water_level": 6.0100497696848,
+        "water_level": 5.002962667046992,
         "x_center": 433,
         "y_center": 850,
-        "z": 4,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -3046,28 +3046,28 @@
       },
       "id": 47,
       "properties": {
-        "Chezy": 1000,
-        "behind_dike": true,
+        "Chezy": 3.671458672544155,
+        "behind_dike": false,
         "column": 5,
-        "dike_reference": 46,
+        "dike_reference": null,
         "face_cell": 4581,
         "floodplain_north": false,
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 1,
+        "landuse": 10,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": false,
+        "south_dike": true,
         "south_side_channel": false,
         "tygron_id": 47,
         "water": false,
-        "water_level": 6.061240493903791,
+        "water_level": 6.0,
         "x_center": 433,
         "y_center": 950,
-        "z": 2,
+        "z": 4,
         "z_changed": false
       },
       "type": "Feature"
@@ -3110,7 +3110,7 @@
       },
       "id": 48,
       "properties": {
-        "Chezy": 0.8656243734810227,
+        "Chezy": 0.8176536395721222,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3128,7 +3128,7 @@
         "south_side_channel": false,
         "tygron_id": 48,
         "water": false,
-        "water_level": 6.0699633372431645,
+        "water_level": 6.069373162087455,
         "x_center": 520,
         "y_center": 100,
         "z": 4,
@@ -3174,7 +3174,7 @@
       },
       "id": 49,
       "properties": {
-        "Chezy": 10.936398262604067,
+        "Chezy": 9.561800064466711,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3192,7 +3192,7 @@
         "south_side_channel": false,
         "tygron_id": 49,
         "water": false,
-        "water_level": 5.003296719391142,
+        "water_level": 5.1878877221814,
         "x_center": 520,
         "y_center": 200,
         "z": 3,
@@ -3238,7 +3238,7 @@
       },
       "id": 50,
       "properties": {
-        "Chezy": 52.313665338198305,
+        "Chezy": 52.625128170307036,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3256,7 +3256,7 @@
         "south_side_channel": false,
         "tygron_id": 50,
         "water": true,
-        "water_level": 5.00415727610305,
+        "water_level": 5.185600451926983,
         "x_center": 520,
         "y_center": 300,
         "z": 0,
@@ -3302,7 +3302,7 @@
       },
       "id": 51,
       "properties": {
-        "Chezy": 52.00751313664441,
+        "Chezy": 52.28583396977849,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3320,7 +3320,7 @@
         "south_side_channel": true,
         "tygron_id": 51,
         "water": true,
-        "water_level": 4.830994874284667,
+        "water_level": 4.988204950137227,
         "x_center": 520,
         "y_center": 400,
         "z": 0,
@@ -3366,7 +3366,7 @@
       },
       "id": 52,
       "properties": {
-        "Chezy": 5.969898308593098,
+        "Chezy": 0.453231289467472,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3384,7 +3384,7 @@
         "south_side_channel": false,
         "tygron_id": 52,
         "water": false,
-        "water_level": 4.873478184499369,
+        "water_level": 5.016484868007582,
         "x_center": 520,
         "y_center": 500,
         "z": 2,
@@ -3430,7 +3430,7 @@
       },
       "id": 53,
       "properties": {
-        "Chezy": 14.374346760071468,
+        "Chezy": 49.265491291948535,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3438,21 +3438,21 @@
         "floodplain_north": false,
         "floodplain_south": true,
         "ghost_hexagon": false,
-        "land": true,
-        "landuse": 5,
-        "landuse_changed": false,
+        "land": false,
+        "landuse": 7,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 53,
-        "water": false,
-        "water_level": 4.874260120772879,
+        "water": true,
+        "water_level": 4.990574892408855,
         "x_center": 520,
         "y_center": 600,
-        "z": 3,
-        "z_changed": false
+        "z": 1,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -3494,7 +3494,7 @@
       },
       "id": 54,
       "properties": {
-        "Chezy": 48.77523979409414,
+        "Chezy": 49.21666393400365,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3512,7 +3512,7 @@
         "south_side_channel": false,
         "tygron_id": 54,
         "water": true,
-        "water_level": 4.787278741558734,
+        "water_level": 4.9698690632342535,
         "x_center": 520,
         "y_center": 700,
         "z": 1,
@@ -3558,7 +3558,7 @@
       },
       "id": 55,
       "properties": {
-        "Chezy": 30.15344592409981,
+        "Chezy": 31.208273547748266,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3576,7 +3576,7 @@
         "south_side_channel": false,
         "tygron_id": 55,
         "water": false,
-        "water_level": 4.771017105629844,
+        "water_level": 4.979139225649759,
         "x_center": 520,
         "y_center": 800,
         "z": 2,
@@ -3622,7 +3622,7 @@
       },
       "id": 56,
       "properties": {
-        "Chezy": 2.521680261452516,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3640,7 +3640,7 @@
         "south_side_channel": false,
         "tygron_id": 56,
         "water": false,
-        "water_level": 6.036258777337382,
+        "water_level": 6.0,
         "x_center": 520,
         "y_center": 900,
         "z": 4,
@@ -3686,7 +3686,7 @@
       },
       "id": 57,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 35.302985803267894,
         "behind_dike": true,
         "column": 7,
         "dike_reference": 58,
@@ -3704,7 +3704,7 @@
         "south_side_channel": false,
         "tygron_id": 57,
         "water": false,
-        "water_level": 6.089516175890242,
+        "water_level": 6.088848909703523,
         "x_center": 606,
         "y_center": 50,
         "z": 2,
@@ -3750,7 +3750,7 @@
       },
       "id": 58,
       "properties": {
-        "Chezy": 2.177183773521121,
+        "Chezy": 2.230783742267947,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3768,7 +3768,7 @@
         "south_side_channel": false,
         "tygron_id": 58,
         "water": false,
-        "water_level": 6.049861879186394,
+        "water_level": 6.04736133136142,
         "x_center": 606,
         "y_center": 150,
         "z": 4,
@@ -3814,7 +3814,7 @@
       },
       "id": 59,
       "properties": {
-        "Chezy": 31.331110735365463,
+        "Chezy": 32.15706450472726,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3832,7 +3832,7 @@
         "south_side_channel": false,
         "tygron_id": 59,
         "water": false,
-        "water_level": 5.005109524069048,
+        "water_level": 5.18995293141887,
         "x_center": 606,
         "y_center": 250,
         "z": 2,
@@ -3878,7 +3878,7 @@
       },
       "id": 60,
       "properties": {
-        "Chezy": 52.18096089367006,
+        "Chezy": 52.503842793885305,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3896,7 +3896,7 @@
         "south_side_channel": false,
         "tygron_id": 60,
         "water": true,
-        "water_level": 4.928474176249424,
+        "water_level": 5.114304682809391,
         "x_center": 606,
         "y_center": 350,
         "z": 0,
@@ -3942,7 +3942,7 @@
       },
       "id": 61,
       "properties": {
-        "Chezy": 51.70508313281841,
+        "Chezy": 52.06658508297604,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3960,7 +3960,7 @@
         "south_side_channel": true,
         "tygron_id": 61,
         "water": true,
-        "water_level": 4.664869474226977,
+        "water_level": 4.864011778775799,
         "x_center": 606,
         "y_center": 450,
         "z": 0,
@@ -4006,7 +4006,7 @@
       },
       "id": 62,
       "properties": {
-        "Chezy": 10.960404330847497,
+        "Chezy": 30.716234084613053,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4015,7 +4015,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 5,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -4024,10 +4024,10 @@
         "south_side_channel": false,
         "tygron_id": 62,
         "water": false,
-        "water_level": 4.711417587043387,
+        "water_level": 4.878823973118858,
         "x_center": 606,
         "y_center": 550,
-        "z": 3,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -4070,7 +4070,7 @@
       },
       "id": 63,
       "properties": {
-        "Chezy": 14.18002774686199,
+        "Chezy": 49.06860186429364,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4078,21 +4078,21 @@
         "floodplain_north": false,
         "floodplain_south": true,
         "ghost_hexagon": false,
-        "land": true,
-        "landuse": 5,
-        "landuse_changed": false,
+        "land": false,
+        "landuse": 7,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 63,
-        "water": false,
-        "water_level": 4.710702622906365,
+        "water": true,
+        "water_level": 4.907706271880145,
         "x_center": 606,
         "y_center": 650,
-        "z": 2,
-        "z_changed": false
+        "z": 1,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4134,7 +4134,7 @@
       },
       "id": 64,
       "properties": {
-        "Chezy": 11.317316686037838,
+        "Chezy": 14.947097163870785,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4152,7 +4152,7 @@
         "south_side_channel": false,
         "tygron_id": 64,
         "water": false,
-        "water_level": 4.722760035453802,
+        "water_level": 4.926198038599395,
         "x_center": 606,
         "y_center": 750,
         "z": 3,
@@ -4198,7 +4198,7 @@
       },
       "id": 65,
       "properties": {
-        "Chezy": 14.12981034139849,
+        "Chezy": 13.596899130907095,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4216,7 +4216,7 @@
         "south_side_channel": false,
         "tygron_id": 65,
         "water": false,
-        "water_level": 4.731393773524599,
+        "water_level": 4.9586168158654145,
         "x_center": 606,
         "y_center": 850,
         "z": 2,
@@ -4262,7 +4262,7 @@
       },
       "id": 66,
       "properties": {
-        "Chezy": 4.9349296021465605,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4280,7 +4280,7 @@
         "south_side_channel": false,
         "tygron_id": 66,
         "water": false,
-        "water_level": 6.003746042946063,
+        "water_level": 6.0,
         "x_center": 606,
         "y_center": 950,
         "z": 4,
@@ -4326,7 +4326,7 @@
       },
       "id": 67,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 5.6352003983012136,
         "behind_dike": true,
         "column": 8,
         "dike_reference": 68,
@@ -4344,7 +4344,7 @@
         "south_side_channel": false,
         "tygron_id": 67,
         "water": false,
-        "water_level": 6.090142602401292,
+        "water_level": 6.088164591928587,
         "x_center": 693,
         "y_center": 100,
         "z": 2,
@@ -4390,7 +4390,7 @@
       },
       "id": 68,
       "properties": {
-        "Chezy": 2.542256298852571,
+        "Chezy": 2.7088874868313524,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4408,7 +4408,7 @@
         "south_side_channel": false,
         "tygron_id": 68,
         "water": false,
-        "water_level": 6.035597927969871,
+        "water_level": 6.030675047395549,
         "x_center": 693,
         "y_center": 200,
         "z": 4,
@@ -4454,7 +4454,7 @@
       },
       "id": 69,
       "properties": {
-        "Chezy": 6.033524085234769,
+        "Chezy": 5.786904278137855,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4472,7 +4472,7 @@
         "south_side_channel": false,
         "tygron_id": 69,
         "water": false,
-        "water_level": 4.833067930885009,
+        "water_level": 4.997162318892016,
         "x_center": 693,
         "y_center": 300,
         "z": 2,
@@ -4518,7 +4518,7 @@
       },
       "id": 70,
       "properties": {
-        "Chezy": 51.7783812078619,
+        "Chezy": 52.06984203686306,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4536,7 +4536,7 @@
         "south_side_channel": false,
         "tygron_id": 70,
         "water": true,
-        "water_level": 4.704688388678012,
+        "water_level": 4.865837633841853,
         "x_center": 693,
         "y_center": 400,
         "z": 0,
@@ -4582,7 +4582,7 @@
       },
       "id": 71,
       "properties": {
-        "Chezy": 51.67577171165443,
+        "Chezy": 52.07420053593194,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4600,7 +4600,7 @@
         "south_side_channel": true,
         "tygron_id": 71,
         "water": true,
-        "water_level": 4.649024960646896,
+        "water_level": 4.86828191096366,
         "x_center": 693,
         "y_center": 500,
         "z": 0,
@@ -4646,7 +4646,7 @@
       },
       "id": 72,
       "properties": {
-        "Chezy": 29.477397042705224,
+        "Chezy": 48.96517620682446,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4654,21 +4654,21 @@
         "floodplain_north": false,
         "floodplain_south": true,
         "ghost_hexagon": false,
-        "land": true,
-        "landuse": 2,
-        "landuse_changed": false,
+        "land": false,
+        "landuse": 7,
+        "landuse_changed": true,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 72,
-        "water": false,
-        "water_level": 4.650608167043598,
+        "water": true,
+        "water_level": 4.8648366230739155,
         "x_center": 693,
         "y_center": 600,
-        "z": 2,
-        "z_changed": false
+        "z": 1,
+        "z_changed": true
       },
       "type": "Feature"
     },
@@ -4710,7 +4710,7 @@
       },
       "id": 73,
       "properties": {
-        "Chezy": 14.314859470392006,
+        "Chezy": 30.75405390004509,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4719,7 +4719,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 5,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -4728,7 +4728,7 @@
         "south_side_channel": false,
         "tygron_id": 73,
         "water": false,
-        "water_level": 4.65563738885073,
+        "water_level": 4.886328851004132,
         "x_center": 693,
         "y_center": 700,
         "z": 2,
@@ -4774,7 +4774,7 @@
       },
       "id": 74,
       "properties": {
-        "Chezy": 29.537728429352498,
+        "Chezy": 13.726455835219705,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4783,7 +4783,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 2,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -4792,7 +4792,7 @@
         "south_side_channel": false,
         "tygron_id": 74,
         "water": false,
-        "water_level": 4.660969879269966,
+        "water_level": 4.901935451711227,
         "x_center": 693,
         "y_center": 800,
         "z": 2,
@@ -4838,7 +4838,7 @@
       },
       "id": 75,
       "properties": {
-        "Chezy": 4.883384747213875,
+        "Chezy": 1.4013930505884986,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4856,7 +4856,7 @@
         "south_side_channel": false,
         "tygron_id": 75,
         "water": false,
-        "water_level": 6.00378661467067,
+        "water_level": 6.0100473835788915,
         "x_center": 693,
         "y_center": 900,
         "z": 4,
@@ -4902,7 +4902,7 @@
       },
       "id": 76,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 38.77106795179265,
         "behind_dike": true,
         "column": 9,
         "dike_reference": 77,
@@ -4920,7 +4920,7 @@
         "south_side_channel": false,
         "tygron_id": 76,
         "water": false,
-        "water_level": 6.091136170959472,
+        "water_level": 6.0889291734982365,
         "x_center": 779,
         "y_center": 50,
         "z": 2,
@@ -4966,7 +4966,7 @@
       },
       "id": 77,
       "properties": {
-        "Chezy": 0.11595761340287958,
+        "Chezy": 0.6222905074786815,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -4984,7 +4984,7 @@
         "south_side_channel": false,
         "tygron_id": 77,
         "water": false,
-        "water_level": 6.060561667975326,
+        "water_level": 6.06689532368823,
         "x_center": 779,
         "y_center": 150,
         "z": 4,
@@ -5030,7 +5030,7 @@
       },
       "id": 78,
       "properties": {
-        "Chezy": 14.332833485955069,
+        "Chezy": 13.962328721841136,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5048,7 +5048,7 @@
         "south_side_channel": false,
         "tygron_id": 78,
         "water": false,
-        "water_level": 4.648346462117718,
+        "water_level": 4.801209805332633,
         "x_center": 779,
         "y_center": 250,
         "z": 2,
@@ -5094,7 +5094,7 @@
       },
       "id": 79,
       "properties": {
-        "Chezy": 6.366191884337715,
+        "Chezy": 6.058362802930031,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5112,7 +5112,7 @@
         "south_side_channel": false,
         "tygron_id": 79,
         "water": false,
-        "water_level": 4.640974617415766,
+        "water_level": 4.817633897076449,
         "x_center": 779,
         "y_center": 350,
         "z": 2,
@@ -5158,7 +5158,7 @@
       },
       "id": 80,
       "properties": {
-        "Chezy": 51.604848829426956,
+        "Chezy": 51.99360615399112,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5176,7 +5176,7 @@
         "south_side_channel": false,
         "tygron_id": 80,
         "water": true,
-        "water_level": 4.610872497943442,
+        "water_level": 4.823249109055535,
         "x_center": 779,
         "y_center": 450,
         "z": 0,
@@ -5222,7 +5222,7 @@
       },
       "id": 81,
       "properties": {
-        "Chezy": 51.655042654063585,
+        "Chezy": 52.02109177747577,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5240,7 +5240,7 @@
         "south_side_channel": true,
         "tygron_id": 81,
         "water": true,
-        "water_level": 4.637846803747237,
+        "water_level": 4.838567762071358,
         "x_center": 779,
         "y_center": 550,
         "z": 0,
@@ -5286,7 +5286,7 @@
       },
       "id": 82,
       "properties": {
-        "Chezy": 29.366162639092774,
+        "Chezy": 30.491995935727015,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5304,7 +5304,7 @@
         "south_side_channel": false,
         "tygron_id": 82,
         "water": false,
-        "water_level": 4.631694717253293,
+        "water_level": 4.835009309372584,
         "x_center": 779,
         "y_center": 650,
         "z": 2,
@@ -5350,7 +5350,7 @@
       },
       "id": 83,
       "properties": {
-        "Chezy": 29.330437168888473,
+        "Chezy": 7.199822175214482,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5359,7 +5359,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 2,
+        "landuse": 4,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -5368,7 +5368,7 @@
         "south_side_channel": false,
         "tygron_id": 83,
         "water": false,
-        "water_level": 4.625672234938318,
+        "water_level": 4.838598268172117,
         "x_center": 779,
         "y_center": 750,
         "z": 2,
@@ -5414,7 +5414,7 @@
       },
       "id": 84,
       "properties": {
-        "Chezy": 1.427169375866315,
+        "Chezy": 0.3143000577857648,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5432,7 +5432,7 @@
         "south_side_channel": false,
         "tygron_id": 84,
         "water": false,
-        "water_level": 6.0100855177638355,
+        "water_level": 6.008675826156846,
         "x_center": 779,
         "y_center": 850,
         "z": 4,
@@ -5478,7 +5478,7 @@
       },
       "id": 85,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 38.55714475736536,
         "behind_dike": true,
         "column": 9,
         "dike_reference": 84,
@@ -5496,7 +5496,7 @@
         "south_side_channel": false,
         "tygron_id": 85,
         "water": false,
-        "water_level": 6.017653075865159,
+        "water_level": 6.01328485201403,
         "x_center": 779,
         "y_center": 950,
         "z": 2,
@@ -5542,7 +5542,7 @@
       },
       "id": 86,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 35.30153489003806,
         "behind_dike": true,
         "column": 10,
         "dike_reference": 87,
@@ -5560,7 +5560,7 @@
         "south_side_channel": false,
         "tygron_id": 86,
         "water": false,
-        "water_level": 6.091374898691218,
+        "water_level": 6.088350293862542,
         "x_center": 866,
         "y_center": 100,
         "z": 2,
@@ -5606,7 +5606,7 @@
       },
       "id": 87,
       "properties": {
-        "Chezy": 2.7345321130486338,
+        "Chezy": 2.7244266818191307,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5624,7 +5624,7 @@
         "south_side_channel": false,
         "tygron_id": 87,
         "water": false,
-        "water_level": 6.029973728257514,
+        "water_level": 6.030248614477574,
         "x_center": 866,
         "y_center": 200,
         "z": 4,
@@ -5670,7 +5670,7 @@
       },
       "id": 88,
       "properties": {
-        "Chezy": 29.059977242966166,
+        "Chezy": 30.204702209397066,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5688,7 +5688,7 @@
         "south_side_channel": false,
         "tygron_id": 88,
         "water": false,
-        "water_level": 4.580885017110868,
+        "water_level": 4.780542250746822,
         "x_center": 866,
         "y_center": 300,
         "z": 2,
@@ -5734,7 +5734,7 @@
       },
       "id": 89,
       "properties": {
-        "Chezy": 48.27974355624333,
+        "Chezy": 30.270524872162056,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5742,21 +5742,21 @@
         "floodplain_north": true,
         "floodplain_south": false,
         "ghost_hexagon": false,
-        "land": false,
-        "landuse": 7,
-        "landuse_changed": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 89,
-        "water": true,
-        "water_level": 4.591930901741696,
+        "water": false,
+        "water_level": 4.7928589525596506,
         "x_center": 866,
         "y_center": 400,
-        "z": 1,
-        "z_changed": true
+        "z": 2,
+        "z_changed": false
       },
       "type": "Feature"
     },
@@ -5798,7 +5798,7 @@
       },
       "id": 90,
       "properties": {
-        "Chezy": 51.599529912361184,
+        "Chezy": 52.02193831161968,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5816,7 +5816,7 @@
         "south_side_channel": false,
         "tygron_id": 90,
         "water": true,
-        "water_level": 4.608021773982957,
+        "water_level": 4.839040206533815,
         "x_center": 866,
         "y_center": 500,
         "z": 0,
@@ -5862,7 +5862,7 @@
       },
       "id": 91,
       "properties": {
-        "Chezy": 51.58262318665358,
+        "Chezy": 51.98014324055859,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5880,7 +5880,7 @@
         "south_side_channel": true,
         "tygron_id": 91,
         "water": true,
-        "water_level": 4.5989702063675,
+        "water_level": 4.8157605384596645,
         "x_center": 866,
         "y_center": 600,
         "z": 0,
@@ -5926,7 +5926,7 @@
       },
       "id": 92,
       "properties": {
-        "Chezy": 6.4709179020533325,
+        "Chezy": 6.090496413345913,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5944,7 +5944,7 @@
         "south_side_channel": false,
         "tygron_id": 92,
         "water": false,
-        "water_level": 4.586490944053494,
+        "water_level": 4.797944166136367,
         "x_center": 866,
         "y_center": 700,
         "z": 2,
@@ -5990,7 +5990,7 @@
       },
       "id": 93,
       "properties": {
-        "Chezy": 14.442036117158816,
+        "Chezy": 13.97031645795867,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -6008,7 +6008,7 @@
         "south_side_channel": false,
         "tygron_id": 93,
         "water": false,
-        "water_level": 4.604271652342387,
+        "water_level": 4.797849965151662,
         "x_center": 866,
         "y_center": 800,
         "z": 2,
@@ -6054,7 +6054,7 @@
       },
       "id": 94,
       "properties": {
-        "Chezy": 2.667575749864056,
+        "Chezy": 2.907215791567213,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -6072,7 +6072,7 @@
         "south_side_channel": false,
         "tygron_id": 94,
         "water": false,
-        "water_level": 6.012841508287121,
+        "water_level": 6.014022413102701,
         "x_center": 866,
         "y_center": 900,
         "z": 4,
@@ -6118,7 +6118,7 @@
       },
       "id": 95,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 38.770861071483296,
         "behind_dike": true,
         "column": 11,
         "dike_reference": 96,
@@ -6136,7 +6136,7 @@
         "south_side_channel": false,
         "tygron_id": 95,
         "water": false,
-        "water_level": 6.092202892005792,
+        "water_level": 6.0888550442065625,
         "x_center": 953,
         "y_center": 50,
         "z": 2,
@@ -6182,7 +6182,7 @@
       },
       "id": 96,
       "properties": {
-        "Chezy": 2.0747313824382516,
+        "Chezy": 0.31207046683007805,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6200,7 +6200,7 @@
         "south_side_channel": false,
         "tygron_id": 96,
         "water": false,
-        "water_level": 6.05516211420595,
+        "water_level": 6.062774759553345,
         "x_center": 953,
         "y_center": 150,
         "z": 4,
@@ -6246,7 +6246,7 @@
       },
       "id": 97,
       "properties": {
-        "Chezy": 7.761250128232347,
+        "Chezy": 7.310166380022506,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6264,7 +6264,7 @@
         "south_side_channel": false,
         "tygron_id": 97,
         "water": false,
-        "water_level": 4.558970724173444,
+        "water_level": 4.778732442545961,
         "x_center": 953,
         "y_center": 250,
         "z": 2,
@@ -6310,7 +6310,7 @@
       },
       "id": 98,
       "properties": {
-        "Chezy": 48.24590581882694,
+        "Chezy": 48.74416649387763,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6328,7 +6328,7 @@
         "south_side_channel": false,
         "tygron_id": 98,
         "water": true,
-        "water_level": 4.578951446115527,
+        "water_level": 4.774733353634783,
         "x_center": 953,
         "y_center": 350,
         "z": 1,
@@ -6374,7 +6374,7 @@
       },
       "id": 99,
       "properties": {
-        "Chezy": 15.48369966560554,
+        "Chezy": 13.543124412528535,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6392,7 +6392,7 @@
         "south_side_channel": false,
         "tygron_id": 99,
         "water": false,
-        "water_level": 4.593588401833331,
+        "water_level": 4.781431872382206,
         "x_center": 953,
         "y_center": 450,
         "z": 3,
@@ -6438,7 +6438,7 @@
       },
       "id": 100,
       "properties": {
-        "Chezy": 51.37373485013782,
+        "Chezy": 51.84599177813657,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6456,7 +6456,7 @@
         "south_side_channel": false,
         "tygron_id": 100,
         "water": true,
-        "water_level": 4.488351816649307,
+        "water_level": 4.741668321515682,
         "x_center": 953,
         "y_center": 550,
         "z": 0,
@@ -6502,7 +6502,7 @@
       },
       "id": 101,
       "properties": {
-        "Chezy": 51.46939038008114,
+        "Chezy": 51.907714878242274,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6520,7 +6520,7 @@
         "south_side_channel": true,
         "tygron_id": 101,
         "water": true,
-        "water_level": 4.538728432184005,
+        "water_level": 4.775639269986322,
         "x_center": 953,
         "y_center": 650,
         "z": 0,
@@ -6566,7 +6566,7 @@
       },
       "id": 102,
       "properties": {
-        "Chezy": 28.805210809159192,
+        "Chezy": 30.184117144195778,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6584,7 +6584,7 @@
         "south_side_channel": false,
         "tygron_id": 102,
         "water": false,
-        "water_level": 4.539968770540355,
+        "water_level": 4.776709943374862,
         "x_center": 953,
         "y_center": 750,
         "z": 2,
@@ -6630,7 +6630,7 @@
       },
       "id": 103,
       "properties": {
-        "Chezy": 0.8673670657460751,
+        "Chezy": 0.4199274756762057,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6648,7 +6648,7 @@
         "south_side_channel": false,
         "tygron_id": 103,
         "water": false,
-        "water_level": 6.009326512598323,
+        "water_level": 6.008794741987838,
         "x_center": 953,
         "y_center": 850,
         "z": 4,
@@ -6694,7 +6694,7 @@
       },
       "id": 104,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 38.5572999312387,
         "behind_dike": true,
         "column": 11,
         "dike_reference": 103,
@@ -6712,7 +6712,7 @@
         "south_side_channel": false,
         "tygron_id": 104,
         "water": false,
-        "water_level": 6.0051311315474445,
+        "water_level": 6.013338997130283,
         "x_center": 953,
         "y_center": 950,
         "z": 2,
@@ -6758,7 +6758,7 @@
       },
       "id": 105,
       "properties": {
-        "Chezy": 2.0327722327901974,
+        "Chezy": 0.5167925199071459,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6776,7 +6776,7 @@
         "south_side_channel": false,
         "tygron_id": 105,
         "water": false,
-        "water_level": 6.057557413523736,
+        "water_level": 6.0655071220172285,
         "x_center": 1039,
         "y_center": 100,
         "z": 4,
@@ -6822,7 +6822,7 @@
       },
       "id": 106,
       "properties": {
-        "Chezy": 8.08146168906758,
+        "Chezy": 7.313909692848147,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6840,7 +6840,7 @@
         "south_side_channel": false,
         "tygron_id": 106,
         "water": false,
-        "water_level": 4.423780895422497,
+        "water_level": 4.776747167411185,
         "x_center": 1039,
         "y_center": 200,
         "z": 2,
@@ -6886,7 +6886,7 @@
       },
       "id": 107,
       "properties": {
-        "Chezy": 48.17475182130137,
+        "Chezy": 7.397892313221125,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6894,21 +6894,21 @@
         "floodplain_north": true,
         "floodplain_south": false,
         "ghost_hexagon": false,
-        "land": false,
-        "landuse": 7,
-        "landuse_changed": true,
+        "land": true,
+        "landuse": 0,
+        "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 107,
-        "water": true,
-        "water_level": 4.551806320033902,
+        "water": false,
+        "water_level": 4.719912870554475,
         "x_center": 1039,
         "y_center": 300,
-        "z": 1,
-        "z_changed": true
+        "z": 3,
+        "z_changed": false
       },
       "type": "Feature"
     },
@@ -6950,7 +6950,7 @@
       },
       "id": 108,
       "properties": {
-        "Chezy": 15.079175153959628,
+        "Chezy": 33.00054873403977,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6959,7 +6959,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 5,
+        "landuse": 1,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -6968,7 +6968,7 @@
         "south_side_channel": false,
         "tygron_id": 108,
         "water": false,
-        "water_level": 4.351048929916252,
+        "water_level": 4.6096808344239575,
         "x_center": 1039,
         "y_center": 400,
         "z": 2,
@@ -7014,7 +7014,7 @@
       },
       "id": 109,
       "properties": {
-        "Chezy": 7.264927804214356,
+        "Chezy": 6.477951789513439,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7032,7 +7032,7 @@
         "south_side_channel": false,
         "tygron_id": 109,
         "water": false,
-        "water_level": 4.246300208694756,
+        "water_level": 4.582924996136005,
         "x_center": 1039,
         "y_center": 500,
         "z": 2,
@@ -7078,7 +7078,7 @@
       },
       "id": 110,
       "properties": {
-        "Chezy": 50.73826627764405,
+        "Chezy": 51.522524286812654,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7096,7 +7096,7 @@
         "south_side_channel": false,
         "tygron_id": 110,
         "water": true,
-        "water_level": 4.165371987446299,
+        "water_level": 4.566914151208255,
         "x_center": 1039,
         "y_center": 600,
         "z": 0,
@@ -7142,7 +7142,7 @@
       },
       "id": 111,
       "properties": {
-        "Chezy": 51.46419850662299,
+        "Chezy": 51.91081167825178,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7160,7 +7160,7 @@
         "south_side_channel": true,
         "tygron_id": 111,
         "water": true,
-        "water_level": 4.535982113051563,
+        "water_level": 4.777349004935647,
         "x_center": 1039,
         "y_center": 700,
         "z": 0,
@@ -7206,7 +7206,7 @@
       },
       "id": 112,
       "properties": {
-        "Chezy": 7.805970967306117,
+        "Chezy": 7.325537617701875,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7224,7 +7224,7 @@
         "south_side_channel": false,
         "tygron_id": 112,
         "water": false,
-        "water_level": 4.539141650214551,
+        "water_level": 4.7705989152899955,
         "x_center": 1039,
         "y_center": 800,
         "z": 2,
@@ -7270,7 +7270,7 @@
       },
       "id": 113,
       "properties": {
-        "Chezy": 0.9507983976072496,
+        "Chezy": 1.098940547512057,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7288,7 +7288,7 @@
         "south_side_channel": false,
         "tygron_id": 113,
         "water": false,
-        "water_level": 6.00943182814981,
+        "water_level": 6.009624779548997,
         "x_center": 1039,
         "y_center": 900,
         "z": 4,
@@ -7334,7 +7334,7 @@
       },
       "id": 114,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 38.75806447143988,
         "behind_dike": true,
         "column": 13,
         "dike_reference": 115,
@@ -7352,7 +7352,7 @@
         "south_side_channel": false,
         "tygron_id": 114,
         "water": false,
-        "water_level": 6.081724591114997,
+        "water_level": 6.084273472533048,
         "x_center": 1126,
         "y_center": 50,
         "z": 2,
@@ -7398,7 +7398,7 @@
       },
       "id": 115,
       "properties": {
-        "Chezy": 2.9257961953135663,
+        "Chezy": 2.7638511789404245,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7416,7 +7416,7 @@
         "south_side_channel": false,
         "tygron_id": 115,
         "water": false,
-        "water_level": 6.025015751540958,
+        "water_level": 6.029186274835106,
         "x_center": 1126,
         "y_center": 150,
         "z": 4,
@@ -7462,7 +7462,7 @@
       },
       "id": 116,
       "properties": {
-        "Chezy": 27.119542664741573,
+        "Chezy": 5.189090208594806,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7480,10 +7480,10 @@
         "south_side_channel": false,
         "tygron_id": 116,
         "water": false,
-        "water_level": 4.2976306392202686,
+        "water_level": 4.679936111284524,
         "x_center": 1126,
         "y_center": 250,
-        "z": 2,
+        "z": 3,
         "z_changed": false
       },
       "type": "Feature"
@@ -7526,7 +7526,7 @@
       },
       "id": 117,
       "properties": {
-        "Chezy": 47.44847981404096,
+        "Chezy": 32.177268934884765,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7534,8 +7534,8 @@
         "floodplain_north": true,
         "floodplain_south": false,
         "ghost_hexagon": false,
-        "land": false,
-        "landuse": 7,
+        "land": true,
+        "landuse": 1,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -7543,11 +7543,11 @@
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 117,
-        "water": true,
-        "water_level": 4.285953533759276,
+        "water": false,
+        "water_level": 4.471386439613869,
         "x_center": 1126,
         "y_center": 350,
-        "z": 1,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -7590,7 +7590,7 @@
       },
       "id": 118,
       "properties": {
-        "Chezy": 7.845230131362038,
+        "Chezy": 6.723924542146244,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7608,7 +7608,7 @@
         "south_side_channel": false,
         "tygron_id": 118,
         "water": false,
-        "water_level": 4.059379320903446,
+        "water_level": 4.4651014934785795,
         "x_center": 1126,
         "y_center": 450,
         "z": 2,
@@ -7654,7 +7654,7 @@
       },
       "id": 119,
       "properties": {
-        "Chezy": 50.19294811704698,
+        "Chezy": 51.26185077929546,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7672,7 +7672,7 @@
         "south_side_channel": false,
         "tygron_id": 119,
         "water": true,
-        "water_level": 3.9038784048237876,
+        "water_level": 4.430020587562223,
         "x_center": 1126,
         "y_center": 550,
         "z": 0,
@@ -7718,7 +7718,7 @@
       },
       "id": 120,
       "properties": {
-        "Chezy": 51.01956218374444,
+        "Chezy": 51.78769086994866,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7736,7 +7736,7 @@
         "south_side_channel": true,
         "tygron_id": 120,
         "water": true,
-        "water_level": 4.3058650728794365,
+        "water_level": 4.7097660388831954,
         "x_center": 1126,
         "y_center": 650,
         "z": 0,
@@ -7782,7 +7782,7 @@
       },
       "id": 121,
       "properties": {
-        "Chezy": 7.972903438537839,
+        "Chezy": 30.05802666876087,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7791,7 +7791,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 4,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -7800,7 +7800,7 @@
         "south_side_channel": false,
         "tygron_id": 121,
         "water": false,
-        "water_level": 4.467894904688337,
+        "water_level": 4.753437325989716,
         "x_center": 1126,
         "y_center": 750,
         "z": 2,
@@ -7846,28 +7846,28 @@
       },
       "id": 122,
       "properties": {
-        "Chezy": 0.8410875066331236,
+        "Chezy": 7.348129789374974,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
         "face_cell": 14129,
         "floodplain_north": false,
-        "floodplain_south": false,
+        "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 10,
+        "landuse": 4,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": true,
+        "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 122,
         "water": false,
-        "water_level": 6.007474345233719,
+        "water_level": 4.758733419297653,
         "x_center": 1126,
         "y_center": 850,
-        "z": 4,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -7910,28 +7910,28 @@
       },
       "id": 123,
       "properties": {
-        "Chezy": 1000,
-        "behind_dike": true,
+        "Chezy": 3.671458672544155,
+        "behind_dike": false,
         "column": 13,
-        "dike_reference": 122,
+        "dike_reference": null,
         "face_cell": 12789,
         "floodplain_north": false,
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 4,
+        "landuse": 10,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": false,
+        "south_dike": true,
         "south_side_channel": false,
         "tygron_id": 123,
         "water": false,
-        "water_level": 6.013430200064943,
+        "water_level": 6.0,
         "x_center": 1126,
         "y_center": 950,
-        "z": 2,
+        "z": 4,
         "z_changed": false
       },
       "type": "Feature"
@@ -7974,7 +7974,7 @@
       },
       "id": 124,
       "properties": {
-        "Chezy": 2.29916567210245,
+        "Chezy": 2.1756055743448623,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -7992,7 +7992,7 @@
         "south_side_channel": false,
         "tygron_id": 124,
         "water": false,
-        "water_level": 6.044405977460929,
+        "water_level": 6.04993815685855,
         "x_center": 1212,
         "y_center": 100,
         "z": 4,
@@ -8038,7 +8038,7 @@
       },
       "id": 125,
       "properties": {
-        "Chezy": 0.39527861403525866,
+        "Chezy": 3.550332861343417,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8056,7 +8056,7 @@
         "south_side_channel": false,
         "tygron_id": 125,
         "water": false,
-        "water_level": 4.531689711243979,
+        "water_level": 4.552574147119592,
         "x_center": 1212,
         "y_center": 200,
         "z": 3,
@@ -8102,7 +8102,7 @@
       },
       "id": 126,
       "properties": {
-        "Chezy": 3.0814227380040893,
+        "Chezy": 28.04011066313066,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8120,10 +8120,10 @@
         "south_side_channel": false,
         "tygron_id": 126,
         "water": false,
-        "water_level": 4.505551800386686,
+        "water_level": 4.424121291585112,
         "x_center": 1212,
         "y_center": 300,
-        "z": 3,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -8166,7 +8166,7 @@
       },
       "id": 127,
       "properties": {
-        "Chezy": 46.47720559627056,
+        "Chezy": 6.8491369057113705,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8174,21 +8174,21 @@
         "floodplain_north": true,
         "floodplain_south": false,
         "ghost_hexagon": false,
-        "land": false,
-        "landuse": 7,
-        "landuse_changed": true,
+        "land": true,
+        "landuse": 3,
+        "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 127,
-        "water": true,
-        "water_level": 3.9608214485056523,
+        "water": false,
+        "water_level": 4.409884334551327,
         "x_center": 1212,
         "y_center": 400,
-        "z": 1,
-        "z_changed": true
+        "z": 2,
+        "z_changed": false
       },
       "type": "Feature"
     },
@@ -8230,7 +8230,7 @@
       },
       "id": 128,
       "properties": {
-        "Chezy": 49.94558921417815,
+        "Chezy": 51.207721943247755,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8248,7 +8248,7 @@
         "south_side_channel": false,
         "tygron_id": 128,
         "water": true,
-        "water_level": 3.7898576475162264,
+        "water_level": 4.402027871249083,
         "x_center": 1212,
         "y_center": 500,
         "z": 0,
@@ -8294,7 +8294,7 @@
       },
       "id": 129,
       "properties": {
-        "Chezy": 50.28143134546225,
+        "Chezy": 51.3849084763638,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8312,7 +8312,7 @@
         "south_side_channel": true,
         "tygron_id": 129,
         "water": true,
-        "water_level": 3.9453528008215764,
+        "water_level": 4.494212217057646,
         "x_center": 1212,
         "y_center": 600,
         "z": 0,
@@ -8358,7 +8358,7 @@
       },
       "id": 130,
       "properties": {
-        "Chezy": 25.378898795626924,
+        "Chezy": 14.301688559116121,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8367,7 +8367,7 @@
         "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 2,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -8376,7 +8376,7 @@
         "south_side_channel": false,
         "tygron_id": 130,
         "water": false,
-        "water_level": 4.091876131252514,
+        "water_level": 4.660987023765868,
         "x_center": 1212,
         "y_center": 700,
         "z": 2,
@@ -8422,28 +8422,28 @@
       },
       "id": 131,
       "properties": {
-        "Chezy": 3.7278853589945933,
+        "Chezy": 14.122002229034875,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
         "face_cell": 15863,
         "floodplain_north": false,
-        "floodplain_south": false,
+        "floodplain_south": true,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 10,
+        "landuse": 5,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": true,
+        "south_dike": false,
         "south_side_channel": false,
         "tygron_id": 131,
         "water": false,
-        "water_level": 6.004762957315052,
+        "water_level": 4.734620497526319,
         "x_center": 1212,
         "y_center": 800,
-        "z": 4,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -8486,28 +8486,28 @@
       },
       "id": 132,
       "properties": {
-        "Chezy": 1000,
-        "behind_dike": true,
+        "Chezy": 3.671458672544155,
+        "behind_dike": false,
         "column": 14,
-        "dike_reference": 131,
+        "dike_reference": null,
         "face_cell": 14523,
         "floodplain_north": false,
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 5,
+        "landuse": 10,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
-        "south_dike": false,
+        "south_dike": true,
         "south_side_channel": false,
         "tygron_id": 132,
         "water": false,
-        "water_level": 6.012754686076752,
+        "water_level": 6.0,
         "x_center": 1212,
         "y_center": 900,
-        "z": 2,
+        "z": 4,
         "z_changed": false
       },
       "type": "Feature"
@@ -8550,7 +8550,7 @@
       },
       "id": 133,
       "properties": {
-        "Chezy": 0.5619811614881149,
+        "Chezy": 2.3086901788416054,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8568,7 +8568,7 @@
         "south_side_channel": false,
         "tygron_id": 133,
         "water": false,
-        "water_level": 6.06610567716296,
+        "water_level": 6.044013534788274,
         "x_center": 1299,
         "y_center": 50,
         "z": 4,
@@ -8614,7 +8614,7 @@
       },
       "id": 134,
       "properties": {
-        "Chezy": 12.38992427689246,
+        "Chezy": 8.137847405921653,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8632,7 +8632,7 @@
         "south_side_channel": false,
         "tygron_id": 134,
         "water": false,
-        "water_level": 3.373353884770593,
+        "water_level": 4.4015193107625965,
         "x_center": 1299,
         "y_center": 150,
         "z": 2,
@@ -8678,7 +8678,7 @@
       },
       "id": 135,
       "properties": {
-        "Chezy": 13.828313508180377,
+        "Chezy": 27.876330658174027,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8696,7 +8696,7 @@
         "south_side_channel": false,
         "tygron_id": 135,
         "water": false,
-        "water_level": 3.3817607092687414,
+        "water_level": 4.400626818910062,
         "x_center": 1299,
         "y_center": 250,
         "z": 2,
@@ -8742,7 +8742,7 @@
       },
       "id": 136,
       "properties": {
-        "Chezy": 10.149773501696876,
+        "Chezy": 27.7365232365126,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8751,7 +8751,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": true,
-        "landuse": 3,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -8760,7 +8760,7 @@
         "south_side_channel": false,
         "tygron_id": 136,
         "water": false,
-        "water_level": 3.6003586699899954,
+        "water_level": 4.380919109297483,
         "x_center": 1299,
         "y_center": 350,
         "z": 2,
@@ -8806,7 +8806,7 @@
       },
       "id": 137,
       "properties": {
-        "Chezy": 49.698329897385825,
+        "Chezy": 51.16228077526995,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8824,7 +8824,7 @@
         "south_side_channel": false,
         "tygron_id": 137,
         "water": true,
-        "water_level": 3.678669906879178,
+        "water_level": 4.378641939978521,
         "x_center": 1299,
         "y_center": 450,
         "z": 0,
@@ -8870,7 +8870,7 @@
       },
       "id": 138,
       "properties": {
-        "Chezy": 48.39427534872546,
+        "Chezy": 51.17148280770261,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8888,7 +8888,7 @@
         "south_side_channel": true,
         "tygron_id": 138,
         "water": true,
-        "water_level": 3.1362017945386196,
+        "water_level": 4.38336931252645,
         "x_center": 1299,
         "y_center": 550,
         "z": 0,
@@ -8934,7 +8934,7 @@
       },
       "id": 139,
       "properties": {
-        "Chezy": 20.824430582140668,
+        "Chezy": 27.951520712838867,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8952,7 +8952,7 @@
         "south_side_channel": false,
         "tygron_id": 139,
         "water": false,
-        "water_level": 3.708634651580467,
+        "water_level": 4.411357853429939,
         "x_center": 1299,
         "y_center": 650,
         "z": 2,
@@ -8998,7 +8998,7 @@
       },
       "id": 140,
       "properties": {
-        "Chezy": 10.503611478950383,
+        "Chezy": 7.946650432754317,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -9016,7 +9016,7 @@
         "south_side_channel": false,
         "tygron_id": 140,
         "water": false,
-        "water_level": 3.7407831713035606,
+        "water_level": 4.47881930708907,
         "x_center": 1299,
         "y_center": 750,
         "z": 2,
@@ -9062,7 +9062,7 @@
       },
       "id": 141,
       "properties": {
-        "Chezy": 0.4232649019898016,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -9080,7 +9080,7 @@
         "south_side_channel": false,
         "tygron_id": 141,
         "water": false,
-        "water_level": 6.008798534846458,
+        "water_level": 6.0,
         "x_center": 1299,
         "y_center": 850,
         "z": 4,
@@ -9126,7 +9126,7 @@
       },
       "id": 142,
       "properties": {
-        "Chezy": 1000,
+        "Chezy": 38.51898121148092,
         "behind_dike": true,
         "column": 15,
         "dike_reference": 141,
@@ -9144,7 +9144,7 @@
         "south_side_channel": false,
         "tygron_id": 142,
         "water": false,
-        "water_level": 6.01119449289704,
+        "water_level": 6.0,
         "x_center": 1299,
         "y_center": 950,
         "z": 2,
@@ -9157,32 +9157,32 @@
         "coordinates": [
           [
             [
-              -366.6753234863281,
-              240.0
-            ],
-            [
-              -383.337646484375,
-              210.0
-            ],
-            [
-              -416.662353515625,
-              210.0
-            ],
-            [
-              -433.3246765136719,
-              240.0
-            ],
-            [
-              -416.662353515625,
+              -516.6364135742188,
               270.0
             ],
             [
-              -383.337646484375,
+              -533.2987670898438,
+              240.0
+            ],
+            [
+              -566.6234741210938,
+              240.0
+            ],
+            [
+              -583.2857666015625,
               270.0
             ],
             [
-              -366.6753234863281,
-              240.0
+              -566.6234741210938,
+              300.0
+            ],
+            [
+              -533.2987670898438,
+              300.0
+            ],
+            [
+              -516.6364135742188,
+              270.0
             ]
           ]
         ],
@@ -9190,10 +9190,13 @@
       },
       "id": 143,
       "properties": {
-        "Chezy": 3.004597640917934,
+        "Chezy": 3.1049726930593677,
         "behind_dike": false,
-        "column": 0,
-        "face_cell": 9815,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 7251,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 10,
@@ -9205,9 +9208,9 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 6.0229785326922,
-        "x_center": 0,
-        "y_center": 100,
+        "water_level": 6.019883017963225,
+        "x_center": -260,
+        "y_center": 50,
         "z": 4,
         "z_changed": false
       },
@@ -9218,32 +9221,32 @@
         "coordinates": [
           [
             [
-              -366.6753234863281,
-              180.0
-            ],
-            [
-              -383.337646484375,
-              150.0
-            ],
-            [
-              -416.662353515625,
-              150.0
-            ],
-            [
-              -433.3246765136719,
-              180.0
-            ],
-            [
-              -416.662353515625,
+              -516.6364135742188,
               210.0
             ],
             [
-              -383.337646484375,
+              -533.2987670898438,
+              180.0
+            ],
+            [
+              -566.6234741210938,
+              180.0
+            ],
+            [
+              -583.2857666015625,
               210.0
             ],
             [
-              -366.6753234863281,
-              180.0
+              -566.6234741210938,
+              240.0
+            ],
+            [
+              -533.2987670898438,
+              240.0
+            ],
+            [
+              -516.6364135742188,
+              210.0
             ]
           ]
         ],
@@ -9251,10 +9254,13 @@
       },
       "id": 144,
       "properties": {
-        "Chezy": 13.113141650044048,
+        "Chezy": 12.630080097410943,
         "behind_dike": false,
-        "column": 0,
-        "face_cell": 8481,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 6096,
+        "floodplain_north": true,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 5,
@@ -9266,7 +9272,1863 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 5.180305226637473,
+        "water_level": 5.420605979531609,
+        "x_center": -260,
+        "y_center": 150,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              150.0
+            ],
+            [
+              -533.2987670898438,
+              120.0
+            ],
+            [
+              -566.6234741210938,
+              120.0
+            ],
+            [
+              -583.2857666015625,
+              150.0
+            ],
+            [
+              -566.6234741210938,
+              180.0
+            ],
+            [
+              -533.2987670898438,
+              180.0
+            ],
+            [
+              -516.6364135742188,
+              150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 145,
+      "properties": {
+        "Chezy": 33.092155925260045,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 5041,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.422491311794812,
+        "x_center": -260,
+        "y_center": 250,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              90.0
+            ],
+            [
+              -533.2987670898438,
+              60.0
+            ],
+            [
+              -566.6234741210938,
+              60.0
+            ],
+            [
+              -583.2857666015625,
+              90.0
+            ],
+            [
+              -566.6234741210938,
+              120.0
+            ],
+            [
+              -533.2987670898438,
+              120.0
+            ],
+            [
+              -516.6364135742188,
+              90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 146,
+      "properties": {
+        "Chezy": 33.19604681532549,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 4086,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.449976403713055,
+        "x_center": -260,
+        "y_center": 350,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              30.0
+            ],
+            [
+              -533.2987670898438,
+              -3.979039320256561e-13
+            ],
+            [
+              -566.6234741210938,
+              -3.979039320256561e-13
+            ],
+            [
+              -583.2857666015625,
+              30.0
+            ],
+            [
+              -566.6234741210938,
+              60.0
+            ],
+            [
+              -533.2987670898438,
+              60.0
+            ],
+            [
+              -516.6364135742188,
+              30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 147,
+      "properties": {
+        "Chezy": 53.116654285277804,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 3231,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": true,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 5.483076726775132,
+        "x_center": -260,
+        "y_center": 450,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              -30.0
+            ],
+            [
+              -533.2987670898438,
+              -60.0
+            ],
+            [
+              -566.6234741210938,
+              -60.0
+            ],
+            [
+              -583.2857666015625,
+              -30.0
+            ],
+            [
+              -566.6234741210938,
+              -3.979039320256561e-13
+            ],
+            [
+              -533.2987670898438,
+              -3.979039320256561e-13
+            ],
+            [
+              -516.6364135742188,
+              -30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 148,
+      "properties": {
+        "Chezy": 53.04064914592882,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 2476,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": true,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 5.436170076841809,
+        "x_center": -260,
+        "y_center": 550,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              -90.0
+            ],
+            [
+              -533.2987670898438,
+              -120.0
+            ],
+            [
+              -566.6234741210938,
+              -120.0
+            ],
+            [
+              -583.2857666015625,
+              -90.0
+            ],
+            [
+              -566.6234741210938,
+              -60.0
+            ],
+            [
+              -533.2987670898438,
+              -60.0
+            ],
+            [
+              -516.6364135742188,
+              -90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 149,
+      "properties": {
+        "Chezy": 2.9771083124908655,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 1821,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 3,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.426928382913149,
+        "x_center": -260,
+        "y_center": 650,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              -150.0
+            ],
+            [
+              -533.2987670898438,
+              -180.0
+            ],
+            [
+              -566.6234741210938,
+              -180.0
+            ],
+            [
+              -583.2857666015625,
+              -150.0
+            ],
+            [
+              -566.6234741210938,
+              -120.0
+            ],
+            [
+              -533.2987670898438,
+              -120.0
+            ],
+            [
+              -516.6364135742188,
+              -150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 150,
+      "properties": {
+        "Chezy": 33.133890954518925,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 1266,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.43349132062467,
+        "x_center": -260,
+        "y_center": 750,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              -210.0
+            ],
+            [
+              -533.2987670898438,
+              -240.0
+            ],
+            [
+              -566.6234741210938,
+              -240.0
+            ],
+            [
+              -583.2857666015625,
+              -210.0
+            ],
+            [
+              -566.6234741210938,
+              -180.0
+            ],
+            [
+              -533.2987670898438,
+              -180.0
+            ],
+            [
+              -516.6364135742188,
+              -210.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 151,
+      "properties": {
+        "Chezy": 12.595503558550934,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 811,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.438644151144698,
+        "x_center": -260,
+        "y_center": 850,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -516.6364135742188,
+              -270.0
+            ],
+            [
+              -533.2987670898438,
+              -300.0
+            ],
+            [
+              -566.6234741210938,
+              -300.0
+            ],
+            [
+              -583.2857666015625,
+              -270.0
+            ],
+            [
+              -566.6234741210938,
+              -240.0
+            ],
+            [
+              -533.2987670898438,
+              -240.0
+            ],
+            [
+              -516.6364135742188,
+              -270.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 152,
+      "properties": {
+        "Chezy": 2.853963824704815,
+        "behind_dike": false,
+        "column": 16,
+        "dike_reference": null,
+        "face_cell": 456,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": true,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.026841221188774,
+        "x_center": -260,
+        "y_center": 950,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              240.0
+            ],
+            [
+              -483.3117370605469,
+              210.0
+            ],
+            [
+              -516.6364135742188,
+              210.0
+            ],
+            [
+              -533.2987670898438,
+              240.0
+            ],
+            [
+              -516.6364135742188,
+              270.0
+            ],
+            [
+              -483.3117370605469,
+              270.0
+            ],
+            [
+              -466.6493835449219,
+              240.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 153,
+      "properties": {
+        "Chezy": 0.9475389609794628,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 7609,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": true,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.009427670758324,
+        "x_center": -173,
+        "y_center": 100,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              180.0
+            ],
+            [
+              -483.3117370605469,
+              150.0
+            ],
+            [
+              -516.6364135742188,
+              150.0
+            ],
+            [
+              -533.2987670898438,
+              180.0
+            ],
+            [
+              -516.6364135742188,
+              210.0
+            ],
+            [
+              -483.3117370605469,
+              210.0
+            ],
+            [
+              -466.6493835449219,
+              180.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 154,
+      "properties": {
+        "Chezy": 12.654006272646798,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 6424,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.408193706086794,
+        "x_center": -173,
+        "y_center": 200,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              120.0
+            ],
+            [
+              -483.3117370605469,
+              90.0
+            ],
+            [
+              -516.6364135742188,
+              90.0
+            ],
+            [
+              -533.2987670898438,
+              120.0
+            ],
+            [
+              -516.6364135742188,
+              150.0
+            ],
+            [
+              -483.3117370605469,
+              150.0
+            ],
+            [
+              -466.6493835449219,
+              120.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 155,
+      "properties": {
+        "Chezy": 32.9246106430735,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 5339,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.378883615370468,
+        "x_center": -173,
+        "y_center": 300,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              60.0
+            ],
+            [
+              -483.3117370605469,
+              30.0
+            ],
+            [
+              -516.6364135742188,
+              30.0
+            ],
+            [
+              -533.2987670898438,
+              60.0
+            ],
+            [
+              -516.6364135742188,
+              90.0
+            ],
+            [
+              -483.3117370605469,
+              90.0
+            ],
+            [
+              -466.6493835449219,
+              60.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 156,
+      "properties": {
+        "Chezy": 2.9334779235048973,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 4354,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 3,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.418351215897853,
+        "x_center": -173,
+        "y_center": 400,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              -3.979039320256561e-13
+            ],
+            [
+              -483.3117370605469,
+              -30.0
+            ],
+            [
+              -516.6364135742188,
+              -30.0
+            ],
+            [
+              -533.2987670898438,
+              -3.979039320256561e-13
+            ],
+            [
+              -516.6364135742188,
+              30.0
+            ],
+            [
+              -483.3117370605469,
+              30.0
+            ],
+            [
+              -466.6493835449219,
+              -3.979039320256561e-13
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 157,
+      "properties": {
+        "Chezy": 53.03712097425987,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 3469,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": true,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 5.434000810175194,
+        "x_center": -173,
+        "y_center": 500,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              -60.0
+            ],
+            [
+              -483.3117370605469,
+              -90.0
+            ],
+            [
+              -516.6364135742188,
+              -90.0
+            ],
+            [
+              -533.2987670898438,
+              -60.0
+            ],
+            [
+              -516.6364135742188,
+              -30.0
+            ],
+            [
+              -483.3117370605469,
+              -30.0
+            ],
+            [
+              -466.6493835449219,
+              -60.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 158,
+      "properties": {
+        "Chezy": 52.99396027717134,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 2684,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": true,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 5.407522152493375,
+        "x_center": -173,
+        "y_center": 600,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              -120.0
+            ],
+            [
+              -483.3117370605469,
+              -150.0
+            ],
+            [
+              -516.6364135742188,
+              -150.0
+            ],
+            [
+              -533.2987670898438,
+              -120.0
+            ],
+            [
+              -516.6364135742188,
+              -90.0
+            ],
+            [
+              -483.3117370605469,
+              -90.0
+            ],
+            [
+              -466.6493835449219,
+              -120.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 159,
+      "properties": {
+        "Chezy": 33.03838471357254,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 1999,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.408400165236582,
+        "x_center": -173,
+        "y_center": 700,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              -180.0
+            ],
+            [
+              -483.3117370605469,
+              -210.0
+            ],
+            [
+              -516.6364135742188,
+              -210.0
+            ],
+            [
+              -533.2987670898438,
+              -180.0
+            ],
+            [
+              -516.6364135742188,
+              -150.0
+            ],
+            [
+              -483.3117370605469,
+              -150.0
+            ],
+            [
+              -466.6493835449219,
+              -180.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 160,
+      "properties": {
+        "Chezy": 12.621542361500829,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 1414,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.425048892352868,
+        "x_center": -173,
+        "y_center": 800,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -466.6493835449219,
+              -240.0
+            ],
+            [
+              -483.3117370605469,
+              -270.0
+            ],
+            [
+              -516.6364135742188,
+              -270.0
+            ],
+            [
+              -533.2987670898438,
+              -240.0
+            ],
+            [
+              -516.6364135742188,
+              -210.0
+            ],
+            [
+              -483.3117370605469,
+              -210.0
+            ],
+            [
+              -466.6493835449219,
+              -240.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 161,
+      "properties": {
+        "Chezy": 3.126246319714579,
+        "behind_dike": false,
+        "column": 17,
+        "dike_reference": null,
+        "face_cell": 929,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": true,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.017051321980942,
+        "x_center": -173,
+        "y_center": 900,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              270.0
+            ],
+            [
+              -433.3246765136719,
+              240.0
+            ],
+            [
+              -466.6493835449219,
+              240.0
+            ],
+            [
+              -483.3117370605469,
+              270.0
+            ],
+            [
+              -466.6493835449219,
+              300.0
+            ],
+            [
+              -433.3246765136719,
+              300.0
+            ],
+            [
+              -416.662353515625,
+              270.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 162,
+      "properties": {
+        "Chezy": 2.440268951661146,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 9421,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": true,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.012093328897016,
+        "x_center": -87,
+        "y_center": 50,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              210.0
+            ],
+            [
+              -433.3246765136719,
+              180.0
+            ],
+            [
+              -466.6493835449219,
+              180.0
+            ],
+            [
+              -483.3117370605469,
+              210.0
+            ],
+            [
+              -466.6493835449219,
+              240.0
+            ],
+            [
+              -433.3246765136719,
+              240.0
+            ],
+            [
+              -416.662353515625,
+              210.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 163,
+      "properties": {
+        "Chezy": 12.689710091389353,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 8102,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.389776217674144,
+        "x_center": -87,
+        "y_center": 150,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              150.0
+            ],
+            [
+              -433.3246765136719,
+              120.0
+            ],
+            [
+              -466.6493835449219,
+              120.0
+            ],
+            [
+              -483.3117370605469,
+              150.0
+            ],
+            [
+              -466.6493835449219,
+              180.0
+            ],
+            [
+              -433.3246765136719,
+              180.0
+            ],
+            [
+              -416.662353515625,
+              150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 164,
+      "properties": {
+        "Chezy": 32.90494873778148,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 6877,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.373823501706605,
+        "x_center": -87,
+        "y_center": 250,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              90.0
+            ],
+            [
+              -433.3246765136719,
+              60.0
+            ],
+            [
+              -466.6493835449219,
+              60.0
+            ],
+            [
+              -483.3117370605469,
+              90.0
+            ],
+            [
+              -466.6493835449219,
+              120.0
+            ],
+            [
+              -433.3246765136719,
+              120.0
+            ],
+            [
+              -416.662353515625,
+              90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 165,
+      "properties": {
+        "Chezy": 32.68349397209171,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 5752,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.317648731542591,
+        "x_center": -87,
+        "y_center": 350,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              30.0
+            ],
+            [
+              -433.3246765136719,
+              -3.979039320256561e-13
+            ],
+            [
+              -466.6493835449219,
+              -3.979039320256561e-13
+            ],
+            [
+              -483.3117370605469,
+              30.0
+            ],
+            [
+              -466.6493835449219,
+              60.0
+            ],
+            [
+              -433.3246765136719,
+              60.0
+            ],
+            [
+              -416.662353515625,
+              30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 166,
+      "properties": {
+        "Chezy": 2.447243513288477,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 4727,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 3,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.323928238249258,
+        "x_center": -87,
+        "y_center": 450,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              -30.0
+            ],
+            [
+              -433.3246765136719,
+              -60.0
+            ],
+            [
+              -466.6493835449219,
+              -60.0
+            ],
+            [
+              -483.3117370605469,
+              -30.0
+            ],
+            [
+              -466.6493835449219,
+              -3.979039320256561e-13
+            ],
+            [
+              -433.3246765136719,
+              -3.979039320256561e-13
+            ],
+            [
+              -416.662353515625,
+              -30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 167,
+      "properties": {
+        "Chezy": 52.88843493242647,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 3802,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": true,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 5.34323586781837,
+        "x_center": -87,
+        "y_center": 550,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              -90.0
+            ],
+            [
+              -433.3246765136719,
+              -120.0
+            ],
+            [
+              -466.6493835449219,
+              -120.0
+            ],
+            [
+              -483.3117370605469,
+              -90.0
+            ],
+            [
+              -466.6493835449219,
+              -60.0
+            ],
+            [
+              -433.3246765136719,
+              -60.0
+            ],
+            [
+              -416.662353515625,
+              -90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 168,
+      "properties": {
+        "Chezy": 53.008305954418326,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 2977,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": true,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 5.416311126038773,
+        "x_center": -87,
+        "y_center": 650,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              -150.0
+            ],
+            [
+              -433.3246765136719,
+              -180.0
+            ],
+            [
+              -466.6493835449219,
+              -180.0
+            ],
+            [
+              -483.3117370605469,
+              -150.0
+            ],
+            [
+              -466.6493835449219,
+              -120.0
+            ],
+            [
+              -433.3246765136719,
+              -120.0
+            ],
+            [
+              -416.662353515625,
+              -150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 169,
+      "properties": {
+        "Chezy": 33.05834189534749,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 2252,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.413619455736131,
+        "x_center": -87,
+        "y_center": 750,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              -210.0
+            ],
+            [
+              -433.3246765136719,
+              -240.0
+            ],
+            [
+              -466.6493835449219,
+              -240.0
+            ],
+            [
+              -483.3117370605469,
+              -210.0
+            ],
+            [
+              -466.6493835449219,
+              -180.0
+            ],
+            [
+              -433.3246765136719,
+              -180.0
+            ],
+            [
+              -416.662353515625,
+              -210.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 170,
+      "properties": {
+        "Chezy": 12.640343067169622,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 1627,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.415274876187012,
+        "x_center": -87,
+        "y_center": 850,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -416.662353515625,
+              -270.0
+            ],
+            [
+              -433.3246765136719,
+              -300.0
+            ],
+            [
+              -466.6493835449219,
+              -300.0
+            ],
+            [
+              -483.3117370605469,
+              -270.0
+            ],
+            [
+              -466.6493835449219,
+              -240.0
+            ],
+            [
+              -433.3246765136719,
+              -240.0
+            ],
+            [
+              -416.662353515625,
+              -270.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 171,
+      "properties": {
+        "Chezy": 2.7685555243020197,
+        "behind_dike": false,
+        "column": 18,
+        "dike_reference": null,
+        "face_cell": 1102,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": true,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.029061232824216,
+        "x_center": -87,
+        "y_center": 950,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -366.6753234863281,
+              240.0
+            ],
+            [
+              -383.337646484375,
+              210.0
+            ],
+            [
+              -416.662353515625,
+              210.0
+            ],
+            [
+              -433.3246765136719,
+              240.0
+            ],
+            [
+              -416.662353515625,
+              270.0
+            ],
+            [
+              -383.337646484375,
+              270.0
+            ],
+            [
+              -366.6753234863281,
+              240.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 172,
+      "properties": {
+        "Chezy": 2.814059019935566,
+        "behind_dike": false,
+        "column": 19,
+        "dike_reference": null,
+        "face_cell": 9815,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": true,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.0278679911631,
+        "x_center": 0,
+        "y_center": 100,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -366.6753234863281,
+              180.0
+            ],
+            [
+              -383.337646484375,
+              150.0
+            ],
+            [
+              -416.662353515625,
+              150.0
+            ],
+            [
+              -433.3246765136719,
+              180.0
+            ],
+            [
+              -416.662353515625,
+              210.0
+            ],
+            [
+              -383.337646484375,
+              210.0
+            ],
+            [
+              -366.6753234863281,
+              180.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 173,
+      "properties": {
+        "Chezy": 12.728615580628475,
+        "behind_dike": false,
+        "column": 19,
+        "dike_reference": null,
+        "face_cell": 8481,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 5.369848053608758,
         "x_center": 0,
         "y_center": 200,
         "z": 2,
@@ -9310,12 +11172,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 145,
+      "id": 174,
       "properties": {
-        "Chezy": 32.3772701431958,
+        "Chezy": 32.720854577748455,
         "behind_dike": false,
-        "column": 0,
+        "column": 19,
+        "dike_reference": null,
         "face_cell": 7226,
+        "floodplain_north": true,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 2,
@@ -9327,7 +11192,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 5.242390130456021,
+        "water_level": 5.327021257785644,
         "x_center": 0,
         "y_center": 300,
         "z": 2,
@@ -9371,27 +11236,30 @@
         ],
         "type": "Polygon"
       },
-      "id": 146,
+      "id": 175,
       "properties": {
-        "Chezy": 52.685853044695,
+        "Chezy": 32.589380576040405,
         "behind_dike": false,
-        "column": 0,
+        "column": 19,
+        "dike_reference": null,
         "face_cell": 6071,
+        "floodplain_north": true,
+        "floodplain_south": false,
         "ghost_hexagon": true,
-        "land": false,
-        "landuse": 9,
+        "land": true,
+        "landuse": 2,
         "landuse_changed": false,
-        "main_channel": true,
+        "main_channel": false,
         "north_dike": false,
-        "north_side_channel": true,
+        "north_side_channel": false,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": null,
-        "water": true,
-        "water_level": 5.2216066052733145,
+        "water": false,
+        "water_level": 5.294224257350614,
         "x_center": 0,
         "y_center": 400,
-        "z": 0,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -9432,24 +11300,27 @@
         ],
         "type": "Polygon"
       },
-      "id": 147,
+      "id": 176,
       "properties": {
-        "Chezy": 52.58318088803553,
+        "Chezy": 52.80883861340534,
         "behind_dike": false,
-        "column": 0,
+        "column": 19,
+        "dike_reference": null,
         "face_cell": 5016,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": false,
         "landuse": 9,
         "landuse_changed": false,
         "main_channel": true,
         "north_dike": false,
-        "north_side_channel": false,
+        "north_side_channel": true,
         "south_dike": false,
-        "south_side_channel": true,
+        "south_side_channel": false,
         "tygron_id": null,
         "water": true,
-        "water_level": 5.160849290341799,
+        "water_level": 5.295168089088045,
         "x_center": 0,
         "y_center": 500,
         "z": 0,
@@ -9493,27 +11364,30 @@
         ],
         "type": "Polygon"
       },
-      "id": 148,
+      "id": 177,
       "properties": {
-        "Chezy": 31.979260908998135,
+        "Chezy": 52.966084894122844,
         "behind_dike": false,
-        "column": 0,
+        "column": 19,
+        "dike_reference": null,
         "face_cell": 4061,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
-        "land": true,
-        "landuse": 2,
+        "land": false,
+        "landuse": 9,
         "landuse_changed": false,
-        "main_channel": false,
+        "main_channel": true,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
-        "south_side_channel": false,
+        "south_side_channel": true,
         "tygron_id": null,
-        "water": false,
-        "water_level": 5.148609083753755,
+        "water": true,
+        "water_level": 5.390478096901185,
         "x_center": 0,
         "y_center": 600,
-        "z": 2,
+        "z": 0,
         "z_changed": false
       },
       "type": "Feature"
@@ -9554,12 +11428,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 149,
+      "id": 178,
       "properties": {
-        "Chezy": 32.16089855850244,
+        "Chezy": 33.04749310433157,
         "behind_dike": false,
-        "column": 0,
+        "column": 19,
+        "dike_reference": null,
         "face_cell": 3206,
+        "floodplain_north": false,
+        "floodplain_south": true,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 2,
@@ -9571,7 +11448,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 5.190854160218495,
+        "water_level": 5.410780677182633,
         "x_center": 0,
         "y_center": 700,
         "z": 2,
@@ -9615,15 +11492,18 @@
         ],
         "type": "Polygon"
       },
-      "id": 150,
+      "id": 179,
       "properties": {
-        "Chezy": 13.005769662815503,
+        "Chezy": 33.05012018702516,
         "behind_dike": false,
-        "column": 0,
+        "column": 19,
+        "dike_reference": null,
         "face_cell": 2451,
+        "floodplain_north": false,
+        "floodplain_south": true,
         "ghost_hexagon": true,
         "land": true,
-        "landuse": 5,
+        "landuse": 2,
         "landuse_changed": false,
         "main_channel": false,
         "north_dike": false,
@@ -9632,7 +11512,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 5.231935416349814,
+        "water_level": 5.411467759955782,
         "x_center": 0,
         "y_center": 800,
         "z": 2,
@@ -9676,12 +11556,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 151,
+      "id": 180,
       "properties": {
-        "Chezy": 2.9244180393051713,
+        "Chezy": 2.9782656074902643,
         "behind_dike": false,
-        "column": 0,
+        "column": 19,
+        "dike_reference": null,
         "face_cell": 1796,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 10,
@@ -9693,7 +11576,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 6.0250507573087315,
+        "water_level": 6.023671148314435,
         "x_center": 0,
         "y_center": 900,
         "z": 4,
@@ -9737,12 +11620,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 152,
+      "id": 181,
       "properties": {
-        "Chezy": 2.451526478323104,
+        "Chezy": 0.9230276204862133,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 24803,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 10,
@@ -9754,7 +11640,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 6.005933811685023,
+        "water_level": 6.009396520809973,
         "x_center": 1386,
         "y_center": 100,
         "z": 4,
@@ -9798,12 +11684,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 153,
+      "id": 182,
       "properties": {
-        "Chezy": 14.457510789299764,
+        "Chezy": 14.95891267084687,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 24148,
+        "floodplain_north": true,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 5,
@@ -9815,7 +11704,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 3.380910041650846,
+        "water_level": 4.398808980203058,
         "x_center": 1386,
         "y_center": 200,
         "z": 2,
@@ -9859,12 +11748,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 154,
+      "id": 183,
       "properties": {
-        "Chezy": 13.427665877806701,
+        "Chezy": 27.690433643059432,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 23393,
+        "floodplain_north": true,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 2,
@@ -9876,7 +11768,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 3.368891888877192,
+        "water_level": 4.374491371226931,
         "x_center": 1386,
         "y_center": 300,
         "z": 2,
@@ -9920,27 +11812,30 @@
         ],
         "type": "Polygon"
       },
-      "id": 155,
+      "id": 184,
       "properties": {
-        "Chezy": 14.217404279755279,
+        "Chezy": 51.140740841123005,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 22538,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
-        "land": true,
-        "landuse": 2,
+        "land": false,
+        "landuse": 9,
         "landuse_changed": false,
-        "main_channel": false,
+        "main_channel": true,
         "north_dike": false,
-        "north_side_channel": false,
+        "north_side_channel": true,
         "south_dike": false,
         "south_side_channel": false,
         "tygron_id": null,
-        "water": false,
-        "water_level": 3.394716407182317,
+        "water": true,
+        "water_level": 4.367592810433136,
         "x_center": 1386,
         "y_center": 400,
-        "z": 2,
+        "z": 0,
         "z_changed": false
       },
       "type": "Feature"
@@ -9981,24 +11876,27 @@
         ],
         "type": "Polygon"
       },
-      "id": 156,
+      "id": 185,
       "properties": {
-        "Chezy": 48.73492244313012,
+        "Chezy": 51.05090444853031,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 21583,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": false,
         "landuse": 9,
         "landuse_changed": false,
         "main_channel": true,
         "north_dike": false,
-        "north_side_channel": true,
+        "north_side_channel": false,
         "south_dike": false,
-        "south_side_channel": false,
+        "south_side_channel": true,
         "tygron_id": null,
         "water": true,
-        "water_level": 3.271008913777285,
+        "water_level": 4.321760504935066,
         "x_center": 1386,
         "y_center": 500,
         "z": 0,
@@ -10042,27 +11940,30 @@
         ],
         "type": "Polygon"
       },
-      "id": 157,
+      "id": 186,
       "properties": {
-        "Chezy": 47.8654214580428,
+        "Chezy": 27.465102109582528,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 20528,
+        "floodplain_north": false,
+        "floodplain_south": true,
         "ghost_hexagon": true,
-        "land": false,
-        "landuse": 9,
+        "land": true,
+        "landuse": 2,
         "landuse_changed": false,
-        "main_channel": true,
+        "main_channel": false,
         "north_dike": false,
         "north_side_channel": false,
         "south_dike": false,
-        "south_side_channel": true,
+        "south_side_channel": false,
         "tygron_id": null,
-        "water": true,
-        "water_level": 2.9361036002422685,
+        "water": false,
+        "water_level": 4.3435517955048475,
         "x_center": 1386,
         "y_center": 600,
-        "z": 0,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"
@@ -10103,12 +12004,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 158,
+      "id": 187,
       "properties": {
-        "Chezy": 9.672868509664491,
+        "Chezy": 27.403042719318098,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 19373,
+        "floodplain_north": false,
+        "floodplain_south": true,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 2,
@@ -10120,7 +12024,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 3.267838972280916,
+        "water_level": 4.335170255225229,
         "x_center": 1386,
         "y_center": 700,
         "z": 2,
@@ -10164,12 +12068,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 159,
+      "id": 188,
       "properties": {
-        "Chezy": 12.716073821138263,
+        "Chezy": 15.095341007251736,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 18118,
+        "floodplain_north": false,
+        "floodplain_south": true,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 5,
@@ -10181,7 +12088,7 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 3.276617658330083,
+        "water_level": 4.3446069498857005,
         "x_center": 1386,
         "y_center": 800,
         "z": 2,
@@ -10225,12 +12132,15 @@
         ],
         "type": "Polygon"
       },
-      "id": 160,
+      "id": 189,
       "properties": {
-        "Chezy": 3.436417543967138,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
-        "column": 16,
+        "column": 20,
+        "dike_reference": null,
         "face_cell": 16784,
+        "floodplain_north": false,
+        "floodplain_south": false,
         "ghost_hexagon": true,
         "land": true,
         "landuse": 10,
@@ -10242,10 +12152,1866 @@
         "south_side_channel": false,
         "tygron_id": null,
         "water": false,
-        "water_level": 6.005024681419985,
+        "water_level": 6.0,
         "x_center": 1386,
         "y_center": 900,
         "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              270.0
+            ],
+            [
+              466.4419860839844,
+              240.0
+            ],
+            [
+              433.1173095703125,
+              240.0
+            ],
+            [
+              416.4549255371094,
+              270.0
+            ],
+            [
+              433.1173095703125,
+              300.0
+            ],
+            [
+              466.4419860839844,
+              300.0
+            ],
+            [
+              483.1043395996094,
+              270.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 190,
+      "properties": {
+        "Chezy": 38.63784892416391,
+        "behind_dike": true,
+        "column": 21,
+        "dike_reference": 191,
+        "face_cell": 25497,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.041586414446548,
+        "x_center": 1472,
+        "y_center": 50,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              210.0
+            ],
+            [
+              466.4419860839844,
+              180.0
+            ],
+            [
+              433.1173095703125,
+              180.0
+            ],
+            [
+              416.4549255371094,
+              210.0
+            ],
+            [
+              433.1173095703125,
+              240.0
+            ],
+            [
+              466.4419860839844,
+              240.0
+            ],
+            [
+              483.1043395996094,
+              210.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 191,
+      "properties": {
+        "Chezy": 2.103626323202704,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 24972,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": true,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.011271121327752,
+        "x_center": 1472,
+        "y_center": 150,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              150.0
+            ],
+            [
+              466.4419860839844,
+              120.0
+            ],
+            [
+              433.1173095703125,
+              120.0
+            ],
+            [
+              416.4549255371094,
+              150.0
+            ],
+            [
+              433.1173095703125,
+              180.0
+            ],
+            [
+              466.4419860839844,
+              180.0
+            ],
+            [
+              483.1043395996094,
+              150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 192,
+      "properties": {
+        "Chezy": 15.027796059525333,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 24347,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 4.371483605729604,
+        "x_center": 1472,
+        "y_center": 250,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              90.0
+            ],
+            [
+              466.4419860839844,
+              60.0
+            ],
+            [
+              433.1173095703125,
+              60.0
+            ],
+            [
+              416.4549255371094,
+              90.0
+            ],
+            [
+              433.1173095703125,
+              120.0
+            ],
+            [
+              466.4419860839844,
+              120.0
+            ],
+            [
+              483.1043395996094,
+              90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 193,
+      "properties": {
+        "Chezy": 51.12260549293183,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 23622,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": true,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 4.3583081234366,
+        "x_center": 1472,
+        "y_center": 350,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              30.0
+            ],
+            [
+              466.4419860839844,
+              -2.8421709430404007e-13
+            ],
+            [
+              433.1173095703125,
+              -2.8421709430404007e-13
+            ],
+            [
+              416.4549255371094,
+              30.0
+            ],
+            [
+              433.1173095703125,
+              60.0
+            ],
+            [
+              466.4419860839844,
+              60.0
+            ],
+            [
+              483.1043395996094,
+              30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 194,
+      "properties": {
+        "Chezy": 50.41375352286382,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 22797,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": true,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 4.008060372102233,
+        "x_center": 1472,
+        "y_center": 450,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              -30.0
+            ],
+            [
+              466.4419860839844,
+              -60.0
+            ],
+            [
+              433.1173095703125,
+              -60.0
+            ],
+            [
+              416.4549255371094,
+              -30.0
+            ],
+            [
+              433.1173095703125,
+              -2.8421709430404007e-13
+            ],
+            [
+              466.4419860839844,
+              -2.8421709430404007e-13
+            ],
+            [
+              483.1043395996094,
+              -30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 195,
+      "properties": {
+        "Chezy": 7.646419494593846,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 21872,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 3,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 4.118736569376777,
+        "x_center": 1472,
+        "y_center": 550,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              -90.0
+            ],
+            [
+              466.4419860839844,
+              -120.0
+            ],
+            [
+              433.1173095703125,
+              -120.0
+            ],
+            [
+              416.4549255371094,
+              -90.0
+            ],
+            [
+              433.1173095703125,
+              -60.0
+            ],
+            [
+              466.4419860839844,
+              -60.0
+            ],
+            [
+              483.1043395996094,
+              -90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 196,
+      "properties": {
+        "Chezy": 26.841480800276813,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 20847,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 4.261974352715128,
+        "x_center": 1472,
+        "y_center": 650,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              -150.0
+            ],
+            [
+              466.4419860839844,
+              -180.0
+            ],
+            [
+              433.1173095703125,
+              -180.0
+            ],
+            [
+              416.4549255371094,
+              -150.0
+            ],
+            [
+              433.1173095703125,
+              -120.0
+            ],
+            [
+              466.4419860839844,
+              -120.0
+            ],
+            [
+              483.1043395996094,
+              -150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 197,
+      "properties": {
+        "Chezy": 15.192610355304053,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 19722,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 4.305677879204833,
+        "x_center": 1472,
+        "y_center": 750,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              -210.0
+            ],
+            [
+              466.4419860839844,
+              -240.0
+            ],
+            [
+              433.1173095703125,
+              -240.0
+            ],
+            [
+              416.4549255371094,
+              -210.0
+            ],
+            [
+              433.1173095703125,
+              -180.0
+            ],
+            [
+              466.4419860839844,
+              -180.0
+            ],
+            [
+              483.1043395996094,
+              -210.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 198,
+      "properties": {
+        "Chezy": 0.2726770790734278,
+        "behind_dike": false,
+        "column": 21,
+        "dike_reference": null,
+        "face_cell": 18497,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": true,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.008047320203908,
+        "x_center": 1472,
+        "y_center": 850,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              483.1043395996094,
+              -270.0
+            ],
+            [
+              466.4419860839844,
+              -300.0
+            ],
+            [
+              433.1173095703125,
+              -300.0
+            ],
+            [
+              416.4549255371094,
+              -270.0
+            ],
+            [
+              433.1173095703125,
+              -240.0
+            ],
+            [
+              466.4419860839844,
+              -240.0
+            ],
+            [
+              483.1043395996094,
+              -270.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 199,
+      "properties": {
+        "Chezy": 38.55937745065927,
+        "behind_dike": true,
+        "column": 21,
+        "dike_reference": 198,
+        "face_cell": 17178,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.014064010442094,
+        "x_center": 1472,
+        "y_center": 950,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              240.0
+            ],
+            [
+              516.4290161132812,
+              210.0
+            ],
+            [
+              483.1043395996094,
+              210.0
+            ],
+            [
+              466.4419860839844,
+              240.0
+            ],
+            [
+              483.1043395996094,
+              270.0
+            ],
+            [
+              516.4290161132812,
+              270.0
+            ],
+            [
+              533.0913696289062,
+              240.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 200,
+      "properties": {
+        "Chezy": 38.585429369880416,
+        "behind_dike": true,
+        "column": 22,
+        "dike_reference": 201,
+        "face_cell": 25670,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.023171511822046,
+        "x_center": 1559,
+        "y_center": 100,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              180.0
+            ],
+            [
+              516.4290161132812,
+              150.0
+            ],
+            [
+              483.1043395996094,
+              150.0
+            ],
+            [
+              466.4419860839844,
+              180.0
+            ],
+            [
+              483.1043395996094,
+              210.0
+            ],
+            [
+              516.4290161132812,
+              210.0
+            ],
+            [
+              533.0913696289062,
+              180.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 201,
+      "properties": {
+        "Chezy": 1.0640659023485248,
+        "behind_dike": false,
+        "column": 22,
+        "dike_reference": null,
+        "face_cell": 25185,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": true,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.009578623342397,
+        "x_center": 1559,
+        "y_center": 200,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              120.0
+            ],
+            [
+              516.4290161132812,
+              90.0
+            ],
+            [
+              483.1043395996094,
+              90.0
+            ],
+            [
+              466.4419860839844,
+              120.0
+            ],
+            [
+              483.1043395996094,
+              150.0
+            ],
+            [
+              516.4290161132812,
+              150.0
+            ],
+            [
+              533.0913696289062,
+              120.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 202,
+      "properties": {
+        "Chezy": 7.258169844978506,
+        "behind_dike": false,
+        "column": 22,
+        "dike_reference": null,
+        "face_cell": 24600,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 3,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 4.248739626147936,
+        "x_center": 1559,
+        "y_center": 300,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              60.0
+            ],
+            [
+              516.4290161132812,
+              30.0
+            ],
+            [
+              483.1043395996094,
+              30.0
+            ],
+            [
+              466.4419860839844,
+              60.0
+            ],
+            [
+              483.1043395996094,
+              90.0
+            ],
+            [
+              516.4290161132812,
+              90.0
+            ],
+            [
+              533.0913696289062,
+              60.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 203,
+      "properties": {
+        "Chezy": 50.41708906321749,
+        "behind_dike": false,
+        "column": 22,
+        "dike_reference": null,
+        "face_cell": 23915,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": true,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 4.009651754340911,
+        "x_center": 1559,
+        "y_center": 400,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              -2.8421709430404007e-13
+            ],
+            [
+              516.4290161132812,
+              -30.0
+            ],
+            [
+              483.1043395996094,
+              -30.0
+            ],
+            [
+              466.4419860839844,
+              -2.8421709430404007e-13
+            ],
+            [
+              483.1043395996094,
+              30.0
+            ],
+            [
+              516.4290161132812,
+              30.0
+            ],
+            [
+              533.0913696289062,
+              -2.8421709430404007e-13
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 204,
+      "properties": {
+        "Chezy": 49.49332181201953,
+        "behind_dike": false,
+        "column": 22,
+        "dike_reference": null,
+        "face_cell": 23130,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": true,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 3.588555525060117,
+        "x_center": 1559,
+        "y_center": 500,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              -60.0
+            ],
+            [
+              516.4290161132812,
+              -90.0
+            ],
+            [
+              483.1043395996094,
+              -90.0
+            ],
+            [
+              466.4419860839844,
+              -60.0
+            ],
+            [
+              483.1043395996094,
+              -30.0
+            ],
+            [
+              516.4290161132812,
+              -30.0
+            ],
+            [
+              533.0913696289062,
+              -60.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 205,
+      "properties": {
+        "Chezy": 22.193314095348697,
+        "behind_dike": false,
+        "column": 22,
+        "dike_reference": null,
+        "face_cell": 22245,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 3.80466887003438,
+        "x_center": 1559,
+        "y_center": 600,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              -120.0
+            ],
+            [
+              516.4290161132812,
+              -150.0
+            ],
+            [
+              483.1043395996094,
+              -150.0
+            ],
+            [
+              466.4419860839844,
+              -120.0
+            ],
+            [
+              483.1043395996094,
+              -90.0
+            ],
+            [
+              516.4290161132812,
+              -90.0
+            ],
+            [
+              533.0913696289062,
+              -120.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 206,
+      "properties": {
+        "Chezy": 15.51006934183854,
+        "behind_dike": false,
+        "column": 22,
+        "dike_reference": null,
+        "face_cell": 21260,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 5,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 4.174819973930365,
+        "x_center": 1559,
+        "y_center": 700,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              -180.0
+            ],
+            [
+              516.4290161132812,
+              -210.0
+            ],
+            [
+              483.1043395996094,
+              -210.0
+            ],
+            [
+              466.4419860839844,
+              -180.0
+            ],
+            [
+              483.1043395996094,
+              -150.0
+            ],
+            [
+              516.4290161132812,
+              -150.0
+            ],
+            [
+              533.0913696289062,
+              -180.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 207,
+      "properties": {
+        "Chezy": 3.131835730183697,
+        "behind_dike": false,
+        "column": 22,
+        "dike_reference": null,
+        "face_cell": 20175,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": true,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.017551015874589,
+        "x_center": 1559,
+        "y_center": 800,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              533.0913696289062,
+              -240.0
+            ],
+            [
+              516.4290161132812,
+              -270.0
+            ],
+            [
+              483.1043395996094,
+              -270.0
+            ],
+            [
+              466.4419860839844,
+              -240.0
+            ],
+            [
+              483.1043395996094,
+              -210.0
+            ],
+            [
+              516.4290161132812,
+              -210.0
+            ],
+            [
+              533.0913696289062,
+              -240.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 208,
+      "properties": {
+        "Chezy": 38.57577369744942,
+        "behind_dike": true,
+        "column": 22,
+        "dike_reference": 207,
+        "face_cell": 18990,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.019792544588742,
+        "x_center": 1559,
+        "y_center": 900,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              270.0
+            ],
+            [
+              566.416015625,
+              240.0
+            ],
+            [
+              533.0913696289062,
+              240.0
+            ],
+            [
+              516.4290161132812,
+              270.0
+            ],
+            [
+              533.0913696289062,
+              300.0
+            ],
+            [
+              566.416015625,
+              300.0
+            ],
+            [
+              583.0784301757812,
+              270.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 209,
+      "properties": {
+        "Chezy": 38.563852373113306,
+        "behind_dike": true,
+        "column": 23,
+        "dike_reference": 211,
+        "face_cell": 26143,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.015626305553605,
+        "x_center": 1645,
+        "y_center": 50,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              210.0
+            ],
+            [
+              566.416015625,
+              180.0
+            ],
+            [
+              533.0913696289062,
+              180.0
+            ],
+            [
+              516.4290161132812,
+              210.0
+            ],
+            [
+              533.0913696289062,
+              240.0
+            ],
+            [
+              566.416015625,
+              240.0
+            ],
+            [
+              583.0784301757812,
+              210.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 210,
+      "properties": {
+        "Chezy": 38.55862066820991,
+        "behind_dike": true,
+        "column": 23,
+        "dike_reference": 211,
+        "face_cell": 25788,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.013799886634973,
+        "x_center": 1645,
+        "y_center": 150,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              150.0
+            ],
+            [
+              566.416015625,
+              120.0
+            ],
+            [
+              533.0913696289062,
+              120.0
+            ],
+            [
+              516.4290161132812,
+              150.0
+            ],
+            [
+              533.0913696289062,
+              180.0
+            ],
+            [
+              566.416015625,
+              180.0
+            ],
+            [
+              583.0784301757812,
+              150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 211,
+      "properties": {
+        "Chezy": 0.6454641898093493,
+        "behind_dike": false,
+        "column": 23,
+        "dike_reference": null,
+        "face_cell": 25333,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": true,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.009056501737426,
+        "x_center": 1645,
+        "y_center": 250,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              90.0
+            ],
+            [
+              566.416015625,
+              60.0
+            ],
+            [
+              533.0913696289062,
+              60.0
+            ],
+            [
+              516.4290161132812,
+              90.0
+            ],
+            [
+              533.0913696289062,
+              120.0
+            ],
+            [
+              566.416015625,
+              120.0
+            ],
+            [
+              583.0784301757812,
+              90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 212,
+      "properties": {
+        "Chezy": 21.814150854636974,
+        "behind_dike": false,
+        "column": 23,
+        "dike_reference": null,
+        "face_cell": 24778,
+        "floodplain_north": true,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 2,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 3.7766525050054027,
+        "x_center": 1645,
+        "y_center": 350,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              30.0
+            ],
+            [
+              566.416015625,
+              -2.8421709430404007e-13
+            ],
+            [
+              533.0913696289062,
+              -2.8421709430404007e-13
+            ],
+            [
+              516.4290161132812,
+              30.0
+            ],
+            [
+              533.0913696289062,
+              60.0
+            ],
+            [
+              566.416015625,
+              60.0
+            ],
+            [
+              583.0784301757812,
+              30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 213,
+      "properties": {
+        "Chezy": 48.94089620346295,
+        "behind_dike": false,
+        "column": 23,
+        "dike_reference": null,
+        "face_cell": 24123,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": true,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 3.354838043675306,
+        "x_center": 1645,
+        "y_center": 450,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              -30.0
+            ],
+            [
+              566.416015625,
+              -60.0
+            ],
+            [
+              533.0913696289062,
+              -60.0
+            ],
+            [
+              516.4290161132812,
+              -30.0
+            ],
+            [
+              533.0913696289062,
+              -2.8421709430404007e-13
+            ],
+            [
+              566.416015625,
+              -2.8421709430404007e-13
+            ],
+            [
+              583.0784301757812,
+              -30.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 214,
+      "properties": {
+        "Chezy": 49.06449049982113,
+        "behind_dike": false,
+        "column": 23,
+        "dike_reference": null,
+        "face_cell": 23368,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": false,
+        "landuse": 9,
+        "landuse_changed": false,
+        "main_channel": true,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": true,
+        "tygron_id": null,
+        "water": true,
+        "water_level": 3.4059934794773694,
+        "x_center": 1645,
+        "y_center": 550,
+        "z": 0,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              -90.0
+            ],
+            [
+              566.416015625,
+              -120.0
+            ],
+            [
+              533.0913696289062,
+              -120.0
+            ],
+            [
+              516.4290161132812,
+              -90.0
+            ],
+            [
+              533.0913696289062,
+              -60.0
+            ],
+            [
+              566.416015625,
+              -60.0
+            ],
+            [
+              583.0784301757812,
+              -90.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 215,
+      "properties": {
+        "Chezy": 9.641472965950104,
+        "behind_dike": false,
+        "column": 23,
+        "dike_reference": null,
+        "face_cell": 22513,
+        "floodplain_north": false,
+        "floodplain_south": true,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 3,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 3.6751354479586746,
+        "x_center": 1645,
+        "y_center": 650,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              -150.0
+            ],
+            [
+              566.416015625,
+              -180.0
+            ],
+            [
+              533.0913696289062,
+              -180.0
+            ],
+            [
+              516.4290161132812,
+              -150.0
+            ],
+            [
+              533.0913696289062,
+              -120.0
+            ],
+            [
+              566.416015625,
+              -120.0
+            ],
+            [
+              583.0784301757812,
+              -150.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 216,
+      "properties": {
+        "Chezy": 3.007822749037115,
+        "behind_dike": false,
+        "column": 23,
+        "dike_reference": null,
+        "face_cell": 21558,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 10,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": true,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.014822778085135,
+        "x_center": 1645,
+        "y_center": 750,
+        "z": 4,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              -210.0
+            ],
+            [
+              566.416015625,
+              -240.0
+            ],
+            [
+              533.0913696289062,
+              -240.0
+            ],
+            [
+              516.4290161132812,
+              -210.0
+            ],
+            [
+              533.0913696289062,
+              -180.0
+            ],
+            [
+              566.416015625,
+              -180.0
+            ],
+            [
+              583.0784301757812,
+              -210.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 217,
+      "properties": {
+        "Chezy": 38.580163122535204,
+        "behind_dike": true,
+        "column": 23,
+        "dike_reference": 216,
+        "face_cell": 20503,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.021328105605935,
+        "x_center": 1645,
+        "y_center": 850,
+        "z": 2,
+        "z_changed": false
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              583.0784301757812,
+              -270.0
+            ],
+            [
+              566.416015625,
+              -300.0
+            ],
+            [
+              533.0913696289062,
+              -300.0
+            ],
+            [
+              516.4290161132812,
+              -270.0
+            ],
+            [
+              533.0913696289062,
+              -240.0
+            ],
+            [
+              566.416015625,
+              -240.0
+            ],
+            [
+              583.0784301757812,
+              -270.0
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 218,
+      "properties": {
+        "Chezy": 38.57590643585944,
+        "behind_dike": true,
+        "column": 23,
+        "dike_reference": 216,
+        "face_cell": 19348,
+        "floodplain_north": false,
+        "floodplain_south": false,
+        "ghost_hexagon": true,
+        "land": true,
+        "landuse": 1,
+        "landuse_changed": false,
+        "main_channel": false,
+        "north_dike": false,
+        "north_side_channel": false,
+        "south_dike": false,
+        "south_side_channel": false,
+        "tygron_id": null,
+        "water": false,
+        "water_level": 6.01983896845078,
+        "x_center": 1645,
+        "y_center": 950,
+        "z": 2,
         "z_changed": false
       },
       "type": "Feature"

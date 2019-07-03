@@ -27,25 +27,48 @@ def set_values(hexagons):
                          "land": True,
                          "behind_dike": False
                          }
+    floodplain_values_reed = {"z": 2,
+                         "landuse": 3,
+                         "water": False,
+                         "land": True,
+                         "behind_dike": False
+                         }
     channel_values = {"z": 0,
                       "landuse": 9,
                       "water": True,
                       "land": False,
                       "behind_dike": False
                       }
+    behind_dike_values = {"z": 2,
+                      "landuse": 1,
+                      "water": False,
+                      "land": True,
+                      "behind_dike": True
+                      }
     for feature in hexagons.features:
         if not feature.properties["ghost_hexagon"]:
             continue
         else:
-            if (feature.id == 143 or feature.id == 151 or
-                feature.id == 152 or feature.id == 160):
+            if (feature.id == 143 or feature.id == 152 or
+                feature.id == 153 or feature.id == 161 or
+                feature.id == 162 or feature.id == 170 or
+                feature.id == 172 or feature.id == 179):
                 values = dike_values
-            elif (feature.id == 146 or feature.id == 147 or
-                  feature.id == 156 or feature.id == 157):
+            elif (feature.id == 147 or feature.id == 148 or
+                  feature.id == 156 or feature.id == 157 or
+                  feature.id == 166 or feature.id == 167 or
+                  feature.id == 175 or feature.id == 176):
                 values = channel_values
-            elif (feature.id == 144 or feature.id == 150 or
-                feature.id == 153 or feature.id == 159):
+            elif (feature.id == 144 or feature.id == 151 or
+                  feature.id == 154 or feature.id == 160 or
+                  feature.id == 163 or feature.id == 169 or
+                  feature.id == 173 or feature.id == 178):
                 values = floodplain_values_forest
+            elif (feature.id == 165 or feature.id == 174 or
+                  feature.id == 177):
+                values = floodplain_values_reed
+            elif (feature.id == 171 or feature.id == 180):
+                values = behind_dike_values
             else:
                 values = floodplain_values_grass
             feature.properties["z"] = values["z"]
