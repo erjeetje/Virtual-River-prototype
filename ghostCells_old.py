@@ -45,27 +45,29 @@ def set_values(hexagons):
                       "land": True,
                       "behind_dike": True
                       }
-    channel_hexagons = [147, 148, 157, 158, 167, 168, 176, 177,
-                        184, 185, 193, 194, 203, 204, 213, 214]
-    dike_hexagons = [143, 152, 153, 161, 162, 171, 172, 180,
-                     181, 189, 191, 198, 201, 207, 211, 216]
-    floodplain_forest = [144, 151, 154, 160, 163, 170, 173,
-                         182, 188, 192, 197, 206]
-    floodplain_reed = [149, 156, 166, 195, 202, 215]
-    behind_dike = [190, 199, 200, 208, 209, 210, 217, 218]
     for feature in hexagons.features:
         if not feature.properties["ghost_hexagon"]:
             continue
         else:
-            if feature.id in dike_hexagons:
+            if (feature.id == 143 or feature.id == 152 or
+                feature.id == 153 or feature.id == 161 or
+                feature.id == 162 or feature.id == 170 or
+                feature.id == 172 or feature.id == 179):
                 values = dike_values
-            elif feature.id in channel_hexagons:
+            elif (feature.id == 147 or feature.id == 148 or
+                  feature.id == 156 or feature.id == 157 or
+                  feature.id == 166 or feature.id == 167 or
+                  feature.id == 175 or feature.id == 176):
                 values = channel_values
-            elif feature.id in floodplain_forest:
+            elif (feature.id == 144 or feature.id == 151 or
+                  feature.id == 154 or feature.id == 160 or
+                  feature.id == 163 or feature.id == 169 or
+                  feature.id == 173 or feature.id == 178):
                 values = floodplain_values_forest
-            elif feature.id in floodplain_reed:
+            elif (feature.id == 165 or feature.id == 174 or
+                  feature.id == 177):
                 values = floodplain_values_reed
-            elif feature.id in behind_dike:
+            elif (feature.id == 171 or feature.id == 180):
                 values = behind_dike_values
             else:
                 values = floodplain_values_grass

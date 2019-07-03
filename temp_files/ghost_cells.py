@@ -10,6 +10,7 @@ import geojson
 import numpy as np
 #import gridMapping as gridmap
 from shapely import geometry
+import ghostCells_test as ghosts
 
 
 def create_features(height, width):
@@ -149,8 +150,6 @@ def create_features(height, width):
         features.append(feature)
     # create geojson featurecollection with all hexagons.
     features = geojson.FeatureCollection(features)
-    with open('ghost_cells_test.geojson', 'w') as f:
-        geojson.dump(features, f, sort_keys=True, indent=2)
     return features
 
 
@@ -191,6 +190,9 @@ def main():
     width = int(round(height * ratio))
     hexagons = create_features(height, width)
     #create_ghost_cells(hexagons)
+    hexagons = ghosts.set_values(hexagons)
+    with open('ghost_cells_test.geojson', 'w') as f:
+        geojson.dump(hexagons, f, sort_keys=True, indent=2)
     
     
 if __name__ == "__main__":
