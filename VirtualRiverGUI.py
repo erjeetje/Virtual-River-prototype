@@ -20,7 +20,7 @@ import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
 import waterModule as water
-import ghostCells_test as ghosts
+import ghostCells as ghosts
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -276,6 +276,8 @@ class runScript():
         # and trachytopes) 
         self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
+        self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox, initialization=True)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
         print("Executed grid interpolation.")
@@ -284,10 +286,6 @@ class runScript():
         self.filled_node_grid = deepcopy(self.node_grid)
         filled_hexagons = deepcopy(self.hexagons_sandbox)
         filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
-        #filled_hexagons, self.flow_grid = roughness.hex_to_points(
-        #        self.model, filled_hexagons, self.flow_grid)
-        #self.hexagons_sandbox = roughness.update_Chezy_values(
-        #        self.hexagons_sandbox, filled_hexagons)
         self.filled_node_grid = gridmap.update_node_grid(
                 filled_hexagons, self.filled_node_grid, fill=True)
         self.filled_node_grid = gridmap.interpolate_node_grid(
@@ -458,14 +456,10 @@ class runScript():
         # update the Chezy coefficients of all hexagons.
         self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
+        self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
-        #filled_hexagons = deepcopy(self.hexagons_sandbox)
-        #filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
-        #filled_hexagons, self.flow_grid = roughness.hex_to_points(
-        #        self.model, filled_hexagons, self.flow_grid)
-        #self.hexagons_sandbox = roughness.update_Chezy_values(
-        #        self.hexagons_sandbox, filled_hexagons)
 
         tac = time.time()
         if self.tygron:
@@ -618,6 +612,8 @@ class runScript():
                     self.model, self.filled_node_grid, turn=self.turn)
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
             self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
             print("Executed first model loop, updating roughness")
@@ -638,6 +634,8 @@ class runScript():
                     self.model, temp_grid, turn=self.turn)
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
             self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
             print("Executed second model loop, updating roughness")
@@ -656,6 +654,8 @@ class runScript():
                     self.model, temp_grid, turn=self.turn)
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
             self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
             if self.model_ini_save:

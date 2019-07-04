@@ -16,7 +16,7 @@ from shapely import geometry
 
 def water_levels(turn=0):
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(dir_path, 'test_files_copy')
+    test_path = os.path.join(dir_path, 'test_files')
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
@@ -58,7 +58,7 @@ def plot_water_levels(xvals, yvals, turn=0, fig=None, ax=None):
         fig, ax = plt.subplots(1)
         ax.set_xlabel('river section (meters)')
         ax.set_ylabel('water levels (meters)')
-        ax.set_ylim([0, 6])
+        ax.set_ylim([3, 6])
     if turn == 0:
         label = "initial board"
     else:
@@ -78,14 +78,14 @@ def main():
         geojson.dump(face_grid, f, sort_keys=True, indent=2)
     """
     water_level0, x0 = water_levels(turn=0)
-    print(water_level0)
     water_level1, x1 = water_levels(turn=1)
     water_level2, x2 = water_levels(turn=2)
     water_level3, x3 = water_levels(turn=3)
     water_level4, x4 = water_levels(turn=4)
     water_level5, x5 = water_levels(turn=5)
     water_level6, x6 = water_levels(turn=6)
-    #water_level7, x7 = water_levels(turn=7)
+    water_level7, x7 = water_levels(turn=7)
+    water_level8, x8 = water_levels(turn=8)
     fig, ax = plot_water_levels(x0, water_level0, turn=0)
     fig, ax = plot_water_levels(x1, water_level1, turn=1, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x2, water_level2, turn=2, fig=fig, ax=ax)
@@ -94,7 +94,7 @@ def main():
     fig, ax = plot_water_levels(x5, water_level5, turn=5, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x6, water_level6, turn=6, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x7, water_level7, turn=7, fig=fig, ax=ax)
-    #fig, ax = plot_water_levels(x8, water_level8, turn=8, fig=fig, ax=ax)
+    fig, ax = plot_water_levels(x8, water_level8, turn=8, fig=fig, ax=ax)
     return
 
 

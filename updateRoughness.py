@@ -12,7 +12,7 @@ import gridMapping as gridmap
 import modelInterface as D3D
 
 
-def hex_to_points(model, hexagons, grid, test=False):
+def hex_to_points(model, hexagons, grid, test=False, initialization=False):
     """
     Function that sets the Chezy value of all the grid points (centers of
     cells) based on the Chezy value of the hexagon where these are located.
@@ -23,7 +23,6 @@ def hex_to_points(model, hexagons, grid, test=False):
     frcu = model.get_var('frcu')
     if test:
         hexagons = randomizer(hexagons)
-    hexagons = landuse_to_friction(hexagons)
     hexagons_by_id = {feature.id: feature for feature in hexagons.features}
     for feature in grid.features:
         if feature.properties["fill"]:
@@ -63,7 +62,7 @@ def update_Chezy_values(hexagons, filled_hexagons):
     return hexagons
 
 
-def landuse_to_friction(hexagons, printing=False):
+def landuse_to_friction(hexagons, printing=False, initialization=False):
     """
     Function that turns the landuse into a trachytope.
     
@@ -84,35 +83,47 @@ def landuse_to_friction(hexagons, printing=False):
         # the test_list is only added to print the Chezy calculations, set
         # to False by default.
         test_list = []
-    for feature in hexagons.features:
-        # this would require water height to be stored per hexagon    
-        """
-        try:
-            water_level = feature.properties["water_level"]
-        except KeyError:
-            water_level = 6
-        try:
-            if feature.properties["behind_dike"]:
-                dike = hexagons[feature.properties["dike_reference"]]
-                z = dike.properties["z"] * 1.5
+    for feature in hexagons.features:    
+        if not initialization:
+            try:
+                behind_dike = feature.properties["behind_dike"]
+            except KeyError:
+                behind_dike = False
+                print("KeyError on behind dike")
+            if behind_dike:
+                try:
+                    dike = hexagons[feature.properties["dike_reference"]]
+                    z = dike.properties["z"] * 1.5
+                except KeyError:
+                    z = 6
+                    print("KeyError on dike reference")
             else:
-                z = feature.properties["z"] * 1.5
-        except KeyError:
+                try:
+                    z = feature.properties["z"] * 1.5
+                except KeyError:
+                    z = 3
+                    print("KeyError on z")
+    
             try:
-                z = feature.properties["z"] * 1.5
+                h = feature.properties["water_level"] - z
+                print(h, feature.properties["water_level"], z)
             except KeyError:
-                z = 3
-        h = water_level - z
-        """
-        try:
-            h = feature.properties["water_level"] - (feature.properties["z"] * 1.5)
-        except KeyError:
+                try:
+                    h = 6 - z
+                    print("KeyError on water level")
+                except KeyError:
+                    h = 3
+        else:
             try:
-                h = 6 - (feature.properties["z"] * 1.5)
+                h = feature.properties["water_level"] - (feature.properties["z"] * 1.5)
             except KeyError:
-                h = 6    
-        if h < 0:
-            h = 0.0001
+                try:
+                    h = 6 - (feature.properties["z"] * 1.5)
+                except KeyError:
+                    h = 6
+            print(h, feature.properties["water_level"], str(feature.properties["z"] * 1.5))
+        #if h < 0:
+        #    h = 0.0001
         if feature.properties["landuse"] == 0:
             # build environment
             vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
@@ -168,6 +179,8 @@ def landuse_to_friction(hexagons, printing=False):
                 h = 0.1
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
+            if h <= 0:
+                h = 0.1
             feature.properties["Chezy"] = manning(h, n)
         else:
             """

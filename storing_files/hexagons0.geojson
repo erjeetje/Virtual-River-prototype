@@ -102,7 +102,7 @@
       },
       "id": 1,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -742,7 +742,7 @@
       },
       "id": 11,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -1318,7 +1318,7 @@
       },
       "id": 20,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1894,7 +1894,7 @@
       },
       "id": 29,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2534,7 +2534,7 @@
       },
       "id": 39,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -3110,7 +3110,7 @@
       },
       "id": 48,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3622,7 +3622,7 @@
       },
       "id": 56,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3750,7 +3750,7 @@
       },
       "id": 58,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4390,7 +4390,7 @@
       },
       "id": 68,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4838,7 +4838,7 @@
       },
       "id": 75,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4966,7 +4966,7 @@
       },
       "id": 77,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5414,7 +5414,7 @@
       },
       "id": 84,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5606,7 +5606,7 @@
       },
       "id": 87,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -6054,7 +6054,7 @@
       },
       "id": 94,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -6182,7 +6182,7 @@
       },
       "id": 96,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6630,7 +6630,7 @@
       },
       "id": 103,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -7398,7 +7398,7 @@
       },
       "id": 115,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -13542,7 +13542,7 @@
       },
       "id": 211,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
@@ -13862,7 +13862,7 @@
       },
       "id": 216,
       "properties": {
-        "Chezy": 28.291340723531864,
+        "Chezy": 3.671458672544155,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
