@@ -21,6 +21,7 @@ import createStructures as structures
 import costModule as costs
 import waterModule as water
 import ghostCells as ghosts
+import hexagonAdjustments as adjust
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -112,6 +113,7 @@ class runScript():
         self.turn = 0
         self.token = ""
         self.model = None
+        self.slope = 10**-4
         self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
@@ -188,6 +190,7 @@ class runScript():
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, method='LAB', path=self.store_path)
             self.hexagons = ghosts.set_values(self.hexagons)
+            self.hexagons = adjust.z_correction(self.hexagons, self.slope)
             print("Processed initial board state.")
         else:
             self.transforms = cali.create_calibration_file(
@@ -212,6 +215,8 @@ class runScript():
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
             self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
+            self.hexagons_sandbox = adjust.z_correction(
+                    self.hexagons_sandbox, self.slope)
             if self.tygron:
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
@@ -403,6 +408,7 @@ class runScript():
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, turn=self.turn, method='LAB',
                     path=self.store_path)
+            self.hexagons = adjust.z_correction(self.hexagons, self.slope)
             print("Processed current board state.")
             if self.tygron:
                 # update hexagon ids to matching ids in tygron.
@@ -434,6 +440,8 @@ class runScript():
                         path=self.test_path)
                 self.hexagons_sandbox = ghosts.set_values(
                         self.hexagons_sandbox)
+                self.hexagons_sandbox = adjust.z_correction(
+                        self.hexagons_sandbox, self.slope)
                 print("Received current board state.")
             except FileNotFoundError:
                 print("ERROR: Ran out of test files, aborting update function."

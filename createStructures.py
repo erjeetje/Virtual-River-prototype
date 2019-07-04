@@ -116,7 +116,7 @@ def determine_channel(hexagons):
     for feature in hexagons.features:
         #if feature.properties["ghost_hexagon"]:
         #    continue
-        if feature.properties["z"] == 0:
+        if feature.properties["z"] < 1:
             next_hexagon = hexagons[feature.id + 1]
             if next_hexagon.properties["z"] == 0:
                 feature.properties["main_channel"] = True

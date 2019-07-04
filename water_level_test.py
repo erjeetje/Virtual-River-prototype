@@ -50,6 +50,38 @@ def water_levels(turn=0):
     return water_level, x_output
 
 
+def water_levels2(turn=0):
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    test_path = os.path.join(dir_path, 'test_files')
+    hexagons = gridmap.read_hexagons(
+            filename='hexagons%d.geojson' % turn,
+            path=test_path)
+    water_level_columns = [[] for i in range(15)]
+    x_values = []
+    for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
+        if feature.properties["main_channel"]:
+            shape = geometry.asShape(feature.geometry)
+            x_hex = shape.centroid.x
+            x_values.append(x_hex)
+            water_level = feature.properties["water_level"]
+            column = feature.properties["column"] - 1
+            water_level_columns[column].append(water_level)
+    x_output = []
+    for x in x_values:
+        x = round(x, 2)
+        if x not in x_output:
+            x_output.append(x)
+    water_level = []
+    for values in water_level_columns:
+        average = round(sum(values) / len(values), 2)
+        #formatted = [ '%.2f' % elem for elem in values ]
+        #print("water level values:", formatted, "average:", average)
+        water_level.append(average)
+    return water_level, x_output
+
+
 def plot_water_levels(xvals, yvals, turn=0, fig=None, ax=None):
     xvals = []
     for i in range(len(yvals)):
@@ -59,10 +91,10 @@ def plot_water_levels(xvals, yvals, turn=0, fig=None, ax=None):
         ax.set_xlabel('river section (meters)')
         ax.set_ylabel('water levels (meters)')
         ax.set_ylim([3, 6])
-    if turn == 0:
+    if turn == 1:
         label = "initial board"
     else:
-        label = ("board after turn " + str(turn))
+        label = ("board after turn " + str(turn-1))
     ax.plot(xvals, yvals, label=label)
     ax.legend(loc='upper right')
     plt.show
@@ -77,17 +109,17 @@ def main():
     with open(os.path.join(dir_path, 'face_grid.geojson'), 'w') as f:
         geojson.dump(face_grid, f, sort_keys=True, indent=2)
     """
-    water_level0, x0 = water_levels(turn=0)
-    water_level1, x1 = water_levels(turn=1)
-    water_level2, x2 = water_levels(turn=2)
-    water_level3, x3 = water_levels(turn=3)
-    water_level4, x4 = water_levels(turn=4)
-    water_level5, x5 = water_levels(turn=5)
-    water_level6, x6 = water_levels(turn=6)
-    water_level7, x7 = water_levels(turn=7)
-    water_level8, x8 = water_levels(turn=8)
-    fig, ax = plot_water_levels(x0, water_level0, turn=0)
-    fig, ax = plot_water_levels(x1, water_level1, turn=1, fig=fig, ax=ax)
+    #water_level0, x0 = water_levels2(turn=0)
+    water_level1, x1 = water_levels2(turn=1)
+    water_level2, x2 = water_levels2(turn=2)
+    water_level3, x3 = water_levels2(turn=3)
+    water_level4, x4 = water_levels2(turn=4)
+    water_level5, x5 = water_levels2(turn=5)
+    water_level6, x6 = water_levels2(turn=6)
+    water_level7, x7 = water_levels2(turn=7)
+    water_level8, x8 = water_levels2(turn=8)
+    #fig, ax = plot_water_levels(x0, water_level0, turn=0)
+    fig, ax = plot_water_levels(x1, water_level1, turn=1)
     fig, ax = plot_water_levels(x2, water_level2, turn=2, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x3, water_level3, turn=3, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x4, water_level4, turn=4, fig=fig, ax=ax)

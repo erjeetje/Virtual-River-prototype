@@ -106,7 +106,6 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
     
             try:
                 h = feature.properties["water_level"] - z
-                print(h, feature.properties["water_level"], z)
             except KeyError:
                 try:
                     h = 6 - z
@@ -121,7 +120,6 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
                     h = 6 - (feature.properties["z"] * 1.5)
                 except KeyError:
                     h = 6
-            print(h, feature.properties["water_level"], str(feature.properties["z"] * 1.5))
         #if h < 0:
         #    h = 0.0001
         if feature.properties["landuse"] == 0:
