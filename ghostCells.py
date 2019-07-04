@@ -9,42 +9,48 @@ import geojson
 
 
 def set_values(hexagons):
-    dike_values = {"z": 4,
+    dike_values = {"z_reference": 4,
+                   "z": 4.8,
                    "landuse": 10,
                    "water": False,
                    "land": True,
                    "behind_dike": False
                    }
-    floodplain_values_grass = {"z": 2,
-                         "landuse": 2,
-                         "water": False,
-                         "land": True,
-                         "behind_dike": False
-                         }
-    floodplain_values_forest = {"z": 2,
-                         "landuse": 5,
-                         "water": False,
-                         "land": True,
-                         "behind_dike": False
-                         }
-    floodplain_values_reed = {"z": 2,
-                         "landuse": 3,
-                         "water": False,
-                         "land": True,
-                         "behind_dike": False
-                         }
-    channel_values = {"z": 0,
+    floodplain_values_grass = {"z_reference": 2,
+                               "z": 2.4,
+                               "landuse": 2,
+                               "water": False,
+                               "land": True,
+                               "behind_dike": False
+                               }
+    floodplain_values_forest = {"z_reference": 2,
+                                "z": 2.4,
+                                "landuse": 5,
+                                "water": False,
+                                "land": True,
+                                "behind_dike": False
+                                }
+    floodplain_values_reed = {"z_reference": 2,
+                              "z": 2.4,
+                              "landuse": 3,
+                              "water": False,
+                              "land": True,
+                              "behind_dike": False
+                              }
+    channel_values = {"z_reference": 0,
+                      "z": 0,
                       "landuse": 9,
                       "water": True,
                       "land": False,
                       "behind_dike": False
                       }
-    behind_dike_values = {"z": 2,
-                      "landuse": 1,
-                      "water": False,
-                      "land": True,
-                      "behind_dike": True
-                      }
+    behind_dike_values = {"z_reference": 2,
+                          "z": 2.4,
+                          "landuse": 1,
+                          "water": False,
+                          "land": True,
+                          "behind_dike": True
+                          }
     channel_hexagons = [147, 148, 157, 158, 167, 168, 176, 177,
                         184, 185, 193, 194, 203, 204, 213, 214]
     dike_hexagons = [143, 152, 153, 161, 162, 171, 172, 180,
@@ -69,6 +75,7 @@ def set_values(hexagons):
                 values = behind_dike_values
             else:
                 values = floodplain_values_grass
+            feature.properties["z_reference"] = values["z_reference"]
             feature.properties["z"] = values["z"]
             feature.properties["landuse"] = values["landuse"]
             feature.properties["water"] = values["water"]
@@ -96,7 +103,7 @@ def set_frcu(model, grid, hexagons):
         if not feature.properties["board"]:
             continue
         location = feature.properties["location"]
-        hexagon = hexagons_by_id[location]
+        hexagon = hexagons[location]
         if (hexagon.properties["z_changed"] or
             hexagon.properties["landuse_changed"]):
             feature.properties["Chezy"] = hexagon.properties["Chezy"]

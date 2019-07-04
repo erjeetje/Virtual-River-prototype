@@ -31,18 +31,18 @@ def compare_hex(cost, hexagons_old, hexagons_new):
     dike_moved = False
     for feature in hexagons_new.features:
         reference_hex = hexagons_old[feature.id]
-        if feature.properties["z"] != reference_hex.properties["z"]:
+        if feature.properties["z_reference"] != reference_hex.properties["z_reference"]:
             print("Hexagon " + str(feature.id) + " z value changed")
             feature.properties["z_changed"] = True
             z_changed.append(feature)
-            if (feature.properties["z"] < 2 and
-                    reference_hex.properties["z"] >= 2):
+            if (feature.properties["z_reference"] < 2 and
+                    reference_hex.properties["z_reference"] >= 2):
                 becomes_water.append(feature)
-            elif (feature.properties["z"] >= 2 and
-                    reference_hex.properties["z"] < 2):
+            elif (feature.properties["z_reference"] >= 2 and
+                    reference_hex.properties["z_reference"] < 2):
                 becomes_land.append(feature)
-            if (feature.properties["z"] >= 4 or
-                    reference_hex.properties["z"] >= 4):
+            if (feature.properties["z_reference"] >= 4 or
+                    reference_hex.properties["z_reference"] >= 4):
                 print("Detected a dike relocation, will update total grid")
                 dike_moved = True
         else:
@@ -77,9 +77,9 @@ def terrain_updates(hexagons):
     for feature in hexagons.features:
         if not feature.properties["z_changed"]:
             continue
-        if feature.properties["z"] < 2:
+        if feature.properties["z_reference"] < 2:
             becomes_water.append(feature)
-        if feature.properties["z"] >= 2:
+        if feature.properties["z_reference"] >= 2:
             becomes_land.append(feature)
     becomes_water = geojson.FeatureCollection(becomes_water)
     becomes_land = geojson.FeatureCollection(becomes_land)

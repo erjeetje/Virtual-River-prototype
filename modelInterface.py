@@ -24,7 +24,7 @@ def initialize_model():
     """
     model = bmi.wrapper.BMIWrapper('dflowfm')
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    model_name = 'Virtual_River_structures.mdu'
+    model_name = 'Virtual_River.mdu'
     model_path = os.path.join(dir_path, 'models', 'Waal_schematic', model_name)
     model.initialize(model_path)
     print('Initialized Delft3D FM model.')
@@ -73,13 +73,12 @@ def run_model(model, filled_node_grid, fig=None,
     if fig is None:
         fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
         colorbar = True
-    sc = axes[0].scatter(xzw, yzw, c=s1, edgecolor='none', vmin=0, vmax=6, cmap='jet')
-    sc_zk = axes[1].scatter(xk, yk, c=zk, edgecolor='none', vmin=0, vmax=6, cmap='jet')
+    sc = axes[0].scatter(xzw, yzw, c=s1, edgecolor='none', vmin=0, vmax=7.75, cmap='jet')
+    sc_zk = axes[1].scatter(xk, yk, c=zk, edgecolor='none', vmin=0, vmax=7.75, cmap='jet')
     if colorbar:
         fig.colorbar(sc, ax=axes[0])
         fig.colorbar(sc_zk, ax=axes[1])
     plt.show()
-    #zk_new = np.array([feature.properties['z'] for feature in filled_node_grid['features']])
     """
     for i in range(10):
         model.update()
@@ -98,20 +97,17 @@ def run_model(model, filled_node_grid, fig=None,
             if feature.properties['changed']
     ]
 
-    if True:
-        for feature in changed:
-            zk_new = np.array([feature.properties['z']], dtype='float64') * 1.5
-            model.set_var_slice(
-                    'zk',
-                    [feature.id + 1],
-                    [1],
-                    zk_new
-            )
+    for feature in changed:
+        zk_new = np.array([feature.properties['z']], dtype='float64')  # * 1.5
+        model.set_var_slice(
+                'zk',
+                [feature.id + 1],
+                [1],
+                zk_new
+                )
     #s0 = s1.copy()
     print("updated grid in model")
-    #if turn == 1:
-    #    model.update(10)
-    #print("set timesteps in model")
+
     step = 30
     for i in range(step):
         t0 = time.time()

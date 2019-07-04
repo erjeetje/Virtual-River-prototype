@@ -39,6 +39,7 @@
       "id": 0,
       "properties": {
         "Chezy": 2.4760424098288563,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -59,8 +60,9 @@
         "water_level": 6.180275834745549,
         "x_center": 87,
         "y_center": 50,
-        "z": 4.09500129614936,
-        "z_changed": true
+        "z": 2.4,
+        "z_changed": true,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -103,6 +105,7 @@
       "id": 1,
       "properties": {
         "Chezy": 11.5938603338326,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -123,8 +126,9 @@
         "water_level": 6.163348192168262,
         "x_center": 87,
         "y_center": 150,
-        "z": 2.09500129614936,
-        "z_changed": true
+        "z": 4.8,
+        "z_changed": true,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -167,6 +171,7 @@
       "id": 2,
       "properties": {
         "Chezy": 7.186251235419902,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -187,8 +192,9 @@
         "water_level": 4.988646884279266,
         "x_center": 87,
         "y_center": 250,
-        "z": 2.09500129614936,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -231,6 +237,7 @@
       "id": 3,
       "properties": {
         "Chezy": 30.43047660693811,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -251,8 +258,9 @@
         "water_level": 4.965692234586211,
         "x_center": 87,
         "y_center": 350,
-        "z": 2.09500129614936,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -295,6 +303,7 @@
       "id": 4,
       "properties": {
         "Chezy": 52.043599938484824,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -315,8 +324,9 @@
         "water_level": 4.9936444289454585,
         "x_center": 87,
         "y_center": 450,
-        "z": 0.09500129614935987,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -359,6 +369,7 @@
       "id": 5,
       "properties": {
         "Chezy": 51.995677916130255,
+        "bedslope_correction": 0.9500129614935987,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -379,8 +390,9 @@
         "water_level": 4.966904305124702,
         "x_center": 87,
         "y_center": 550,
-        "z": 0.09500129614935987,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -423,6 +435,7 @@
       "id": 6,
       "properties": {
         "Chezy": 5.994154424974734,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -443,8 +456,9 @@
         "water_level": 5.0004238928904545,
         "x_center": 87,
         "y_center": 650,
-        "z": 2.09500129614936,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -487,6 +501,7 @@
       "id": 7,
       "properties": {
         "Chezy": 7.048450155945,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -507,8 +522,9 @@
         "water_level": 5.067673622437773,
         "x_center": 87,
         "y_center": 750,
-        "z": 2.09500129614936,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -551,6 +567,7 @@
       "id": 8,
       "properties": {
         "Chezy": 1.8482102648644463,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": false,
         "column": 1,
         "dike_reference": null,
@@ -571,8 +588,9 @@
         "water_level": 6.153274401834402,
         "x_center": 87,
         "y_center": 850,
-        "z": 4.09500129614936,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -615,6 +633,7 @@
       "id": 9,
       "properties": {
         "Chezy": 4.5013207271513345,
+        "bedslope_correction": 0.9500129614935986,
         "behind_dike": true,
         "column": 1,
         "dike_reference": 8,
@@ -635,8 +654,9 @@
         "water_level": 6.1599002489529395,
         "x_center": 87,
         "y_center": 950,
-        "z": 2.09500129614936,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -679,6 +699,7 @@
       "id": 10,
       "properties": {
         "Chezy": 2.1385447926421155,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -699,8 +720,9 @@
         "water_level": 6.186779544196744,
         "x_center": 173,
         "y_center": 100,
-        "z": 4.090002592468262,
-        "z_changed": true
+        "z": 2.4,
+        "z_changed": true,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -743,6 +765,7 @@
       "id": 11,
       "properties": {
         "Chezy": 35.09179540880804,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -763,8 +786,9 @@
         "water_level": 6.152195911235007,
         "x_center": 173,
         "y_center": 200,
-        "z": 2.0900025924682617,
-        "z_changed": true
+        "z": 4.8,
+        "z_changed": true,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -807,6 +831,7 @@
       "id": 12,
       "properties": {
         "Chezy": 34.01355637155466,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -827,8 +852,9 @@
         "water_level": 4.934880091504287,
         "x_center": 173,
         "y_center": 300,
-        "z": 2.0900025924682617,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -871,6 +897,7 @@
       "id": 13,
       "properties": {
         "Chezy": 33.961932564442485,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -891,8 +918,9 @@
         "water_level": 4.924611544348127,
         "x_center": 173,
         "y_center": 400,
-        "z": 2.0900025924682617,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -935,6 +963,7 @@
       "id": 14,
       "properties": {
         "Chezy": 51.9631813257336,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -955,8 +984,9 @@
         "water_level": 4.941343378272809,
         "x_center": 173,
         "y_center": 500,
-        "z": 0.09000259246826173,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -999,6 +1029,7 @@
       "id": 15,
       "properties": {
         "Chezy": 51.919567240152524,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -1019,8 +1050,9 @@
         "water_level": 4.917189575830684,
         "x_center": 173,
         "y_center": 600,
-        "z": 0.09000259246826173,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -1063,6 +1095,7 @@
       "id": 16,
       "properties": {
         "Chezy": 30.200285123689167,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -1083,8 +1116,9 @@
         "water_level": 4.914723030672597,
         "x_center": 173,
         "y_center": 700,
-        "z": 2.0900025924682617,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -1127,6 +1161,7 @@
       "id": 17,
       "properties": {
         "Chezy": 3.5145024209862092,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": false,
         "column": 2,
         "dike_reference": null,
@@ -1147,8 +1182,9 @@
         "water_level": 6.139958017799939,
         "x_center": 173,
         "y_center": 800,
-        "z": 4.090002592468262,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -1191,6 +1227,7 @@
       "id": 18,
       "properties": {
         "Chezy": 10.697139469944881,
+        "bedslope_correction": 0.9000259246826172,
         "behind_dike": true,
         "column": 2,
         "dike_reference": 17,
@@ -1211,8 +1248,9 @@
         "water_level": 6.1477025524985205,
         "x_center": 173,
         "y_center": 900,
-        "z": 2.0900025924682617,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -1255,6 +1293,7 @@
       "id": 19,
       "properties": {
         "Chezy": 2.144631291355332,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1264,7 +1303,7 @@
         "ghost_hexagon": false,
         "land": true,
         "landuse": 10,
-        "landuse_changed": true,
+        "landuse_changed": false,
         "main_channel": false,
         "north_dike": true,
         "north_side_channel": false,
@@ -1275,8 +1314,9 @@
         "water_level": 6.17897349441472,
         "x_center": 260,
         "y_center": 50,
-        "z": 4.085003889126248,
-        "z_changed": true
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -1319,6 +1359,7 @@
       "id": 20,
       "properties": {
         "Chezy": 5.6907162497470525,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1339,8 +1380,9 @@
         "water_level": 6.153425670514726,
         "x_center": 260,
         "y_center": 150,
-        "z": 2.0850038891262477,
-        "z_changed": true
+        "z": 4.8,
+        "z_changed": true,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -1383,6 +1425,7 @@
       "id": 21,
       "properties": {
         "Chezy": 11.790614967991422,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1403,8 +1446,9 @@
         "water_level": 4.9483410547451685,
         "x_center": 260,
         "y_center": 250,
-        "z": 3.0850038891262477,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -1447,6 +1491,7 @@
       "id": 22,
       "properties": {
         "Chezy": 33.98940945539454,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1467,8 +1512,9 @@
         "water_level": 4.922570920575167,
         "x_center": 260,
         "y_center": 350,
-        "z": 2.0850038891262477,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -1511,6 +1557,7 @@
       "id": 23,
       "properties": {
         "Chezy": 51.96654946591428,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1531,8 +1578,9 @@
         "water_level": 4.935714844896061,
         "x_center": 260,
         "y_center": 450,
-        "z": 0.08500388912624783,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -1575,6 +1623,7 @@
       "id": 24,
       "properties": {
         "Chezy": 51.926974086845696,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1595,8 +1644,9 @@
         "water_level": 4.913786341333484,
         "x_center": 260,
         "y_center": 550,
-        "z": 0.08500388912624783,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -1639,6 +1689,7 @@
       "id": 25,
       "properties": {
         "Chezy": 6.127223773714078,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1659,8 +1710,9 @@
         "water_level": 4.9033205208649715,
         "x_center": 260,
         "y_center": 650,
-        "z": 2.0850038891262477,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -1703,6 +1755,7 @@
       "id": 26,
       "properties": {
         "Chezy": 30.194720384911648,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1723,8 +1776,9 @@
         "water_level": 4.906188614936051,
         "x_center": 260,
         "y_center": 750,
-        "z": 2.0850038891262477,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -1767,6 +1821,7 @@
       "id": 27,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": false,
         "column": 3,
         "dike_reference": null,
@@ -1787,8 +1842,9 @@
         "water_level": 6.127505833689371,
         "x_center": 260,
         "y_center": 850,
-        "z": 4.085003889126248,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -1831,6 +1887,7 @@
       "id": 28,
       "properties": {
         "Chezy": 5.401591635437524,
+        "bedslope_correction": 0.8500388912624783,
         "behind_dike": true,
         "column": 3,
         "dike_reference": 27,
@@ -1851,8 +1908,9 @@
         "water_level": 6.127505833689371,
         "x_center": 260,
         "y_center": 950,
-        "z": 2.0850038891262477,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -1895,6 +1953,7 @@
       "id": 29,
       "properties": {
         "Chezy": 2.8103315353440412,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -1915,8 +1974,9 @@
         "water_level": 6.147972510681523,
         "x_center": 346,
         "y_center": 100,
-        "z": 4.080005185275608,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -1959,6 +2019,7 @@
       "id": 30,
       "properties": {
         "Chezy": 30.508241329202395,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -1979,8 +2040,9 @@
         "water_level": 4.958152482993666,
         "x_center": 346,
         "y_center": 200,
-        "z": 2.0800051852756076,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2023,6 +2085,7 @@
       "id": 31,
       "properties": {
         "Chezy": 16.50717568095139,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2043,8 +2106,9 @@
         "water_level": 4.935440199347783,
         "x_center": 346,
         "y_center": 300,
-        "z": 3.0800051852756076,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2087,6 +2151,7 @@
       "id": 32,
       "properties": {
         "Chezy": 51.98069633959762,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2107,8 +2172,9 @@
         "water_level": 4.936075779556101,
         "x_center": 346,
         "y_center": 400,
-        "z": 0.08000518527560764,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -2151,6 +2217,7 @@
       "id": 33,
       "properties": {
         "Chezy": 52.03662133043269,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2171,8 +2238,9 @@
         "water_level": 4.967248586905987,
         "x_center": 346,
         "y_center": 500,
-        "z": 0.08000518527560764,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -2215,6 +2283,7 @@
       "id": 34,
       "properties": {
         "Chezy": 48.713571149754635,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2235,8 +2304,9 @@
         "water_level": 4.882427718811656,
         "x_center": 346,
         "y_center": 600,
-        "z": 1.0800051852756076,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -2279,6 +2349,7 @@
       "id": 35,
       "properties": {
         "Chezy": 12.366025424828463,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2299,8 +2370,9 @@
         "water_level": 4.88146688699212,
         "x_center": 346,
         "y_center": 700,
-        "z": 3.0800051852756076,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2343,6 +2415,7 @@
       "id": 36,
       "properties": {
         "Chezy": 7.343159913354107,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2363,8 +2436,9 @@
         "water_level": 4.881342371446837,
         "x_center": 346,
         "y_center": 800,
-        "z": 2.0800051852756076,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2407,6 +2481,7 @@
       "id": 37,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.8000518527560764,
         "behind_dike": false,
         "column": 4,
         "dike_reference": null,
@@ -2427,8 +2502,9 @@
         "water_level": 6.120007777913412,
         "x_center": 346,
         "y_center": 900,
-        "z": 4.080005185275608,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -2471,6 +2547,7 @@
       "id": 38,
       "properties": {
         "Chezy": 2.8141692758240073,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": true,
         "column": 5,
         "dike_reference": 39,
@@ -2491,8 +2568,9 @@
         "water_level": 6.140374854142229,
         "x_center": 433,
         "y_center": 50,
-        "z": 2.075006481382582,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2535,6 +2613,7 @@
       "id": 39,
       "properties": {
         "Chezy": 1.9159175060729516,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2555,8 +2634,9 @@
         "water_level": 6.123406825686634,
         "x_center": 433,
         "y_center": 150,
-        "z": 4.075006481382582,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -2599,6 +2679,7 @@
       "id": 40,
       "properties": {
         "Chezy": 30.461347433195364,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2619,8 +2700,9 @@
         "water_level": 4.941620151934012,
         "x_center": 433,
         "y_center": 250,
-        "z": 2.075006481382582,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2663,6 +2745,7 @@
       "id": 41,
       "properties": {
         "Chezy": 51.99025633403775,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2683,8 +2766,9 @@
         "water_level": 4.933894631071113,
         "x_center": 433,
         "y_center": 350,
-        "z": 0.07500648138258192,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -2727,6 +2811,7 @@
       "id": 42,
       "properties": {
         "Chezy": 52.05126880641464,
+        "bedslope_correction": 0.7500648138258194,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2747,8 +2832,9 @@
         "water_level": 4.9679428183709975,
         "x_center": 433,
         "y_center": 450,
-        "z": 0.07500648138258194,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -2791,6 +2877,7 @@
       "id": 43,
       "properties": {
         "Chezy": 29.96901653471939,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2811,8 +2898,9 @@
         "water_level": 4.849724982766228,
         "x_center": 433,
         "y_center": 550,
-        "z": 2.075006481382582,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2855,6 +2943,7 @@
       "id": 44,
       "properties": {
         "Chezy": 48.69987811018022,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2875,8 +2964,9 @@
         "water_level": 4.869431269407539,
         "x_center": 433,
         "y_center": 650,
-        "z": 1.075006481382582,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -2919,6 +3009,7 @@
       "id": 45,
       "properties": {
         "Chezy": 30.069005543441016,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -2939,8 +3030,9 @@
         "water_level": 4.867959732621546,
         "x_center": 433,
         "y_center": 750,
-        "z": 2.075006481382582,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -2983,6 +3075,7 @@
       "id": 46,
       "properties": {
         "Chezy": 7.35434956307134,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -3003,8 +3096,9 @@
         "water_level": 4.86799491838903,
         "x_center": 433,
         "y_center": 850,
-        "z": 2.075006481382582,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -3047,6 +3141,7 @@
       "id": 47,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.7500648138258192,
         "behind_dike": false,
         "column": 5,
         "dike_reference": null,
@@ -3067,8 +3162,9 @@
         "water_level": 6.112509722073873,
         "x_center": 433,
         "y_center": 950,
-        "z": 4.075006481382582,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -3111,6 +3207,7 @@
       "id": 48,
       "properties": {
         "Chezy": 3.077045587473149,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3131,8 +3228,9 @@
         "water_level": 6.125900794141246,
         "x_center": 520,
         "y_center": 100,
-        "z": 4.070007777913411,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -3175,6 +3273,7 @@
       "id": 49,
       "properties": {
         "Chezy": 12.751104570669852,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3195,8 +3294,9 @@
         "water_level": 4.942653461743244,
         "x_center": 520,
         "y_center": 200,
-        "z": 3.0700077779134114,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -3239,6 +3339,7 @@
       "id": 50,
       "properties": {
         "Chezy": 52.01268165840961,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3259,8 +3360,9 @@
         "water_level": 4.938887890990143,
         "x_center": 520,
         "y_center": 300,
-        "z": 0.07000777791341141,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -3303,6 +3405,7 @@
       "id": 51,
       "properties": {
         "Chezy": 51.91603857711219,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3323,8 +3426,9 @@
         "water_level": 4.885247585632737,
         "x_center": 520,
         "y_center": 400,
-        "z": 0.07000777791341141,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -3367,6 +3471,7 @@
       "id": 52,
       "properties": {
         "Chezy": 6.22033836484301,
+        "bedslope_correction": 0.700077779134114,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3387,8 +3492,9 @@
         "water_level": 4.826452588116702,
         "x_center": 520,
         "y_center": 500,
-        "z": 2.0700077779134114,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -3431,6 +3537,7 @@
       "id": 53,
       "properties": {
         "Chezy": 48.66068707373267,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3451,8 +3558,9 @@
         "water_level": 4.846238849541118,
         "x_center": 520,
         "y_center": 600,
-        "z": 1.0700077779134114,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -3495,6 +3603,7 @@
       "id": 54,
       "properties": {
         "Chezy": 48.732344263669894,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3515,8 +3624,9 @@
         "water_level": 4.874982458621907,
         "x_center": 520,
         "y_center": 700,
-        "z": 1.0700077779134114,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -3559,6 +3669,7 @@
       "id": 55,
       "properties": {
         "Chezy": 30.097827043090753,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3579,8 +3690,9 @@
         "water_level": 4.865757717817426,
         "x_center": 520,
         "y_center": 800,
-        "z": 2.0700077779134114,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -3623,6 +3735,7 @@
       "id": 56,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.7000777791341141,
         "behind_dike": false,
         "column": 6,
         "dike_reference": null,
@@ -3643,8 +3756,9 @@
         "water_level": 6.1050116668701175,
         "x_center": 520,
         "y_center": 900,
-        "z": 4.070007777913411,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -3687,6 +3801,7 @@
       "id": 57,
       "properties": {
         "Chezy": 4.689949431727385,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": true,
         "column": 7,
         "dike_reference": 58,
@@ -3707,8 +3822,9 @@
         "water_level": 6.131187638234586,
         "x_center": 606,
         "y_center": 50,
-        "z": 2.06500907497406,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -3751,6 +3867,7 @@
       "id": 58,
       "properties": {
         "Chezy": 3.100490066934775,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3771,8 +3888,9 @@
         "water_level": 6.117575859777912,
         "x_center": 606,
         "y_center": 150,
-        "z": 4.06500907497406,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -3815,6 +3933,7 @@
       "id": 59,
       "properties": {
         "Chezy": 30.5435746231313,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3835,8 +3954,9 @@
         "water_level": 4.942498519348303,
         "x_center": 606,
         "y_center": 250,
-        "z": 2.06500907497406,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -3879,6 +3999,7 @@
       "id": 60,
       "properties": {
         "Chezy": 51.98712381051576,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3899,8 +4020,9 @@
         "water_level": 4.917155791812597,
         "x_center": 606,
         "y_center": 350,
-        "z": 0.06500907497406005,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -3943,6 +4065,7 @@
       "id": 61,
       "properties": {
         "Chezy": 51.75271197676399,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -3963,8 +4086,9 @@
         "water_level": 4.7882251843706145,
         "x_center": 606,
         "y_center": 450,
-        "z": 0.06500907497406005,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -4007,6 +4131,7 @@
       "id": 62,
       "properties": {
         "Chezy": 29.492396222203688,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4027,8 +4152,9 @@
         "water_level": 4.750691008050708,
         "x_center": 606,
         "y_center": 550,
-        "z": 2.06500907497406,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -4071,6 +4197,7 @@
       "id": 63,
       "properties": {
         "Chezy": 48.63828545366822,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4091,8 +4218,9 @@
         "water_level": 4.829798230269119,
         "x_center": 606,
         "y_center": 650,
-        "z": 1.0650090749740602,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -4135,6 +4263,7 @@
       "id": 64,
       "properties": {
         "Chezy": 11.958302932337324,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4155,8 +4284,9 @@
         "water_level": 4.842852732173111,
         "x_center": 606,
         "y_center": 750,
-        "z": 3.06500907497406,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -4199,6 +4329,7 @@
       "id": 65,
       "properties": {
         "Chezy": 14.073286678875967,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4219,8 +4350,9 @@
         "water_level": 4.852325996495588,
         "x_center": 606,
         "y_center": 850,
-        "z": 2.06500907497406,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -4263,6 +4395,7 @@
       "id": 66,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.6500907497406005,
         "behind_dike": false,
         "column": 7,
         "dike_reference": null,
@@ -4283,8 +4416,9 @@
         "water_level": 6.097513612461089,
         "x_center": 606,
         "y_center": 950,
-        "z": 4.06500907497406,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -4327,6 +4461,7 @@
       "id": 67,
       "properties": {
         "Chezy": 2.282978691175385,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4347,8 +4482,9 @@
         "water_level": 6.135098899211819,
         "x_center": 693,
         "y_center": 100,
-        "z": 4.060010370784336,
-        "z_changed": true
+        "z": 2.4,
+        "z_changed": true,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -4391,6 +4527,7 @@
       "id": 68,
       "properties": {
         "Chezy": 5.698795602956129,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4411,8 +4548,9 @@
         "water_level": 6.107026017901208,
         "x_center": 693,
         "y_center": 200,
-        "z": 2.060010370784336,
-        "z_changed": true
+        "z": 4.8,
+        "z_changed": true,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -4455,6 +4593,7 @@
       "id": 69,
       "properties": {
         "Chezy": 6.130367810837275,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4475,8 +4614,9 @@
         "water_level": 4.863954153430439,
         "x_center": 693,
         "y_center": 300,
-        "z": 2.060010370784336,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -4519,6 +4659,7 @@
       "id": 70,
       "properties": {
         "Chezy": 51.830829177712815,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4539,8 +4680,9 @@
         "water_level": 4.823369621451518,
         "x_center": 693,
         "y_center": 400,
-        "z": 0.06001037078433567,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -4583,6 +4725,7 @@
       "id": 71,
       "properties": {
         "Chezy": 51.73160291666268,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4603,8 +4746,9 @@
         "water_level": 4.769259253764094,
         "x_center": 693,
         "y_center": 500,
-        "z": 0.06001037078433567,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -4647,6 +4791,7 @@
       "id": 72,
       "properties": {
         "Chezy": 48.53757813400398,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4667,8 +4812,9 @@
         "water_level": 4.782352089437141,
         "x_center": 693,
         "y_center": 600,
-        "z": 1.0600103707843356,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -4711,6 +4857,7 @@
       "id": 73,
       "properties": {
         "Chezy": 29.867308286908518,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4731,8 +4878,9 @@
         "water_level": 4.8089010711733025,
         "x_center": 693,
         "y_center": 700,
-        "z": 2.060010370784336,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -4775,6 +4923,7 @@
       "id": 74,
       "properties": {
         "Chezy": 14.139448440180384,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4795,8 +4944,9 @@
         "water_level": 4.817429946941844,
         "x_center": 693,
         "y_center": 800,
-        "z": 2.060010370784336,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -4839,6 +4989,7 @@
       "id": 75,
       "properties": {
         "Chezy": 8.948794447116805,
+        "bedslope_correction": 0.6001037078433566,
         "behind_dike": false,
         "column": 8,
         "dike_reference": null,
@@ -4859,8 +5010,9 @@
         "water_level": 6.091600912911993,
         "x_center": 693,
         "y_center": 900,
-        "z": 4.060010370784336,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -4903,6 +5055,7 @@
       "id": 76,
       "properties": {
         "Chezy": 0.09326522906160067,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": true,
         "column": 9,
         "dike_reference": 77,
@@ -4923,8 +5076,9 @@
         "water_level": 6.142906390728552,
         "x_center": 779,
         "y_center": 50,
-        "z": 2.0550116663297016,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -4967,6 +5121,7 @@
       "id": 77,
       "properties": {
         "Chezy": 2.6017341355759904,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -4987,8 +5142,9 @@
         "water_level": 6.116276177906883,
         "x_center": 779,
         "y_center": 150,
-        "z": 4.055011666329702,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -5031,6 +5187,7 @@
       "id": 78,
       "properties": {
         "Chezy": 14.342825904429864,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5051,8 +5208,9 @@
         "water_level": 4.726815359650886,
         "x_center": 779,
         "y_center": 250,
-        "z": 2.0550116663297016,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5095,6 +5253,7 @@
       "id": 79,
       "properties": {
         "Chezy": 6.3730762282486335,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5115,8 +5274,9 @@
         "water_level": 4.719828720751414,
         "x_center": 779,
         "y_center": 350,
-        "z": 2.0550116663297016,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5159,6 +5319,7 @@
       "id": 80,
       "properties": {
         "Chezy": 51.716592848827325,
+        "bedslope_correction": 0.5501166632970176,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5179,8 +5340,9 @@
         "water_level": 4.753620930786888,
         "x_center": 779,
         "y_center": 450,
-        "z": 0.05501166632970176,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -5223,6 +5385,7 @@
       "id": 81,
       "properties": {
         "Chezy": 51.76818093025926,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5243,8 +5406,9 @@
         "water_level": 4.781647719123433,
         "x_center": 779,
         "y_center": 550,
-        "z": 0.055011666329701746,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -5287,6 +5451,7 @@
       "id": 82,
       "properties": {
         "Chezy": 29.407108251269626,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5307,8 +5472,9 @@
         "water_level": 4.72114569732336,
         "x_center": 779,
         "y_center": 650,
-        "z": 2.0550116663297016,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5351,6 +5517,7 @@
       "id": 83,
       "properties": {
         "Chezy": 7.523416136467859,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5371,8 +5538,9 @@
         "water_level": 4.7526482855960115,
         "x_center": 779,
         "y_center": 750,
-        "z": 2.0550116663297016,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5415,6 +5583,7 @@
       "id": 84,
       "properties": {
         "Chezy": 0.3867587155062078,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": false,
         "column": 9,
         "dike_reference": null,
@@ -5435,8 +5604,9 @@
         "water_level": 6.091274667563172,
         "x_center": 779,
         "y_center": 850,
-        "z": 4.055011666329702,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -5479,6 +5649,7 @@
       "id": 85,
       "properties": {
         "Chezy": 2.499920934404419,
+        "bedslope_correction": 0.5501166632970175,
         "behind_dike": true,
         "column": 9,
         "dike_reference": 84,
@@ -5499,8 +5670,9 @@
         "water_level": 6.094786705361159,
         "x_center": 779,
         "y_center": 950,
-        "z": 2.0550116663297016,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5543,6 +5715,7 @@
       "id": 86,
       "properties": {
         "Chezy": 4.018354608205743,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": true,
         "column": 10,
         "dike_reference": 87,
@@ -5563,8 +5736,9 @@
         "water_level": 6.1268205402514555,
         "x_center": 866,
         "y_center": 100,
-        "z": 2.050012962934706,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5607,6 +5781,7 @@
       "id": 87,
       "properties": {
         "Chezy": 2.978828850082914,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5627,8 +5802,9 @@
         "water_level": 6.089575672008876,
         "x_center": 866,
         "y_center": 200,
-        "z": 4.050012962934706,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -5671,6 +5847,7 @@
       "id": 88,
       "properties": {
         "Chezy": 29.039024479014223,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5691,8 +5868,9 @@
         "water_level": 4.652493377289971,
         "x_center": 866,
         "y_center": 300,
-        "z": 2.050012962934706,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5735,6 +5913,7 @@
       "id": 89,
       "properties": {
         "Chezy": 48.33846072135638,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5755,8 +5934,9 @@
         "water_level": 4.689581241992633,
         "x_center": 866,
         "y_center": 400,
-        "z": 1.050012962934706,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -5799,6 +5979,7 @@
       "id": 90,
       "properties": {
         "Chezy": 51.79159643737716,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5819,8 +6000,9 @@
         "water_level": 4.786917006459143,
         "x_center": 866,
         "y_center": 500,
-        "z": 0.05001296293470594,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -5863,6 +6045,7 @@
       "id": 91,
       "properties": {
         "Chezy": 51.694795354825004,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5883,8 +6066,9 @@
         "water_level": 4.734322664066379,
         "x_center": 866,
         "y_center": 600,
-        "z": 0.05001296293470594,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -5927,6 +6111,7 @@
       "id": 92,
       "properties": {
         "Chezy": 6.410015933122736,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -5947,8 +6132,9 @@
         "water_level": 4.692872912283012,
         "x_center": 866,
         "y_center": 700,
-        "z": 2.050012962934706,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -5991,6 +6177,7 @@
       "id": 93,
       "properties": {
         "Chezy": 14.386080129649855,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -6011,8 +6198,9 @@
         "water_level": 4.7018294395384075,
         "x_center": 866,
         "y_center": 800,
-        "z": 2.050012962934706,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -6055,6 +6243,7 @@
       "id": 94,
       "properties": {
         "Chezy": 0.5365718224981775,
+        "bedslope_correction": 0.5001296293470594,
         "behind_dike": false,
         "column": 10,
         "dike_reference": null,
@@ -6075,8 +6264,9 @@
         "water_level": 6.082797489359893,
         "x_center": 866,
         "y_center": 900,
-        "z": 4.050012962934706,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -6119,6 +6309,7 @@
       "id": 95,
       "properties": {
         "Chezy": 0.08784818378628674,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": true,
         "column": 11,
         "dike_reference": 96,
@@ -6139,8 +6330,9 @@
         "water_level": 6.1278730435863045,
         "x_center": 953,
         "y_center": 50,
-        "z": 2.045014259126451,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -6183,6 +6375,7 @@
       "id": 96,
       "properties": {
         "Chezy": 2.757500058676281,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6203,8 +6396,9 @@
         "water_level": 6.096877030089325,
         "x_center": 953,
         "y_center": 150,
-        "z": 4.045014259126451,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -6247,6 +6441,7 @@
       "id": 97,
       "properties": {
         "Chezy": 7.775645874168117,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6267,8 +6462,9 @@
         "water_level": 4.620073661034016,
         "x_center": 953,
         "y_center": 250,
-        "z": 2.045014259126451,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -6311,6 +6507,7 @@
       "id": 98,
       "properties": {
         "Chezy": 48.16631983169309,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6331,8 +6528,9 @@
         "water_level": 4.616124178967584,
         "x_center": 953,
         "y_center": 350,
-        "z": 1.0450142591264513,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -6375,6 +6573,7 @@
       "id": 99,
       "properties": {
         "Chezy": 14.996748855246103,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6395,8 +6594,9 @@
         "water_level": 4.755697887351233,
         "x_center": 953,
         "y_center": 450,
-        "z": 3.045014259126451,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -6439,6 +6639,7 @@
       "id": 100,
       "properties": {
         "Chezy": 51.65027054006282,
+        "bedslope_correction": 0.450142591264513,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6459,8 +6660,9 @@
         "water_level": 4.702798001246405,
         "x_center": 953,
         "y_center": 550,
-        "z": 0.0450142591264513,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -6503,6 +6705,7 @@
       "id": 101,
       "properties": {
         "Chezy": 51.60468915168739,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6523,8 +6726,9 @@
         "water_level": 4.67830828444426,
         "x_center": 953,
         "y_center": 650,
-        "z": 0.045014259126451295,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -6567,6 +6771,7 @@
       "id": 102,
       "properties": {
         "Chezy": 29.264491013171323,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6587,8 +6792,9 @@
         "water_level": 4.68214245874686,
         "x_center": 953,
         "y_center": 750,
-        "z": 2.045014259126451,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -6631,6 +6837,7 @@
       "id": 103,
       "properties": {
         "Chezy": 0.06668415610708579,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": false,
         "column": 11,
         "dike_reference": null,
@@ -6651,8 +6858,9 @@
         "water_level": 6.075926117697723,
         "x_center": 953,
         "y_center": 850,
-        "z": 4.045014259126451,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -6695,6 +6903,7 @@
       "id": 104,
       "properties": {
         "Chezy": 4.191882923512689,
+        "bedslope_correction": 0.45014259126451295,
         "behind_dike": true,
         "column": 11,
         "dike_reference": 103,
@@ -6715,8 +6924,9 @@
         "water_level": 6.0718786600373615,
         "x_center": 953,
         "y_center": 950,
-        "z": 2.045014259126451,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -6759,6 +6969,7 @@
       "id": 105,
       "properties": {
         "Chezy": 2.9756329120570135,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6779,8 +6990,9 @@
         "water_level": 6.083762829320971,
         "x_center": 1039,
         "y_center": 100,
-        "z": 4.0400155564202205,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -6823,6 +7035,7 @@
       "id": 106,
       "properties": {
         "Chezy": 7.7773900924726,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6843,8 +7056,9 @@
         "water_level": 4.611800230015039,
         "x_center": 1039,
         "y_center": 200,
-        "z": 2.04001555642022,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -6887,6 +7101,7 @@
       "id": 107,
       "properties": {
         "Chezy": 48.14069251903794,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6907,8 +7122,9 @@
         "water_level": 4.598906845986573,
         "x_center": 1039,
         "y_center": 300,
-        "z": 1.0400155564202203,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -6951,6 +7167,7 @@
       "id": 108,
       "properties": {
         "Chezy": 31.943142251904668,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -6971,8 +7188,9 @@
         "water_level": 4.494521430526446,
         "x_center": 1039,
         "y_center": 400,
-        "z": 2.04001555642022,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7015,6 +7233,7 @@
       "id": 109,
       "properties": {
         "Chezy": 6.713469864179314,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7035,8 +7254,9 @@
         "water_level": 4.529873705371246,
         "x_center": 1039,
         "y_center": 500,
-        "z": 2.04001555642022,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7079,6 +7299,7 @@
       "id": 110,
       "properties": {
         "Chezy": 51.49974690714833,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7099,8 +7320,9 @@
         "water_level": 4.614837057179047,
         "x_center": 1039,
         "y_center": 600,
-        "z": 0.04001555642022019,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -7143,6 +7365,7 @@
       "id": 111,
       "properties": {
         "Chezy": 51.635730633940696,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7163,8 +7386,9 @@
         "water_level": 4.687476281701145,
         "x_center": 1039,
         "y_center": 700,
-        "z": 0.04001555642022019,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -7207,6 +7431,7 @@
       "id": 112,
       "properties": {
         "Chezy": 7.606157459153715,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7227,8 +7452,9 @@
         "water_level": 4.690353425916008,
         "x_center": 1039,
         "y_center": 800,
-        "z": 2.04001555642022,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7271,6 +7497,7 @@
       "id": 113,
       "properties": {
         "Chezy": 8.649525282789112,
+        "bedslope_correction": 0.4001555642022019,
         "behind_dike": false,
         "column": 12,
         "dike_reference": null,
@@ -7291,8 +7518,9 @@
         "water_level": 6.0617089929166665,
         "x_center": 1039,
         "y_center": 900,
-        "z": 4.0400155564202205,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -7335,6 +7563,7 @@
       "id": 114,
       "properties": {
         "Chezy": 2.786657547565992,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": true,
         "column": 13,
         "dike_reference": 115,
@@ -7355,8 +7584,9 @@
         "water_level": 6.081108452571172,
         "x_center": 1126,
         "y_center": 50,
-        "z": 2.0350168537563746,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7399,6 +7629,7 @@
       "id": 115,
       "properties": {
         "Chezy": 1.1995122585541975,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7419,8 +7650,9 @@
         "water_level": 6.062285924520483,
         "x_center": 1126,
         "y_center": 150,
-        "z": 4.035016853756375,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -7463,6 +7695,7 @@
       "id": 116,
       "properties": {
         "Chezy": 3.743604643178226,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7483,8 +7716,9 @@
         "water_level": 4.613591751333667,
         "x_center": 1126,
         "y_center": 250,
-        "z": 3.0350168537563746,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7527,6 +7761,7 @@
       "id": 117,
       "properties": {
         "Chezy": 47.866025981909935,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7547,8 +7782,9 @@
         "water_level": 4.488851379794666,
         "x_center": 1126,
         "y_center": 350,
-        "z": 1.0350168537563746,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -7591,6 +7827,7 @@
       "id": 118,
       "properties": {
         "Chezy": 6.811616551396465,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7611,8 +7848,9 @@
         "water_level": 4.4786405565490846,
         "x_center": 1126,
         "y_center": 450,
-        "z": 2.0350168537563746,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7655,6 +7893,7 @@
       "id": 119,
       "properties": {
         "Chezy": 51.29483172991636,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7675,8 +7914,9 @@
         "water_level": 4.4996745705476675,
         "x_center": 1126,
         "y_center": 550,
-        "z": 0.03501685375637467,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -7719,6 +7959,7 @@
       "id": 120,
       "properties": {
         "Chezy": 51.60772817802891,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7739,8 +7980,9 @@
         "water_level": 4.6649416057533495,
         "x_center": 1126,
         "y_center": 650,
-        "z": 0.03501685375637467,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -7783,6 +8025,7 @@
       "id": 121,
       "properties": {
         "Chezy": 29.367521797884514,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7803,8 +8046,9 @@
         "water_level": 4.684449617365452,
         "x_center": 1126,
         "y_center": 750,
-        "z": 2.0350168537563746,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7847,6 +8091,7 @@
       "id": 122,
       "properties": {
         "Chezy": 7.589500551736446,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7867,8 +8112,9 @@
         "water_level": 4.690767968346522,
         "x_center": 1126,
         "y_center": 850,
-        "z": 2.0350168537563746,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -7911,6 +8157,7 @@
       "id": 123,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.35016853756374666,
         "behind_dike": false,
         "column": 13,
         "dike_reference": null,
@@ -7931,8 +8178,9 @@
         "water_level": 6.052525280634562,
         "x_center": 1126,
         "y_center": 950,
-        "z": 4.035016853756375,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -7975,6 +8223,7 @@
       "id": 124,
       "properties": {
         "Chezy": 2.881773692308578,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -7995,8 +8244,9 @@
         "water_level": 6.058889418701899,
         "x_center": 1212,
         "y_center": 100,
-        "z": 4.03001815032959,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -8039,6 +8289,7 @@
       "id": 125,
       "properties": {
         "Chezy": 2.089224071886418,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8059,8 +8310,9 @@
         "water_level": 4.570539340172315,
         "x_center": 1212,
         "y_center": 200,
-        "z": 3.0300181503295898,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -8103,6 +8355,7 @@
       "id": 126,
       "properties": {
         "Chezy": 27.966526090032072,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8123,8 +8376,9 @@
         "water_level": 4.458537786218323,
         "x_center": 1212,
         "y_center": 300,
-        "z": 2.0300181503295898,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -8167,6 +8421,7 @@
       "id": 127,
       "properties": {
         "Chezy": 47.80710294266187,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8187,8 +8442,9 @@
         "water_level": 4.459732268718812,
         "x_center": 1212,
         "y_center": 400,
-        "z": 1.0300181503295898,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -8231,6 +8487,7 @@
       "id": 128,
       "properties": {
         "Chezy": 51.30089566381962,
+        "bedslope_correction": 0.3001815032958985,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8251,8 +8508,9 @@
         "water_level": 4.495331826343283,
         "x_center": 1212,
         "y_center": 500,
-        "z": 0.030018150329589852,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -8295,6 +8553,7 @@
       "id": 129,
       "properties": {
         "Chezy": 51.45394934037198,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8315,8 +8574,9 @@
         "water_level": 4.575591953735315,
         "x_center": 1212,
         "y_center": 600,
-        "z": 0.030018150329589845,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -8359,6 +8619,7 @@
       "id": 130,
       "properties": {
         "Chezy": 14.460507102092995,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8379,8 +8640,9 @@
         "water_level": 4.641878633489094,
         "x_center": 1212,
         "y_center": 700,
-        "z": 2.0300181503295898,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -8423,6 +8685,7 @@
       "id": 131,
       "properties": {
         "Chezy": 14.364742285996847,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8443,8 +8706,9 @@
         "water_level": 4.680456742971111,
         "x_center": 1212,
         "y_center": 800,
-        "z": 2.0300181503295898,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -8487,6 +8751,7 @@
       "id": 132,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.30018150329589843,
         "behind_dike": false,
         "column": 14,
         "dike_reference": null,
@@ -8507,8 +8772,9 @@
         "water_level": 6.045027225494385,
         "x_center": 1212,
         "y_center": 900,
-        "z": 4.03001815032959,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -8551,6 +8817,7 @@
       "id": 133,
       "properties": {
         "Chezy": 64.93399857648633,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8571,8 +8838,9 @@
         "water_level": 6.037530967984958,
         "x_center": 1299,
         "y_center": 50,
-        "z": 4.025019444783529,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -8615,6 +8883,7 @@
       "id": 134,
       "properties": {
         "Chezy": 7.978697296715845,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8635,8 +8904,9 @@
         "water_level": 4.503026808683069,
         "x_center": 1299,
         "y_center": 150,
-        "z": 2.025019444783529,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -8679,6 +8949,7 @@
       "id": 135,
       "properties": {
         "Chezy": 28.19700931647987,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8699,8 +8970,9 @@
         "water_level": 4.484578175920176,
         "x_center": 1299,
         "y_center": 250,
-        "z": 2.025019444783529,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -8743,6 +9015,7 @@
       "id": 136,
       "properties": {
         "Chezy": 27.960429379237148,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8763,8 +9036,9 @@
         "water_level": 4.450164629841868,
         "x_center": 1299,
         "y_center": 350,
-        "z": 2.025019444783529,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -8807,6 +9081,7 @@
       "id": 137,
       "properties": {
         "Chezy": 51.30901248692569,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8827,8 +9102,9 @@
         "water_level": 4.492060200246296,
         "x_center": 1299,
         "y_center": 450,
-        "z": 0.02501944478352896,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -8871,6 +9147,7 @@
       "id": 138,
       "properties": {
         "Chezy": 51.36342037809021,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8891,8 +9168,9 @@
         "water_level": 4.520476850908496,
         "x_center": 1299,
         "y_center": 550,
-        "z": 0.02501944478352896,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -8935,6 +9213,7 @@
       "id": 139,
       "properties": {
         "Chezy": 28.39768993878838,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -8955,8 +9234,9 @@
         "water_level": 4.514516574501998,
         "x_center": 1299,
         "y_center": 650,
-        "z": 2.025019444783529,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -8999,6 +9279,7 @@
       "id": 140,
       "properties": {
         "Chezy": 7.900614700463214,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -9019,8 +9300,9 @@
         "water_level": 4.535753346238561,
         "x_center": 1299,
         "y_center": 750,
-        "z": 2.025019444783529,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -9063,6 +9345,7 @@
       "id": 141,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": false,
         "column": 15,
         "dike_reference": null,
@@ -9083,8 +9366,9 @@
         "water_level": 6.037529167175293,
         "x_center": 1299,
         "y_center": 850,
-        "z": 4.025019444783529,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -9127,6 +9411,7 @@
       "id": 142,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.25019444783528955,
         "behind_dike": true,
         "column": 15,
         "dike_reference": 141,
@@ -9147,8 +9432,9 @@
         "water_level": 6.037529167175293,
         "x_center": 1299,
         "y_center": 950,
-        "z": 2.025019444783529,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -9191,6 +9477,7 @@
       "id": 143,
       "properties": {
         "Chezy": 1.1578808365235445,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9211,8 +9498,9 @@
         "water_level": 6.1821980549103905,
         "x_center": -260,
         "y_center": 50,
-        "z": 4.1149961103651265,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -9255,6 +9543,7 @@
       "id": 144,
       "properties": {
         "Chezy": 13.592268900590701,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9275,8 +9564,9 @@
         "water_level": 5.133155945094806,
         "x_center": -260,
         "y_center": 150,
-        "z": 2.114996110365126,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -9319,6 +9609,7 @@
       "id": 145,
       "properties": {
         "Chezy": 31.12185961866297,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9339,8 +9630,9 @@
         "water_level": 5.133589370349282,
         "x_center": -260,
         "y_center": 250,
-        "z": 2.114996110365126,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -9383,6 +9675,7 @@
       "id": 146,
       "properties": {
         "Chezy": 31.296520413884693,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9403,8 +9696,9 @@
         "water_level": 5.170252212411844,
         "x_center": -260,
         "y_center": 350,
-        "z": 2.114996110365126,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -9447,6 +9741,7 @@
       "id": 147,
       "properties": {
         "Chezy": 52.384974502675966,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9467,8 +9762,9 @@
         "water_level": 5.217718400412963,
         "x_center": -260,
         "y_center": 450,
-        "z": 0.11499611036512607,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -9511,6 +9807,7 @@
       "id": 148,
       "properties": {
         "Chezy": 52.26642467848558,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9531,8 +9828,9 @@
         "water_level": 5.14959923913662,
         "x_center": -260,
         "y_center": 550,
-        "z": 0.11499611036512607,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -9575,6 +9873,7 @@
       "id": 149,
       "properties": {
         "Chezy": 0.9971476858252862,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9595,8 +9894,9 @@
         "water_level": 5.24649308050339,
         "x_center": -260,
         "y_center": 650,
-        "z": 2.114996110365126,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -9639,6 +9939,7 @@
       "id": 150,
       "properties": {
         "Chezy": 31.27558085844057,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9659,8 +9960,9 @@
         "water_level": 5.1658165903434465,
         "x_center": -260,
         "y_center": 750,
-        "z": 2.114996110365126,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -9703,6 +10005,7 @@
       "id": 151,
       "properties": {
         "Chezy": 13.475370210975976,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9723,8 +10026,9 @@
         "water_level": 5.185246185629686,
         "x_center": -260,
         "y_center": 850,
-        "z": 2.114996110365126,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -9767,6 +10071,7 @@
       "id": 152,
       "properties": {
         "Chezy": 2.643320642035377,
+        "bedslope_correction": 1.1499611036512607,
         "behind_dike": false,
         "column": 16,
         "dike_reference": null,
@@ -9787,8 +10092,9 @@
         "water_level": 6.1852441476856885,
         "x_center": -260,
         "y_center": 950,
-        "z": 4.1149961103651265,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -9831,6 +10137,7 @@
       "id": 153,
       "properties": {
         "Chezy": 0.04950840017907545,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -9851,8 +10158,9 @@
         "water_level": 6.173382390889497,
         "x_center": -173,
         "y_center": 100,
-        "z": 4.109997407531738,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -9895,6 +10203,7 @@
       "id": 154,
       "properties": {
         "Chezy": 13.629545282458391,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -9915,8 +10224,9 @@
         "water_level": 5.109232976283413,
         "x_center": -173,
         "y_center": 200,
-        "z": 2.1099974075317385,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -9959,6 +10269,7 @@
       "id": 155,
       "properties": {
         "Chezy": 30.801899468279387,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -9979,8 +10290,9 @@
         "water_level": 5.060867566329985,
         "x_center": -173,
         "y_center": 300,
-        "z": 2.1099974075317385,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10023,6 +10335,7 @@
       "id": 156,
       "properties": {
         "Chezy": 5.865047083348824,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -10043,8 +10356,9 @@
         "water_level": 5.10793588897519,
         "x_center": -173,
         "y_center": 400,
-        "z": 2.1099974075317385,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10087,6 +10401,7 @@
       "id": 157,
       "properties": {
         "Chezy": 52.26054071672203,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -10107,8 +10422,9 @@
         "water_level": 5.138740305850815,
         "x_center": -173,
         "y_center": 500,
-        "z": 0.10999740753173828,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -10151,6 +10467,7 @@
       "id": 158,
       "properties": {
         "Chezy": 52.208449514790274,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -10171,8 +10488,9 @@
         "water_level": 5.109068563645683,
         "x_center": -173,
         "y_center": 600,
-        "z": 0.10999740753173828,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -10215,6 +10533,7 @@
       "id": 159,
       "properties": {
         "Chezy": 31.075388567639976,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -10235,8 +10554,9 @@
         "water_level": 5.116463970752322,
         "x_center": -173,
         "y_center": 700,
-        "z": 2.1099974075317385,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10279,6 +10599,7 @@
       "id": 160,
       "properties": {
         "Chezy": 13.533073775680148,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -10299,8 +10620,9 @@
         "water_level": 5.15192308055903,
         "x_center": -173,
         "y_center": 800,
-        "z": 2.1099974075317385,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10343,6 +10665,7 @@
       "id": 161,
       "properties": {
         "Chezy": 1.4740367946217177,
+        "bedslope_correction": 1.0999740753173828,
         "behind_dike": false,
         "column": 17,
         "dike_reference": null,
@@ -10363,8 +10686,9 @@
         "water_level": 6.175151947989882,
         "x_center": -173,
         "y_center": 900,
-        "z": 4.109997407531738,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -10407,6 +10731,7 @@
       "id": 162,
       "properties": {
         "Chezy": 0.23065431089417832,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10427,8 +10752,9 @@
         "water_level": 6.166081171695574,
         "x_center": -87,
         "y_center": 50,
-        "z": 4.10499870385064,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -10471,6 +10797,7 @@
       "id": 163,
       "properties": {
         "Chezy": 13.679201408645595,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10491,8 +10818,9 @@
         "water_level": 5.0799891515021125,
         "x_center": -87,
         "y_center": 150,
-        "z": 2.10499870385064,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10535,6 +10863,7 @@
       "id": 164,
       "properties": {
         "Chezy": 30.84684804676985,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10555,8 +10884,9 @@
         "water_level": 5.062383682057006,
         "x_center": -87,
         "y_center": 250,
-        "z": 2.10499870385064,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10599,6 +10929,7 @@
       "id": 165,
       "properties": {
         "Chezy": 30.556007746084656,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10619,8 +10950,9 @@
         "water_level": 5.0048966979051865,
         "x_center": -87,
         "y_center": 350,
-        "z": 2.10499870385064,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10663,6 +10995,7 @@
       "id": 166,
       "properties": {
         "Chezy": 6.005834894230563,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10683,8 +11016,9 @@
         "water_level": 5.007995542307575,
         "x_center": -87,
         "y_center": 450,
-        "z": 2.10499870385064,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10727,6 +11061,7 @@
       "id": 167,
       "properties": {
         "Chezy": 52.14847466768205,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10747,8 +11082,9 @@
         "water_level": 5.067590983182443,
         "x_center": -87,
         "y_center": 550,
-        "z": 0.10499870385064014,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -10791,6 +11127,7 @@
       "id": 168,
       "properties": {
         "Chezy": 52.25399006745479,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10811,8 +11148,9 @@
         "water_level": 5.127502788945974,
         "x_center": -87,
         "y_center": 650,
-        "z": 0.10499870385064014,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -10855,6 +11193,7 @@
       "id": 169,
       "properties": {
         "Chezy": 31.160355758033308,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10875,8 +11214,9 @@
         "water_level": 5.126608752978252,
         "x_center": -87,
         "y_center": 750,
-        "z": 2.10499870385064,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10919,6 +11259,7 @@
       "id": 170,
       "properties": {
         "Chezy": 13.557992648497393,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -10939,8 +11280,9 @@
         "water_level": 5.133340748271426,
         "x_center": -87,
         "y_center": 850,
-        "z": 2.10499870385064,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -10983,6 +11325,7 @@
       "id": 171,
       "properties": {
         "Chezy": 2.983051502687165,
+        "bedslope_correction": 1.0499870385064014,
         "behind_dike": false,
         "column": 18,
         "dike_reference": null,
@@ -11003,8 +11346,9 @@
         "water_level": 6.172090818772156,
         "x_center": -87,
         "y_center": 950,
-        "z": 4.10499870385064,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -11047,6 +11391,7 @@
       "id": 172,
       "properties": {
         "Chezy": 2.7314242833606968,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11067,8 +11412,9 @@
         "water_level": 6.163100823512446,
         "x_center": 0,
         "y_center": 100,
-        "z": 4.1,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -11111,6 +11457,7 @@
       "id": 173,
       "properties": {
         "Chezy": 13.71367644322005,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11131,8 +11478,9 @@
         "water_level": 5.057481396596613,
         "x_center": 0,
         "y_center": 200,
-        "z": 2.1,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -11175,6 +11523,7 @@
       "id": 174,
       "properties": {
         "Chezy": 30.643533320388933,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11195,8 +11544,9 @@
         "water_level": 5.014491335366581,
         "x_center": 0,
         "y_center": 300,
-        "z": 2.1,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -11239,6 +11589,7 @@
       "id": 175,
       "properties": {
         "Chezy": 30.459319345074498,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11259,8 +11610,9 @@
         "water_level": 4.978720838455242,
         "x_center": 0,
         "y_center": 400,
-        "z": 2.1,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -11303,6 +11655,7 @@
       "id": 176,
       "properties": {
         "Chezy": 52.014548732387354,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11323,8 +11676,9 @@
         "water_level": 4.984917433401392,
         "x_center": 0,
         "y_center": 500,
-        "z": 0.1,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -11367,6 +11721,7 @@
       "id": 177,
       "properties": {
         "Chezy": 52.214994346306426,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11387,8 +11742,9 @@
         "water_level": 5.0977923403208,
         "x_center": 0,
         "y_center": 600,
-        "z": 0.1,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -11431,6 +11787,7 @@
       "id": 178,
       "properties": {
         "Chezy": 31.158777186706814,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11451,8 +11808,9 @@
         "water_level": 5.118781293681853,
         "x_center": 0,
         "y_center": 700,
-        "z": 2.1,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -11495,6 +11853,7 @@
       "id": 179,
       "properties": {
         "Chezy": 31.190565228560338,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11515,8 +11874,9 @@
         "water_level": 5.125426473006896,
         "x_center": 0,
         "y_center": 800,
-        "z": 2.1,
-        "z_changed": false
+        "z": 2.4,
+        "z_changed": false,
+        "z_reference": 2
       },
       "type": "Feature"
     },
@@ -11559,6 +11919,7 @@
       "id": 180,
       "properties": {
         "Chezy": 2.9494171139999286,
+        "bedslope_correction": 1.0,
         "behind_dike": false,
         "column": 19,
         "dike_reference": null,
@@ -11579,8 +11940,9 @@
         "water_level": 6.164319354365764,
         "x_center": 0,
         "y_center": 900,
-        "z": 4.1,
-        "z_changed": false
+        "z": 4.8,
+        "z_changed": false,
+        "z_reference": 4
       },
       "type": "Feature"
     },
@@ -11623,6 +11985,7 @@
       "id": 181,
       "properties": {
         "Chezy": 0.009605534190194795,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -11643,8 +12006,9 @@
         "water_level": 6.038374688873356,
         "x_center": 1386,
         "y_center": 100,
-        "z": 4.020020739746093,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -11687,6 +12051,7 @@
       "id": 182,
       "properties": {
         "Chezy": 14.781294144306894,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -11707,8 +12072,9 @@
         "water_level": 4.499155083680302,
         "x_center": 1386,
         "y_center": 200,
-        "z": 2.020020739746094,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -11751,6 +12117,7 @@
       "id": 183,
       "properties": {
         "Chezy": 28.20684410021993,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -11771,8 +12138,9 @@
         "water_level": 4.478531173825639,
         "x_center": 1386,
         "y_center": 300,
-        "z": 2.020020739746094,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -11815,6 +12183,7 @@
       "id": 184,
       "properties": {
         "Chezy": 51.27864831405376,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -11835,8 +12204,9 @@
         "water_level": 4.468768636968618,
         "x_center": 1386,
         "y_center": 400,
-        "z": 0.020020739746093752,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -11879,6 +12249,7 @@
       "id": 185,
       "properties": {
         "Chezy": 51.29164516578188,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -11899,8 +12270,9 @@
         "water_level": 4.475523048263057,
         "x_center": 1386,
         "y_center": 500,
-        "z": 0.020020739746093752,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -11943,6 +12315,7 @@
       "id": 186,
       "properties": {
         "Chezy": 28.193138783557973,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -11963,8 +12336,9 @@
         "water_level": 4.476509499811263,
         "x_center": 1386,
         "y_center": 600,
-        "z": 2.020020739746094,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12007,6 +12381,7 @@
       "id": 187,
       "properties": {
         "Chezy": 28.08201654783929,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -12027,8 +12402,9 @@
         "water_level": 4.460235529845278,
         "x_center": 1386,
         "y_center": 700,
-        "z": 2.020020739746094,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12071,6 +12447,7 @@
       "id": 188,
       "properties": {
         "Chezy": 14.892400145975127,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -12091,8 +12468,9 @@
         "water_level": 4.455178915637884,
         "x_center": 1386,
         "y_center": 800,
-        "z": 2.020020739746094,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12135,6 +12513,7 @@
       "id": 189,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.2002073974609375,
         "behind_dike": false,
         "column": 20,
         "dike_reference": null,
@@ -12155,8 +12534,9 @@
         "water_level": 6.03003110961914,
         "x_center": 1386,
         "y_center": 900,
-        "z": 4.020020739746093,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -12199,6 +12579,7 @@
       "id": 190,
       "properties": {
         "Chezy": 0.3391353335988505,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": true,
         "column": 21,
         "dike_reference": 191,
@@ -12219,8 +12600,9 @@
         "water_level": 6.0305119373501075,
         "x_center": 1472,
         "y_center": 50,
-        "z": 2.015022036064996,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12263,6 +12645,7 @@
       "id": 191,
       "properties": {
         "Chezy": 0.7660950314780585,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12283,8 +12666,9 @@
         "water_level": 6.031734628166108,
         "x_center": 1472,
         "y_center": 150,
-        "z": 4.0150220360649955,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -12327,6 +12711,7 @@
       "id": 192,
       "properties": {
         "Chezy": 14.781106815347199,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12347,8 +12732,9 @@
         "water_level": 4.491731205375988,
         "x_center": 1472,
         "y_center": 250,
-        "z": 2.015022036064996,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12391,6 +12777,7 @@
       "id": 193,
       "properties": {
         "Chezy": 51.31284148735468,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12411,8 +12798,9 @@
         "water_level": 4.479059009642995,
         "x_center": 1472,
         "y_center": 350,
-        "z": 0.015022036064995763,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -12455,6 +12843,7 @@
       "id": 194,
       "properties": {
         "Chezy": 50.99869466066284,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12475,8 +12864,9 @@
         "water_level": 4.317842068674867,
         "x_center": 1472,
         "y_center": 450,
-        "z": 0.015022036064995763,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -12519,6 +12909,7 @@
       "id": 195,
       "properties": {
         "Chezy": 7.185159931576709,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12539,8 +12930,9 @@
         "water_level": 4.298060362086155,
         "x_center": 1472,
         "y_center": 550,
-        "z": 2.015022036064996,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12583,6 +12975,7 @@
       "id": 196,
       "properties": {
         "Chezy": 27.720775367373275,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12603,8 +12996,9 @@
         "water_level": 4.401252102901046,
         "x_center": 1472,
         "y_center": 650,
-        "z": 2.015022036064996,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12647,6 +13041,7 @@
       "id": 197,
       "properties": {
         "Chezy": 14.928870819127043,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12667,8 +13062,9 @@
         "water_level": 4.433242269243646,
         "x_center": 1472,
         "y_center": 750,
-        "z": 2.015022036064996,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12711,6 +13107,7 @@
       "id": 198,
       "properties": {
         "Chezy": 24.07082479103527,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": false,
         "column": 21,
         "dike_reference": null,
@@ -12731,8 +13128,9 @@
         "water_level": 6.022695484678638,
         "x_center": 1472,
         "y_center": 850,
-        "z": 4.0150220360649955,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -12775,6 +13173,7 @@
       "id": 199,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.15022036064995764,
         "behind_dike": true,
         "column": 21,
         "dike_reference": 198,
@@ -12795,8 +13194,9 @@
         "water_level": 6.022533054097494,
         "x_center": 1472,
         "y_center": 950,
-        "z": 2.015022036064996,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12839,6 +13239,7 @@
       "id": 200,
       "properties": {
         "Chezy": 0.6613676846417355,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": true,
         "column": 22,
         "dike_reference": 201,
@@ -12859,8 +13260,9 @@
         "water_level": 6.022687784174707,
         "x_center": 1559,
         "y_center": 100,
-        "z": 2.0100233322143555,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -12903,6 +13305,7 @@
       "id": 201,
       "properties": {
         "Chezy": 0.028144611170486118,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": false,
         "column": 22,
         "dike_reference": null,
@@ -12923,8 +13326,9 @@
         "water_level": 6.023398388622918,
         "x_center": 1559,
         "y_center": 200,
-        "z": 4.010023332214355,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -12967,6 +13371,7 @@
       "id": 202,
       "properties": {
         "Chezy": 6.909215527674378,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": false,
         "column": 22,
         "dike_reference": null,
@@ -12987,8 +13392,9 @@
         "water_level": 4.399471392162446,
         "x_center": 1559,
         "y_center": 300,
-        "z": 2.0100233322143555,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13031,6 +13437,7 @@
       "id": 203,
       "properties": {
         "Chezy": 50.94995170431941,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": false,
         "column": 22,
         "dike_reference": null,
@@ -13051,8 +13458,9 @@
         "water_level": 4.285770862420304,
         "x_center": 1559,
         "y_center": 400,
-        "z": 0.010023332214355469,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -13095,6 +13503,7 @@
       "id": 204,
       "properties": {
         "Chezy": 50.50838966736618,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": false,
         "column": 22,
         "dike_reference": null,
@@ -13115,8 +13524,9 @@
         "water_level": 4.068451079298329,
         "x_center": 1559,
         "y_center": 500,
-        "z": 0.010023332214355469,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -13159,6 +13569,7 @@
       "id": 205,
       "properties": {
         "Chezy": 25.408154896733844,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": false,
         "column": 22,
         "dike_reference": null,
@@ -13179,8 +13590,9 @@
         "water_level": 4.110045951246995,
         "x_center": 1559,
         "y_center": 600,
-        "z": 2.0100233322143555,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13223,6 +13635,7 @@
       "id": 206,
       "properties": {
         "Chezy": 15.146790426590282,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": false,
         "column": 22,
         "dike_reference": null,
@@ -13243,8 +13656,9 @@
         "water_level": 4.339090719444867,
         "x_center": 1559,
         "y_center": 700,
-        "z": 2.0100233322143555,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13287,6 +13701,7 @@
       "id": 207,
       "properties": {
         "Chezy": 1.151227474164392,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": false,
         "column": 22,
         "dike_reference": null,
@@ -13307,8 +13722,9 @@
         "water_level": 6.024729885946125,
         "x_center": 1559,
         "y_center": 800,
-        "z": 4.010023332214355,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -13351,6 +13767,7 @@
       "id": 208,
       "properties": {
         "Chezy": 5.780130090037471,
+        "bedslope_correction": 0.1002333221435547,
         "behind_dike": true,
         "column": 22,
         "dike_reference": 207,
@@ -13371,8 +13788,9 @@
         "water_level": 6.018161314931407,
         "x_center": 1559,
         "y_center": 900,
-        "z": 2.0100233322143555,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13415,6 +13833,7 @@
       "id": 209,
       "properties": {
         "Chezy": 3.671458672544155,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": true,
         "column": 23,
         "dike_reference": 211,
@@ -13435,8 +13854,9 @@
         "water_level": 6.007536943562824,
         "x_center": 1645,
         "y_center": 50,
-        "z": 2.005024629041883,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13479,6 +13899,7 @@
       "id": 210,
       "properties": {
         "Chezy": 0.8606796182327079,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": true,
         "column": 23,
         "dike_reference": 211,
@@ -13499,8 +13920,9 @@
         "water_level": 6.014991960645195,
         "x_center": 1645,
         "y_center": 150,
-        "z": 2.005024629041883,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13543,6 +13965,7 @@
       "id": 211,
       "properties": {
         "Chezy": 1.0173047018967356,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
@@ -13563,8 +13986,9 @@
         "water_level": 6.017054403517614,
         "x_center": 1645,
         "y_center": 250,
-        "z": 4.005024629041883,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -13607,6 +14031,7 @@
       "id": 212,
       "properties": {
         "Chezy": 25.29536359600027,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
@@ -13627,8 +14052,9 @@
         "water_level": 4.090518547579489,
         "x_center": 1645,
         "y_center": 350,
-        "z": 2.005024629041883,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13671,6 +14097,7 @@
       "id": 213,
       "properties": {
         "Chezy": 50.49763624752181,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
@@ -13691,8 +14118,9 @@
         "water_level": 4.0557778576051895,
         "x_center": 1645,
         "y_center": 450,
-        "z": 0.00502462904188327,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -13735,6 +14163,7 @@
       "id": 214,
       "properties": {
         "Chezy": 50.51802146386617,
+        "bedslope_correction": 0.050246290418832586,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
@@ -13755,8 +14184,9 @@
         "water_level": 4.065593080970181,
         "x_center": 1645,
         "y_center": 550,
-        "z": 0.005024629041883259,
-        "z_changed": false
+        "z": 0.0,
+        "z_changed": false,
+        "z_reference": 0
       },
       "type": "Feature"
     },
@@ -13799,6 +14229,7 @@
       "id": 215,
       "properties": {
         "Chezy": 7.781755637183866,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
@@ -13819,8 +14250,9 @@
         "water_level": 4.0853839179228,
         "x_center": 1645,
         "y_center": 650,
-        "z": 2.005024629041883,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13863,6 +14295,7 @@
       "id": 216,
       "properties": {
         "Chezy": 2.930639567562329,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": false,
         "column": 23,
         "dike_reference": null,
@@ -13883,8 +14316,9 @@
         "water_level": 6.021718753896794,
         "x_center": 1645,
         "y_center": 750,
-        "z": 4.005024629041883,
-        "z_changed": false
+        "z": 3.5999999999999996,
+        "z_changed": false,
+        "z_reference": 3
       },
       "type": "Feature"
     },
@@ -13927,6 +14361,7 @@
       "id": 217,
       "properties": {
         "Chezy": 3.0193042923908404,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": true,
         "column": 23,
         "dike_reference": 216,
@@ -13947,8 +14382,9 @@
         "water_level": 6.030119037758886,
         "x_center": 1645,
         "y_center": 850,
-        "z": 2.005024629041883,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     },
@@ -13991,6 +14427,7 @@
       "id": 218,
       "properties": {
         "Chezy": 2.730301058026154,
+        "bedslope_correction": 0.050246290418832704,
         "behind_dike": true,
         "column": 23,
         "dike_reference": 216,
@@ -14011,8 +14448,9 @@
         "water_level": 6.013210565083262,
         "x_center": 1645,
         "y_center": 950,
-        "z": 2.005024629041883,
-        "z_changed": false
+        "z": 1.2,
+        "z_changed": false,
+        "z_reference": 1
       },
       "type": "Feature"
     }

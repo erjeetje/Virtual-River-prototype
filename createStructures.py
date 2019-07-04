@@ -20,7 +20,7 @@ def determine_dikes(hexagons):
     for feature in hexagons.features:
         #if feature.properties["ghost_hexagon"]:
         #    continue
-        if feature.properties["z"] >= 4:
+        if feature.properties["z_reference"] >= 4:
             shape = geometry.asShape(feature.geometry)
             y_hex = shape.centroid.y
             if y_hex >= 0:
@@ -116,9 +116,9 @@ def determine_channel(hexagons):
     for feature in hexagons.features:
         #if feature.properties["ghost_hexagon"]:
         #    continue
-        if feature.properties["z"] < 1:
+        if feature.properties["z_reference"] < 1:
             next_hexagon = hexagons[feature.id + 1]
-            if next_hexagon.properties["z"] == 0:
+            if next_hexagon.properties["z_reference"] == 0:
                 feature.properties["main_channel"] = True
                 feature.properties["north_side_channel"] = True
                 feature.properties["south_side_channel"] = False

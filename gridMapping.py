@@ -279,7 +279,7 @@ def index_flow_grid(hexagons, grid):
     return grid
 
 
-def index_node_grid(hexagons, grid):
+def index_node_grid(hexagons, grid, slope):
     """
     Function that indexes the node grid to the hexagons. Determines the three
     closest hexagons to a point in the node grid. Also calculates weight
@@ -334,70 +334,11 @@ def index_node_grid(hexagons, grid):
     # of the board bbox.
     inside_id = []
     inside_coor = []
-    """
-    # this is an idea to fixate part of the sides of the board, so that the
-    # main channel is always in a proper position. If used, a better version
-    # of it should be developed. Therefore currently not in use.
-    
-    border_id = []
-    border_coor = []
-    """
+
     x_coor = np.array([feature.geometry['coordinates'][0] for
                        feature in grid['features']])
     x_min = min(x_coor)
     x_max = max(x_coor)
-    """
-    # this is an idea to fixate part of the sides of the board, so that the
-    # main channel is always in a proper position. If used, a better version
-    # of it should be developed. Therefore currently not in use.
-    
-    y_coor = np.array([feature.geometry['coordinates'][1] for
-                       feature in grid['features']])
-    y_coor = np.unique(y_coor)
-    if y_coor[0] > 0:
-        y_step = y_coor[0] - y_coor[1]
-    else:    
-        y_step = y_coor[1] - y_coor[0]
-    y_z = np.full(len(y_coor), 4.0)
-    for i, y in enumerate(y_coor):
-        if y > (maxy-10*y_step) or y < (miny+10*y_step):
-            continue
-        # dike to floodplain
-        if (y < (maxy-10*y_step) and y > (maxy-11*y_step)) or (y > (miny+10*y_step) and y < (miny+11*y_step)):
-            y_z[i] = 3.9
-        elif (y < (maxy-11*y_step) and y > (maxy-12*y_step)) or (y > (miny+11*y_step) and y < (miny+12*y_step)):
-            y_z[i] = 3.7
-        elif (y < (maxy-12*y_step) and y > (maxy-13*y_step)) or (y > (miny+12*y_step) and y < (miny+13*y_step)):
-            y_z[i] = 3.4
-        elif (y < (maxy-13*y_step) and y > (maxy-14*y_step)) or (y > (miny+13*y_step) and y < (miny+14*y_step)):
-            y_z[i] = 3
-        elif (y < (maxy-14*y_step) and y > (maxy-15*y_step)) or (y > (miny+14*y_step) and y < (miny+15*y_step)):
-            y_z[i] = 2.6
-        elif (y < (maxy-15*y_step) and y > (maxy-16*y_step)) or (y > (miny+15*y_step) and y < (miny+16*y_step)):
-            y_z[i] = 2.3
-        elif (y < (maxy-16*y_step) and y > (maxy-17*y_step)) or (y > (miny+16*y_step) and y < (miny+17*y_step)):
-            y_z[i] = 2.1
-        # river bed
-        elif y < (10*y_step) and y > (10*-y_step):
-            y_z[i] = 0
-        elif (y < (11*y_step) and y > (10*y_step)) or (y > (11*-y_step) and y < (10*-y_step)):
-            y_z[i] = 0.1
-        elif (y < (12*y_step) and y > (11*y_step)) or (y > (12*-y_step) and y < (11*-y_step)):
-            y_z[i] = 0.3
-        elif (y < (13*y_step) and y > (12*y_step)) or (y > (13*-y_step) and y < (12*-y_step)):
-            y_z[i] = 0.6
-        elif (y < (14*y_step) and y > (13*y_step)) or (y > (14*-y_step) and y < (13*-y_step)):
-            y_z[i] = 1
-        elif (y < (15*y_step) and y > (14*y_step)) or (y > (15*-y_step) and y < (14*-y_step)):
-            y_z[i] = 1.4
-        elif (y < (16*y_step) and y > (15*y_step)) or (y > (16*-y_step) and y < (15*-y_step)):
-            y_z[i] = 1.7
-        elif (y < (17*y_step) and y > (16*y_step)) or (y > (17*-y_step) and y < (16*-y_step)):
-            y_z[i] = 1.9
-        else:
-            y_z[i] = 2
-    border_values = np.array(list(zip(y_coor, y_z)))
-    """
     # set properties for the grid point features position in relation to the
     # board. Points not in the board are not indexed later on and some other
     # values can be set immediately.
@@ -412,17 +353,9 @@ def index_node_grid(hexagons, grid):
             feature.properties["fill"] = False
             if (y_point > maxy or y_point < miny):
                 feature.properties["fill"] = True
-                feature.properties["z"] = 4.0
+                feature.properties["z"] = 6 + (abs(x_point - 600) * slope)
             elif (x_point == x_min or x_point == x_max):
                 feature.properties["border"] = True
-                """
-                index = np.where(border_values[:, 0] == y_point)
-                feature.properties["z"] = float(border_values[index, 1])
-                """
-                """
-                border_id.append(feature.id)
-                border_coor.append([x_point, y_point])
-                """
         else:  
             feature.properties["board"] = True
             feature.properties["border"] = False
@@ -435,14 +368,6 @@ def index_node_grid(hexagons, grid):
     # tree is used to index the points left and right of the board.
     inside_coor = np.array(inside_coor)
     inside_locations = cKDTree(inside_coor)
-    """
-    # this is an idea to fixate part of the sides of the board, so that the
-    # main channel is always in a proper position. If used, a better version
-    # of it should be developed. Therefore currently not in use.
-    
-    border_coor = np.array(border_coor)
-    border_locations = cKDTree(border_coor)
-    """
 
     # index the all the grid points to either up to the nearest three
     # hexagons in case the grid point falls within the board bbox.
@@ -502,22 +427,6 @@ def index_node_grid(hexagons, grid):
             dist, indices = inside_locations.query(xy)
             feature.properties["location"] = None
             feature.properties["nearest"] = inside_id[indices]
-        """
-        # this is an idea to fixate part of the sides of the board, so that the
-        # main channel is always in a proper position. If used, a better version
-        # of it should be developed. Therefore currently not in use.
-        
-        else:
-            dist1, indices1 = inside_locations.query(xy)
-            dist2, indices2 = border_locations.query(xy)
-            #weights = 1 / np.power([dist1, dist2], 2)
-            weights = [1 / dist1, 1 / dist2]
-            weights_sum = sum(weights)
-            feature.properties["nearest"] = [inside_id[indices1],
-                                             border_id[indices2]]
-            feature.properties["weight"] = weights
-            feature.properties["weight_sum"] = weights_sum
-        """
     return grid
 
 
@@ -588,16 +497,16 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
         # factors.
         if type(nearest) is int:
             hexagon = hexagons_by_id[nearest]
-            feature.properties['z'] = hexagon.properties['z']
+            feature.properties["z"] = hexagon.properties["z"]
             continue
         if len(nearest) == 2:
             weights = feature.properties["weight"]
             weights_sum = feature.properties["weight_sum"]
             hexagon1 = hexagons_by_id[nearest[0]]
             hexagon2 = hexagons_by_id[nearest[1]]
-            feature.properties['z'] = \
-                round(hexagon1.properties['z'] * (weights[0] /
-                      weights_sum) + hexagon2.properties['z'] *
+            feature.properties["z"] = \
+                round(hexagon1.properties["z"] * (weights[0] /
+                      weights_sum) + hexagon2.properties["z"] *
                       (weights[1] / weights_sum), 5)
         else:
             weights = feature.properties["weight"]
@@ -605,11 +514,11 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
             hexagon1 = hexagons_by_id[nearest[0]]
             hexagon2 = hexagons_by_id[nearest[1]]
             hexagon3 = hexagons_by_id[nearest[2]]
-            feature.properties['z'] = \
-                round(hexagon1.properties['z'] * (weights[0] /
-                      weights_sum) + hexagon2.properties['z'] *
+            feature.properties["z"] = \
+                round(hexagon1.properties["z"] * (weights[0] /
+                      weights_sum) + hexagon2.properties["z"] *
                       (weights[1] / weights_sum) +
-                      hexagon3.properties['z'] * (weights[2] /
+                      hexagon3.properties["z"] * (weights[2] /
                       weights_sum), 5)
 
     # block of code that sets the z variable for each grid point outside of the
@@ -624,21 +533,6 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
         nearest = feature.properties["nearest"]
         inside_point = grid_by_id[nearest]
         feature.properties["z"] = inside_point.properties["z"]
-        """
-        # this is an idea to fixate part of the sides of the board, so that the
-        # main channel is always in a proper position. If used, a better version
-        # of it should be developed. Therefore currently not in use.
-    
-        inside_point1 = grid_by_id[nearest[0]]
-        inside_point2 = grid_by_id[nearest[1]]
-        if inside_point1.properties["changed"] or inside_point2.properties["changed"]:
-            weights = feature.properties["weight"]
-            weights_sum = feature.properties["weight_sum"]
-            feature.properties['z'] = \
-                round(inside_point1.properties['z'] * (weights[0] /
-                      weights_sum) + inside_point2.properties['z'] *
-                      (weights[1] / weights_sum), 5)
-        """
     if (turn != 0 and not fill):
         print("Number of gridpoints outside the board updated: "+str(counter))
     if save:
@@ -680,7 +574,7 @@ def create_geotiff(grid, turn=0, path="", save=False):
         will look in Tygron. Current implementation amplifies the dike segments
         """
         height = (feature.properties["z"] * 4) - 6
-        if height > 8:
+        if height > 10:
             height = height * 1.5
         data.append(height)
     x_coor = np.array(x_coor)

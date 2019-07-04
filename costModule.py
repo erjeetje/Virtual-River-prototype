@@ -88,8 +88,8 @@ class Costs():
         # In such a scenario, landuse_trigger activates the landuse loop.
         landuse_trigger = False
         if z_changed:
-            if hexagon_old.properties["z"] >= 5:
-                if hexagon_new.properties["z"] >= 4:
+            if hexagon_old.properties["z_reference"] >= 5:
+                if hexagon_new.properties["z_reference"] >= 4:
                     # dike lowering (for whatever reason)
                     z_type = "lowered reinforced dike [NEEDS costs calculation]"
                 else:
@@ -98,8 +98,8 @@ class Costs():
                     # since dike relocation involves two hexagon changes, costs
                     # are split
                     z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
-            elif hexagon_new.properties["z"] >= 5:
-                if hexagon_old.properties["z"] >= 4:
+            elif hexagon_new.properties["z_reference"] >= 5:
+                if hexagon_old.properties["z_reference"] >= 4:
                     # dike reinforcement
                     z_type = "reinforced dike"
                     z_cost = self.hexagon_height * self.dike_m["raise"]
@@ -109,62 +109,62 @@ class Costs():
                     # since dike relocation involves two hexagon changes, costs
                     # are split
                     z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
-            elif hexagon_old.properties["z"] >= 4:
+            elif hexagon_old.properties["z_reference"] >= 4:
                 z_type = "dike relocation (removal)"
                 # since dike relocation involves two hexagon changes, costs
                 # are split
                 z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
-            elif hexagon_new.properties["z"] >= 4:
+            elif hexagon_new.properties["z_reference"] >= 4:
                 z_type = "dike relocation (construction)"
                 # since dike relocation involves two hexagon changes, costs
                 # are split
                 z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
-            elif hexagon_old.properties["z"] >= 3:
-                if hexagon_new.properties["z"] == 2:
+            elif hexagon_old.properties["z_reference"] >= 3:
+                if hexagon_new.properties["z_reference"] == 2:
                     z_type = "lowered floodplain"
                     z_cost = ((self.hexagon_area *
-                               (hexagon_old.properties["z"] -
-                                hexagon_new.properties["z"]))
+                               (hexagon_old.properties["z_reference"] -
+                                hexagon_new.properties["z_reference"]))
                               * self.floodplain_lowering_m3["storage"])
                     landuse_trigger = True
                 else:
                     z_type = "constructed sidechannel"
                     z_cost = ((self.hexagon_area *
-                               (hexagon_old.properties["z"] -
-                                hexagon_new.properties["z"]))
+                               (hexagon_old.properties["z_reference"] -
+                                hexagon_new.properties["z_reference"]))
                               * self.sidechannel_m3["storage"])
-            elif hexagon_new.properties["z"] >= 3:
-                if hexagon_old.properties["z"] == 2:
+            elif hexagon_new.properties["z_reference"] >= 3:
+                if hexagon_old.properties["z_reference"] == 2:
                     z_type = "raised floodplain"
                     z_cost = ((self.hexagon_area *
-                               (hexagon_old.properties["z"] -
-                                hexagon_new.properties["z"]))
+                               (hexagon_old.properties["z_reference"] -
+                                hexagon_new.properties["z_reference"]))
                               * self.floodplain_lowering_m3["storage"])
                 else:
                     z_type = "filled up sidechannel (for whatever reason)"
                     z_cost = ((self.hexagon_area *
-                               (hexagon_old.properties["z"] -
-                                hexagon_new.properties["z"]))
+                               (hexagon_old.properties["z_reference"] -
+                                hexagon_new.properties["z_reference"]))
                               * self.sidechannel_m3["storage"])
-            elif hexagon_old.properties["z"] >= 2:
+            elif hexagon_old.properties["z_reference"] >= 2:
                 z_type = "constructed sidechannel"
-                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
-                                                  hexagon_new.properties["z"]))
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z_reference"] -
+                                                  hexagon_new.properties["z_reference"]))
                           * self.sidechannel_m3["storage"])
-            elif hexagon_new.properties["z"] >= 2:
+            elif hexagon_new.properties["z_reference"] >= 2:
                 z_type = "filled up sidechannel (for whatever reason)"
-                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
-                                                  hexagon_new.properties["z"]))
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z_reference"] -
+                                                  hexagon_new.properties["z_reference"]))
                           * self.sidechannel_m3["storage"])
-            elif hexagon_old.properties["z"] >= 1:
+            elif hexagon_old.properties["z_reference"] >= 1:
                 z_type = "deepened existing sidechannel"
-                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
-                                                  hexagon_new.properties["z"]))
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z_reference"] -
+                                                  hexagon_new.properties["z_reference"]))
                           * self.sidechannel_m3["storage"])
-            elif hexagon_new.properties["z"] >= 1:
+            elif hexagon_new.properties["z_reference"] >= 1:
                 z_type = "undeepened existing sidechannel"
-                z_cost = ((self.hexagon_area * (hexagon_old.properties["z"] -
-                                                  hexagon_new.properties["z"]))
+                z_cost = ((self.hexagon_area * (hexagon_old.properties["z_reference"] -
+                                                  hexagon_new.properties["z_reference"]))
                           * self.sidechannel_m3["storage"])
             try:
                 z_cost = int(round(abs(z_cost)))

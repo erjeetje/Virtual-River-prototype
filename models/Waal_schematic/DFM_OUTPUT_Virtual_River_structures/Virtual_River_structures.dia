@@ -150,112 +150,143 @@
 ** INFO   : Start initializing external forcings...
 ** INFO   : Opened file : groyne00.pli
 ** INFO   : Closed file : groyne00.pli
-** INFO   :  groyne00.pli       3 nr of weir cells
+** INFO   :  groyne00.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne01.pli
 ** INFO   : Closed file : groyne01.pli
 ** INFO   :  groyne01.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne02.pli
 ** INFO   : Closed file : groyne02.pli
-** INFO   :  groyne02.pli       3 nr of weir cells
+** INFO   :  groyne02.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne03.pli
 ** INFO   : Closed file : groyne03.pli
 ** INFO   :  groyne03.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne04.pli
 ** INFO   : Closed file : groyne04.pli
-** INFO   :  groyne04.pli       3 nr of weir cells
+** INFO   :  groyne04.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne05.pli
 ** INFO   : Closed file : groyne05.pli
 ** INFO   :  groyne05.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne06.pli
 ** INFO   : Closed file : groyne06.pli
-** INFO   :  groyne06.pli       3 nr of weir cells
+** INFO   :  groyne06.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne07.pli
 ** INFO   : Closed file : groyne07.pli
 ** INFO   :  groyne07.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne08.pli
 ** INFO   : Closed file : groyne08.pli
-** INFO   :  groyne08.pli       3 nr of weir cells
+** INFO   :  groyne08.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne09.pli
 ** INFO   : Closed file : groyne09.pli
 ** INFO   :  groyne09.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne10.pli
 ** INFO   : Closed file : groyne10.pli
-** INFO   :  groyne10.pli       3 nr of weir cells
+** INFO   :  groyne10.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne11.pli
 ** INFO   : Closed file : groyne11.pli
 ** INFO   :  groyne11.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne12.pli
 ** INFO   : Closed file : groyne12.pli
-** INFO   :  groyne12.pli       3 nr of weir cells
+** INFO   :  groyne12.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne13.pli
 ** INFO   : Closed file : groyne13.pli
 ** INFO   :  groyne13.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne14.pli
 ** INFO   : Closed file : groyne14.pli
-** INFO   :  groyne14.pli       3 nr of weir cells
+** INFO   :  groyne14.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne15.pli
 ** INFO   : Closed file : groyne15.pli
 ** INFO   :  groyne15.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne16.pli
 ** INFO   : Closed file : groyne16.pli
-** INFO   :  groyne16.pli       3 nr of weir cells
+** INFO   :  groyne16.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne17.pli
 ** INFO   : Closed file : groyne17.pli
 ** INFO   :  groyne17.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne18.pli
 ** INFO   : Closed file : groyne18.pli
-** INFO   :  groyne18.pli       3 nr of weir cells
+** INFO   :  groyne18.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne19.pli
 ** INFO   : Closed file : groyne19.pli
 ** INFO   :  groyne19.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne20.pli
 ** INFO   : Closed file : groyne20.pli
-** INFO   :  groyne20.pli       3 nr of weir cells
+** INFO   :  groyne20.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne21.pli
 ** INFO   : Closed file : groyne21.pli
 ** INFO   :  groyne21.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne22.pli
 ** INFO   : Closed file : groyne22.pli
-** INFO   :  groyne22.pli       3 nr of weir cells
+** INFO   :  groyne22.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne23.pli
 ** INFO   : Closed file : groyne23.pli
 ** INFO   :  groyne23.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne24.pli
 ** INFO   : Closed file : groyne24.pli
-** INFO   :  groyne24.pli       3 nr of weir cells
+** INFO   :  groyne24.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne25.pli
 ** INFO   : Closed file : groyne25.pli
 ** INFO   :  groyne25.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne26.pli
 ** INFO   : Closed file : groyne26.pli
-** INFO   :  groyne26.pli       3 nr of weir cells
+** INFO   :  groyne26.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne27.pli
 ** INFO   : Closed file : groyne27.pli
 ** INFO   :  groyne27.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne28.pli
 ** INFO   : Closed file : groyne28.pli
-** INFO   :  groyne28.pli       3 nr of weir cells
+** INFO   :  groyne28.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne29.pli
 ** INFO   : Closed file : groyne29.pli
 ** INFO   :  groyne29.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne30.pli
 ** INFO   : Closed file : groyne30.pli
-** INFO   :  groyne30.pli       3 nr of weir cells
+** INFO   :  groyne30.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne31.pli
 ** INFO   : Closed file : groyne31.pli
 ** INFO   :  groyne31.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne32.pli
 ** INFO   : Closed file : groyne32.pli
-** INFO   :  groyne32.pli       3 nr of weir cells
+** INFO   :  groyne32.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne33.pli
 ** INFO   : Closed file : groyne33.pli
 ** INFO   :  groyne33.pli       3 nr of weir cells
 ** INFO   : Opened file : groyne34.pli
 ** INFO   : Closed file : groyne34.pli
-** INFO   :  groyne34.pli       3 nr of weir cells
+** INFO   :  groyne34.pli       4 nr of weir cells
 ** INFO   : Opened file : groyne35.pli
 ** INFO   : Closed file : groyne35.pli
 ** INFO   :  groyne35.pli       3 nr of weir cells
+** INFO   : Opened file : groyne36.pli
+** INFO   : Closed file : groyne36.pli
+** INFO   :  groyne36.pli       4 nr of weir cells
+** INFO   : Opened file : groyne37.pli
+** INFO   : Closed file : groyne37.pli
+** INFO   :  groyne37.pli       3 nr of weir cells
+** INFO   : Opened file : groyne38.pli
+** INFO   : Closed file : groyne38.pli
+** INFO   :  groyne38.pli       4 nr of weir cells
+** INFO   : Opened file : groyne39.pli
+** INFO   : Closed file : groyne39.pli
+** INFO   :  groyne39.pli       3 nr of weir cells
+** INFO   : Opened file : groyne40.pli
+** INFO   : Closed file : groyne40.pli
+** INFO   :  groyne40.pli       4 nr of weir cells
+** INFO   : Opened file : groyne41.pli
+** INFO   : Closed file : groyne41.pli
+** INFO   :  groyne41.pli       3 nr of weir cells
+** INFO   : Opened file : groyne42.pli
+** INFO   : Closed file : groyne42.pli
+** INFO   :  groyne42.pli       4 nr of weir cells
+** INFO   : Opened file : groyne43.pli
+** INFO   : Closed file : groyne43.pli
+** INFO   :  groyne43.pli       3 nr of weir cells
+** INFO   : Opened file : groyne44.pli
+** INFO   : Closed file : groyne44.pli
+** INFO   :  groyne44.pli       4 nr of weir cells
+** INFO   : Opened file : groyne45.pli
+** INFO   : Closed file : groyne45.pli
+** INFO   :  groyne45.pli       3 nr of weir cells
+** DEBUG  :           66  1.4490000E-03  zcgen(ncgensg*kx), kcgen(4,ncgen)
 ** INFO   : External Forcing or Initialising 'frictioncoefficient' from file 'frictioncoefficient_Set_value_1.pol'.
 ** DEBUG  :           66  5.2974001E-02  zh(nx)
 ** INFO   : Opened file : frictioncoefficient_Set_value_1.pol
@@ -276,16 +307,16 @@
 ** DEBUG  :           70  2.6706999E-02  jagauss(nodtot)
 ** DEBUG  :           72  0.1061290      ccr(0:ijstck)
 ** DEBUG  :           73  0.1061290      bbl(0:ijstck)
-** DEBUG  :           73  5.3413998E-02  bbr(nodtot), ddr(nodtot)
+** DEBUG  :           74  5.3413998E-02  bbr(nodtot), ddr(nodtot)
 ** DEBUG  :           75  0.1335350      d0(nodtot), zkr(nodtot),pk(0:nodtot), apk(nodtot), rk(nodtot)
 ** INFO   : nogauss , nocg :          13420         13287
 ** DEBUG  :           80  0.7297890      iao(nn+1)
 ** DEBUG  :           83  0.3046050      ao(na)
 ** DEBUG  :           89  0.7972200      wk(nwk)
-** INFO   : Modelinit finished   at: 14:28:31, 04-07-2019
+** INFO   : Modelinit finished   at: 21:33:19, 04-07-2019
 ** INFO   : ** Model initialization was successful **
 ** INFO   : * Active Model definition:
-# Generated on 14:28:31, 04-07-2019
+# Generated on 21:33:19, 04-07-2019
 # Deltares, D-Flow FM Version 1.2.38.63172M, Feb 14 2019, 18:49:17
 # Source:https://svn.oss.deltares.nl/repos/delft3d/trunk/
 
@@ -662,3 +693,9 @@ ProcessFluxIntegration            = 1                   # Process fluxes integra
 ** INFO   :    Sim. time done   Sim. time left   Real time used   Real time left Steps left Complete% Interval-averaged time step
 ** INFO   :               0d  0:0             99d 23:5              0d  0:0         ??d ??:??:??    8639999     0.0%     0.00000
 ** INFO   : Done writing initial output to file(s).
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d 13:0    8639940     0.0%     0.00000
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              4d  1:0    8639880     0.0%     0.65217
+** INFO   :               0d  0:0             99d 23:5              0d  0:0              7d  8:0    8639820     0.0%     0.14851
+** INFO   :               0d  0:0             99d 23:5              0d  0:0             11d  3:4    8639760     0.0%     0.09063
+** INFO   :               0d  0:0             99d 23:5              0d  0:0             13d 20:0    8639700     0.0%     0.08451
+** INFO   :               0d  0:0             99d 23:5              0d  0:0             15d  2:5    8639640     0.0%     0.09434

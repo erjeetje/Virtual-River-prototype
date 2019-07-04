@@ -107,13 +107,13 @@ class runScript():
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
         self.save = True
-        self.model_save = False
+        self.model_save = True
         self.model_ini_save = False
         # Virtual River variables
         self.turn = 0
         self.token = ""
         self.model = None
-        self.slope = 10**-4
+        self.slope = 10**-3
         self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
@@ -190,7 +190,8 @@ class runScript():
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, method='LAB', path=self.store_path)
             self.hexagons = ghosts.set_values(self.hexagons)
-            self.hexagons = adjust.z_correction(self.hexagons, self.slope)
+            self.hexagons = adjust.add_bedslope(self.hexagons, self.slope)
+            self.hexagons = adjust.z_correction(self.hexagons)
             print("Processed initial board state.")
         else:
             self.transforms = cali.create_calibration_file(
@@ -215,8 +216,9 @@ class runScript():
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
             self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
-            self.hexagons_sandbox = adjust.z_correction(
+            self.hexagons_sandbox = adjust.add_bedslope(
                     self.hexagons_sandbox, self.slope)
+            self.hexagons_sandbox = adjust.z_correction(self.hexagons_sandbox)
             if self.tygron:
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
@@ -227,9 +229,9 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = structures.determine_floodplains_and_behind_dikes(
                 self.hexagons_sandbox)
-        channel = structures.get_channel(self.hexagons_sandbox)
-        weirs = structures.create_structures(channel)
-        D3D.geojson2pli(weirs)
+        #channel = structures.get_channel(self.hexagons_sandbox)
+        #weirs = structures.create_structures(channel)
+        #D3D.geojson2pli(weirs)
         print("Created structure files (groynes and ltds).")
         """
         # doesn't work properly after changing the shapes to linestrings
@@ -268,7 +270,7 @@ class runScript():
         print("Loaded grids (cell corners and cell centers).")
         # index both grids to the hexagons.
         self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox,
-                                                 self.node_grid)
+                                                 self.node_grid, self.slope)
         self.flow_grid = gridmap.index_flow_grid(self.hexagons_sandbox,
                                                  self.flow_grid)
         self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
@@ -358,11 +360,13 @@ class runScript():
             """
             Not sure it makes sense to store the structures ?
             """
+            """
             with open(os.path.join(self.store_path,
                                    'structures.geojson'), 'w') as f:
                 geojson.dump(weirs, f, sort_keys=True,
                              indent=2)
             print("Saved structures file (conditional).")
+            """
         toc = time.time()
         try:
             print("Finished startup and calibration" +
@@ -408,7 +412,7 @@ class runScript():
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, turn=self.turn, method='LAB',
                     path=self.store_path)
-            self.hexagons = adjust.z_correction(self.hexagons, self.slope)
+            self.hexagons = adjust.z_correction(self.hexagons)
             print("Processed current board state.")
             if self.tygron:
                 # update hexagon ids to matching ids in tygron.
@@ -441,7 +445,7 @@ class runScript():
                 self.hexagons_sandbox = ghosts.set_values(
                         self.hexagons_sandbox)
                 self.hexagons_sandbox = adjust.z_correction(
-                        self.hexagons_sandbox, self.slope)
+                        self.hexagons_sandbox)
                 print("Received current board state.")
             except FileNotFoundError:
                 print("ERROR: Ran out of test files, aborting update function."
@@ -605,17 +609,6 @@ class runScript():
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time. Running three loops to "
                   "stabilize.")
-            if self.model_ini_save:
-                with open(os.path.join(self.store_path,
-                                      'flow_grid_model_ini1.geojson'),
-                         'w') as f:
-                    geojson.dump(self.flow_grid, f, sort_keys=True,
-                                 indent=2)
-                with open(os.path.join(self.store_path,
-                                       'hexagons_model_ini1.geojson'),
-                          'w') as f:
-                    geojson.dump(
-                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
             self.fig, self.axes = D3D.run_model(
                     self.model, self.filled_node_grid, turn=self.turn)
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
@@ -627,12 +620,12 @@ class runScript():
             print("Executed first model loop, updating roughness")
             if self.model_ini_save:
                 with open(os.path.join(self.store_path,
-                                       'flow_grid_model_ini2.geojson'),
+                                       'flow_grid_model_ini0.geojson'),
                           'w') as f:
                     geojson.dump(self.flow_grid, f, sort_keys=True,
                                  indent=2)
                 with open(os.path.join(self.store_path,
-                                       'hexagons_model_ini2.geojson'),
+                                       'hexagons_model_ini0.geojson'),
                           'w') as f:
                     geojson.dump(
                             self.hexagons_sandbox, f, sort_keys=True, indent=2)
@@ -647,6 +640,46 @@ class runScript():
             self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
             print("Executed second model loop, updating roughness")
+            if self.model_ini_save:
+                with open(os.path.join(self.store_path,
+                                       'flow_grid_model_ini1.geojson'),
+                          'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'hexagons_model_ini1.geojson'),
+                          'w') as f:
+                    geojson.dump(
+                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
+            self.fig, self.axes = D3D.run_model(
+                    self.model, temp_grid, turn=self.turn)
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
+            print("Executed third model loop, updating roughness")
+            if self.model_ini_save:
+                with open(os.path.join(self.store_path,
+                                       'flow_grid_model_ini2.geojson'),
+                          'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'hexagons_model_ini2.geojson'),
+                          'w') as f:
+                    geojson.dump(
+                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
+            self.fig, self.axes = D3D.run_model(
+                    self.model, temp_grid, turn=self.turn)
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
+            print("Executed fourth model loop, updating roughness")
             if self.model_ini_save:
                 with open(os.path.join(self.store_path,
                                        'flow_grid_model_ini3.geojson'),
@@ -680,9 +713,22 @@ class runScript():
         else:
             self.fig, self.axes = D3D.run_model(
                     self.model, self.filled_node_grid, turn=self.turn)
+            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
+                                                      self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
+            print("executed first update loop")
+            self.fig, self.axes = D3D.run_model(
+                    self.model, self.filled_node_grid, turn=self.turn)
         if self.model_save:
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model, self.hexagons_sandbox, self.flow_grid)
             with open(os.path.join(self.store_path,
                                    'hexagons_with_model_output%d.geojson' %
                                    self.turn),

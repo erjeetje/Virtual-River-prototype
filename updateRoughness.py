@@ -48,7 +48,7 @@ def randomizer(hexagons):
     for feature in hexagons.features:
         if feature.properties["landuse"] == 9:
             continue
-        elif feature.properties["z"] >= 4:
+        elif feature.properties["z_reference"] >= 4:
             feature.properties["landuse"] = 10
         else:
             feature.properties["landuse"] = random.randint(1, 5)
@@ -93,13 +93,13 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
             if behind_dike:
                 try:
                     dike = hexagons[feature.properties["dike_reference"]]
-                    z = dike.properties["z"] * 1.5
+                    z = dike.properties["z"]
                 except KeyError:
                     z = 6
                     print("KeyError on dike reference")
             else:
                 try:
-                    z = feature.properties["z"] * 1.5
+                    z = feature.properties["z"]
                 except KeyError:
                     z = 3
                     print("KeyError on z")
@@ -114,10 +114,10 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
                     h = 3
         else:
             try:
-                h = feature.properties["water_level"] - (feature.properties["z"] * 1.5)
+                h = feature.properties["water_level"] - (feature.properties["z"])
             except KeyError:
                 try:
-                    h = 6 - (feature.properties["z"] * 1.5)
+                    h = 6 - (feature.properties["z"])
                 except KeyError:
                     h = 6
         #if h < 0:
@@ -172,15 +172,19 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
             vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
             handler = "vegetation"
             name = "dike              "
-        if handler == "vegetation":
-            if h <= 0:
+        if h <= 0:
                 h = 0.1
+        if handler == "vegetation":
+            #if h <= 0:
+            #    h = 0.1
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
-            if h <= 0:
-                h = 0.1
+            #if h <= 0:
+            #    h = 0.1
             feature.properties["Chezy"] = manning(h, n)
         else:
+            #if h <= 0:
+            #    h = 0.1
             """
             This else statement should handle buildings --> perhaps need to
             add buildings as a geometry or structure in the model? Use manning
