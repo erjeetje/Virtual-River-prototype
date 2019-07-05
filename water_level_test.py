@@ -153,7 +153,7 @@ def main():
     water_level4, x4 = water_levels2(turn=4)
     water_level5, x5 = water_levels2(turn=5)
     water_level6, x6 = water_levels2(turn=6)
-    water_level7, x7 = water_levels2(turn=8)
+    water_level7, x7 = water_levels2(turn=7)
     #water_level8, x8 = water_levels2(turn=8)
     #fig, ax = plot_water_levels(x0, water_level0, turn=0)
     fig, ax = plot_water_levels(x1, water_level1, turn=1)
