@@ -112,6 +112,8 @@ class runScript():
         # Virtual River variables. THESE ARE ADJUSTABLE!
         self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4
         self.vert_scale = 0.25  # setting matches current z scaling, testing.
+        self.ini_loops = 8
+        self.update_loops = 4
         # Memory variables
         self.turn = 0
         self.token = ""
@@ -616,9 +618,9 @@ class runScript():
         temp_grid = gridmap.set_change_false(temp_grid)
         if self.turn == 0:
             print("Running model after initialization, updating the elevation "
-                  "in the model will take some time. Running eight loops to "
-                  "stabilize.")
-            for i in range(0, 8):
+                  "in the model will take some time. Running "+ str(self.ini_loops) +
+                  " eight loops to stabilize.")
+            for i in range(0, self.ini_loops):
                 if i == 0:
                     grid = self.filled_node_grid
                 else:
@@ -644,8 +646,9 @@ class runScript():
                         geojson.dump(
                                 self.hexagons_sandbox, f, sort_keys=True, indent=2)
         else:
-            print("Running model after turn update, running four loops.")
-            for i in range(0, 4):
+            print("Running model after turn update, running " +
+                  str(self.update_loops) + " loops.")
+            for i in range(0, self.update_loops):
                 if i == 0:
                     grid = self.filled_node_grid
                 else:
@@ -660,12 +663,6 @@ class runScript():
                     self.model, self.hexagons_sandbox, self.flow_grid)
                 print("Executed model update loop " + str(i) + ", updating roughness.")
         if self.model_save:
-            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
-                                                      self.hexagons_sandbox)
-            self.hexagons_sandbox = roughness.landuse_to_friction(
-                self.hexagons_sandbox, vert_scale=self.vert_scale)
-            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                self.model, self.hexagons_sandbox, self.flow_grid)
             with open(os.path.join(self.store_path,
                                    'hexagons_with_model_output%d.geojson' %
                                    self.turn),
