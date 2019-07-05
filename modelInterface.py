@@ -108,10 +108,10 @@ def run_model(model, filled_node_grid, fig=None,
     #s0 = s1.copy()
     print("updated grid in model")
 
-    step = 30
+    step = 10
     for i in range(step):
         t0 = time.time()
-        model.update(10)
+        model.update(25)
         t1 = time.time()
         print("model update: " + str(t1 - t0))
         axes[0].set_title("{:2f}".format(model.get_current_time()))

@@ -20,10 +20,13 @@ def add_bedslope(hexagons, slope):
     return hexagons
 
 
-def z_correction(hexagons):
+def z_correction(hexagons, initialized=True):
     for feature in hexagons.features:
-        feature.properties["z"] = (feature.properties["z"] +
-                          feature.properties["bedslope_correction"])
+        if (feature.properties["ghost_hexagon"] and initialized):
+            continue
+        else:
+            feature.properties["z"] = (feature.properties["z"] +
+                              feature.properties["bedslope_correction"])
     return hexagons
 
 
