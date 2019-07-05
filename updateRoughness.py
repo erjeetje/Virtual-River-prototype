@@ -172,24 +172,22 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
             vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
             handler = "vegetation"
             name = "dike              "
-        if h <= 0:
-                h = 0.1
+        if h < 0.025:
+                h = 0.025
         if handler == "vegetation":
-            #if h <= 0:
-            #    h = 0.1
+            # vegetation height scale test
+            vegpar["hv"] = vegpar["hv"] * 0.25
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
-            #if h <= 0:
-            #    h = 0.1
             feature.properties["Chezy"] = manning(h, n)
         else:
-            #if h <= 0:
-            #    h = 0.1
             """
             This else statement should handle buildings --> perhaps need to
             add buildings as a geometry or structure in the model? Use manning
             for the polygon?
             """
+            # vegetation height scale test
+            vegpar["hv"] = vegpar["hv"] * 0.25
             feature.properties["Chezy"] = klopstra(h, vegpar)
         print("Chezy coefficient calculation for cell: " +
               str(feature.id) + ". landuse: " +

@@ -106,14 +106,16 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = True
-        self.model_save = True
+        self.save = False
+        self.model_save = False
         self.model_ini_save = False
-        # Virtual River variables
+        # Virtual River variables: adjustable!
+        self.slope = 10**-3
+        self.vert_scale = 0.25
+        # Memory variables
         self.turn = 0
         self.token = ""
         self.model = None
-        self.slope = 10**-3
         self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
@@ -142,8 +144,8 @@ class runScript():
         # TODO
         # visualization
         # TODO
-        
-
+    
+    
     def initialize(self):
         if self.initialized:
             print("Virtual River is already initialized, please use Update "
