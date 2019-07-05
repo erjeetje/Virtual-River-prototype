@@ -65,7 +65,7 @@ def water_levels2(turn=0):
             shape = geometry.asShape(feature.geometry)
             x_hex = shape.centroid.x
             x_values.append(x_hex)
-            water_level = feature.properties["water_level"]  # - feature.properties["bedslope_correction"]
+            water_level = feature.properties["water_level"] - feature.properties["bedslope_correction"]
             column = feature.properties["column"] - 1
             water_level_columns[column].append(water_level)
     x_output = []
@@ -90,7 +90,7 @@ def plot_water_levels(xvals, yvals, turn=0, fig=None, ax=None):
         fig, ax = plt.subplots(1)
         ax.set_xlabel('river section (meters)')
         ax.set_ylabel('water levels (meters)')
-        ax.set_ylim([3.5, 5.5])
+        ax.set_ylim([3.75, 5.25])
     if turn == 1:
         label = "initial board"
     elif turn == 10:
@@ -145,7 +145,7 @@ def main():
     with open(os.path.join(dir_path, 'face_grid.geojson'), 'w') as f:
         geojson.dump(face_grid, f, sort_keys=True, indent=2)
     """
-    
+    """
     #water_level0, x0 = water_levels2(turn=0)
     water_level1, x1 = water_levels2(turn=1)
     water_level2, x2 = water_levels2(turn=2)
@@ -169,7 +169,6 @@ def main():
     dike_level1, x2 = dike_levels(turn=1)
     fig, ax = plot_water_levels(x1, water_level1, turn=1)
     fig, ax = plot_water_levels(x2, dike_level1, turn=10, fig=fig, ax=ax)
-    """
     return
 
 

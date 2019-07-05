@@ -109,9 +109,9 @@ class runScript():
         self.save = False
         self.model_save = False
         self.model_ini_save = False
-        # Virtual River variables: adjustable!
-        self.slope = 10**-3
-        self.vert_scale = 0.25
+        # Virtual River variables. THESE ARE ADJUSTABLE!
+        self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4
+        self.vert_scale = 0.25  # setting matches current z scaling, testing.
         # Memory variables
         self.turn = 0
         self.token = ""
@@ -290,7 +290,8 @@ class runScript():
         self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
-                self.hexagons_sandbox, initialization=True)
+                self.hexagons_sandbox, vert_scale=self.vert_scale,
+                initialization=True)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
         print("Executed grid interpolation.")
@@ -475,7 +476,7 @@ class runScript():
         self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
-                self.hexagons_sandbox)
+                self.hexagons_sandbox, vert_scale=self.vert_scale)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
 
@@ -627,7 +628,7 @@ class runScript():
                 self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                           self.hexagons_sandbox)
                 self.hexagons_sandbox = roughness.landuse_to_friction(
-                    self.hexagons_sandbox)
+                    self.hexagons_sandbox, vert_scale=self.vert_scale)
                 self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                     self.model, self.hexagons_sandbox, self.flow_grid)
                 print("Executed model initiation loop " + str(i) + ", updating roughness.")
@@ -654,7 +655,7 @@ class runScript():
                 self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                           self.hexagons_sandbox)
                 self.hexagons_sandbox = roughness.landuse_to_friction(
-                    self.hexagons_sandbox)
+                    self.hexagons_sandbox, vert_scale=self.vert_scale)
                 self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                     self.model, self.hexagons_sandbox, self.flow_grid)
                 print("Executed model update loop " + str(i) + ", updating roughness.")
@@ -662,7 +663,7 @@ class runScript():
             self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
             self.hexagons_sandbox = roughness.landuse_to_friction(
-                self.hexagons_sandbox)
+                self.hexagons_sandbox, vert_scale=self.vert_scale)
             self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model, self.hexagons_sandbox, self.flow_grid)
             with open(os.path.join(self.store_path,

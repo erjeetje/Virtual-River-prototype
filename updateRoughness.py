@@ -62,7 +62,7 @@ def update_Chezy_values(hexagons, filled_hexagons):
     return hexagons
 
 
-def landuse_to_friction(hexagons, printing=False, initialization=False):
+def landuse_to_friction(hexagons, vert_scale=1, printing=False, initialization=False):
     """
     Function that turns the landuse into a trachytope.
     
@@ -176,7 +176,7 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
                 h = 0.025
         if handler == "vegetation":
             # vegetation height scale test
-            vegpar["hv"] = vegpar["hv"] * 0.25
+            vegpar["hv"] = vegpar["hv"] * vert_scale
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
             feature.properties["Chezy"] = manning(h, n)
@@ -187,7 +187,7 @@ def landuse_to_friction(hexagons, printing=False, initialization=False):
             for the polygon?
             """
             # vegetation height scale test
-            vegpar["hv"] = vegpar["hv"] * 0.25
+            vegpar["hv"] = vegpar["hv"] * vert_scale
             feature.properties["Chezy"] = klopstra(h, vegpar)
         print("Chezy coefficient calculation for cell: " +
               str(feature.id) + ". landuse: " +
