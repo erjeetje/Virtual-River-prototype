@@ -218,9 +218,11 @@ class runScript():
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
             self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
-            self.hexagons_sandbox = adjust.add_bedslope(
-                    self.hexagons_sandbox, self.slope)
-            self.hexagons_sandbox = adjust.z_correction(self.hexagons_sandbox)
+            self.hexagons_sandbox = adjust.test_mode_z_correction(
+                    self.hexagons_sandbox)
+            #self.hexagons_sandbox = adjust.add_bedslope(
+            #        self.hexagons_sandbox, self.slope)
+            #self.hexagons_sandbox = adjust.z_correction(self.hexagons_sandbox)
             if self.tygron:
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
@@ -446,8 +448,8 @@ class runScript():
                         path=self.test_path)
                 self.hexagons_sandbox = ghosts.set_values(
                         self.hexagons_sandbox)
-                self.hexagons_sandbox = adjust.z_correction(
-                        self.hexagons_sandbox)
+                self.hexagons_sandbox = adjust.test_mode_z_correction(
+                    self.hexagons_sandbox)
                 print("Received current board state.")
             except FileNotFoundError:
                 print("ERROR: Ran out of test files, aborting update function."
