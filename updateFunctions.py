@@ -5,10 +5,8 @@ Created on Fri Mar 29 09:26:52 2019
 @author: HaanRJ
 """
 
-import os
-import geojson
-import costModule as costs
-import gridMapping as gridmap
+import hexagonOwnership as owner
+from geojson import FeatureCollection
 
 
 def compare_hex(cost, hexagons_old, hexagons_new):
@@ -55,10 +53,11 @@ def compare_hex(cost, hexagons_old, hexagons_new):
         else:
             feature.properties["landuse_changed"] = False
         if (feature.properties["z_changed"] or feature.properties["landuse"]):
-            z_cost, l_cost = cost.calc_Costs(
+            z_cost, l_cost, ownership_change = cost.calc_Costs(
                     feature, reference_hex,
                     z_changed=feature.properties["z_changed"],
                     landuse_changed=feature.properties["landuse_changed"])
+            feature = owner.update_ownership(feature, ownership_change)
             costs = costs + z_cost + l_cost
     return hexagons_new, costs, dike_moved
 
@@ -81,12 +80,13 @@ def terrain_updates(hexagons):
             becomes_water.append(feature)
         if feature.properties["z_reference"] >= 2:
             becomes_land.append(feature)
-    becomes_water = geojson.FeatureCollection(becomes_water)
-    becomes_land = geojson.FeatureCollection(becomes_land)
+    becomes_water = FeatureCollection(becomes_water)
+    becomes_land = FeatureCollection(becomes_land)
     return becomes_water, becomes_land
 
 
 if __name__ == '__main__':
+    """
     dir_path = os.path.dirname(os.path.realpath(__file__))
     test_path = os.path.join(dir_path, 'test_files')
     turn = 0
@@ -99,3 +99,5 @@ if __name__ == '__main__':
             path=test_path)
     cost = costs.Costs()
     hexagons_new, dike_moved = compare_hex(hexagons_old, hexagons_new)
+    """
+

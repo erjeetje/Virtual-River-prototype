@@ -5,14 +5,10 @@ Created on Wed Jun 12 06:37:58 2019
 @author: HaanRJ
 """
 
-import os
 import random
-import geojson
 import numpy as np
 from scipy.spatial import cKDTree
 from shapely import geometry
-from shapely.ops import unary_union
-import gridMapping as gridmap
 
 
 def determine_neighbours(hexagons):
@@ -234,27 +230,18 @@ def generate_ownership(hexagons):
         feature.properties["ownership_change"] = False
     return hexagons
 
-"""
-def floodplain_count(hexagons, side="north"):
-    count = 0
-    indices = []
-    for feature in hexagons.features:
-        if feature.properties["ghost_hexagon"]:
-            continue
-        if side == "south":
-            if feature.properties["floodplain_south"]:
-                count += 1
-                indices.append(feature.id)
-        else:
-            if feature.properties["floodplain_north"]:
-                count += 1
-                indices.append(feature.id)
-    return indices, count 
-"""
+
+def update_ownership(feature, ownership_change):
+    if ownership_change is not None:
+        feature.properties["ownership_change"] = True
+        feature.properties["owner"] = ownership_change
+    else:
+        feature.properties["ownership_change"] = False
+    return feature
 
 
 def main():
-    turn=0
+    """turn=0
     dir_path = os.path.dirname(os.path.realpath(__file__))
     test_path = os.path.join(dir_path, 'test_files')
     hexagons = gridmap.read_hexagons(
@@ -263,7 +250,6 @@ def main():
     hexagons = determine_neighbours(hexagons)
     hexagons = generate_ownership(hexagons)
     hexagons = determine_ownership(hexagons)
-    """
     with open(os.path.join(test_path, 'hexagons%d.geojson' % turn),
               'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)

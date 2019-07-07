@@ -26,6 +26,19 @@ def fix(hexagons_ownership, path, turn=0):
     return
 
 
+def update_ownership(feature):
+    feature.properties["owner"] = "Something new"
+    return feature
+
+
+def test(hexagons):
+    for feature in hexagons.features:
+        print(feature.properties["owner"])
+        feature = update_ownership(feature)
+        print(feature.properties["owner"])
+    return
+
+
 def main():
     turn=0
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -33,6 +46,7 @@ def main():
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
+    """
     hexagons = owner.determine_neighbours(hexagons)
     hexagons = owner.generate_ownership(hexagons)
     hexagons = owner.determine_ownership(hexagons)
@@ -42,6 +56,8 @@ def main():
     turn += 1
     for turn in range (1, 8):
         fix(hexagons, test_path, turn=turn)
+    """
+    test(hexagons)
     return
 
 

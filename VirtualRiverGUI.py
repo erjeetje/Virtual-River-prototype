@@ -107,7 +107,7 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = False
+        self.save = True
         self.model_save = True
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!

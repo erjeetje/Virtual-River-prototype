@@ -6,9 +6,6 @@ Created on Wed Jun 26 14:20:02 2019
 """
 
 
-import os
-import gridMapping as gridmap
-import updateFunctions as update
 from numpy import sqrt
 
 class Costs():  
@@ -87,6 +84,7 @@ class Costs():
         # though costs for removal (e.g. a building) should be calculated.
         # In such a scenario, landuse_trigger activates the landuse loop.
         landuse_trigger = False
+        ownership_change = None
         if z_changed:
             if hexagon_old.properties["z_reference"] >= 5:
                 if hexagon_new.properties["z_reference"] >= 4:
@@ -98,6 +96,7 @@ class Costs():
                     # since dike relocation involves two hexagon changes, costs
                     # are split
                     z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
+                    ownership_change = "Water"
             elif hexagon_new.properties["z_reference"] >= 5:
                 if hexagon_old.properties["z_reference"] >= 4:
                     # dike reinforcement
@@ -111,6 +110,7 @@ class Costs():
                     z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
             elif hexagon_old.properties["z_reference"] >= 4:
                 z_type = "dike relocation (removal)"
+                ownership_change = "Water"
                 # since dike relocation involves two hexagon changes, costs
                 # are split
                 z_cost = self.hexagon_height * self.dike_m["relocate"] / 2.0
@@ -133,6 +133,7 @@ class Costs():
                                (hexagon_old.properties["z_reference"] -
                                 hexagon_new.properties["z_reference"]))
                               * self.sidechannel_m3["storage"])
+                    ownership_change = "Water"
             elif hexagon_new.properties["z_reference"] >= 3:
                 if hexagon_old.properties["z_reference"] == 2:
                     z_type = "raised floodplain"
@@ -151,6 +152,7 @@ class Costs():
                 z_cost = ((self.hexagon_area * (hexagon_old.properties["z_reference"] -
                                                   hexagon_new.properties["z_reference"]))
                           * self.sidechannel_m3["storage"])
+                ownership_change = "Water"
             elif hexagon_new.properties["z_reference"] >= 2:
                 z_type = "filled up sidechannel (for whatever reason)"
                 z_cost = ((self.hexagon_area * (hexagon_old.properties["z_reference"] -
@@ -176,6 +178,12 @@ class Costs():
             if hexagon_old.properties["landuse"] == 0:
                 l_type = "building acquisition and demolition"
                 l_cost = self.acqi_type["farm"] + self.demo_type["farm"]
+                # This if scenario of when not to assign ownership might need
+                # to be changed. Currently doesn't overwrite an ownership
+                # change in relation to a dike relocation.
+                if (ownership_change is None and
+                    hexagon_new.properties["landuse"] != 10):
+                    ownership_change = "Province"
             elif hexagon_old.properties["landuse"] == 1:
                 l_type = "production grass removal"
                 l_cost = self.hexagon_area * self.roughness_smooth_m2["grass"]
@@ -212,6 +220,8 @@ class Costs():
             else:
                 print("dike relocation")
                 # no costs in land use changed, all in z changed
+            if hexagon_new.properties["landuse"] == 6:
+                ownership_change = "Nature"
             """
             # These could be added to add costs for construction/planting of
             # different land uses.
@@ -266,7 +276,7 @@ class Costs():
         if (z_changed and landuse_changed):
             # exceptional situations if they exist?
             pass
-        return z_cost, l_cost
+        return z_cost, l_cost, ownership_change
 
 
     def cost_per_hex(self):
