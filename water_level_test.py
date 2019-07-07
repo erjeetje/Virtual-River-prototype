@@ -54,7 +54,7 @@ def water_levels2(turn=0):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     test_path = os.path.join(dir_path, 'storing_files')
     hexagons = gridmap.read_hexagons(
-            filename='hexagons%d.geojson' % turn,
+            filename='hexagons_with_model_output%d.geojson' % turn,
             path=test_path)
     water_level_columns = [[] for i in range(15)]
     x_values = []
@@ -90,7 +90,7 @@ def plot_water_levels(xvals, yvals, turn=0, fig=None, ax=None):
         fig, ax = plt.subplots(1)
         ax.set_xlabel('river section (meters)')
         ax.set_ylabel('water levels (meters)')
-        ax.set_ylim([3.75, 5.25])
+        ax.set_ylim([4, 5.25])
     if turn == 1:
         label = "initial board"
     elif turn == 10:
@@ -169,6 +169,7 @@ def main():
     dike_level1, x2 = dike_levels(turn=1)
     fig, ax = plot_water_levels(x1, water_level1, turn=1)
     fig, ax = plot_water_levels(x2, dike_level1, turn=10, fig=fig, ax=ax)
+    
     return
 
 

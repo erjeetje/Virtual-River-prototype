@@ -29,7 +29,10 @@ def determine_neighbours(hexagons):
     polygons = []
     hexagon0_y = 0
     hexagon1_y = 0
+    hexagon_count = 0
     for feature in hexagons.features:
+        if not feature.properties["ghost_hexagon"]:
+            hexagon_count += 1
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
@@ -42,8 +45,9 @@ def determine_neighbours(hexagons):
     hex_coor = np.array(hex_coor)
     hex_locations = cKDTree(hex_coor)
     limit = abs((hexagon0_y - hexagon1_y) * 1.5)
-    total_hex = len(hexagons.features)
     for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
@@ -52,7 +56,7 @@ def determine_neighbours(hexagons):
         dist, indices = hex_locations.query(
                 xy, k=7, distance_upper_bound=limit)
         # remove missing neighbours (return as self.n, equal to total_hex)
-        indices = remove_values_from_array(indices, total_hex)
+        indices = remove_values_from_array(indices, hexagon_count)
         # convert from int32 to regular int (otherwise JSON error)
         indices = list(map(int, indices))
         # remove itself
@@ -64,9 +68,390 @@ def determine_neighbours(hexagons):
 
 
 def remove_values_from_array(array, val):
-   return [value for value in array if value != val]
+    return [value for value in array if value <= val]
 
 
+def determine_ownership(hexagons):
+    def floodplain_count(hexagons, side="north"):
+        count = 0
+        indices = []
+        for feature in hexagons.features:
+            if feature.properties["ghost_hexagon"]:
+                continue
+            if side == "south":
+                if feature.properties["floodplain_south"]:
+                    count += 1
+                    indices.append(feature.id)
+            else:
+                if feature.properties["floodplain_north"]:
+                    count += 1
+                    indices.append(feature.id)
+        return indices, count
+    north_indices, north_count = floodplain_count(hexagons, side="north")
+    south_indices, south_count = floodplain_count(hexagons, side="south")
+    floodplain_count = north_count + south_count
+    floodplain_indices = north_indices + south_indices
+    if floodplain_count < 55:
+        nature_count = 4
+        water_count = 2
+        province_count = 2
+    elif floodplain_count < 70:
+        nature_count = 5
+        water_count = 2
+        province_count = 3
+    else:
+        nature_count = 6
+        water_count = 3
+        province_count = 3
+    total_count = nature_count + water_count + province_count
+    taken_hexagons = []
+    #for i in range(0, nature_count):
+    i = 0
+    while i < total_count:
+        #print(taken_hexagons)
+        #print("Trial loop nature ownership: " + str(i))
+        random_value = random.randint(0, floodplain_count-1)
+        if random_value in taken_hexagons:
+            #i += -1
+            continue
+        else:
+            taken_hexagons.append(random_value)
+        random_hexagon = floodplain_indices[random_value]
+        print("")
+        print("Trying from hexagon: " + str(random_hexagon))
+        hexagon = hexagons[random_hexagon]
+        if hexagon.properties["owned"]:
+            continue
+        if (hexagon.properties["landuse"] == 0 or
+            hexagon.properties["landuse"] == 1):
+            continue
+        neighbours = hexagon.properties["neighbours"]
+        print("Neighbours are: " + str(neighbours))
+        floodplain_neighbours = check_floodplain(
+                floodplain_indices, neighbours)
+        print("Floodplain neighbours are: " + str(floodplain_neighbours))
+        if i < nature_count:
+            owner = "Nature"
+        elif i < (nature_count + water_count):
+            owner = "Water"
+        else:
+            owner = "Province"
+        if not floodplain_neighbours:
+            continue
+        elif len(floodplain_neighbours) == 1:
+            chosen_neighbour = floodplain_neighbours[0]
+            if chosen_neighbour in taken_hexagons:
+                continue
+            neighbour_hexagon = hexagons[chosen_neighbour]
+            if neighbour_hexagon.properties["owned"]:
+                continue
+            if (neighbour_hexagon.properties["landuse"] == 0 or
+                neighbour_hexagon.properties["landuse"] == 1):
+                continue
+            else:
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = owner
+                neighbour_hexagon.properties["owned"] = True
+                neighbour_hexagon.properties["owner"] = owner
+                i += 1
+                taken_hexagons.append(chosen_neighbour)
+                print(owner + " ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbour))
+                continue
+        else:
+            if len(floodplain_neighbours) == 2:
+                chosen_neighbours = floodplain_neighbours
+            else:
+                random_neighbours = random.sample(floodplain_neighbours, 2)
+                chosen_neighbours = random_neighbours
+            if (chosen_neighbours[0] in taken_hexagons and
+                chosen_neighbours[1] in taken_hexagons):
+                continue
+            neighbour_hexagon1 = hexagons[chosen_neighbours[0]]
+            neighbour_hexagon2 = hexagons[chosen_neighbours[1]]
+            if (neighbour_hexagon1.properties["owned"] and
+                neighbour_hexagon2.properties["owned"]):
+                continue
+            if ((neighbour_hexagon1.properties["landuse"] == 0 or
+                neighbour_hexagon1.properties["landuse"] == 1) and
+                (neighbour_hexagon2.properties["landuse"] == 0 or
+                neighbour_hexagon2.properties["landuse"] == 1)):
+                continue
+            if (neighbour_hexagon1.properties["owned"] or 
+                neighbour_hexagon1.properties["landuse"] == 0 or
+                neighbour_hexagon1.properties["landuse"] == 1):
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = owner
+                neighbour_hexagon2.properties["owned"] = True
+                neighbour_hexagon2.properties["owner"] = owner
+                i += 1
+                taken_hexagons.append(chosen_neighbours[1])
+                print(owner + " ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[1]))
+            elif (neighbour_hexagon2.properties["owned"] or
+                  neighbour_hexagon2.properties["landuse"] == 0 or
+                  neighbour_hexagon2.properties["landuse"] == 1):
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = owner
+                neighbour_hexagon1.properties["owned"] = True
+                neighbour_hexagon1.properties["owner"] = owner
+                i += 1
+                taken_hexagons.append(chosen_neighbours[0])
+                print(owner + " ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[0]))
+            else:
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = owner
+                neighbour_hexagon1.properties["owned"] = True
+                neighbour_hexagon1.properties["owner"] = owner
+                neighbour_hexagon2.properties["owned"] = True
+                neighbour_hexagon2.properties["owner"] = owner
+                i += 1
+                taken_hexagons.append(chosen_neighbours[0])
+                taken_hexagons.append(chosen_neighbours[1])
+                print(owner + " ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[0]) + ", " +
+                      str(chosen_neighbours[1]))
+    """
+    i = 0
+    print("")
+    print("WATER OWNERSHIP")
+    print("")
+    while i < water_count:
+        #print(taken_hexagons)
+        #print("Trial loop water ownership: " + str(i))
+        random_value = random.randint(0, floodplain_count-1)
+        if random_value in taken_hexagons:
+            continue
+        else:
+            taken_hexagons.append(random_value)
+        random_hexagon = floodplain_indices[random_value]
+        print("")
+        print("Trying from hexagon: " + str(random_hexagon))
+        hexagon = hexagons[random_hexagon]
+        if hexagon.properties["owned"]:
+            continue
+        if (hexagon.properties["landuse"] == 0 or
+            hexagon.properties["landuse"] == 1):
+            continue
+        neighbours = hexagon.properties["neighbours"]
+        print("Neighbours are: " + str(neighbours))
+        floodplain_neighbours = check_floodplain(
+                floodplain_indices, neighbours)
+        print("Floodplain neighbours are: " + str(floodplain_neighbours))
+        if not floodplain_neighbours:
+            continue
+        elif len(floodplain_neighbours) == 1:
+            chosen_neighbour = floodplain_neighbours[0]
+            if chosen_neighbour in taken_hexagons:
+                continue
+            neighbour_hexagon = hexagons[chosen_neighbour]
+            if neighbour_hexagon.properties["owned"]:
+                continue
+            if (neighbour_hexagon.properties["landuse"] == 0 or
+                neighbour_hexagon.properties["landuse"] == 1):
+                continue
+            else:
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Water"
+                neighbour_hexagon.properties["owned"] = True
+                neighbour_hexagon.properties["owner"] = "Water"
+                i += 1
+                taken_hexagons.append(chosen_neighbour)
+                print("Water ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbour))
+                continue
+        else:
+            if len(floodplain_neighbours) == 2:
+                chosen_neighbours = floodplain_neighbours
+            else:
+                random_neighbours = random.sample(floodplain_neighbours, 2)
+                chosen_neighbours = random_neighbours
+            if (chosen_neighbours[0] in taken_hexagons and
+                chosen_neighbours[1] in taken_hexagons):
+                continue
+            neighbour_hexagon1 = hexagons[chosen_neighbours[0]]
+            neighbour_hexagon2 = hexagons[chosen_neighbours[1]]
+            if (neighbour_hexagon1.properties["owned"] and
+                neighbour_hexagon2.properties["owned"]):
+                continue
+            if ((neighbour_hexagon1.properties["landuse"] == 0 or
+                neighbour_hexagon1.properties["landuse"] == 1) and
+                (neighbour_hexagon2.properties["landuse"] == 0 or
+                neighbour_hexagon2.properties["landuse"] == 1)):
+                continue
+            if (neighbour_hexagon1.properties["owned"] or 
+                neighbour_hexagon1.properties["landuse"] == 0 or
+                neighbour_hexagon1.properties["landuse"] == 1):
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Water"
+                neighbour_hexagon2.properties["owned"] = True
+                neighbour_hexagon2.properties["owner"] = "Water"
+                i += 1
+                taken_hexagons.append(chosen_neighbours[1])
+                print("Water ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[1]))
+            elif (neighbour_hexagon2.properties["owned"] or
+                  neighbour_hexagon2.properties["landuse"] == 0 or
+                  neighbour_hexagon2.properties["landuse"] == 1):
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Water"
+                neighbour_hexagon1.properties["owned"] = True
+                neighbour_hexagon1.properties["owner"] = "Water"
+                i += 1
+                taken_hexagons.append(chosen_neighbours[0])
+                print("Water ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[0]))
+            else:
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Water"
+                neighbour_hexagon1.properties["owned"] = True
+                neighbour_hexagon1.properties["owner"] = "Water"
+                neighbour_hexagon2.properties["owned"] = True
+                neighbour_hexagon2.properties["owner"] = "Water"
+                i += 1
+                taken_hexagons.append(chosen_neighbours[0])
+                taken_hexagons.append(chosen_neighbours[1])
+                print("Water ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[0]) + ", " +
+                      str(chosen_neighbours[1]))
+    i = 0
+    print("")
+    print("PROVINCE OWNERSHIP")
+    print("")
+    while i < province_count:
+        #print(taken_hexagons)
+        #print("Trial loop province ownership: " + str(i))
+        random_value = random.randint(0, floodplain_count-1)
+        if random_value in taken_hexagons:
+            continue
+        else:
+            taken_hexagons.append(random_value)
+        random_hexagon = floodplain_indices[random_value]
+        print("")
+        print("Trying from hexagon: " + str(random_hexagon))
+        hexagon = hexagons[random_hexagon]
+        if hexagon.properties["owned"]:
+            continue
+        if (hexagon.properties["landuse"] == 0 or
+            hexagon.properties["landuse"] == 1):
+            continue
+        neighbours = hexagon.properties["neighbours"]
+        print("Neighbours are: " + str(neighbours))
+        floodplain_neighbours = check_floodplain(
+                floodplain_indices, neighbours)
+        print("Floodplain neighbours are: " + str(floodplain_neighbours))
+        if not floodplain_neighbours:
+            continue
+        elif len(floodplain_neighbours) == 1:
+            chosen_neighbour = floodplain_neighbours[0]
+            neighbour_hexagon = hexagons[chosen_neighbour]
+            if neighbour_hexagon.properties["owned"]:
+                continue
+            if (neighbour_hexagon.properties["landuse"] == 0 or
+                neighbour_hexagon.properties["landuse"] == 1):
+                continue
+            else:
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Province"
+                neighbour_hexagon.properties["owned"] = True
+                neighbour_hexagon.properties["owner"] = "Province"
+                i += 1
+                taken_hexagons.append(chosen_neighbour)
+                print("Province ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbour))
+                continue
+        else:
+            if len(floodplain_neighbours) == 2:
+                chosen_neighbours = floodplain_neighbours
+            else:
+                random_neighbours = random.sample(floodplain_neighbours, 2)
+                chosen_neighbours = random_neighbours
+            if (chosen_neighbours[0] in taken_hexagons and
+                chosen_neighbours[1] in taken_hexagons):
+                continue
+            neighbour_hexagon1 = hexagons[chosen_neighbours[0]]
+            neighbour_hexagon2 = hexagons[chosen_neighbours[1]]
+            if (neighbour_hexagon1.properties["owned"] and
+                neighbour_hexagon2.properties["owned"]):
+                continue
+            if ((neighbour_hexagon1.properties["landuse"] == 0 or
+                neighbour_hexagon1.properties["landuse"] == 1) and
+                (neighbour_hexagon2.properties["landuse"] == 0 or
+                neighbour_hexagon2.properties["landuse"] == 1)):
+                continue
+            if (neighbour_hexagon1.properties["owned"] or 
+                neighbour_hexagon1.properties["landuse"] == 0 or
+                neighbour_hexagon1.properties["landuse"] == 1):
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Province"
+                neighbour_hexagon2.properties["owned"] = True
+                neighbour_hexagon2.properties["owner"] = "Province"
+                i += 1
+                taken_hexagons.append(chosen_neighbours[1])
+                print("Province ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[1]))
+            elif (neighbour_hexagon2.properties["owned"] or
+                  neighbour_hexagon2.properties["landuse"] == 0 or
+                  neighbour_hexagon2.properties["landuse"] == 1):
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Province"
+                neighbour_hexagon1.properties["owned"] = True
+                neighbour_hexagon1.properties["owner"] = "Province"
+                i += 1
+                taken_hexagons.append(chosen_neighbours[0])
+                print("Province ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[0]))
+            else:
+                hexagon.properties["owned"] = True
+                hexagon.properties["owner"] = "Province"
+                neighbour_hexagon1.properties["owned"] = True
+                neighbour_hexagon1.properties["owner"] = "Province"
+                neighbour_hexagon2.properties["owned"] = True
+                neighbour_hexagon2.properties["owner"] = "Province"
+                i += 1
+                taken_hexagons.append(chosen_neighbours[0])
+                taken_hexagons.append(chosen_neighbours[1])
+                print("Province ownership of hexagons: " + str(random_hexagon) +
+                      ", " + str(chosen_neighbours[0]) + ", " +
+                      str(chosen_neighbours[1]))
+    """
+    return hexagons
+
+
+def check_floodplain(floodplain_indices, neighbours):
+    is_floodplain = []
+    for index in neighbours:
+        if index in floodplain_indices:
+            is_floodplain.append(index)
+    return is_floodplain
+    
+
+
+def generate_ownership(hexagons):
+    for feature in hexagons.features:
+        feature.properties["owned"] = False
+        feature.properties["owner"] = None
+    return hexagons
+
+
+def floodplain_count(hexagons, side="north"):
+    count = 0
+    indices = []
+    for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
+        if side == "south":
+            if feature.properties["floodplain_south"]:
+                count += 1
+                indices.append(feature.id)
+        else:
+            if feature.properties["floodplain_north"]:
+                count += 1
+                indices.append(feature.id)
+    return indices, count
+
+"""
 def owners(hexagons):
     count = 0
     for feature in hexagons.features:
@@ -167,6 +552,7 @@ def add_ownership(ownership):
         ownership.append(owner)
     return ownership
 """
+"""
 Separate north and south floodplains ? ==>
 Create empty list of ownership ==>
 Create random len(3-5) list of 
@@ -174,7 +560,7 @@ Create random len(3-5) list of
 Generate (semi) random points within the board ==> cKDTree ==> index hexagons
 to random points ==> assign ownership
 """
-
+"""
 def random_points(hexagons):
     polygons = []
     for feature in hexagons.features:
@@ -237,7 +623,7 @@ def random_points(hexagons):
         print("ownership for hexagon " + str(feature.id) + ": " +
               str(feature.properties["owner"]))
     return hexagons
-
+"""
 
 if __name__ == '__main__':
     with open('storing_files\\hexagons0.geojson', 'r') as f:
@@ -247,8 +633,14 @@ if __name__ == '__main__':
     hexagons = determine_ownership(hexagons)
     """
     hexagons = determine_neighbours(hexagons)
+    hexagons = generate_ownership(hexagons)
+    hexagons = determine_ownership(hexagons)
+    """
+    count = floodplain_count(hexagons, side="north")
+    print("north floodplain count: " + str(count))
+    count = floodplain_count(hexagons, side="south")
+    print("south floodplain count: " + str(count))
+    """
     #hexagons = random_points(hexagons)
-    """
-    with open('floodplain_test.geojson', 'w') as f:
+    with open('floodplain_test4.geojson', 'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
-    """
