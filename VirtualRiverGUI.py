@@ -195,6 +195,7 @@ class runScript():
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, method='LAB', path=self.store_path)
             self.hexagons = ghosts.set_values(self.hexagons)
+            self.hexagons = adjust.find_factory(self.hexagons)
             print("Processed initial board state.")
         else:
             self.transforms = cali.create_calibration_file(
@@ -226,6 +227,9 @@ class runScript():
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
             self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
+            self.hexagons_sandbox = adjust.find_factory(self.hexagons_sandbox)
+            self.hexagons_sandbox = owner.determine_neighbours(
+                    self.hexagons_sandbox)
             self.hexagons_sandbox = adjust.test_mode_z_correction(
                     self.hexagons_sandbox)
             #self.hexagons_sandbox = adjust.add_bedslope(

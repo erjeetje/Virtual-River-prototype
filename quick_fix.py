@@ -11,10 +11,10 @@ import gridMapping as gridmap
 import hexagonOwnership as owner
 
 
-def fix(hexagons_ownership, path, turn=0):
+def fix(hexagons_ownership, temp_path, test_path, turn=0):
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
-            path=path)
+            path=temp_path)
     for feature in hexagons.features:
         reference_hex = hexagons_ownership[feature.id]
         """
@@ -26,7 +26,7 @@ def fix(hexagons_ownership, path, turn=0):
             feature.properties["neighbours"] = reference_hex.properties["neighbours"]
         except KeyError:
             continue
-    with open(os.path.join(path, 'hexagons%d.geojson' % turn),
+    with open(os.path.join(temp_path, 'hexagons%d.geojson' % turn),
               'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
     return
@@ -49,9 +49,11 @@ def main():
     turn=0
     dir_path = os.path.dirname(os.path.realpath(__file__))
     test_path = os.path.join(dir_path, 'test_files')
+    
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
+    temp_path = os.path.join(dir_path, 'temp_files')
     """
     hexagons = owner.determine_neighbours(hexagons)
     hexagons = owner.generate_ownership(hexagons)
@@ -60,9 +62,8 @@ def main():
               'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
     """
-    turn += 1
-    for turn in range (1, 8):
-        fix(hexagons, test_path, turn=turn)
+    for turn in range (0, 8):
+        fix(hexagons, temp_path, test_path, turn=turn)
     
     #test(hexagons)
     return
