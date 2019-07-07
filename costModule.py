@@ -176,8 +176,12 @@ class Costs():
                       "(elevation change)?")
         if (landuse_changed or landuse_trigger):
             if hexagon_old.properties["landuse"] == 0:
-                l_type = "building acquisition and demolition"
-                l_cost = self.acqi_type["farm"] + self.demo_type["farm"]
+                if hexagon_old.properties["factory"]:
+                    l_type = "factory acquisition and demolition"
+                    l_cost = self.acqi_type["business"] + self.demo_type["business"]
+                else:
+                    l_type = "farm acquisition and demolition"
+                    l_cost = self.acqi_type["farm"] + self.demo_type["farm"]
                 # This if scenario of when not to assign ownership might need
                 # to be changed. Currently doesn't overwrite an ownership
                 # change in relation to a dike relocation.

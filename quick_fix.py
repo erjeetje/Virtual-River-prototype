@@ -14,7 +14,7 @@ import hexagonOwnership as owner
 def fix(hexagons_ownership, temp_path, test_path, turn=0):
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
-            path=temp_path)
+            path=test_path)
     for feature in hexagons.features:
         reference_hex = hexagons_ownership[feature.id]
         """
@@ -22,11 +22,16 @@ def fix(hexagons_ownership, temp_path, test_path, turn=0):
         feature.properties["owner"] = reference_hex.properties["owner"]
         feature.properties["ownership_change"] = reference_hex.properties["ownership_change"]
         """
+        if feature.properties["ghost_hexagon"]:
+            continue
+        feature.properties["factory"] = False
+        """
         try:
             feature.properties["neighbours"] = reference_hex.properties["neighbours"]
         except KeyError:
             continue
-    with open(os.path.join(temp_path, 'hexagons%d.geojson' % turn),
+        """
+    with open(os.path.join(test_path, 'hexagons%d.geojson' % turn),
               'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
     return
