@@ -17,9 +17,15 @@ def fix(hexagons_ownership, path, turn=0):
             path=path)
     for feature in hexagons.features:
         reference_hex = hexagons_ownership[feature.id]
+        """
         feature.properties["owned"] = reference_hex.properties["owned"]
         feature.properties["owner"] = reference_hex.properties["owner"]
         feature.properties["ownership_change"] = reference_hex.properties["ownership_change"]
+        """
+        try:
+            feature.properties["neighbours"] = reference_hex.properties["neighbours"]
+        except KeyError:
+            continue
     with open(os.path.join(path, 'hexagons%d.geojson' % turn),
               'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
@@ -53,11 +59,12 @@ def main():
     with open(os.path.join(test_path, 'hexagons%d.geojson' % turn),
               'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
+    """
     turn += 1
     for turn in range (1, 8):
         fix(hexagons, test_path, turn=turn)
-    """
-    test(hexagons)
+    
+    #test(hexagons)
     return
 
 
