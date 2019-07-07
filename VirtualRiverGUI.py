@@ -22,6 +22,7 @@ import costModule as costs
 import waterModule as water
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
+import hexagonOwnership as owner
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -206,6 +207,9 @@ class runScript():
             if self.tygron:
                 self.hexagons = tygron.update_hexagons_tygron_id(self.token,
                                                                  self.hexagons)
+            self.hexagons = owner.determine_neighbours(self.hexagons)
+            self.hexagons = owner.generate_ownership(self.hexagons)
+            self.hexagons = owner.determine_ownership(self.hexagons)
             self.hexagons_sandbox = detect.transform(
                     self.hexagons, self.transforms, export="sandbox",
                     path=self.dir_path)

@@ -16,6 +16,14 @@ import gridMapping as gridmap
 
 
 def determine_neighbours(hexagons):
+    """
+    Function that indexes all hexagons to their neighbours. Finds all hexagons
+    that are direct neighbours of each hexagon and stores their value in the
+    hexagon properties.
+    """
+    def remove_values_from_array(array, val):
+        return [value for value in array if value <= val]
+
     hex_coor = []
     polygons = []
     hexagon0_y = 0
@@ -56,10 +64,6 @@ def determine_neighbours(hexagons):
               " are: " + str(indices))
         feature.properties["neighbours"] = indices
     return hexagons
-
-
-def remove_values_from_array(array, val):
-    return [value for value in array if value <= val]
 
 
 def determine_ownership(hexagons):
@@ -227,6 +231,7 @@ def generate_ownership(hexagons):
     for feature in hexagons.features:
         feature.properties["owned"] = False
         feature.properties["owner"] = None
+        feature.properties["ownership_change"] = False
     return hexagons
 
 """
