@@ -51,6 +51,10 @@ class GUI(QWidget):
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
         btn_exit.move(20, 260)
+        btn_update = QPushButton('Save', self)
+        btn_update.clicked.connect(self.on_save_button_clicked)
+        btn_update.resize(180, 40)
+        btn_update.move(280, 35)
         self.setWindowTitle('Virtual River interface')
         self.show()  # app.exec_()
 
@@ -113,8 +117,12 @@ class runScript():
         # Virtual River variables. THESE ARE ADJUSTABLE!
         self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4
         self.vert_scale = 0.25  # setting matches current z scaling, testing.
-        self.ini_loops = 8
-        self.update_loops = 4
+        # Mixtype vegetation class ratio in % for natural grass/reed/brushwood
+        # Currently not used, but can be passed to landuse_to_friction function
+        # of the updateRoughness module.
+        self.mixtype_ratio = [50, 20, 30]
+        self.ini_loops = 8  # number of model loops to run on initialization
+        self.update_loops = 4  # number of model loops to run on updates
         # Memory variables
         self.turn = 0
         self.token = ""

@@ -36,6 +36,12 @@ def test_mode_z_correction(hexagons):
     return hexagons
 
 
+def add_mixtype_ratio(hexagons, ratio):
+    for feature in hexagons.features:
+        feature.properties["mixtype_ratio"] = ratio
+    return hexagons
+
+
 def find_factory(hexagons):
     for feature in hexagons.features:
         if feature.properties["ghost_hexagon"]:

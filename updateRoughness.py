@@ -62,7 +62,8 @@ def update_Chezy_values(hexagons, filled_hexagons):
     return hexagons
 
 
-def landuse_to_friction(hexagons, vert_scale=1, printing=False, initialization=False):
+def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
+                        printing=False, initialization=False):
     """
     Function that turns the landuse into a trachytope.
     
@@ -153,9 +154,14 @@ def landuse_to_friction(hexagons, vert_scale=1, printing=False, initialization=F
             handler = "vegetation"
             name = "soft wood forest  "
         elif feature.properties["landuse"] == 6:
-            # mixtype
-            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
-            handler = "vegetation"
+            # mixtype --> follows 70/30 RWS mixtype class, check implementation
+            # with field expert.
+            # takes mixtype[0] percentage as natural grassland, mixtype[1]
+            # percentage as reed roughness and mixtype[2] as shrubs
+            vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # grass
+            vegpar2 = {"hv": 2, "n": 0.16, "Cd": 1.8, "kb": 0.1}  # grass
+            vegpar3 = {"hv": 6, "n": 0.13, "Cd": 1.5, "kb": 0.4}  # grass
+            handler = "mixtype"
             name = "vegetation mixtype"
         elif feature.properties["landuse"] == 7:
             # side channel
@@ -180,6 +186,16 @@ def landuse_to_friction(hexagons, vert_scale=1, printing=False, initialization=F
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
             feature.properties["Chezy"] = manning(h, n)
+        elif handler == "mixtype":
+            vegpar["hv"] = vegpar["hv"] * vert_scale
+            vegpar2["hv"] = vegpar2["hv"] * vert_scale
+            vegpar3["hv"] = vegpar3["hv"] * vert_scale
+            C1 = klopstra(h, vegpar)
+            C2 = klopstra(h, vegpar2)
+            C3 = klopstra(h, vegpar3)
+            avg_chezy = ((C1 * mixtype_ratio[0] + C2 * mixtype_ratio[1] +
+                          C3 * mixtype_ratio[2]) / 100)
+            feature.properties["Chezy"] = avg_chezy
         else:
             """
             This else statement should handle buildings --> perhaps need to
