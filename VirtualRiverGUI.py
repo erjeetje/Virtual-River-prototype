@@ -51,10 +51,14 @@ class GUI(QWidget):
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
         btn_exit.move(20, 260)
-        btn_update = QPushButton('Save', self)
-        btn_update.clicked.connect(self.on_save_button_clicked)
-        btn_update.resize(180, 40)
-        btn_update.move(280, 35)
+        btn_save = QPushButton('Save', self)
+        btn_save.clicked.connect(self.on_save_button_clicked)
+        btn_save.resize(180, 40)
+        btn_save.move(280, 35)
+        btn_reload = QPushButton('Reload', self)
+        btn_reload.clicked.connect(self.on_reload_button_clicked)
+        btn_reload.resize(180, 40)
+        btn_reload.move(280, 80)
         self.setWindowTitle('Virtual River interface')
         self.show()  # app.exec_()
 
@@ -75,6 +79,14 @@ class GUI(QWidget):
         alert.setText('Exiting Virtual River')
         alert.exec_()
         QCoreApplication.instance().quit()
+    
+    def on_save_button_clicked(self):
+        print("Calling save function")
+        self.script.save()
+        
+    def on_reload_button_clicked(self):
+        print("Calling save function")
+        self.script.reload()
 
 
 class runScript():
@@ -695,6 +707,10 @@ class runScript():
             print("Finished running the model after turn " + str(self.turn) +
                   ".")
         return
+    
+    def save(self):
+        return
+    
 
 def main():
     app = QApplication(sys.argv)
