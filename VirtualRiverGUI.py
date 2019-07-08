@@ -123,8 +123,8 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = True
-        self.model_save = True
+        self.save = False
+        self.model_save = False
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
         self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4

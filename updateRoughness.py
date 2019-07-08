@@ -205,11 +205,13 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
             # vegetation height scale test
             vegpar["hv"] = vegpar["hv"] * vert_scale
             feature.properties["Chezy"] = klopstra(h, vegpar)
+        """
         print("Chezy coefficient calculation for cell: " +
               str(feature.id) + ". landuse: " +
               str(feature.properties["landuse"]) + ". h: " +
               str(round(h,3)) + ". C: " +
               str(round(feature.properties["Chezy"], 3)))
+        """
         if printing:
             # the test_list is only added to print the Chezy calculations,
             # set to False by default.
