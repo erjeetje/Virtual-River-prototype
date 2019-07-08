@@ -54,7 +54,7 @@ class GUI(QWidget):
         btn_round = QPushButton('End round', self)
         btn_round.clicked.connect(self.on_end_round_button_clicked)
         btn_round.resize(180, 40)
-        btn_round.move(280, 170)
+        btn_round.move(280, 80)
         btn_save = QPushButton('Save', self)
         btn_save.clicked.connect(self.on_save_button_clicked)
         btn_save.resize(180, 40)
@@ -132,6 +132,7 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
+        self.save = True
         self.model_save = False
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
@@ -413,7 +414,7 @@ class runScript():
             return
         tic = time.time()
         print("Updating board state")
-        self.turn += 1
+        #self.turn += 1
         # get new image of board state from camera.
         if not self.test:
             img = webcam.get_image(self.turn, mirror=True)
@@ -660,6 +661,19 @@ class runScript():
     
     
     def end_round(self):
+        if not self.initialized:
+            print("Virtual River is not yet calibrated, please first run "
+                  "initialize")
+            return
+        print("Ending round " + str(self.turn) + ", applying all the changes. "
+              "Make sure to save the files for this turn!")
+        self.turn += 1
+        """
+        TODO: code to handle whatever needs to be handled, e.g. the indicators.
+        """
+        if self.save:
+            self.save_files()
+        return
     
     
     def save_files(self):
