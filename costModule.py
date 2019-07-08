@@ -375,6 +375,9 @@ class Costs():
                     ownership_change = "Nature"
                 #    if ownership_change is None:
                 #        ownership_change = "Nature"
+            elif hexagon_new.properties["landuse"] == 7:
+                # this elif statement is for redundancy in this specific case.
+                ownership_change = "Water"
             """
             # These could be added to add costs for construction/planting of
             # different land uses.

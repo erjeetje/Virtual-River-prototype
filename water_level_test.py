@@ -145,8 +145,8 @@ def main():
     with open(os.path.join(dir_path, 'face_grid.geojson'), 'w') as f:
         geojson.dump(face_grid, f, sort_keys=True, indent=2)
     """
-    """
-    #water_level0, x0 = water_levels2(turn=0)
+    
+    water_level0, x0 = water_levels2(turn=0)
     water_level1, x1 = water_levels2(turn=1)
     water_level2, x2 = water_levels2(turn=2)
     water_level3, x3 = water_levels2(turn=3)
@@ -154,22 +154,22 @@ def main():
     water_level5, x5 = water_levels2(turn=5)
     water_level6, x6 = water_levels2(turn=6)
     water_level7, x7 = water_levels2(turn=7)
-    #water_level8, x8 = water_levels2(turn=8)
-    #fig, ax = plot_water_levels(x0, water_level0, turn=0)
-    fig, ax = plot_water_levels(x1, water_level1, turn=1)
+    water_level8, x8 = water_levels2(turn=8)
+    fig, ax = plot_water_levels(x0, water_level0, turn=0)
+    fig, ax = plot_water_levels(x1, water_level1, turn=1, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x2, water_level2, turn=2, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x3, water_level3, turn=3, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x4, water_level4, turn=4, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x5, water_level5, turn=5, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x6, water_level6, turn=6, fig=fig, ax=ax)
     fig, ax = plot_water_levels(x7, water_level7, turn=7, fig=fig, ax=ax)
-    #fig, ax = plot_water_levels(x8, water_level8, turn=8, fig=fig, ax=ax)
+    fig, ax = plot_water_levels(x8, water_level8, turn=8, fig=fig, ax=ax)
     """
     water_level1, x1 = water_levels2(turn=1)
     dike_level1, x2 = dike_levels(turn=1)
     fig, ax = plot_water_levels(x1, water_level1, turn=1)
     fig, ax = plot_water_levels(x2, dike_level1, turn=10, fig=fig, ax=ax)
-    
+    """
     return
 
 

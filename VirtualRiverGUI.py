@@ -124,7 +124,7 @@ class runScript():
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
         self.save = False
-        self.model_save = False
+        self.model_save = True
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
         self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4
@@ -133,7 +133,7 @@ class runScript():
         # Currently not used, but can be passed to landuse_to_friction function
         # of the updateRoughness module.
         self.mixtype_ratio = [50, 20, 30]
-        self.ini_loops = 8  # number of model loops to run on initialization
+        self.ini_loops = 10  # number of model loops to run on initialization
         self.update_loops = 4  # number of model loops to run on updates
         # Memory variables
         self.turn = 0
@@ -215,7 +215,6 @@ class runScript():
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, method='LAB', path=self.store_path)
             self.hexagons = ghosts.set_values(self.hexagons)
-            self.hexagons = adjust.find_factory(self.hexagons)
             print("Processed initial board state.")
         else:
             self.transforms = cali.create_calibration_file(
@@ -228,9 +227,6 @@ class runScript():
             if self.tygron:
                 self.hexagons = tygron.update_hexagons_tygron_id(self.token,
                                                                  self.hexagons)
-            self.hexagons = owner.determine_neighbours(self.hexagons)
-            self.hexagons = owner.generate_ownership(self.hexagons)
-            self.hexagons = owner.determine_ownership(self.hexagons)
             self.hexagons_sandbox = detect.transform(
                     self.hexagons, self.transforms, export="sandbox",
                     path=self.dir_path)
@@ -247,7 +243,6 @@ class runScript():
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
             self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
-            self.hexagons_sandbox = adjust.find_factory(self.hexagons_sandbox)
             self.hexagons_sandbox = owner.determine_neighbours(
                     self.hexagons_sandbox)
             self.hexagons_sandbox = adjust.test_mode_z_correction(
@@ -264,6 +259,14 @@ class runScript():
         self.hexagons_sandbox = structures.determine_channel(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = structures.determine_floodplains_and_behind_dikes(
+                self.hexagons_sandbox)
+        self.hexagons_sandbox = owner.determine_neighbours(
+                self.hexagons_sandbox)
+        self.hexagons_sandbox = owner.generate_ownership(
+                self.hexagons_sandbox)
+        self.hexagons_sandbox = owner.determine_ownership(
+                self.hexagons_sandbox)
+        self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
         #channel = structures.get_channel(self.hexagons_sandbox)
         #weirs = structures.create_structures(channel)
