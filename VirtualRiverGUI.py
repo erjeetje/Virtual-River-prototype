@@ -703,15 +703,217 @@ class runScript():
     
     
     def reload(self):
-        if self.initialized:
-            print("Virtual River is calibrated and initialized, cannot start "
-                  "reload from here. If you intended to start the reload, "
-                  "please restart Virtual River and try again.")
+        if not self.reload_enabled:
+            print("Are you sure you want to iniate a reload? If you intended "
+                  "to press reload, press reload again to engage the reload.")
+            self.reload_enabled = True
             return
-        self.reload_enabled = True
-        print("Reloading...")
-        # TODO
-        return
+        tic = time.time()
+        if not self.initialized:
+            print("Reloading initial board state...")
+            with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
+                username = f.read()
+            with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
+                password = g.read()
+            api_key = tygron.join_session(username, password)
+            if api_key is None:
+                print("logging in to Tygron failed, running Virtual River without "
+                      "Tygron")
+                self.tygron = False
+            else:
+                self.token = "token=" + api_key
+                print("logged in to Tygron")
+            # get image from camera
+            img = webcam.get_image(self.turn, mirror=True)
+            print("Trying to get an initial board image")
+            # calibrate camera
+            # try - except TypeError --> if nothing returned by method, then go to
+            # test mode.
+            try:
+                canvas, thresh = cali.detect_corners(img, method='adaptive',
+                                                     path=self.processing_path)
+            except TypeError:
+                self.test = True
+                print("TEST MODE: No camera detected, loading stored "
+                      "configuration file")
+            # adjust image, get the hexagons and store calibration values as global
+            # variables.
+            if not self.test:
+                self.pers, self.img_x, self.img_y, self.origins, self.radius, \
+                    cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
+                print("Calibrated camera.")
+                # create the calibration file for use by other methods and store it
+                # change dir_path to config_path
+                self.transforms = cali.create_calibration_file(
+                        self.img_x, self.img_y, cut_points, path=self.config_path)
+            else:
+                self.transforms = cali.create_calibration_file(
+                    path=self.config_path, test = self.test)
+            self.hexagons_sandbox = gridmap.read_hexagons(
+                        filename='hexagons%d.geojson' % self.turn,
+                        path=self.store_path)
+            self.node_grid = gridmap.read_hexagons(
+                        filename='node_grid%d.geojson' % self.turn,
+                        path=self.store_path)
+            self.filled_node_grid = gridmap.read_hexagons(
+                        filename='filled_node_grid%d.geojson' % self.turn,
+                        path=self.store_path)
+            self.flow_grid = gridmap.read_hexagons(
+                        filename='flow_grid%d.geojson' % self.turn,
+                        path=self.store_path)
+            if self.tygron:
+                self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
+                        self.token, self.hexagons_sandbox)
+                self.hexagons_tygron = detect.transform(
+                        self.hexagons_sandbox, self.transforms,
+                        export="sandbox2tygron")
+            print("Reloaded and transformed geojson featurecollections.")
+            # initialize Delft3D-FM model
+            tac = time.time()
+            self.model = D3D.initialize_model()
+            if self.tygron:
+                # a geotiff of the node grid is required to set the elevation in
+                # tygron.
+                t0 = time.time()
+                self.heightmap = gridmap.create_geotiff(
+                    self.node_grid, turn=self.turn, path=self.store_path)
+                print("Created geotiff elevation map")
+                self.hexagons_tygron = tygron.set_terrain_type(
+                        self.token, self.hexagons_tygron)
+                tygron.hex_to_terrain(self.token, self.hexagons_tygron)
+                file_location = (self.store_path + "\\grid_height_map" +
+                                 str(self.turn) + ".tif")
+                heightmap_id = tygron.set_elevation(
+                        file_location, self.token, turn=self.turn)
+                t1 = time.time()
+                print("Updated Tygron world from current board state.")
+            """
+            # run the model. --> this is currently separate from the initialization
+            # as the whole system becomes rather slow. Added a temporary run model
+            # button to the Virtual River GUI to run the model instead.
+            self.fig, self.axes = D3D.run_model(
+                    self.model, self.filled_node_grid, self.flow_grid,
+                    self.hexagons_sandbox, initialized=self.initialized)
+            """
+            """
+            # Not sure it makes sense to store the structures ?
+            with open(os.path.join(self.store_path,
+                                   'structures.geojson'), 'w') as f:
+                geojson.dump(weirs, f, sort_keys=True,
+                             indent=2)
+            print("Saved structures file (conditional).")
+            """
+            toc = time.time()
+            try:
+                print("Finished startup and calibration" +
+                      ". Calibration and loading time: " +
+                      str(round(tac-tic, 2)) +
+                      " seconds. Tygron terrain update time: " +
+                      str(round(t1-t0, 2)) +
+                      " seconds. Total initialization time: " +
+                      str(round(toc-tic, 2)) + " seconds.")
+            except UnboundLocalError:
+                print("Finished startup and calibration" +
+                      ". Calibration and loading time: " +
+                      str(round(tac-tic, 2)) +
+                      " seconds. Total initialization time: " +
+                      str(round(toc-tic, 2)) + " seconds.")
+            # system is now initialized
+            self.initialized = True
+            return
+        else:
+            tic = time.time()
+            hexagons_sandbox_old = deepcopy(self.hexagons_sandbox)
+            try:
+                print("Getting board state of " + str(self.turn) +
+                      " from storing folder.")
+                self.hexagons_sandbox = gridmap.read_hexagons(
+                        filename='hexagons%d.geojson' % self.turn,
+                        path=self.store_path)
+                self.node_grid = gridmap.read_hexagons(
+                        filename='node_grid%d.geojson' % self.turn,
+                        path=self.store_path)
+                self.filled_node_grid = gridmap.read_hexagons(
+                        filename='filled_node_grid%d.geojson' % self.turn,
+                        path=self.store_path)
+                self.flow_grid = gridmap.read_hexagons(
+                        filename='flow_grid%d.geojson' % self.turn,
+                        path=self.store_path)
+                print("Reloaded board state of turn " + str(self.turn) + " .")
+            except FileNotFoundError:
+                print("ERROR: You have reloaded to the last stored file. "
+                      "Please continue to play through update.")
+                return
+            # THIS SHOULD BE MOVED TO INITIALIZE AFTER MODEL IS FIXED TO INITIALIZATION
+            if not self.ghost_hexagons_fixed:
+                self.hexagons_sandbox = ghosts.update_values(
+                        self.hexagons_sandbox)
+                self.ghost_hexagons_fixed = True
+                print("Fixed the ghost cell values")
+            if self.tygron:
+                # update hexagon ids to matching ids in tygron.
+                self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
+                        self.token, self.hexagons_sandbox)
+            self.hexagons_sandbox, turn_costs, dike_moved = compare.compare_hex(
+                    self.cost_module, hexagons_sandbox_old,
+                    self.hexagons_sandbox)
+            self.costs = self.costs + turn_costs
+            # update the Chezy coefficients of all hexagons.
+            tac = time.time()
+            if self.tygron:
+                # transform the hexagons to the sandbox coordinates --> check if this
+                # is necessary, as the main hexagons are already updated, they should
+                # be linked in memory to the sandbox hexagons.
+                t0 = time.time()
+                self.hexagons_tygron = detect.transform(
+                        self.hexagons_sandbox, self.transforms,
+                        export="sandbox2tygron")
+                # get the hexagons that should be changed to water or land in
+                # tygron.
+                #hexagons_to_water, hexagons_to_land = compare.terrain_updates(
+                #        self.hexagons_tygron)
+                # update tygron terrain
+                tygron.set_terrain_type(
+                        self.token, self.hexagons_tygron)
+                tygron.hex_to_terrain(self.token, self.hexagons_tygron)
+                t1 = time.time()
+
+            toc = time.time()
+            if self.tygron:
+                # create a new geotiff and set the new elevation in tygron.
+                t2 = time.time()
+                self.heightmap = gridmap.create_geotiff(
+                        self.node_grid, turn=self.turn, path=self.store_path)
+                file_location = (self.store_path + "\\grid_height_map" +
+                                 str(self.turn) + ".tif")
+                heightmap_id = tygron.set_elevation(
+                        file_location, self.token, turn=0)
+                print("Updated Tygron heightmap.")
+                t3 = time.time()
+            """
+            # run the model. --> this is currently separate from the initialization
+            # as the whole system becomes rather slow. Added a temporary run model
+            # button to the Virtual River GUI to run the model instead.
+            self.fig, self.axes = D3D.run_model(
+                        self.model, self.filled_node_grid, self.flow_grid,
+                        self.hexagons_sandbox, initialized=self.initialized,
+                        fig=self.fig, axes=self.axes)
+            """
+            print("Turn costs: " + str(turn_costs) + ". Total costs: " +
+                  str(self.costs))
+            try:
+                print("Updated to turn " + str(self.turn) +
+                  ". Comparison update time: " + str(round(tac-tic, 2)) +
+                  " seconds. Tygron update time: " +
+                  str(round((t1-t0)+(t3-t2), 2)) +
+                  " seconds. Total update time: " + str(round(t3-tic, 2)) +
+                  " seconds.")
+            except UnboundLocalError:
+                print("Updated to turn " + str(self.turn) +
+                  ". Comparison update time: " + str(round(tac-tic, 2)) +
+                  " seconds. Total update time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+            return
     
 
 def main():
