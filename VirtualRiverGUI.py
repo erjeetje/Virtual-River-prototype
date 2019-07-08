@@ -51,14 +51,18 @@ class GUI(QWidget):
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
         btn_exit.move(20, 260)
+        btn_round = QPushButton('End round', self)
+        btn_round.clicked.connect(self.on_end_round_button_clicked)
+        btn_round.resize(180, 40)
+        btn_round.move(280, 170)
         btn_save = QPushButton('Save', self)
         btn_save.clicked.connect(self.on_save_button_clicked)
         btn_save.resize(180, 40)
-        btn_save.move(280, 35)
+        btn_save.move(280, 170)
         btn_reload = QPushButton('Reload', self)
         btn_reload.clicked.connect(self.on_reload_button_clicked)
         btn_reload.resize(180, 40)
-        btn_reload.move(280, 80)
+        btn_reload.move(280, 260)
         self.setWindowTitle('Virtual River interface')
         self.show()  # app.exec_()
 
@@ -80,6 +84,10 @@ class GUI(QWidget):
         alert.exec_()
         QCoreApplication.instance().quit()
     
+    def on_end_round_button_clicked(self):
+        print("Calling end round function")
+        self.script.end_round()
+        
     def on_save_button_clicked(self):
         print("Calling save function")
         self.script.save_files()
@@ -124,7 +132,6 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = False
         self.model_save = False
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
@@ -365,49 +372,14 @@ class runScript():
                 self.model, self.filled_node_grid, self.flow_grid,
                 self.hexagons_sandbox, initialized=self.initialized)
         """
-
-        if self.save:
-            # if save is set to True, store the files related to the
-            # initialization.
-            with open(os.path.join(self.store_path,
-                                   'hexagons%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
-                             indent=2)
-            # Could change this to a try/except UnboundLocalError
-            if (self.tygron and not self.test):
-                with open(os.path.join(
-                        self.store_path,
-                        'hexagons_tygron_initialization.geojson'), 'w') as f:
-                    geojson.dump(hexagons_tygron_int, f, sort_keys=True,
-                                 indent=2)
-            print("Saved hexagon files (conditional).")
-            with open(os.path.join(self.store_path,
-                                   'node_grid%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(self.node_grid, f, sort_keys=True,
-                             indent=2)
-            with open(os.path.join(self.store_path,
-                                   'filled_node_grid%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(self.filled_node_grid, f, sort_keys=True,
-                             indent=2)
-            with open(os.path.join(self.store_path,
-                                   'flow_grid%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(self.flow_grid, f, sort_keys=True,
-                             indent=2)
-            print("Saved interpolation files (conditional).")
-            """
-            Not sure it makes sense to store the structures ?
-            """
-            """
-            with open(os.path.join(self.store_path,
-                                   'structures.geojson'), 'w') as f:
-                geojson.dump(weirs, f, sort_keys=True,
-                             indent=2)
-            print("Saved structures file (conditional).")
-            """
+        """
+        # Not sure it makes sense to store the structures ?
+        with open(os.path.join(self.store_path,
+                               'structures.geojson'), 'w') as f:
+            geojson.dump(weirs, f, sort_keys=True,
+                         indent=2)
+        print("Saved structures file (conditional).")
+        """
         toc = time.time()
         try:
             print("Finished startup and calibration" +
@@ -594,32 +566,6 @@ class runScript():
                     self.hexagons_sandbox, initialized=self.initialized,
                     fig=self.fig, axes=self.axes)
         """
-        if self.save:
-            self.hexagons_sandbox = D3D.update_waterlevel(self.model,
-                                                      self.hexagons_sandbox)
-            # if save is set to True, store the files related to this turn.
-            with open(os.path.join(self.store_path,
-                                   'hexagons%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(
-                        self.hexagons_sandbox, f, sort_keys=True, indent=2)
-            print("saved hexagon file for turn " + str(self.turn) +
-                  " (conditional)")
-            with open(os.path.join(self.store_path,
-                                   'node_grid%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
-            with open(os.path.join(self.store_path, 'filled_node_grid%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(
-                        self.filled_node_grid, f, sort_keys=True, indent=2)
-            with open(os.path.join(self.store_path,
-                                   'flow_grid%d.geojson' % self.turn),
-                      'w') as f:
-                geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
-            print("saved grid files for turn " + str(self.turn) +
-                  " (conditional)")
-
         print("Turn costs: " + str(turn_costs) + ". Total costs: " +
               str(self.costs))
         try:
@@ -711,6 +657,10 @@ class runScript():
             print("Finished running the model after turn " + str(self.turn) +
                   ".")
         return
+    
+    
+    def end_round(self):
+    
     
     def save_files(self):
         if not self.initialized:
