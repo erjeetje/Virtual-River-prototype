@@ -82,10 +82,10 @@ class GUI(QWidget):
     
     def on_save_button_clicked(self):
         print("Calling save function")
-        self.script.save()
+        self.script.save_files()
         
     def on_reload_button_clicked(self):
-        print("Calling save function")
+        print("Calling reload function")
         self.script.reload()
 
 
@@ -119,12 +119,13 @@ class runScript():
         # update in the initialization depending on whether or not a camera
         # is detected and a tygron session is found.
         self.initialized = False
+        self.reload_enabled = False
         self.test = False
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
         self.save = False
-        self.model_save = True
+        self.model_save = False
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
         self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4
@@ -711,7 +712,41 @@ class runScript():
                   ".")
         return
     
-    def save(self):
+    def save_files(self):
+        if not self.initialized:
+            print("Virtual River is not yet calibrated, please first run "
+                  "initialize")
+            return
+        with open(os.path.join(self.store_path,
+                               'hexagons%d.geojson' % self.turn), 'w') as f:
+            geojson.dump(self.hexagons_sandbox, f, sort_keys=True, indent=2)
+        # Could change this to a try/except UnboundLocalError
+        print("Saved hexagon file for turn " + str(self.turn) + ".")
+        with open(os.path.join(self.store_path,
+                               'node_grid%d.geojson' % self.turn), 'w') as f:
+            geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
+        print("Saved node grid for turn " + str(self.turn) + ".")
+        with open(os.path.join(self.store_path,
+                               'filled_node_grid%d.geojson' % self.turn),
+                  'w') as f:
+            geojson.dump(self.filled_node_grid, f, sort_keys=True, indent=2)
+        print("Saved filled node grid for turn " + str(self.turn) + ".")
+        with open(os.path.join(self.store_path,
+                               'flow_grid%d.geojson' % self.turn), 'w') as f:
+            geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
+        print("Saved flow grid for turn " + str(self.turn) + ".")
+        return
+    
+    
+    def reload(self):
+        if self.initialized:
+            print("Virtual River is calibrated and initialized, cannot start "
+                  "reload from here. If you intended to start the reload, "
+                  "please restart Virtual River and try again.")
+            return
+        self.reload_enabled = True
+        print("Reloading...")
+        # TODO
         return
     
 
