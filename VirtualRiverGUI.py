@@ -132,7 +132,7 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = True
+        self.save = False
         self.model_save = False
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
@@ -151,6 +151,7 @@ class runScript():
         self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
+        self.hexagons_prev = None
         self.transforms = None
         self.node_grid = None
         self.filled_node_grid = None
@@ -171,7 +172,10 @@ class runScript():
         self.water_module = water.Water_module()
         # cost module
         self.cost_module = costs.Costs()
-        self.costs = 0
+        # total costs made up until the end of the rounds ended
+        self.total_costs = 0
+        # turn costs of the current round
+        self.turn_costs = 0
         # BIOSAFE module
         # TODO
         # visualization
@@ -421,7 +425,7 @@ class runScript():
             print("Retrieved board image after turn " + str(self.turn) + ".")
             # create a deepcopy of the previous board state to compare with the new
             # board state.
-            hexagons_old = deepcopy(self.hexagons)
+            #self.hexagons_prev = deepcopy(self.hexagons)
             self.hexagons = detect.detect_markers(
                     img, self.pers, self.img_x, self.img_y, self.origins,
                     self.radius, self.hexagons, turn=self.turn, method='LAB',
@@ -435,9 +439,9 @@ class runScript():
             # compare the new board state to the old board state. Sets 'z_changed'
             # and 'landuse_changed' to True or False accordingly. Also tracks if
             # either or both of the dike locations changed.
-            self.hexagons, turn_costs, dike_moved = compare.compare_hex(
-                    self.cost_module, hexagons_old, self.hexagons)
-            self.costs = self.costs + turn_costs
+            self.hexagons, self.turn_costs, dike_moved = compare.compare_hex(
+                    self.cost_module, self.hexagons_prev, self.hexagons)
+            #self.total_costs = self.total_costs + turn_costs
             # transform the hexagons to the sandbox coordinates --> check if this
             # is necessary, as the main hexagons are already updated, they should
             # be linked in memory to the sandbox hexagons.
@@ -450,7 +454,7 @@ class runScript():
                 self.ghost_hexagons_fixed = True
                 print("Fixed the ghost cell values")
         else:
-            hexagons_sandbox_old = deepcopy(self.hexagons_sandbox)
+            #self.hexagons_prev = deepcopy(self.hexagons_sandbox)
             try:
                 print("TEST MODE: Getting new board state from test folder.")
                 self.hexagons_sandbox = gridmap.read_hexagons(
@@ -475,10 +479,10 @@ class runScript():
                 # update hexagon ids to matching ids in tygron.
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
-            self.hexagons_sandbox, turn_costs, dike_moved = compare.compare_hex(
-                    self.cost_module, hexagons_sandbox_old,
+            self.hexagons_sandbox, self.turn_costs, dike_moved = compare.compare_hex(
+                    self.cost_module, self.hexagons_prev,
                     self.hexagons_sandbox)
-            self.costs = self.costs + turn_costs
+            #self.total_costs = self.total_costs + turn_costs
         # update the Chezy coefficients of all hexagons.
         self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                       self.hexagons_sandbox)
@@ -567,8 +571,8 @@ class runScript():
                     self.hexagons_sandbox, initialized=self.initialized,
                     fig=self.fig, axes=self.axes)
         """
-        print("Turn costs: " + str(turn_costs) + ". Total costs: " +
-              str(self.costs))
+        print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
+              str(self.total_costs + self.turn_costs))
         try:
             print("Updated to turn " + str(self.turn) +
               ". Comparison update time: " + str(round(tac-tic, 2)) +
@@ -671,6 +675,8 @@ class runScript():
         """
         TODO: code to handle whatever needs to be handled, e.g. the indicators.
         """
+        self.update_costs()
+        self.hexagons_prev = deepcopy(self.hexagons_sandbox)
         if self.save:
             self.save_files()
         return
@@ -823,7 +829,7 @@ class runScript():
             return
         else:
             tic = time.time()
-            hexagons_sandbox_old = deepcopy(self.hexagons_sandbox)
+            #hexagons_sandbox_old = deepcopy(self.hexagons_sandbox)
             try:
                 print("Getting board state of " + str(self.turn) +
                       " from storing folder.")
@@ -854,10 +860,10 @@ class runScript():
                 # update hexagon ids to matching ids in tygron.
                 self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                         self.token, self.hexagons_sandbox)
-            self.hexagons_sandbox, turn_costs, dike_moved = compare.compare_hex(
-                    self.cost_module, hexagons_sandbox_old,
+            self.hexagons_sandbox, self.turn_costs, dike_moved = compare.compare_hex(
+                    self.cost_module, self.hexagons_prev,
                     self.hexagons_sandbox)
-            self.costs = self.costs + turn_costs
+            #self.total_costs = self.total_costs + turn_costs
             # update the Chezy coefficients of all hexagons.
             tac = time.time()
             if self.tygron:
@@ -899,8 +905,8 @@ class runScript():
                         self.hexagons_sandbox, initialized=self.initialized,
                         fig=self.fig, axes=self.axes)
             """
-            print("Turn costs: " + str(turn_costs) + ". Total costs: " +
-                  str(self.costs))
+            print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
+                  str(self.total_costs + self.turn_costs))
             try:
                 print("Updated to turn " + str(self.turn) +
                   ". Comparison update time: " + str(round(tac-tic, 2)) +
@@ -914,6 +920,11 @@ class runScript():
                   " seconds. Total update time: " +
                   str(round(toc-tic, 2)) + " seconds.")
             return
+    
+    def update_costs(self):
+        self.total_costs = self.total_costs + self.turn_costs
+        self.turn_costs = 0
+        return
     
 
 def main():
