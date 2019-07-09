@@ -98,6 +98,9 @@ class GUI(QWidget):
 
 
 class runScript():
+    """
+    
+    """
     def __init__(self):
         super(runScript, self).__init__()
         # Defines and creates all the path locations used troughout the script.
@@ -128,6 +131,7 @@ class runScript():
         # is detected and a tygron session is found.
         self.initialized = False
         self.reload_enabled = False
+        self.start_new_turn = False
         self.test = False
         self.tygron = True
         self.ghost_hexagons_fixed = False
@@ -154,7 +158,9 @@ class runScript():
         self.hexagons_prev = None
         self.transforms = None
         self.node_grid = None
+        self.node_grid_prev = None
         self.filled_node_grid = None
+        self.filled_node_grid_prev = None
         self.flow_grid = None
         self.face_grid = None
         self.heightmap = None
@@ -416,6 +422,10 @@ class runScript():
             print("ERROR: Virtual River is not yet calibrated, "
                   "please first run initialize")
             return
+        if not self.start_new_turn:
+            self.node_grid = deepcopy(self.node_grid_prev)
+            self.filled_node_grid = deepcopy(self.filled_node_grid)
+            self.flow_grid = deepcopy(self.flow_grid)
         tic = time.time()
         print("Updating board state")
         #self.turn += 1
@@ -587,6 +597,7 @@ class runScript():
               " seconds. Interpolation update time: " +
               str(round(toc-tec, 2)) + " seconds. Total update time: " +
               str(round(toc-tic, 2)) + " seconds.")
+        self.start_new_turn = False
         return
     
     def run_model(self):
@@ -661,50 +672,6 @@ class runScript():
         else:
             print("Finished running the model after turn " + str(self.turn) +
                   ".")
-        return
-    
-    
-    def end_round(self):
-        if not self.initialized:
-            print("Virtual River is not yet calibrated, please first run "
-                  "initialize")
-            return
-        print("Ending round " + str(self.turn) + ", applying all the changes. "
-              "Make sure to save the files for this turn!")
-        self.turn += 1
-        """
-        TODO: code to handle whatever needs to be handled, e.g. the indicators.
-        """
-        self.update_costs()
-        self.hexagons_prev = deepcopy(self.hexagons_sandbox)
-        if self.save:
-            self.save_files()
-        return
-    
-    
-    def save_files(self):
-        if not self.initialized:
-            print("Virtual River is not yet calibrated, please first run "
-                  "initialize")
-            return
-        with open(os.path.join(self.store_path,
-                               'hexagons%d.geojson' % self.turn), 'w') as f:
-            geojson.dump(self.hexagons_sandbox, f, sort_keys=True, indent=2)
-        # Could change this to a try/except UnboundLocalError
-        print("Saved hexagon file for turn " + str(self.turn) + ".")
-        with open(os.path.join(self.store_path,
-                               'node_grid%d.geojson' % self.turn), 'w') as f:
-            geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
-        print("Saved node grid for turn " + str(self.turn) + ".")
-        with open(os.path.join(self.store_path,
-                               'filled_node_grid%d.geojson' % self.turn),
-                  'w') as f:
-            geojson.dump(self.filled_node_grid, f, sort_keys=True, indent=2)
-        print("Saved filled node grid for turn " + str(self.turn) + ".")
-        with open(os.path.join(self.store_path,
-                               'flow_grid%d.geojson' % self.turn), 'w') as f:
-            geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
-        print("Saved flow grid for turn " + str(self.turn) + ".")
         return
     
     
@@ -920,12 +887,60 @@ class runScript():
                   " seconds. Total update time: " +
                   str(round(toc-tic, 2)) + " seconds.")
             return
-    
+
+    def end_round(self):
+        if not self.initialized:
+            print("Virtual River is not yet calibrated, please first run "
+                  "initialize")
+            return
+        print("Ending round " + str(self.turn) + ", applying all the changes. "
+              "Make sure to save the files for this turn!")
+        """
+        TODO: code to handle whatever needs to be handled, e.g. the indicators.
+        """
+        self.update_costs()
+        self.store_previous_turn()
+        self.start_new_turn = True
+        self.turn += 1
+        if self.save:
+            self.save_files()
+        return
+
+    def save_files(self):
+        if not self.initialized:
+            print("Virtual River is not yet calibrated, please first run "
+                  "initialize")
+            return
+        with open(os.path.join(self.store_path,
+                               'hexagons%d.geojson' % self.turn), 'w') as f:
+            geojson.dump(self.hexagons_sandbox, f, sort_keys=True, indent=2)
+        # Could change this to a try/except UnboundLocalError
+        print("Saved hexagon file for turn " + str(self.turn) + ".")
+        with open(os.path.join(self.store_path,
+                               'node_grid%d.geojson' % self.turn), 'w') as f:
+            geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
+        print("Saved node grid for turn " + str(self.turn) + ".")
+        with open(os.path.join(self.store_path,
+                               'filled_node_grid%d.geojson' % self.turn),
+                  'w') as f:
+            geojson.dump(self.filled_node_grid, f, sort_keys=True, indent=2)
+        print("Saved filled node grid for turn " + str(self.turn) + ".")
+        with open(os.path.join(self.store_path,
+                               'flow_grid%d.geojson' % self.turn), 'w') as f:
+            geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
+        print("Saved flow grid for turn " + str(self.turn) + ".")
+        return
+
     def update_costs(self):
         self.total_costs = self.total_costs + self.turn_costs
         self.turn_costs = 0
         return
-    
+
+    def store_previous_turn(self):
+        self.hexagons_prev = deepcopy(self.hexagons_sandbox)
+        self.node_grid_prev = deepcopy(self.node_grid)
+        self.filled_node_grid_prev = deepcopy(self.filled_node_grid)
+        return
 
 def main():
     app = QApplication(sys.argv)
