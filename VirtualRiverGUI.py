@@ -160,7 +160,7 @@ class runScript():
         # Memory variables
         self.turn = 0
         self.token = ""
-        self.model = None
+        self.model = D3D.Model()
         self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
@@ -326,13 +326,13 @@ class runScript():
         print("Prepared and transformed geojson featurecollections.")
         # initialize Delft3D-FM model
         tac = time.time()
-        self.model = D3D.initialize_model()
+        #self.model = D3D.initialize_model()
         # get node grid (cell corner coordinates) and face grid (cell
         # center coordinates)
         self.node_grid = gridmap.read_node_grid(path=self.store_path)
-        self.flow_grid = gridmap.create_flow_grid(self.model,
+        self.flow_grid = gridmap.create_flow_grid(self.model.model,
                                                   path=self.store_path)
-        self.face_grid = gridmap.read_face_grid(self.model,
+        self.face_grid = gridmap.read_face_grid(self.model.model,
                                                 path=self.store_path)
         print("Loaded grids (cell corners and cell centers).")
         # index both grids to the hexagons.
@@ -348,13 +348,12 @@ class runScript():
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
-        self.hexagons_sandbox = D3D.update_waterlevel(self.model,
-                                                      self.hexagons_sandbox)
+        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
                 self.hexagons_sandbox, vert_scale=self.vert_scale,
                 initialization=True)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                self.model, self.hexagons_sandbox, self.flow_grid)
+                self.model.model, self.hexagons_sandbox, self.flow_grid)
         print("Executed grid interpolation.")
         # create a deepcopy of the node grid and fill the grid behind the
         # dikes. The filled node grid is for the hydrodynamic model.
@@ -503,12 +502,11 @@ class runScript():
                     self.hexagons_sandbox)
             #self.total_costs = self.total_costs + turn_costs
         # update the Chezy coefficients of all hexagons.
-        self.hexagons_sandbox = D3D.update_waterlevel(self.model,
-                                                      self.hexagons_sandbox)
+        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
                 self.hexagons_sandbox, vert_scale=self.vert_scale)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                self.model, self.hexagons_sandbox, self.flow_grid)
+                self.model.model, self.hexagons_sandbox, self.flow_grid)
 
         tac = time.time()
         if self.tygron:
@@ -623,20 +621,26 @@ class runScript():
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time. Running "+ str(self.ini_loops) +
                   " eight loops to stabilize.")
-            for i in range(0, self.ini_loops):
+            #for i in range(0, self.ini_loops):
+            for i in range(0, 1):
                 if i == 0:
                     grid = self.filled_node_grid
                 else:
                     grid = temp_grid
-                self.fig, self.axes = D3D.run_model(
-                        self.model, grid, turn=self.turn, fig=self.fig,
-                        axes=self.axes)
-                self.hexagons_sandbox = D3D.update_waterlevel(self.model,
-                                                          self.hexagons_sandbox)
+                self.hexagons_sandbox, self.flow_grid = self.model.run_model(
+                        grid, self.hexagons_sandbox, self.flow_grid,
+                        self.vert_scale, turn=self.turn)
+                """
+                self.model.run_model(grid, self.hexagons_sandbox,
+                                     self.flow_grid, self.vert_scale,
+                                     turn=self.turn)
+                self.hexagons_sandbox = self.model.update_waterlevel(
+                        self.hexagons_sandbox)
                 self.hexagons_sandbox = roughness.landuse_to_friction(
                     self.hexagons_sandbox, vert_scale=self.vert_scale)
                 self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                    self.model, self.hexagons_sandbox, self.flow_grid)
+                    self.model.model, self.hexagons_sandbox, self.flow_grid)
+                """
                 print("Executed model initiation loop " + str(i) + ", updating roughness.")
                 if self.model_ini_save:
                     with open(os.path.join(self.store_path,
@@ -652,20 +656,15 @@ class runScript():
         else:
             print("Running model after turn update, running " +
                   str(self.update_loops) + " loops.")
-            for i in range(0, self.update_loops):
+            #for i in range(0, self.update_loops):
+            for i in range(0, 1):
                 if i == 0:
                     grid = self.filled_node_grid
                 else:
                     grid = temp_grid
-                self.fig, self.axes = D3D.run_model(
-                        self.model, grid, turn=self.turn, fig=self.fig,
-                        axes=self.axes)
-                self.hexagons_sandbox = D3D.update_waterlevel(self.model,
-                                                          self.hexagons_sandbox)
-                self.hexagons_sandbox = roughness.landuse_to_friction(
-                    self.hexagons_sandbox, vert_scale=self.vert_scale)
-                self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                    self.model, self.hexagons_sandbox, self.flow_grid)
+                self.hexagons_sandbox, self.flow_grid = self.model.run_model(
+                        grid, self.hexagons_sandbox, self.flow_grid,
+                        self.vert_scale, turn=self.turn)
                 print("Executed model update loop " + str(i) + ", updating roughness.")
         if self.model_save:
             with open(os.path.join(self.store_path,
@@ -754,7 +753,7 @@ class runScript():
             print("Reloaded and transformed geojson featurecollections.")
             # initialize Delft3D-FM model
             tac = time.time()
-            self.model = D3D.initialize_model()
+            #self.model = D3D.initialize_model()
             if self.tygron:
                 # a geotiff of the node grid is required to set the elevation in
                 # tygron.
@@ -965,6 +964,10 @@ class runScript():
         return
     
     def scores(self):
+        if not self.initialized:
+            print("Virtual River is not yet initialized, there are no scores "
+                  "to show, please first run initialize")
+            return
         self.indicators.add_indicator_values(50, 50, 100, self.turn)
         self.indicators.update_water_and_dike_levels(self.hexagons_sandbox)
         self.indicators.update_flood_safety([600, 400, 800])
