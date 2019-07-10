@@ -422,10 +422,10 @@ class runScript():
             print("ERROR: Virtual River is not yet calibrated, "
                   "please first run initialize")
             return
-        if not self.start_new_turn:
-            self.node_grid = deepcopy(self.node_grid_prev)
-            self.filled_node_grid = deepcopy(self.filled_node_grid)
-            self.flow_grid = deepcopy(self.flow_grid)
+        if (self.initialized and self.turn == 0):
+            print("ERROR: It seems Virtual River is initialized, but that end "
+                  "end round has not yet been triggered.")
+            return
         tic = time.time()
         print("Updating board state")
         #self.turn += 1
@@ -863,6 +863,7 @@ class runScript():
                         file_location, self.token, turn=0)
                 print("Updated Tygron heightmap.")
                 t3 = time.time()
+            self.start_new_turn = False
             """
             # run the model. --> this is currently separate from the initialization
             # as the whole system becomes rather slow. Added a temporary run model
@@ -892,6 +893,10 @@ class runScript():
         if not self.initialized:
             print("Virtual River is not yet calibrated, please first run "
                   "initialize")
+            return
+        if self.start_new_turn:
+            print("It appears as if you have pressed end_round twice, there"
+                  "has been no update from the previous board state so far.")
             return
         print("Ending round " + str(self.turn) + ", applying all the changes. "
               "Make sure to save the files for this turn!")
@@ -938,8 +943,8 @@ class runScript():
 
     def store_previous_turn(self):
         self.hexagons_prev = deepcopy(self.hexagons_sandbox)
-        self.node_grid_prev = deepcopy(self.node_grid)
-        self.filled_node_grid_prev = deepcopy(self.filled_node_grid)
+        #self.node_grid_prev = deepcopy(self.node_grid)
+        #self.filled_node_grid_prev = deepcopy(self.filled_node_grid)
         return
 
 def main():

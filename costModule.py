@@ -345,12 +345,11 @@ class Costs():
                 l_cost = (l_cost + self.roughness_smooth["forest"])
             elif hexagon_old.properties["landuse"] == 6:
                 l_type = "vegetation mixtype removal"
-                l_cost = (l_cost + ((mixtype_ratio[0] *
-                                     self.roughness_smooth["grass"] +
-                                     mixtype_ratio[1] *
-                                     self.roughness_smooth["herbaceous"] +
-                                     mixtype_ratio[2] *
-                                     self.roughness_smooth["forest"])/100))
+                l_cost = (l_cost + round(
+                        ((mixtype_ratio[0] * self.roughness_smooth["grass"] +
+                          mixtype_ratio[1] * self.roughness_smooth["herbaceous"] +
+                          mixtype_ratio[2] * self.roughness_smooth["forest"]) /
+                        10000)) * 100)
             elif hexagon_old.properties["landuse"] == 7:
                 l_type = "changing sidechannel to floodplain"
                 # no costs in land use changed, all in z changed
