@@ -615,57 +615,48 @@ class runScript():
         if not self.initialized:
             print("Virtual River is not yet calibrated, please first run initialize")
             return
-        temp_grid = deepcopy(self.filled_node_grid)
-        temp_grid = gridmap.set_change_false(temp_grid)
         if self.turn == 0:
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time. Running "+ str(self.ini_loops) +
                   " eight loops to stabilize.")
-            #for i in range(0, self.ini_loops):
-            for i in range(0, 1):
-                if i == 0:
-                    grid = self.filled_node_grid
-                else:
-                    grid = temp_grid
-                self.hexagons_sandbox, self.flow_grid = self.model.run_model(
-                        grid, self.hexagons_sandbox, self.flow_grid,
-                        self.vert_scale, turn=self.turn)
-                """
-                self.model.run_model(grid, self.hexagons_sandbox,
-                                     self.flow_grid, self.vert_scale,
-                                     turn=self.turn)
-                self.hexagons_sandbox = self.model.update_waterlevel(
-                        self.hexagons_sandbox)
-                self.hexagons_sandbox = roughness.landuse_to_friction(
-                    self.hexagons_sandbox, vert_scale=self.vert_scale)
-                self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                    self.model.model, self.hexagons_sandbox, self.flow_grid)
-                """
-                print("Executed model initiation loop " + str(i) + ", updating roughness.")
-                if self.model_ini_save:
-                    with open(os.path.join(self.store_path,
-                                           'flow_grid_model_ini%d.geojson' % i),
-                              'w') as f:
-                        geojson.dump(self.flow_grid, f, sort_keys=True,
-                                     indent=2)
-                    with open(os.path.join(self.store_path,
-                                           'hexagons_model_ini%d.geojson' % i),
-                              'w') as f:
-                        geojson.dump(
-                                self.hexagons_sandbox, f, sort_keys=True, indent=2)
+            self.hexagons_sandbox, self.flow_grid = self.model.run_model(
+                    self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
+                    self.vert_scale, turn=self.turn)
+            """
+            self.model.run_model(grid, self.hexagons_sandbox,
+                                 self.flow_grid, self.vert_scale,
+                                 turn=self.turn)
+            self.hexagons_sandbox = self.model.update_waterlevel(
+                    self.hexagons_sandbox)
+            self.hexagons_sandbox = roughness.landuse_to_friction(
+                self.hexagons_sandbox, vert_scale=self.vert_scale)
+            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
+                self.model.model, self.hexagons_sandbox, self.flow_grid)
+            """
+            print("Finished running the model after initialization.")
+            print("NOTE: If you are running tests, make sure to first press "
+                  "'Update'. Otherwise the elevation in the model will be "
+                  "updated again (which is slow).")
+            if self.model_ini_save:
+                with open(os.path.join(self.store_path,
+                                       'flow_grid_model_ini%d.geojson' % self.turn),
+                          'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True,
+                                 indent=2)
+                with open(os.path.join(self.store_path,
+                                       'hexagons_model_ini%d.geojson' % self.turn),
+                          'w') as f:
+                    geojson.dump(
+                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
         else:
             print("Running model after turn update, running " +
                   str(self.update_loops) + " loops.")
             #for i in range(0, self.update_loops):
-            for i in range(0, 1):
-                if i == 0:
-                    grid = self.filled_node_grid
-                else:
-                    grid = temp_grid
-                self.hexagons_sandbox, self.flow_grid = self.model.run_model(
-                        grid, self.hexagons_sandbox, self.flow_grid,
-                        self.vert_scale, turn=self.turn)
-                print("Executed model update loop " + str(i) + ", updating roughness.")
+            self.hexagons_sandbox, self.flow_grid = self.model.run_model(
+                    self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
+                    self.vert_scale, turn=self.turn)
+            print("Finished running the model after turn " + str(self.turn) +
+                  ".")
         if self.model_save:
             with open(os.path.join(self.store_path,
                                    'hexagons_with_model_output%d.geojson' %
@@ -674,14 +665,6 @@ class runScript():
                 geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                              indent=2)
             print("stored hexagon files with model output (conditional)")
-        if self.turn == 0:
-            print("Finished running the model after initialization.")
-            print("NOTE: If you are running tests, make sure to first press "
-                  "'Update'. Otherwise the elevation in the model will be "
-                  "updated again (which is slow).")
-        else:
-            print("Finished running the model after turn " + str(self.turn) +
-                  ".")
         return
     
     
