@@ -20,6 +20,7 @@ import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
 import waterModule as water
+import indicatorModule as indicator
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
@@ -51,6 +52,10 @@ class GUI(QWidget):
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
         btn_exit.move(20, 260)
+        btn_scores = QPushButton('Show scores', self)
+        btn_scores.clicked.connect(self.on_score_button_clicked)
+        btn_scores.resize(180, 40)
+        btn_scores.move(280, 35)
         btn_round = QPushButton('End round', self)
         btn_round.clicked.connect(self.on_end_round_button_clicked)
         btn_round.resize(180, 40)
@@ -95,6 +100,10 @@ class GUI(QWidget):
     def on_reload_button_clicked(self):
         print("Calling reload function")
         self.script.reload()
+        
+    def on_score_button_clicked(self):
+        print("Calling score function")
+        self.script.scores()
 
 
 class runScript():
@@ -175,7 +184,7 @@ class runScript():
         self.fig = None
         self.axes = None
         # water safety module
-        self.water_module = water.Water_module()
+        self.indicators = indicator.Indicators()
         # cost module
         self.cost_module = costs.Costs()
         # total costs made up until the end of the rounds ended
@@ -620,7 +629,8 @@ class runScript():
                 else:
                     grid = temp_grid
                 self.fig, self.axes = D3D.run_model(
-                        self.model, grid, turn=self.turn)
+                        self.model, grid, turn=self.turn, fig=self.fig,
+                        axes=self.axes)
                 self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                           self.hexagons_sandbox)
                 self.hexagons_sandbox = roughness.landuse_to_friction(
@@ -648,7 +658,8 @@ class runScript():
                 else:
                     grid = temp_grid
                 self.fig, self.axes = D3D.run_model(
-                        self.model, grid, turn=self.turn)
+                        self.model, grid, turn=self.turn, fig=self.fig,
+                        axes=self.axes)
                 self.hexagons_sandbox = D3D.update_waterlevel(self.model,
                                                           self.hexagons_sandbox)
                 self.hexagons_sandbox = roughness.landuse_to_friction(
@@ -907,6 +918,8 @@ class runScript():
         self.store_previous_turn()
         self.start_new_turn = True
         self.turn += 1
+        # if self.save is defined as True, the end of turn files are
+        # automatically stored.
         if self.save:
             self.save_files()
         return
@@ -943,8 +956,19 @@ class runScript():
 
     def store_previous_turn(self):
         self.hexagons_prev = deepcopy(self.hexagons_sandbox)
+        """
+        TEST THIS WITH THE TABLE --> comparison when updating should always be
+        with the board of the previous turn, rather than the previous update.
+        """
         #self.node_grid_prev = deepcopy(self.node_grid)
         #self.filled_node_grid_prev = deepcopy(self.filled_node_grid)
+        return
+    
+    def scores(self):
+        self.indicators.add_indicator_values(50, 50, 100, self.turn)
+        self.indicators.update_water_and_dike_levels(self.hexagons_sandbox)
+        self.indicators.update_flood_safety([600, 400, 800])
+        self.indicators.plot(self.turn)
         return
 
 def main():
