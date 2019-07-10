@@ -142,6 +142,8 @@ class Indicators():
         label = "dike crest height"
         if not self.plot3:
             self.plot3, = self.ax3.plot(self.river_length, self.dike_levels, label=label, color='r')
+            #add a reference water level, either initial turn or start of new turn.
+            #self.plot31, = self.ax3.plot(self.river_length, self.ref_water_levels, label=label, color='r')
             self.plot32, = self.ax3.plot(self.river_length, self.water_levels, label=label, color='b')
         else:
             self.plot3.set_ydata(self.dike_levels)
