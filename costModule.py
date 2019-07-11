@@ -227,7 +227,7 @@ class Costs():
                             else:
                                 z_type = (z_type +
                                           " and farm acquisition and demolition")
-                                l_cost = (z_cost + self.acquisition["farm"] +
+                                z_cost = (z_cost + self.acquisition["farm"] +
                                           self.demolition["farm"])
                         elif hexagon_old.properties["landuse"] == 1:
                             z_type = z_type + " and acquired the land"

@@ -15,7 +15,7 @@ import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
-import modelInterface as D3D
+import modelInterface_test as D3D
 import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
@@ -399,6 +399,9 @@ class runScript():
                          indent=2)
         print("Saved structures file (conditional).")
         """
+        # system is now initialized
+        self.initialized = True
+        self.scores()
         toc = time.time()
         try:
             print("Finished startup and calibration" +
@@ -416,8 +419,6 @@ class runScript():
                   str(round(tec-tac, 2)) +
                   " seconds. Total initialization time: " +
                   str(round(toc-tic, 2)) + " seconds.")
-        # system is now initialized
-        self.initialized = True
         return
 
 
@@ -588,6 +589,7 @@ class runScript():
                     self.hexagons_sandbox, initialized=self.initialized,
                     fig=self.fig, axes=self.axes)
         """
+        self.scores()
         print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
               str(self.total_costs + self.turn_costs))
         try:
@@ -619,6 +621,7 @@ class runScript():
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time. Running "+ str(self.ini_loops) +
                   " eight loops to stabilize.")
+            self.model.set_indexes(self.filled_node_grid, self.face_grid)
             self.hexagons_sandbox, self.flow_grid = self.model.run_model(
                     self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
                     self.vert_scale, turn=self.turn)
@@ -665,6 +668,7 @@ class runScript():
                 geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                              indent=2)
             print("stored hexagon files with model output (conditional)")
+        self.scores()
         return
     
     
@@ -769,6 +773,7 @@ class runScript():
                              indent=2)
             print("Saved structures file (conditional).")
             """
+            self.scores()
             toc = time.time()
             try:
                 print("Finished startup and calibration" +
@@ -866,6 +871,7 @@ class runScript():
                         self.hexagons_sandbox, initialized=self.initialized,
                         fig=self.fig, axes=self.axes)
             """
+            self.scores()
             print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
                   str(self.total_costs + self.turn_costs))
             try:
