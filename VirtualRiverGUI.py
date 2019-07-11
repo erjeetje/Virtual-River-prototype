@@ -20,7 +20,7 @@ import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
 import waterModule as water
-import indicatorModule as indicator
+import indicatorModule_IHE as indicator
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
@@ -159,8 +159,8 @@ class runScript():
         # Currently not used, but can be passed to landuse_to_friction function
         # of the updateRoughness module.
         self.mixtype_ratio = [50, 20, 30]
-        self.ini_loops = 10  # number of model loops to run on initialization
-        self.update_loops = 4  # number of model loops to run on updates
+        self.ini_loops = 12  # number of model loops to run on initialization
+        self.update_loops = 5  # number of model loops to run on updates
         # Memory variables
         self.turn = 0
         self.token = ""
@@ -352,7 +352,8 @@ class runScript():
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
-        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
+        if self.test:
+            self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
                 self.hexagons_sandbox, vert_scale=self.vert_scale,
                 initialization=True)
@@ -507,7 +508,8 @@ class runScript():
                     self.hexagons_sandbox)
             #self.total_costs = self.total_costs + turn_costs
         # update the Chezy coefficients of all hexagons.
-        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
+        if self.test:
+            self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
                 self.hexagons_sandbox, vert_scale=self.vert_scale)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
@@ -624,7 +626,7 @@ class runScript():
         if self.turn == 0:
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time. Running "+ str(self.ini_loops) +
-                  " eight loops to stabilize.")
+                  " loops to stabilize.")
             self.model.set_indexes(self.filled_node_grid, self.face_grid)
             self.hexagons_sandbox, self.flow_grid = self.model.run_model(
                     self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
@@ -672,6 +674,7 @@ class runScript():
                 geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                              indent=2)
             print("stored hexagon files with model output (conditional)")
+        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         self.scores()
         return
     
@@ -961,9 +964,11 @@ class runScript():
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
             return
-        self.indicators.add_indicator_values(50, 50, 100, self.turn)
-        self.indicators.update_water_and_dike_levels(self.hexagons_sandbox)
-        self.indicators.update_flood_safety([600, 400, 800])
+        costs = self.total_costs + self.turn_costs
+        self.indicators.add_indicator_values(50.0, 50.0, costs, self.turn)
+        self.indicators.update_water_and_dike_levels(
+                self.hexagons_sandbox, self.hexagons_prev, self.turn)
+        self.indicators.update_flood_safety_score(self.turn)
         self.indicators.plot(self.turn)
         return
 

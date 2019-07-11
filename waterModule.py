@@ -7,6 +7,7 @@ Created on Wed Jun 26 14:20:02 2019
 
 
 import os
+import numpy as np
 import matplotlib.pyplot as plt
 import gridMapping as gridmap
 from shapely import geometry
@@ -77,6 +78,45 @@ def get_river_length2(hexagons):
     return x_output
 
 
+def flood_safety(dike_levels, water_levels):
+    z_difference = [(i - j) for i, j in zip(dike_levels, water_levels)]
+    divide = int(round(len(z_difference) / 3))
+    avg_sections = []
+    #z_difference = [(i+1) for i in range (0, 15)]
+    avg_left = sum(z_difference[:divide]) / divide
+    avg_middle = sum(z_difference[divide:divide*2]) / divide
+    avg_right = sum(z_difference[divide*2:]) / divide
+    
+    #print(z_difference)
+    #print(z_difference[:divide])
+    #print(z_difference[divide:divide*2])
+    #print(z_difference[divide*2:])
+    
+    avg_sections.append(avg_left)
+    avg_sections.append(avg_middle)
+    avg_sections.append(avg_right)
+    
+    flood_safety_levels = []
+    for average in avg_sections:
+        if average < -1:
+            flood_safety = 100
+        elif average < -0.5:
+            flood_safety = 200
+        elif average < 0:
+            flood_safety = 400
+        elif average < 0.25:
+            flood_safety = 600
+        elif average < 0.5:
+            flood_safety = 800
+        elif average < 0.75:
+            flood_safety = 1000
+        else:
+            flood_safety = 1250
+        flood_safety_levels.append(flood_safety)
+
+    print(flood_safety_levels)
+    return flood_safety_levels
+
 def plot_water_levels(xvals, yvals, turn=0, fig=None, ax=None):
     xvals = []
     for i in range(len(yvals)):
@@ -104,14 +144,18 @@ def load(turn=0):
 
 
 def main():
-    turn = 0
+    """turn = 0
     hexagons = load(turn=turn)
     water_level, x_output = water_levels(hexagons)
     dike_level, x_output = dike_levels(hexagons)
     fig, ax = plot_water_levels(x_output, water_level, turn=turn)
     fig, ax = plot_water_levels(x_output, dike_level, turn=turn, fig=fig,
                                 ax=ax)
-
+    """
+    dike_levels = [5 for i in range(0, 15)]
+    water_levels = [4 for i in range (0, 15)]
+    flood_safety_levels = flood_safety(dike_levels, water_levels)
+    return
 
 if __name__ == '__main__':
     main()

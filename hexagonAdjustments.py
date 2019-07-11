@@ -6,6 +6,7 @@ Created on Thu Jul  4 13:45:47 2019
 """
 
 import os
+import geojson
 import gridMapping as gridmap
 from shapely import geometry
 
@@ -65,14 +66,28 @@ def find_factory(hexagons):
     return hexagons
 
 
+def biosafe_area(hexagons):
+    for feature in hexagons.features:
+        if (feature.properties["ghost_hexagon"] or
+            feature.properties["behind_dike"] or 
+            feature.properties["south_dike"] or
+            feature.properties["north_dike"]):
+            feature.properties["biosafe"] = False
+        else:
+            feature.properties["biosafe"] = True
+    return hexagons
+
+
 def main():
     turn=0
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(dir_path, 'temp_files')
+    test_path = os.path.join(dir_path, 'test_files')
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
-    hexagons = find_factory(hexagons)
+    hexagons = biosafe_area(hexagons)
+    with open('hexagons_biosafe.geojson', 'w') as f:
+        geojson.dump(hexagons, f, sort_keys=True, indent=2)
     return
     
 if __name__ == '__main__':

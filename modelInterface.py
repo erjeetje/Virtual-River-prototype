@@ -25,8 +25,8 @@ class Model():
         self.axes = None
         self.node_index = None
         self.face_index = None
-        #plt.interactive(True)
-        plt.ion()
+        plt.interactive(True)
+        #plt.ion()
 
     def initialize_model(self):
         """
@@ -91,58 +91,27 @@ class Model():
         ucx = self.model.get_var('ucx')[:ndxi]
         ucy = self.model.get_var('ucy')[:ndxi]
         
-        """
-        def slice_variables(values, indexes):
-            sliced_values = []
-            for index in indexes:
-                sliced_values.append(values[index])
-            sliced_values = np.array(sliced_values)
-            return sliced_values
-        
-        xk = slice_variables(xk_full, self.node_index)
-        yk = slice_variables(yk_full, self.node_index)
-        
-        xzw = slice_variables(xzw_full, self.face_index)
-        yzw = slice_variables(yzw_full, self.face_index)
-        
-        zk = slice_variables(zk_full, self.node_index)
-        
-        s1 = slice_variables(s1_full, self.face_index)
-        
-        ucx = slice_variables(ucx_full, self.face_index)
-        ucy = slice_variables(ucy_full, self.face_index)
-        """
-        
-        
-    
         colorbar = False
-        #if self.fig is None:
+
         if True:
             self.fig, self.axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
             colorbar = True
-        #self.fig.canvas.draw()
+
         self.sc = self.axes[0].scatter(
                 xzw[self.face_index], yzw[self.face_index],
-                c=s1[self.face_index], edgecolor='none', vmin=0, vmax=7.75,
+                c=s1[self.face_index], edgecolor='none', vmin=0, vmax=6,
                 cmap='jet')
         self.sc_zk = self.axes[1].scatter(
                 xk[self.node_index], yk[self.node_index],
-                c=zk[self.node_index], edgecolor='none', vmin=0, vmax=7.75,
+                c=zk[self.node_index], edgecolor='none', vmin=0, vmax=6,
                 cmap='jet')
+        self.axes[0].set_aspect('equal')
+        self.axes[1].set_aspect('equal')
         if colorbar:
             self.fig.colorbar(self.sc, ax=self.axes[0])
             self.fig.colorbar(self.sc_zk, ax=self.axes[1])
         plt.show()
-        """
-        for i in range(10):
-            model.update()
-            axes[0].set_title("{:2f}".format(model.get_current_time()))
-            sc.set_array(ucx.copy())
-            sc_zk.set_array(zk.copy())
-            plt.draw()
-            plt.pause(0.00001)
-        """
-        #qv = axes[0].quiver(xzw, yzw, ucx, ucy)
+
         self.qv = self.axes[1].quiver(
                 xzw[self.face_index], yzw[self.face_index],
                 ucx[self.face_index], ucy[self.face_index])
@@ -169,9 +138,9 @@ class Model():
         
         self.sc_zk.set_array(zk[self.node_index].copy())
         if turn == 0:
-            step = 100
+            step = 120
         else:
-            step = 40
+            step = 50
         for i in range(step):
             if i % 10 == 0:
                 self.update_waterlevel(hexagons)

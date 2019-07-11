@@ -76,20 +76,24 @@ class Indicators():
         self.indicators = ["flood safety", "biodiversity", "costs"]
         self.flood_safety = []
         self.biodiversity = []
+        self.cost_score = []
         self.total_costs = []
         self.turn = []
         return
         
     def add_indicator_values(self, flood_safety_score, biodiversity_score,
-                             cost_score, turn):
+                             total_cost, turn):
+        cost_score = (total_cost / 25000000) * 100
         if turn < len(self.turn):
             self.flood_safety[turn] = flood_safety_score
             self.biodiversity[turn] = biodiversity_score
-            self.total_costs[turn] = cost_score
+            self.cost_score[turn] = cost_score
+            self.total_costs[turn] = total_cost
         else:
             self.flood_safety.append(flood_safety_score)
             self.biodiversity.append(biodiversity_score)
-            self.total_costs.append(cost_score)
+            self.total_costs.append(total_cost)
+            self.cost_score.append(cost_score)
             self.turn.append(turn)
         return
     
@@ -121,11 +125,13 @@ class Indicators():
         if not self.river_length:
             river_length = water.get_river_length(water_levels)
             self.river_length = river_length
+        flood_safety_values = water.flood_safety(dike_levels, water_levels)
+        self.update_flood_safety(flood_safety_values)
         return
 
     def plot(self, turn):
         performance = [self.flood_safety[turn], self.biodiversity[turn],
-                       self.total_costs[turn]]
+                       self.cost_score[turn]]
         x_labels = [("turn " + str(self.turn[value])) for value in self.turn]
         self.ax1.clear()
         self.barlist = self.ax1.bar(self.x_pos, performance, align='center',
@@ -133,6 +139,8 @@ class Indicators():
         self.barlist[0].set_color('b')
         self.barlist[1].set_color('g')
         self.barlist[2].set_color('r')
+        self.ax1.set_xticks(self.x_pos)
+        self.ax1.set_xticklabels(self.indicators)
         if not self.plot2:
             self.plot2, = self.ax2.plot([1,2,3], self.flood_safety_level, color='b')
         else:
