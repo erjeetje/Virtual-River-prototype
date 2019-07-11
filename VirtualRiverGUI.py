@@ -15,7 +15,7 @@ import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
-import modelInterface_test as D3D
+import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
@@ -52,10 +52,14 @@ class GUI(QWidget):
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
         btn_exit.move(20, 260)
+        """
+        # incorporated the score updates within the other script functions,
+        # called and update automatically.
         btn_scores = QPushButton('Show scores', self)
         btn_scores.clicked.connect(self.on_score_button_clicked)
         btn_scores.resize(180, 40)
         btn_scores.move(280, 35)
+        """
         btn_round = QPushButton('End round', self)
         btn_round.clicked.connect(self.on_end_round_button_clicked)
         btn_round.resize(180, 40)

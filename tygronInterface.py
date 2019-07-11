@@ -21,8 +21,12 @@ def join_session(username, password, application_type="EDITOR",
     Login function to Tygron, returns api token on successful login (requires
     a Tygron session to run called 'virtual_river2').
     """
-    sessions_data = requests.post(url=api_endpoint, json=[],
-                                  auth=(username, password))
+    try:
+        sessions_data = requests.post(url=api_endpoint, json=[],
+                                      auth=(username, password))
+    except requests.exceptions.ConnectionError:
+        print("There appears to be no internet connection.")
+        return None
     session_id = -1
     sessions = sessions_data.json()
     for item in sessions:

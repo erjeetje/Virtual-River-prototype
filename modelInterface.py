@@ -16,12 +16,15 @@ import numpy as np
 import gridMapping as gridmap
 import updateRoughness as roughness
 from copy import deepcopy
+from shapely import geometry
 
 class Model():
     def __init__(self):
         self.model = self.initialize_model()
         self.fig = None
         self.axes = None
+        self.node_index = None
+        self.face_index = None
         #plt.interactive(True)
         plt.ion()
 
@@ -37,6 +40,25 @@ class Model():
         model.initialize(model_path)
         print('Initialized Delft3D FM model.')
         return model
+    
+    def set_indexes(self, node_grid, face_grid):
+        def index(grid):
+            x_left_board = -400
+            x_right_board = 400
+            y_bottom_board = -300
+            x_top_board = 300
+            indexes = []
+            for feature in grid.features:
+                shape = shape = geometry.asShape(feature.geometry)
+                x = shape.centroid.x
+                y = shape.centroid.y
+                if ((x >= x_left_board and x <= x_right_board) and
+                    (y >= y_bottom_board and y <= x_top_board)):
+                    indexes.append(feature.id)
+            return indexes
+        self.node_index = np.array(index(node_grid))
+        self.face_index = np.array(index(face_grid))
+        return
 
     def run_model(self, filled_node_grid, hexagons, flow_grid, vert_scale, turn=0, blit=False):
         """
@@ -68,12 +90,30 @@ class Model():
         s1 = self.model.get_var('s1')[:ndxi]
         ucx = self.model.get_var('ucx')[:ndxi]
         ucy = self.model.get_var('ucy')[:ndxi]
-        #frcu = model.get_var('frcu')[:ndxi]
-    
-        #s1_t0 = s1.copy()
         
-        #print(min(frcu))
-        #print(max(frcu))
+        """
+        def slice_variables(values, indexes):
+            sliced_values = []
+            for index in indexes:
+                sliced_values.append(values[index])
+            sliced_values = np.array(sliced_values)
+            return sliced_values
+        
+        xk = slice_variables(xk_full, self.node_index)
+        yk = slice_variables(yk_full, self.node_index)
+        
+        xzw = slice_variables(xzw_full, self.face_index)
+        yzw = slice_variables(yzw_full, self.face_index)
+        
+        zk = slice_variables(zk_full, self.node_index)
+        
+        s1 = slice_variables(s1_full, self.face_index)
+        
+        ucx = slice_variables(ucx_full, self.face_index)
+        ucy = slice_variables(ucy_full, self.face_index)
+        """
+        
+        
     
         colorbar = False
         #if self.fig is None:
@@ -81,8 +121,14 @@ class Model():
             self.fig, self.axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 6))
             colorbar = True
         #self.fig.canvas.draw()
-        self.sc = self.axes[0].scatter(xzw, yzw, c=s1, edgecolor='none', vmin=0, vmax=7.75, cmap='jet')
-        self.sc_zk = self.axes[1].scatter(xk, yk, c=zk, edgecolor='none', vmin=0, vmax=7.75, cmap='jet')
+        self.sc = self.axes[0].scatter(
+                xzw[self.face_index], yzw[self.face_index],
+                c=s1[self.face_index], edgecolor='none', vmin=0, vmax=7.75,
+                cmap='jet')
+        self.sc_zk = self.axes[1].scatter(
+                xk[self.node_index], yk[self.node_index],
+                c=zk[self.node_index], edgecolor='none', vmin=0, vmax=7.75,
+                cmap='jet')
         if colorbar:
             self.fig.colorbar(self.sc, ax=self.axes[0])
             self.fig.colorbar(self.sc_zk, ax=self.axes[1])
@@ -97,7 +143,9 @@ class Model():
             plt.pause(0.00001)
         """
         #qv = axes[0].quiver(xzw, yzw, ucx, ucy)
-        self.qv = self.axes[1].quiver(xzw, yzw, ucx, ucy)
+        self.qv = self.axes[1].quiver(
+                xzw[self.face_index], yzw[self.face_index],
+                ucx[self.face_index], ucy[self.face_index])
         changed = [
                 feature
                 for feature
@@ -119,7 +167,7 @@ class Model():
             background1 = self.fig.canvas.copy_from_bbox(self.axes[0])
             background2 = self.fig.canvas.copy_from_bbox(self.axes[1])
         
-        self.sc_zk.set_array(zk.copy())
+        self.sc_zk.set_array(zk[self.node_index].copy())
         if turn == 0:
             step = 100
         else:
@@ -138,13 +186,13 @@ class Model():
             self.axes[0].set_title("{:2f}".format(self.model.get_current_time()))
             #t2 = time.time()
             #print("axes title: " + str(t2 - t1))
-            self.sc.set_array(s1.copy())
+            self.sc.set_array(s1[self.face_index].copy())
             #t3 = time.time()
             #print("set sc: " + str(t3 - t2))
             #self.sc_zk.set_array(zk.copy())
             #t4 = time.time()
             #print("set sc_zk: " + str(t4 - t3))
-            self.qv.set_UVC(ucx.copy(), ucy.copy())
+            self.qv.set_UVC(ucx[self.face_index].copy(), ucy[self.face_index].copy())
             #t5 = time.time()
             #print("set qv: " + str(t5 - t4))
             #plt.draw()
