@@ -296,8 +296,9 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = owner.generate_ownership(
                 self.hexagons_sandbox)
-        self.hexagons_sandbox = owner.determine_ownership(
-                self.hexagons_sandbox)
+        # turned ownership off for the IHE session! TURN IT BACK ON
+        #self.hexagons_sandbox = owner.determine_ownership(
+        #        self.hexagons_sandbox)
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
         #channel = structures.get_channel(self.hexagons_sandbox)
@@ -969,6 +970,8 @@ class runScript():
         self.indicators.update_water_and_dike_levels(
                 self.hexagons_sandbox, self.hexagons_prev, self.turn)
         self.indicators.update_flood_safety_score(self.turn)
+        self.indicators.update_biodiversity_score(self.hexagons_sandbox,
+                                                  self.turn)
         self.indicators.plot(self.turn)
         return
 

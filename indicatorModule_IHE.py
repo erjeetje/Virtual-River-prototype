@@ -31,7 +31,7 @@ class Indicators():
         self.ax1.set_ylabel("score (%)")
         # graph with flood safety levels
         self.ax2.set_xlabel("dike section")
-        self.ax2.set_ylabel("chance of flooding occurence")
+        self.ax2.set_ylabel("chance of flooding occurrence")
         # graph with water levels vs dike height
         self.ax3.set_xlabel("river length (meters)")
         self.ax3.set_ylabel("height (meters)")
@@ -63,8 +63,8 @@ class Indicators():
         return
     
     def default_indicator_values(self):
-        #self.indicators = ["flood safety", "biodiversity", "costs"]
-        self.indicators = ["flood safety", "budget"]
+        self.indicators = ["flood safety", "biodiversity", "costs"]
+        #self.indicators = ["flood safety", "budget"]
         self.flood_safety = []
         self.biodiversity = []
         self.cost_score = []
@@ -95,6 +95,27 @@ class Indicators():
             self.flood_safety[turn] = flood_safety_score
         else:
             self.flood_safety.append(flood_safety_score)
+        return
+    
+    def update_biodiversity_score(self, hexagons, turn):
+        floodplain_count = 0
+        non_eco_count = 0
+        for feature in hexagons.features:
+            if feature.properties["ghost_hexagon"]:
+                continue
+            if (feature.properties["floodplain_north"] or
+                feature.properties["floodplain_south"]):
+                floodplain_count += 1
+                if (feature.properties["landuse"] == 0 or
+                    feature.properties["landuse"] == 1):
+                    non_eco_count += 1
+        eco_score = (((floodplain_count - non_eco_count) /
+                      floodplain_count) * 100)
+        if turn < len(self.turn):
+            self.biodiversity[turn] = eco_score
+        else:
+            self.biodiversity.append(eco_score)
+        return
     
     def indicator_feedback_values(self):
         self.water_levels = []
@@ -144,26 +165,28 @@ class Indicators():
         return
 
     def plot(self, turn):
-        performance = [self.flood_safety[turn], self.cost_score[turn]]
+        performance = [self.flood_safety[turn], self.biodiversity[turn], self.cost_score[turn]]
         x_labels = [("turn " + str(self.turn[value])) for value in self.turn]
         self.ax1.clear()
         self.barlist = self.ax1.bar(self.x_pos, performance, align='center',
                                     width=0.2)
         self.barlist[0].set_color('b')
-        self.barlist[1].set_color('r')
-        self.ax1.plot([-0.3, 0.3], [65, 65], "k--", color='r', label="minimum")
+        self.barlist[1].set_color('g')
+        self.barlist[2].set_color('r')
+        self.ax1.plot([-0.3, 0.3], [60, 60], "k--", color='r', label="minimum")
         self.ax1.plot([-0.3, 0.3], [80, 80], "k--", color='y', label="good")
         self.ax1.plot([-0.3, 0.3], [100, 100], "k--", color='g', label="excellent")
-        self.ax1.plot([0.7, 1.3], [0, 0], "k--", color='r')
-        self.ax1.plot([0.7, 1.3], [20, 20], "k--", color='y')
-        self.ax1.plot([0.7, 1.3], [40, 40], "k--", color='g')
+        self.ax1.plot([0.7, 1.3], [80, 80], "k--", color='y')
+        self.ax1.plot([0.7, 1.3], [100, 100], "k--", color='g')
+        self.ax1.plot([1.7, 2.3], [20, 20], "k--", color='y')
+        self.ax1.plot([1.7, 2.3], [40, 40], "k--", color='g')
         self.ax1.set_ylim([0, 110])
         self.ax1.set_xticks(self.x_pos)
         self.ax1.set_xticklabels(self.indicators)
         self.ax1.set_xlabel("indicators")
         self.ax1.set_ylabel("score (%)")
         self.ax1.set_title("Overall score on indicators")
-        self.ax1.legend(loc='lower center', fontsize='x-large')
+        self.ax1.legend(loc='best', fontsize='x-large')
         if not self.plot2:
             self.plot21, = self.ax2.plot([1,2,3], self.initial_flood_safety_level, label="initial flood safety levels", color='y')
             self.plot22, = self.ax2.plot([1,2,3], self.ref_flood_safety_level, label="previous turn flood safety levels", color='g')
