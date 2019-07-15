@@ -192,14 +192,50 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
             filenameEco = 'eco_roi_%i.jpg'%i
             cv2.imwrite(filenameGeo, maskedImgGeo)
             cv2.imwrite(filenameEco, maskedImgEco)
+
+        # sort the contours in such a way that the biggest contours are first
+        # for both geometry and land use
+        #contoursGeo = sorted(
+        #        contoursGeo, key = cv2.contourArea, reverse = True)
+        #contoursEco = sorted(
+        #        contoursEco, key = cv2.contourArea, reverse = True)
+        contoursGeo.sort(key = cv2.contourArea, reverse = True)
+        contoursEco.sort(key = cv2.contourArea, reverse = True)
+        noGeo = False
+        noEco = False
+        try:
+            largestGeo = cv2.contourArea(contoursGeo[0])
+        except IndexError:
+            noGeo = True
+        try:
+            largestEco = cv2.contourArea(contoursEco[0])
+        except IndexError:
+            noEco = True
         
+        countGeo = 0
+        countEco = 0
+        margin = (1 / 3)
+        
+        if not noGeo:
+            marginGeo = largestGeo * margin
+            for contour in contoursGeo:
+                area = cv2.contourArea(contour)
+                if area > marginGeo:
+                    countGeo += 1
+        if not noEco:
+            marginEco = largestEco * margin
+            for contour in contoursEco:
+                area = cv2.contourArea(contour)
+                if area > marginEco:
+                    countEco += 1
+
         # z range between 0 and 5, with 4 as a dike and 5 a reinforced dike
         # this should eventually be changed to match the model's height scale
         # directly.
         # z values should be adjusted to sandbox. Possibly test with new range.
-        feature.properties["z_reference"] = min(len(contoursGeo), 5)
+        feature.properties["z_reference"] = countGeo
         feature.properties["z"] = feature.properties["z_reference"] * 1.2
-        feature.properties["landuse"] = min(len(contoursEco), 9)
+        feature.properties["landuse"] = countEco
         if (feature.properties["landuse"] == 0 and
             feature.properties["z_reference"] >= 4):
             feature.properties["landuse"] = 10

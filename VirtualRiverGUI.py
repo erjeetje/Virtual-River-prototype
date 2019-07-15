@@ -149,7 +149,7 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = False
+        self.save = True
         self.model_save = False
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
@@ -353,8 +353,7 @@ class runScript():
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
-        if self.test:
-            self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
+        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
                 self.hexagons_sandbox, vert_scale=self.vert_scale,
                 initialization=True)
@@ -912,12 +911,12 @@ class runScript():
         """
         self.update_costs()
         self.store_previous_turn()
-        self.start_new_turn = True
-        self.turn += 1
         # if self.save is defined as True, the end of turn files are
         # automatically stored.
         if self.save:
             self.save_files()
+        self.start_new_turn = True
+        self.turn += 1
         return
 
     def save_files(self):

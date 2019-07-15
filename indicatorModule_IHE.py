@@ -20,7 +20,7 @@ class Indicators():
         self.set_figure_variables()
 
     def set_figure_variables(self):
-        self.fig.canvas.manager.full_screen_toggle()
+        #self.fig.canvas.manager.full_screen_toggle()
         self.gs = self.fig.add_gridspec(2, 2)
         self.ax1 = self.fig.add_subplot(self.gs[0, 0])
         self.ax2 = self.fig.add_subplot(self.gs[0, 1])
@@ -203,8 +203,8 @@ class Indicators():
         #label = "dike crest height"
         if not self.plot3:
             self.plot3, = self.ax3.plot(self.river_length, self.dike_levels, label="dike crest height", color='r')
-            self.plot31, = self.ax3.plot(self.river_length, self.original_water_levels, label="initial water levels", color='g')
-            self.plot32, = self.ax3.plot(self.river_length, self.ref_water_levels, label="previous round water levels", color='y')
+            self.plot31, = self.ax3.plot(self.river_length, self.original_water_levels, label="initial water levels", color='y')
+            self.plot32, = self.ax3.plot(self.river_length, self.ref_water_levels, label="previous round water levels", color='g')
             self.plot33, = self.ax3.plot(self.river_length, self.water_levels, label="current water levels", color='b')
         else:
             self.plot3.set_ydata(self.dike_levels)

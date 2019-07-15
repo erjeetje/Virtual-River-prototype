@@ -110,6 +110,9 @@ class Model():
         if colorbar:
             self.fig.colorbar(self.sc, ax=self.axes[0])
             self.fig.colorbar(self.sc_zk, ax=self.axes[1])
+        for feature in hexagons.features:
+            poly = feature.geometry.coordinates[0]
+            
         plt.show()
 
         self.qv = self.axes[1].quiver(
