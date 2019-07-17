@@ -202,6 +202,7 @@ class Visualization():
         self.dflowfm_compute()
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
+        self.data['FLOW'] = np.sqrt((self.data['U'])**2 + (self.data['V'])**2)
         return
 
 
@@ -245,6 +246,7 @@ class Visualization():
         self.dflowfm_compute()
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
+        self.data['FLOW'] = np.sqrt((self.data['U'])**2 + (self.data['V'])**2)
 
 
     def dflowfm_compute(self):
@@ -343,7 +345,7 @@ class Visualization():
         cv2.namedWindow('main', flags=cv2.WINDOW_NORMAL)
         # make main window full screen
         if self.config['settings'].get('fullscreen', False):
-            cv2.moveWindow('main', 1920, 1080)
+            cv2.moveWindow('main', -1920, -1080)
             cv2.setWindowProperty('main', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
 
@@ -374,10 +376,19 @@ class Visualization():
         # get the variable for this layer
         var = self.data[layer['variable']]
         # get min and max if set
-        min = layer.get('min', var.min())
-        max = layer.get('max', var.max())
+        #min_value = layer.get('min', var.min())
+        #max_value = layer.get('max', var.max())
+        min_value = min(var)
+        max_value = max(var)
+        """
+        if min_value > layer['min']:
+            min_value = layer['min']
+        if max_value > layer['max']:
+            max_value = layer['max']
+        """
+
         # the normalization function
-        N = matplotlib.colors.Normalize(var.min(), var.max())
+        N = matplotlib.colors.Normalize(min_value, max_value)
         # the colormap
         cmap = getattr(matplotlib.cm, layer['colormap'])
 

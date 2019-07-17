@@ -15,7 +15,7 @@ import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
-import modelInterface as D3D
+import modelInterface_viz_tests as D3D
 import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
@@ -189,7 +189,7 @@ class runScript():
         self.fig = None
         self.axes = None
         # water safety module
-        self.indicators = indicator.Indicators()
+        #self.indicators = indicator.Indicators()
         # cost module
         self.cost_module = costs.Costs()
         # total costs made up until the end of the rounds ended
@@ -407,6 +407,7 @@ class runScript():
         """
         # system is now initialized
         self.initialized = True
+        self.run_model()
         self.scores()
         toc = time.time()
         try:
@@ -615,6 +616,7 @@ class runScript():
               " seconds. Interpolation update time: " +
               str(round(toc-tec, 2)) + " seconds. Total update time: " +
               str(round(toc-tic, 2)) + " seconds.")
+        self.run_model()
         self.update_viz()
         return
     
@@ -967,6 +969,7 @@ class runScript():
         return
     
     def scores(self):
+        """
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
@@ -979,6 +982,7 @@ class runScript():
         self.indicators.update_biodiversity_score(self.hexagons_sandbox,
                                                   self.turn)
         self.indicators.plot(self.turn)
+        """
         return
     
     def update_viz(self):
