@@ -1,6 +1,6 @@
 {
     "settings": {
-        "fullscreen": false,
+        "fullscreen": true,
         "width": 600,
         "height": 400
     },

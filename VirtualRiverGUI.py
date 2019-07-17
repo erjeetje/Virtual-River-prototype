@@ -24,6 +24,7 @@ import indicatorModule_IHE as indicator
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
+import visualization as visualize
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -149,7 +150,7 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = True
+        self.save = False
         self.model_save = False
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
@@ -198,7 +199,7 @@ class runScript():
         # BIOSAFE module
         # TODO
         # visualization
-        # TODO
+        self.viz = visualize.Visualization(self.model)
     
     
     def initialize(self):
@@ -424,6 +425,7 @@ class runScript():
                   str(round(tec-tac, 2)) +
                   " seconds. Total initialization time: " +
                   str(round(toc-tic, 2)) + " seconds.")
+        #self.update_viz()
         return
 
 
@@ -596,6 +598,7 @@ class runScript():
                     fig=self.fig, axes=self.axes)
         """
         self.scores()
+        self.start_new_turn = False
         print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
               str(self.total_costs + self.turn_costs))
         try:
@@ -612,7 +615,7 @@ class runScript():
               " seconds. Interpolation update time: " +
               str(round(toc-tec, 2)) + " seconds. Total update time: " +
               str(round(toc-tic, 2)) + " seconds.")
-        self.start_new_turn = False
+        self.update_viz()
         return
     
     def run_model(self):
@@ -676,6 +679,7 @@ class runScript():
             print("stored hexagon files with model output (conditional)")
         self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         self.scores()
+        self.update_viz()
         return
     
     
@@ -781,6 +785,8 @@ class runScript():
             print("Saved structures file (conditional).")
             """
             self.scores()
+            # system is now initialized
+            self.initialized = True
             toc = time.time()
             try:
                 print("Finished startup and calibration" +
@@ -796,8 +802,8 @@ class runScript():
                       str(round(tac-tic, 2)) +
                       " seconds. Total initialization time: " +
                       str(round(toc-tic, 2)) + " seconds.")
-            # system is now initialized
-            self.initialized = True
+            
+            self.update_viz()
             return
         else:
             tic = time.time()
@@ -868,7 +874,6 @@ class runScript():
                         file_location, self.token, turn=0)
                 print("Updated Tygron heightmap.")
                 t3 = time.time()
-            self.start_new_turn = False
             """
             # run the model. --> this is currently separate from the initialization
             # as the whole system becomes rather slow. Added a temporary run model
@@ -879,6 +884,7 @@ class runScript():
                         fig=self.fig, axes=self.axes)
             """
             self.scores()
+            self.start_new_turn = False
             print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
                   str(self.total_costs + self.turn_costs))
             try:
@@ -893,6 +899,7 @@ class runScript():
                   ". Comparison update time: " + str(round(tac-tic, 2)) +
                   " seconds. Total update time: " +
                   str(round(toc-tic, 2)) + " seconds.")
+            self.update_viz()
             return
 
     def end_round(self):
@@ -973,6 +980,9 @@ class runScript():
                                                   self.turn)
         self.indicators.plot(self.turn)
         return
+    
+    def update_viz(self):
+        self.viz.loop()
 
 def main():
     app = QApplication(sys.argv)

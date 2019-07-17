@@ -1,3 +1,4 @@
+import os
 import time
 import json
 import itertools
@@ -14,6 +15,8 @@ import matplotlib.colors
 import netCDF4
 import scipy.spatial
 import skimage
+
+import modelInterface as D3D
 
 from models import available
 from physics import warp_flow
@@ -70,8 +73,12 @@ def blend_transparent(background_img, overlay_img):
 
 
 class Visualization():
-    def __init__(self, ds):
-        self.ds = ds
+    def __init__(self, model, ds=None):
+        if ds is None:
+            self.ds = self.get_ds()
+        else:
+            self.ds = ds
+        self.D3D = model
         
         self.data = {}
 
@@ -87,26 +94,39 @@ class Visualization():
             [0, HEIGHT]
         ], dtype='float32')
 
+        """
         self.model = np.array([
             [-600, -400],
             [600, -400],
             [600, 400],
             [-600, 400]
         ], dtype='float32')
+        """
+        self.model = np.array([
+            [-400, -300],
+            [400, -300],
+            [400, 300],
+            [-400, 300]
+        ], dtype='float32')
 
         self.transforms = self.compute_transforms()
-        self.data.update(
-            self.update_initial_vars()
-        )
+        self.update_initial_vars(model=self.D3D, engine='live')
         self.grid = self.init_grid()
         self.init_screens()
         
     def read_config(self):
-        with open("screens.json") as f:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        screens_path = os.path.join(dir_path, 'screens.json')
+        with open(screens_path) as f:
             config = json.load(f)
         return config
 
-        
+    def get_ds(self):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        nc_path = os.path.join(dir_path, 'models', 'Waal_schematic', 'DFM_OUTPUT_Virtual_River', 'Virtual_River_map.nc')
+        ds = netCDF4.Dataset(nc_path)
+        return ds
+
     def compute_transforms(self):
         """compute transformation matrices based on calibration data"""
 
@@ -136,33 +156,81 @@ class Visualization():
                 transforms[transform_name] = transform
 
         return transforms
-    
+
+
     def update_initial_vars(self, model=None, engine='dflowfm_nc'):
         """get the initial variables for the model"""
         # variables on t=0
-        data = {}
-        meta = available[engine]
+        #data = {}
+        #meta = available[engine]
+        meta = {
+                "initial_vars": [
+                        'xzw',
+                        'yzw',
+                        'xk',
+                        'yk',
+                        'zk',
+                        'ndx',
+                        'ndxi',             # number of internal points (no boundaries)
+                        'flowelemnode'
+                        ],
+                "vars": ['bl', 'ucx', 'ucy', 's1', 'zk'],
+                "mapping": dict(
+                        X_NODES="xk",
+                        Y_NODES="yk",
+                        X_CELLS="xzw",
+                        Y_CELLS="yzw",
+                        HEIGHT_NODES="zk",
+                        HEIGHT_CELLS="bl",
+                        WATERLEVEL="s1",
+                        U="ucx",
+                        V="ucy"
+                ), }
         for name in meta['initial_vars']:
             if engine.endswith('_nc'):
-                data[name] = self.ds.variables[name][:]
+                self.data[name] = self.ds.variables[name][:]
             else:
-                data[name] = model.get_var(name)
+                self.data[name] = model.model.get_var(name)
 
         for name in meta['vars']:
             if engine.endswith('_nc'):
-                data[name] = self.ds.variables[name][:]
+                self.data[name] = self.ds.variables[name][:]
             else:
-                data[name] = model.get_var(name)
-                data[name + '_0'] = model.get_var(name).copy()
-        meta['compute'](data)
+                self.data[name] = model.model.get_var(name)
+                self.data[name + '_0'] = model.model.get_var(name).copy()
+        #meta['compute'](data)
+        self.dflowfm_compute()
         for key, val in meta["mapping"].items():
-            data[key] = data[val]
-        return data
+            self.data[key] = self.data[val]
+        return
 
 
     def update_vars(self, model=None, engine='dflowfm_nc', t=0):
         """get the variables from the model and put them in the data dictionary"""
-        meta = available[engine]
+        #meta = available[engine]
+        meta = {
+                "initial_vars": [
+                        'xzw',
+                        'yzw',
+                        'xk',
+                        'yk',
+                        'zk',
+                        'ndx',
+                        'ndxi',             # number of internal points (no boundaries)
+                        'flowelemnode'
+                        ],
+                "vars": ['bl', 'ucx', 'ucy', 's1', 'zk'],
+                "mapping": dict(
+                        X_NODES="xk",
+                        Y_NODES="yk",
+                        X_CELLS="xzw",
+                        Y_CELLS="yzw",
+                        HEIGHT_NODES="zk",
+                        HEIGHT_CELLS="bl",
+                        WATERLEVEL="s1",
+                        U="ucx",
+                        V="ucy"
+                ), }
         for name in meta['vars']:
             if engine.endswith('_nc'):
                 # start looping from the start
@@ -170,11 +238,46 @@ class Visualization():
                 self.data[name] = self.ds.variables[name][t]
                 self.data['t'] = self.data['time'][t]
             else:
-                self.data[name] = model.get_var(name)
+                self.data[name] = model.model.get_var(name)
+                self.data['t'] = "{:2f}".format(model.model.get_current_time())
         # do some stuff per model
-        meta["compute"](self.data)
+        #meta["compute"](self.data)
+        self.dflowfm_compute()
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
+
+
+    def dflowfm_compute(self):
+        """compute variables that are missing/buggy/not available"""
+        numk = self.data['zk'].shape[0]
+        self.data['numk'] = numk
+        # fix shapes
+        dflowfm_vars = ['bl', 'ucx', 'ucy', 's1', 'zk']
+        for var_name in dflowfm_vars:
+            arr = self.data[var_name]
+            #print(var_name)
+            #print(arr)
+            if arr.shape[0] == self.data['numk']:
+                self.data[var_name] = arr[:self.data['numk']]
+            elif arr.shape[0] == self.data['ndx']:
+                "should be of shape ndx"
+                # ndxi:ndx are the boundary points
+                # (See  netcdf write code in unstruc)
+                self.data[var_name] = arr[:self.data['ndxi']]
+                # data should be off consistent shape now
+            elif arr.shape[0] == self.data['ndxi']:
+                # this is ok
+                pass
+            else:
+                msg = "unexpected data shape %s for variable %s" % (
+                    arr.shape,
+                    var_name
+                    )
+                raise ValueError(msg)
+        # compute derivitave variables, should be consistent shape now.
+        self.data['is_wet'] = self.data['s1'] > self.data['bl']
+        return
+
 
     def init_grid(self):
         """initialize grid variables"""
@@ -228,16 +331,21 @@ class Visualization():
         data['y_cells_box'] = y_cells_box
         return data
 
+
     def init_screens(self):
         # Initialize
         self.screen = self.config['screens'][0]
         # Create a debug screen so you can see what's going on.
-        cv2.namedWindow('debug', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
+        #cv2.namedWindow('debug', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
+        cv2.namedWindow('debug', flags=cv2.WINDOW_NORMAL)
         # Create a main window for the beamer
-        cv2.namedWindow('main', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
+        #cv2.namedWindow('main', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
+        cv2.namedWindow('main', flags=cv2.WINDOW_NORMAL)
         # make main window full screen
         if self.config['settings'].get('fullscreen', False):
+            cv2.moveWindow('main', 1920, 1080)
             cv2.setWindowProperty('main', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
 
     def set_screen(self, key):
         for screen in self.config['screens']:
@@ -246,8 +354,8 @@ class Visualization():
                 break
         else:
             logger.warn('screen %s not available', key)
-                
-            
+
+
     def put_text(self, text, window='debug'):
         WIDTH = self.config['settings']['width']
         HEIGHT = self.config['settings']['height']
@@ -261,7 +369,7 @@ class Visualization():
             cv2.putText(img, line, origin, font, scale, color)
         return img
 
-    
+
     def imshow(self, layer):
         # get the variable for this layer
         var = self.data[layer['variable']]
@@ -281,10 +389,12 @@ class Visualization():
         rgba = cmap(N(arr))
 
         # TODO: check if we can do this with opencv (convert or something...)
-        rgb = np.uint8(rgba * 256)[...,:3]
+        #rgb = np.uint8(rgba * 256)[...,:3]
+        rgb = np.uint8(rgba * 255)[...,:3]
 
         # this is one plot, other variants might include advection of colors 
         return rgb
+
 
     def seed_lic(self, layer):
         
@@ -298,17 +408,31 @@ class Visualization():
 
         if not 'lic' in self.data:
             self.data['lic'] = np.zeros((HEIGHT, WIDTH, 4))
+            
+        #var = "WATERLEVEL"
+        #arr = var[self.grid['ravensburger_cells']]
 
         for x, y in coords:
             # white
+            ref = self.grid['ravensburger_cells'][int(x), int(y)]
+            #print("x coor: " + str(x) + ". y coor: " + str(y) + ". Cell: " + str(ref))
+            #print("water level at cell " + str(ref) + " is " + str(self.data['s1'][ref] - self.data['bl'][ref]))
+            water_level = self.data['s1'][ref] - self.data['bl'][ref]
+            if (water_level < 1.5):
+                #print("low waterlevel at x, y = " + str(y) + " " + str(x))
+                continue
             color = (1, 1, 1)
             
             # make sure outline has the same color
             # create a little dot
-            r, c = skimage.draw.circle(y, x, size, shape=(HEIGHT, WIDTH))
+            #r, c = skimage.draw.circle(y, x, size, shape=(HEIGHT, WIDTH))
+            r, c = skimage.draw.circle(x, y, size, shape=(WIDTH, HEIGHT))
             # Don't plot on (nearly) dry cells
+            #if (self.data['waterdepth_img'][int(x), int(y)]) < 0.5:
+            #    continue
             self.data['lic'][r, c] = 1
-        
+
+
     def lic(self, layer):
 
         scale = layer['scale']
@@ -331,7 +455,9 @@ class Visualization():
             flow.astype('float32')
         )
 
-        return (self.data['lic'] * 256).astype('uint8')
+        #return (self.data['lic'] * 256).astype('uint8')
+        return (self.data['lic'] * 255).astype('uint8')
+
 
     def loop(self):
         for i in tqdm.tqdm(itertools.count()):
@@ -353,7 +479,7 @@ class Visualization():
             # You could update the model here
 
             # Update the variables
-            self.update_vars(t=i)
+            self.update_vars(t=i, model=self.D3D, engine='live')
 
             # Nowe we can render
             rgbas = []
@@ -371,24 +497,30 @@ class Visualization():
             
             # Open CV expects BGR, never found out why
             bgr = cv2.cvtColor(rgba, cv2.COLOR_RGBA2BGR)
+            bgr = cv2.flip(bgr, 1)
             cv2.imshow('main', bgr)
 
             img =  self.put_text('Timestep: %s\nT: %s' % (i, self.data['t']))
             cv2.imshow('debug', img)
 
+
     def close(self):
         # Finalize
         cv2.destroyAllWindows()
+
+
     def __del__(self):
         self.close()
-        
-    
+
 
 @click.command()
 def main():
     logging.basicConfig(level=logging.DEBUG)
-    ds = netCDF4.Dataset('models/Waal_schematic/DFM_OUTPUT_waal_with_side/waal_with_side_map.nc')
-    viz = Visualization(ds)
+    model = D3D.Model()
+    #dir_path = os.path.dirname(os.path.realpath(__file__))
+    #nc_path = os.path.join(dir_path, 'models', 'Waal_schematic', 'DFM_OUTPUT_Virtual_River', 'Virtual_River_map.nc')
+    #ds = netCDF4.Dataset(nc_path)
+    viz = Visualization(model)
     viz.loop()
     viz.close()
 
