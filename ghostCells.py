@@ -10,28 +10,28 @@ import geojson
 
 def set_values(hexagons):
     dike_values = {"z_reference": 4,
-                   "z": 4.8,
+                   "z": 16,
                    "landuse": 10,
                    "water": False,
                    "land": True,
                    "behind_dike": False
                    }
     floodplain_values_grass = {"z_reference": 2,
-                               "z": 2.4,
+                               "z": 8,
                                "landuse": 2,
                                "water": False,
                                "land": True,
                                "behind_dike": False
                                }
     floodplain_values_forest = {"z_reference": 2,
-                                "z": 2.4,
+                                "z": 8,
                                 "landuse": 5,
                                 "water": False,
                                 "land": True,
                                 "behind_dike": False
                                 }
     floodplain_values_reed = {"z_reference": 2,
-                              "z": 2.4,
+                              "z": 8,
                               "landuse": 3,
                               "water": False,
                               "land": True,
@@ -45,7 +45,7 @@ def set_values(hexagons):
                       "behind_dike": False
                       }
     behind_dike_values = {"z_reference": 2,
-                          "z": 2.4,
+                          "z": 8,
                           "landuse": 1,
                           "water": False,
                           "land": True,

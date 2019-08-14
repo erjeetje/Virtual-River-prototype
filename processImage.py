@@ -234,7 +234,7 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         # directly.
         # z values should be adjusted to sandbox. Possibly test with new range.
         feature.properties["z_reference"] = countGeo
-        feature.properties["z"] = feature.properties["z_reference"] * 1.2
+        feature.properties["z"] = feature.properties["z_reference"] * 4
         feature.properties["landuse"] = countEco
         if (feature.properties["landuse"] == 0 and
             feature.properties["z_reference"] >= 4):

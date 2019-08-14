@@ -617,7 +617,7 @@ class runScript():
               str(round(toc-tec, 2)) + " seconds. Total update time: " +
               str(round(toc-tic, 2)) + " seconds.")
         self.run_model()
-        self.update_viz()
+        #self.update_viz()
         return
     
     def run_model(self):

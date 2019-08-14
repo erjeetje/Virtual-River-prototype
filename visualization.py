@@ -247,6 +247,8 @@ class Visualization():
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
         self.data['FLOW'] = np.sqrt((self.data['U'])**2 + (self.data['V'])**2)
+        #print("lowest flow value: " + str(min(self.data['FLOW'])))
+        #print("highest flow value: " + str(max(self.data['FLOW'])))
 
 
     def dflowfm_compute(self):
@@ -419,28 +421,26 @@ class Visualization():
 
         if not 'lic' in self.data:
             self.data['lic'] = np.zeros((HEIGHT, WIDTH, 4))
-            
-        #var = "WATERLEVEL"
-        #arr = var[self.grid['ravensburger_cells']]
 
         for x, y in coords:
             # white
             ref = self.grid['ravensburger_cells'][int(x), int(y)]
-            #print("x coor: " + str(x) + ". y coor: " + str(y) + ". Cell: " + str(ref))
-            #print("water level at cell " + str(ref) + " is " + str(self.data['s1'][ref] - self.data['bl'][ref]))
+            """ 
+            # only seed lics where water levels are high
             water_level = self.data['s1'][ref] - self.data['bl'][ref]
-            if (water_level < 1.5):
-                #print("low waterlevel at x, y = " + str(y) + " " + str(x))
+            if (water_level < 7.5):
                 continue
-            color = (1, 1, 1)
+            """
+            # only seed lics where there is at least some water flow
+            flow = self.data['FLOW'][ref]
+            if (flow < 0.25):
+                continue
+            #color = (1, 1, 1)
             
             # make sure outline has the same color
             # create a little dot
             #r, c = skimage.draw.circle(y, x, size, shape=(HEIGHT, WIDTH))
             r, c = skimage.draw.circle(x, y, size, shape=(WIDTH, HEIGHT))
-            # Don't plot on (nearly) dry cells
-            #if (self.data['waterdepth_img'][int(x), int(y)]) < 0.5:
-            #    continue
             self.data['lic'][r, c] = 1
 
 

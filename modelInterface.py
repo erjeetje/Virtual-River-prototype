@@ -70,12 +70,14 @@ class Model():
         function should be updated. Should probably be separated into multiple
         functions as well.
         """
+        """
         self.model.get_var('s1')
         #numk = model.get_var('numk')
         #ndx = model.get_var('ndx')
         ndxi = self.model.get_var('ndxi')
         
         # points, nodes, vertices (corner points)
+        
         xk = self.model.get_var('xk')
         yk = self.model.get_var('yk')
         
@@ -90,7 +92,8 @@ class Model():
         s1 = self.model.get_var('s1')[:ndxi]
         ucx = self.model.get_var('ucx')[:ndxi]
         ucy = self.model.get_var('ucy')[:ndxi]
-        
+        """
+        """
         colorbar = False
 
         if True:
@@ -110,14 +113,13 @@ class Model():
         if colorbar:
             self.fig.colorbar(self.sc, ax=self.axes[0])
             self.fig.colorbar(self.sc_zk, ax=self.axes[1])
-        for feature in hexagons.features:
-            poly = feature.geometry.coordinates[0]
             
         plt.show()
 
         self.qv = self.axes[1].quiver(
                 xzw[self.face_index], yzw[self.face_index],
                 ucx[self.face_index], ucy[self.face_index])
+        """
         changed = [
                 feature
                 for feature
@@ -126,7 +128,7 @@ class Model():
         ]
     
         for feature in changed:
-            zk_new = np.array([feature.properties['z']], dtype='float64')  # * 1.5
+            zk_new = np.array([feature.properties['z']], dtype='float64')
             self.model.set_var_slice(
                     'zk',
                     [feature.id + 1],
@@ -135,11 +137,13 @@ class Model():
                     )
         #s0 = s1.copy()
         print("updated grid in model")
+        """
         if blit:
             background1 = self.fig.canvas.copy_from_bbox(self.axes[0])
             background2 = self.fig.canvas.copy_from_bbox(self.axes[1])
         
         self.sc_zk.set_array(zk[self.node_index].copy())
+        """
         if turn == 0:
             step = 120
         else:
@@ -155,6 +159,7 @@ class Model():
             self.model.update(25)
             t1 = time.time()
             print("model update: " + str(t1 - t0))
+            """
             self.axes[0].set_title("{:2f}".format(self.model.get_current_time()))
             #t2 = time.time()
             #print("axes title: " + str(t2 - t1))
@@ -184,6 +189,7 @@ class Model():
             plt.pause(0.00001)
             t7 = time.time()
             print("loop time: " + str(t7 - t0))
+            """
     
         print("Finished run model. Current time in model: " +
               str(self.model.get_current_time()))

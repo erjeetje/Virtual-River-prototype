@@ -32,7 +32,7 @@ def z_correction(hexagons, initialized=True):
 
 def test_mode_z_correction(hexagons):
     for feature in hexagons.features:
-        feature.properties["z"] = ((feature.properties["z_reference"] * 1.2) +
+        feature.properties["z"] = ((feature.properties["z_reference"] * 4) +
                           feature.properties["bedslope_correction"])
     return hexagons
 

@@ -353,7 +353,7 @@ def index_node_grid(hexagons, grid, slope):
             feature.properties["fill"] = False
             if (y_point > maxy or y_point < miny):
                 feature.properties["fill"] = True
-                feature.properties["z"] = 6 + (abs(x_point - 600) * slope)
+                feature.properties["z"] = 16 + (abs(x_point - 600) * slope)
             elif (x_point == x_min or x_point == x_max):
                 feature.properties["border"] = True
         else:  
@@ -573,9 +573,9 @@ def create_geotiff(grid, turn=0, path="", save=False):
         The code below can be adjusted to 'manipulate' how the virtual world
         will look in Tygron. Current implementation amplifies the dike segments
         """
-        height = (feature.properties["z"] * 4) - 6
-        if height > 10:
-            height = height * 1.5
+        height = feature.properties["z"]
+        if height > 14:
+            height = height * 1.25
         data.append(height)
     x_coor = np.array(x_coor)
     y_coor = np.array(y_coor)

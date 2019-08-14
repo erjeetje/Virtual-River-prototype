@@ -35,7 +35,7 @@ def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", te
     # tygron project update; world coordinates once created
     calibration['tygron_update'] = [0, 0], [1000, 0], [1000, -750],  [0, -750]
     # height range
-    calibration['z'] = [0.0, 9.0]
+    calibration['z'] = [0.0, 20.0]
     # height of game pieces; may be subject to change after interpolation
     calibration['z_values'] = [0, 5]
     # box == beamer

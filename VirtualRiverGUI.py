@@ -155,7 +155,7 @@ class runScript():
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
         self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4
-        self.vert_scale = 0.25  # setting matches current z scaling, testing.
+        self.vert_scale = 1  # setting matches current z scaling, testing.
         # Mixtype vegetation class ratio in % for natural grass/reed/brushwood
         # Currently not used, but can be passed to landuse_to_friction function
         # of the updateRoughness module.
@@ -189,7 +189,7 @@ class runScript():
         self.fig = None
         self.axes = None
         # water safety module
-        self.indicators = indicator.Indicators()
+        #self.indicators = indicator.Indicators()
         # cost module
         self.cost_module = costs.Costs()
         # total costs made up until the end of the rounds ended
@@ -407,6 +407,7 @@ class runScript():
         """
         # system is now initialized
         self.initialized = True
+        self.run_model()
         self.scores()
         toc = time.time()
         try:
@@ -615,7 +616,8 @@ class runScript():
               " seconds. Interpolation update time: " +
               str(round(toc-tec, 2)) + " seconds. Total update time: " +
               str(round(toc-tic, 2)) + " seconds.")
-        self.update_viz()
+        self.run_model()
+        #2self.update_viz()
         return
     
     def run_model(self):
@@ -967,6 +969,7 @@ class runScript():
         return
     
     def scores(self):
+        """
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
@@ -979,6 +982,7 @@ class runScript():
         self.indicators.update_biodiversity_score(self.hexagons_sandbox,
                                                   self.turn)
         self.indicators.plot(self.turn)
+        """
         return
     
     def update_viz(self):

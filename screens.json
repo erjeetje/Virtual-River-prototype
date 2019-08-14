@@ -20,10 +20,10 @@
             "key": "2",
             "layers": [
                 {
-                    "min": 4,
-                    "max": 6,
+                    "min": 6,
+                    "max": 20,
                     "variable": "WATERLEVEL",
-                    "colormap": "winter",
+                    "colormap": "winter_r",
                     "type": "imshow"
                 },
                 {
@@ -38,7 +38,7 @@
             "layers": [
                 {
                     "min": 0,
-                    "max": 6,
+                    "max": 20,
                     "variable": "HEIGHT_CELLS",
                     "colormap": "viridis",
                     "type": "imshow"

@@ -96,31 +96,31 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
                     dike = hexagons[feature.properties["dike_reference"]]
                     z = dike.properties["z"]
                 except KeyError:
-                    z = 6
+                    z = 16
                     print("KeyError on dike reference")
             else:
                 try:
                     z = feature.properties["z"]
                 except KeyError:
-                    z = 3
+                    z = 8
                     print("KeyError on z")
     
             try:
                 h = feature.properties["water_level"] - z
             except KeyError:
                 try:
-                    h = 6 - z
+                    h = 16 - z
                     print("KeyError on water level")
                 except KeyError:
-                    h = 3
+                    h = 8
         else:
             try:
                 h = feature.properties["water_level"] - (feature.properties["z"])
             except KeyError:
                 try:
-                    h = 6 - (feature.properties["z"])
+                    h = 16 - (feature.properties["z"])
                 except KeyError:
-                    h = 6
+                    h = 8
         #if h < 0:
         #    h = 0.0001
         if feature.properties["landuse"] == 0:
@@ -144,8 +144,8 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
             handler = "vegetation"
             name = "reed roughness    "
         elif feature.properties["landuse"] == 4:
-            # shrubs / zachthoutstruweel
-            vegpar = {"hv": 6, "n": 0.13, "Cd": 1.5, "kb": 0.4}
+            # shrubs / zachthoutstruweel --> hv verandert van 6 naar 4
+            vegpar = {"hv": 4, "n": 0.13, "Cd": 1.5, "kb": 0.4}
             handler = "vegetation"
             name = "soft wood shrubs  "
         elif feature.properties["landuse"] == 5:
@@ -182,14 +182,14 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
                 h = 0.025
         if handler == "vegetation":
             # vegetation height scale test
-            vegpar["hv"] = vegpar["hv"] * vert_scale
+            #vegpar["hv"] = vegpar["hv"] * vert_scale
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
             feature.properties["Chezy"] = manning(h, n)
         elif handler == "mixtype":
-            vegpar["hv"] = vegpar["hv"] * vert_scale
-            vegpar2["hv"] = vegpar2["hv"] * vert_scale
-            vegpar3["hv"] = vegpar3["hv"] * vert_scale
+            #vegpar["hv"] = vegpar["hv"] * vert_scale
+            #vegpar2["hv"] = vegpar2["hv"] * vert_scale
+            #vegpar3["hv"] = vegpar3["hv"] * vert_scale
             C1 = klopstra(h, vegpar)
             C2 = klopstra(h, vegpar2)
             C3 = klopstra(h, vegpar3)
@@ -203,7 +203,7 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
             for the polygon?
             """
             # vegetation height scale test
-            vegpar["hv"] = vegpar["hv"] * vert_scale
+            #vegpar["hv"] = vegpar["hv"] * vert_scale
             feature.properties["Chezy"] = klopstra(h, vegpar)
         """
         print("Chezy coefficient calculation for cell: " +
