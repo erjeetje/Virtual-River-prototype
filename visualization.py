@@ -172,9 +172,11 @@ class Visualization():
                         'zk',
                         'ndx',
                         'ndxi',             # number of internal points (no boundaries)
-                        'flowelemnode'
+                        'flowelemnode',
+                        'ln',
+                        'frcu'
                         ],
-                "vars": ['bl', 'ucx', 'ucy', 's1', 'zk'],
+                "vars": ['bl', 'ucx', 'ucy', 's1', 'zk', 'frcu'],
                 "mapping": dict(
                         X_NODES="xk",
                         Y_NODES="yk",
@@ -184,7 +186,9 @@ class Visualization():
                         HEIGHT_CELLS="bl",
                         WATERLEVEL="s1",
                         U="ucx",
-                        V="ucy"
+                        V="ucy",
+                        FLOW_LINKS='ln',
+                        ROUGHNESS='frcu'
                 ), }
         for name in meta['initial_vars']:
             if engine.endswith('_nc'):
@@ -218,9 +222,11 @@ class Visualization():
                         'zk',
                         'ndx',
                         'ndxi',             # number of internal points (no boundaries)
-                        'flowelemnode'
+                        'flowelemnode',
+                        'ln',
+                        'frcu'
                         ],
-                "vars": ['bl', 'ucx', 'ucy', 's1', 'zk'],
+                "vars": ['bl', 'ucx', 'ucy', 's1', 'zk', 'frcu'],
                 "mapping": dict(
                         X_NODES="xk",
                         Y_NODES="yk",
@@ -230,7 +236,9 @@ class Visualization():
                         HEIGHT_CELLS="bl",
                         WATERLEVEL="s1",
                         U="ucx",
-                        V="ucy"
+                        V="ucy",
+                        FLOW_LINKS='ln',
+                        ROUGHNESS='frcu'
                 ), }
         for name in meta['vars']:
             if engine.endswith('_nc'):
@@ -256,7 +264,7 @@ class Visualization():
         numk = self.data['zk'].shape[0]
         self.data['numk'] = numk
         # fix shapes
-        dflowfm_vars = ['bl', 'ucx', 'ucy', 's1', 'zk']
+        dflowfm_vars = ['bl', 'ucx', 'ucy', 's1', 'zk', 'frcu']
         for var_name in dflowfm_vars:
             arr = self.data[var_name]
             #print(var_name)
@@ -272,6 +280,9 @@ class Visualization():
             elif arr.shape[0] == self.data['ndxi']:
                 # this is ok
                 pass
+            elif arr.shape[0] == self.data['ln'].shape[0]:
+                # this is ok
+                pass
             else:
                 msg = "unexpected data shape %s for variable %s" % (
                     arr.shape,
@@ -279,7 +290,7 @@ class Visualization():
                     )
                 raise ValueError(msg)
         # compute derivitave variables, should be consistent shape now.
-        self.data['is_wet'] = self.data['s1'] > self.data['bl']
+        #self.data['is_wet'] = self.data['s1'] > self.data['bl']
         return
 
 
@@ -321,6 +332,29 @@ class Visualization():
         data['ravensburger_nodes'] = ravensburger_nodes.reshape(HEIGHT, WIDTH)
         data['distances_nodes'] = distances_nodes.reshape(HEIGHT, WIDTH)
 
+        flow_links = self.data['FLOW_LINKS']
+        """
+        link_grid = [[cell_centers[links[0]][0]+cell_centers[links[1]][0],
+                      cell_centers[links[0]][1]+cell_centers[links[1]][1]]
+                     for links in flow_links]
+        """
+        
+        link_grid = []
+        for link in flow_links:
+            try:
+                cell1 = cell_centers[link[0]-1]
+                cell2 = cell_centers[link[1]-1]
+                flow_x = (cell1[0] + cell2[0]) / 2.0
+                flow_y = (cell1[1] + cell2[1]) / 2.0
+                link_grid.append([flow_x, flow_y])
+            except IndexError:
+                continue
+        link_grid = np.array(link_grid)
+        tree = scipy.spatial.cKDTree(link_grid)
+        distances_links, ravensburger_links = tree.query(np.c_[m_t, n_t])
+        data['ravensburger_links'] = ravensburger_links.reshape(HEIGHT, WIDTH)
+        data['distances_links'] = distances_links.reshape(HEIGHT, WIDTH)
+        
         # not sure what this does....
         data['node_mask'] = data['distances_nodes'] > 500
         data['cell_mask'] = data['distances_cells'] > 500
@@ -377,11 +411,14 @@ class Visualization():
     def imshow(self, layer):
         # get the variable for this layer
         var = self.data[layer['variable']]
+        print("layer activated: " + str(layer['variable']))
         # get min and max if set
         #min_value = layer.get('min', var.min())
         #max_value = layer.get('max', var.max())
         min_value = min(var)
         max_value = max(var)
+        print("layer min value: " + str(min_value))
+        print("layer max value: " + str(max_value))
         """
         if min_value > layer['min']:
             min_value = layer['min']
@@ -396,10 +433,20 @@ class Visualization():
 
         # The gridded image
         # TODO: use approriate lookup map for cells or nodes
-        arr = var[self.grid['ravensburger_cells']]
+        if layer['grid'] == "CELLS":
+            arr = var[self.grid['ravensburger_cells']]
+        elif layer['grid'] == "NODES":
+            arr = var[self.grid['ravensburger_nodes']]
+        else:
+            arr = var[self.grid['ravensburger_links']]
+            print("I found my links!")
         
         # the colored image
         rgba = cmap(N(arr))
+        if layer['blur'] is True:
+            #sigma=(16, 16, 1)
+            #kernel = sigma[0] * 8 * 4 + 1
+            rgba = cv2.GaussianBlur(rgba, (15, 15), cv2.BORDER_DEFAULT)
 
         # TODO: check if we can do this with opencv (convert or something...)
         #rgb = np.uint8(rgba * 256)[...,:3]
