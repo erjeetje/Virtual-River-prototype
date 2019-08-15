@@ -249,11 +249,11 @@ def visualize_ownership(hexagons):
             continue
         # set color to draw based on ownership (or lack of it)
         if feature.properties["owner"] == "Water":
-            color = (241, 96, 52)
+            color = (52, 96, 241)
         elif feature.properties["owner"] == "Nature":
             color = (31, 127, 63)
         elif feature.properties["owner"] == "Province":
-            color = (66, 28, 213)
+            color = (213, 28, 66)
         else:
             color = (160, 160, 160)
         

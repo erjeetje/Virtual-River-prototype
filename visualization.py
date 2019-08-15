@@ -160,9 +160,6 @@ class Visualization():
 
     def update_initial_vars(self, model=None, engine='dflowfm_nc'):
         """get the initial variables for the model"""
-        # variables on t=0
-        #data = {}
-        #meta = available[engine]
         meta = {
                 "initial_vars": [
                         'xzw',
@@ -207,12 +204,12 @@ class Visualization():
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
         self.data['FLOW'] = np.sqrt((self.data['U'])**2 + (self.data['V'])**2)
+        self.data['WATERDEPTH'] = self.data['WATERLEVEL'] - self.data['HEIGHT_CELLS']
         return
 
 
     def update_vars(self, model=None, engine='dflowfm_nc', t=0):
         """get the variables from the model and put them in the data dictionary"""
-        #meta = available[engine]
         meta = {
                 "initial_vars": [
                         'xzw',
@@ -255,8 +252,7 @@ class Visualization():
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
         self.data['FLOW'] = np.sqrt((self.data['U'])**2 + (self.data['V'])**2)
-        #print("lowest flow value: " + str(min(self.data['FLOW'])))
-        #print("highest flow value: " + str(max(self.data['FLOW'])))
+        self.data['WATERDEPTH'] = self.data['WATERLEVEL'] - self.data['HEIGHT_CELLS']
     
     
     def add_image(self, key, data):

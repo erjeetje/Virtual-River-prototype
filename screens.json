@@ -34,9 +34,28 @@
                 }
             ]
         },
+        {
+            "title": "Water depth",
+            "key": "3",
+            "layers": [
+                {
+                    "min": 0,
+                    "max": 20,
+                    "variable": "WATERDEPTH",
+					"grid": "CELLS",
+					"blur": false,
+                    "colormap": "winter_r",
+                    "type": "imshow"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
 		{
             "title": "Bed level",
-            "key": "3",
+            "key": "4",
             "layers": [
                 {
                     "min": 0,
@@ -55,7 +74,7 @@
         },
 		{
             "title": "Bed level2",
-            "key": "4",
+            "key": "5",
             "layers": [
                 {
                     "min": 0,
@@ -74,7 +93,7 @@
         },
 		{
             "title": "Water flow",
-            "key": "5",
+            "key": "6",
             "layers": [
                 {
                     "min": 0,
@@ -93,7 +112,7 @@
         },
 		{
             "title": "Roughness",
-            "key": "6",
+            "key": "7",
             "layers": [
                 {
                     "min": 0,
@@ -111,13 +130,17 @@
             ]
         },
 		{
-            "title": "Ownership",
-            "key": "7",
+            "title": "Roughness2",
+            "key": "8",
             "layers": [
                 {
-                    "variable": "OWNERSHIP",
-					"blur": false,
-                    "type": "image"
+                    "min": 0,
+                    "max": 70,
+                    "variable": "ROUGHNESS",
+					"grid": "LINKS",
+					"blur": true,
+                    "colormap": "RdYlGn",
+                    "type": "imshow"
                 },
                 {
                     "type": "lic",
@@ -126,8 +149,8 @@
             ]
         },
 		{
-            "title": "Ownership2",
-            "key": "8",
+            "title": "Ownership",
+            "key": "9",
             "layers": [
                 {
                     "variable": "OWNERSHIP",
