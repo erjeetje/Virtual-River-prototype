@@ -259,7 +259,7 @@ class Visualization():
         #print("highest flow value: " + str(max(self.data['FLOW'])))
     
     
-    def add_image(self, key, data):
+    def add_data(self, key, data):
         self.data[key] = data
         return
 
@@ -413,14 +413,6 @@ class Visualization():
         return img
 
 
-    def image(self, layer):
-        rgb = self.data[layer['variable']]
-        if layer['blur'] is True:
-            kernel = (15, 15)
-            rgb = cv2.GaussianBlur(rgb, kernel, cv2.BORDER_DEFAULT)
-        return rgb
-
-
     def imshow(self, layer):
         # get the variable for this layer
         var = self.data[layer['variable']]
@@ -444,13 +436,13 @@ class Visualization():
             msg = "variable has an unspecified or unknown grid"
             raise ValueError(msg)
 
+        
         # the colored image
         rgba = cmap(N(arr))
-        
-        # add a blur in case layer asks for it
         if layer['blur'] is True:
-            kernel = (15, 15)
-            rgba = cv2.GaussianBlur(rgba, kernel, cv2.BORDER_DEFAULT)
+            #sigma=(16, 16, 1)
+            #kernel = sigma[0] * 8 * 4 + 1
+            rgba = cv2.GaussianBlur(rgba, (15, 15), cv2.BORDER_DEFAULT)
 
         # TODO: check if we can do this with opencv (convert or something...)
         #rgb = np.uint8(rgba * 256)[...,:3]
@@ -551,8 +543,6 @@ class Visualization():
                     rgba = self.imshow(layer=layer)
                 if layer['type'] == 'lic':
                     rgba = self.lic(layer)
-                if layer['type'] == 'image':
-                    rgba = self.image(layer)
                 rgbas.append(rgba)
                 
             # merge the layers (can perhaps be done faster)

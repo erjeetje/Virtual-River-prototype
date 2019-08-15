@@ -5,8 +5,12 @@ Created on Wed Jun 12 06:37:58 2019
 @author: HaanRJ
 """
 
+import os
 import random
+import geojson
 import numpy as np
+import gridMapping as gridmap
+from cv2 import fillPoly
 from scipy.spatial import cKDTree
 from shapely import geometry
 
@@ -231,6 +235,41 @@ def generate_ownership(hexagons):
     return hexagons
 
 
+def visualize_ownership(hexagons):
+    # generate empty, white image
+    img = np.full((450, 600, 3), 255, dtype="uint8")
+    # draw hexagons in empty image
+    for feature in hexagons.features:
+        # skip hexagons that do not need to be drawn
+        if (feature.properties["ghost_hexagon"] or
+            feature.properties["behind_dike"] or 
+            feature.properties["south_dike"] or
+            feature.properties["north_dike"] or
+            feature.properties["main_channel"]):
+            continue
+        # set color to draw based on ownership (or lack of it)
+        if feature.properties["owner"] == "Water":
+            color = (241, 96, 52)
+        elif feature.properties["owner"] == "Nature":
+            color = (31, 127, 63)
+        elif feature.properties["owner"] == "Province":
+            color = (66, 28, 213)
+        else:
+            color = (160, 160, 160)
+        
+        # get the coordinates to draw the hexagons, turn into numpy array and
+        # add the necessary offset to match
+        pts = feature.geometry["coordinates"]
+        pts = np.array(pts)
+        pts = pts + [400, 300]
+        pts = pts * [0.75, 0.75]
+        pts = pts.astype(np.int32)
+
+        # draw the hexagon as a filled polygon
+        fillPoly(img, pts, color)
+    return img
+
+
 def update_ownership(feature, ownership_change):
     if ownership_change is not None:
         feature.properties["ownership_change"] = True
@@ -241,9 +280,9 @@ def update_ownership(feature, ownership_change):
 
 
 def main():
-    """turn=0
+    turn=0
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(dir_path, 'test_files')
+    test_path = os.path.join(dir_path, 'storing_files')
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
@@ -253,7 +292,6 @@ def main():
     with open(os.path.join(test_path, 'hexagons%d.geojson' % turn),
               'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
-    """
 
 
 if __name__ == '__main__':

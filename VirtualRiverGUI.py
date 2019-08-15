@@ -297,11 +297,13 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = owner.generate_ownership(
                 self.hexagons_sandbox)
-        # turned ownership off for the IHE session! TURN IT BACK ON
-        #self.hexagons_sandbox = owner.determine_ownership(
-        #        self.hexagons_sandbox)
+        self.hexagons_sandbox = owner.determine_ownership(
+                self.hexagons_sandbox)
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
+        ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
+        self.viz.add_image("OWNERSHIP", ownership_viz)
+        
         #channel = structures.get_channel(self.hexagons_sandbox)
         #weirs = structures.create_structures(channel)
         #D3D.geojson2pli(weirs)
@@ -578,6 +580,8 @@ class runScript():
                     self.hexagons_sandbox, self.filled_node_grid,
                     turn=self.turn, fill=True, save=False, path=self.dir_path)
         toc = time.time()
+        ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
+        self.viz.add_image("OWNERSHIP", ownership_viz)
         if self.tygron:
             # create a new geotiff and set the new elevation in tygron.
             t2 = time.time()

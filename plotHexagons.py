@@ -5,13 +5,48 @@ Created on Mon May  6 16:27:14 2019
 @author: HaanRJ
 """
 
-
+import cv2
 import geojson
+import numpy as np
 import matplotlib.pyplot as plt
 from descartes import PolygonPatch
 
 
-def plot_elevation(hexagons, turn=0):
+def visualize_ownership(hexagons):
+    # generate empty, white image
+    img = np.full((450, 600, 3), 255, dtype="uint8")
+    # draw hexagons in empty image
+    for feature in hexagons.features:
+        # skip hexagons that do not need to be drawn
+        if (feature.properties["ghost_hexagon"] or
+            feature.properties["behind_dike"] or 
+            feature.properties["south_dike"] or
+            feature.properties["north_dike"] or
+            feature.properties["main_channel"]):
+            continue
+        # set color to draw based on ownership (or lack of it)
+        if feature.properties["owner"] == "Water":
+            color = (241, 96, 52)
+        elif feature.properties["owner"] == "Nature":
+            color = (31, 127, 63)
+        elif feature.properties["owner"] == "Province":
+            color = (66, 28, 213)
+        else:
+            color = (160, 160, 160)
+        
+        # get the coordinates to draw the hexagons, turn into numpy array and
+        # add the necessary offset to match
+        pts = feature.geometry["coordinates"]
+        pts = np.array(pts)
+        pts = pts + [400, 300]
+        pts = pts * [0.75, 0.75]
+        pts = pts.astype(np.int32)
+        cv2.fillPoly(img, pts, color)
+    cv2.imshow('Window', img)
+    return img
+
+    
+def plot_elevation2(hexagons, turn=0):
     blue = '#32618f'
     light_blue = '#66ccf2'
     yellow = '#f6eb34'
@@ -69,9 +104,9 @@ def plot_ownership(hexagons, turn=0):
 
 if __name__ == '__main__':
     try:
-        with open('test_files\\hexagons8.geojson') as f:
+        with open('storing_files\\hexagons0.geojson') as f:
             hexagons0 = geojson.load(f)
-        plot_elevation(hexagons0, turn=3)
+        img = visualize_ownership(hexagons0)
     except FileNotFoundError:
         pass
     """

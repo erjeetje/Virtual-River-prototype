@@ -109,6 +109,36 @@
                     "scale": 1.0
                 }
             ]
+        },
+		{
+            "title": "Ownership",
+            "key": "7",
+            "layers": [
+                {
+                    "variable": "OWNERSHIP",
+					"blur": false,
+                    "type": "image"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
+		{
+            "title": "Ownership2",
+            "key": "8",
+            "layers": [
+                {
+                    "variable": "OWNERSHIP",
+					"blur": true,
+                    "type": "image"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
         }
     ]
 }
