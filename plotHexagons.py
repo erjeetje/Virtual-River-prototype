@@ -11,7 +11,36 @@ import matplotlib.pyplot as plt
 from descartes import PolygonPatch
 
 
-def plot(hexagons, turn=0):
+def plot_elevation(hexagons, turn=0):
+    blue = '#32618f'
+    light_blue = '#66ccf2'
+    yellow = '#f6eb34'
+    orange = '#f79f14'
+    red = '#e31e1e'
+    fig = plt.figure()
+    ax = fig.gca()
+    plt.title('Board turn ' + str(turn))
+    for hexagon in hexagons.features:
+        poly = hexagon.geometry
+        if hexagon.properties["z"] <= 0.5:
+            color = blue
+        elif hexagon.properties["z"] <= 1.5:
+            color = light_blue
+        elif hexagon.properties["z"] <= 2.5:
+            color = yellow
+        elif hexagon.properties["z"] <= 3.5:
+            color = orange
+        else:
+            color = red
+        test = PolygonPatch(poly, fc=color, ec=color, alpha=0.5, zorder=2)
+        if hexagon.id == 0:
+            print(test)
+        ax.add_patch(test)
+    ax.axis('scaled')
+    plt.show()
+    
+    
+def plot_ownership(hexagons, turn=0):
     blue = '#32618f'
     light_blue = '#66ccf2'
     yellow = '#f6eb34'
@@ -42,7 +71,7 @@ if __name__ == '__main__':
     try:
         with open('test_files\\hexagons8.geojson') as f:
             hexagons0 = geojson.load(f)
-        plot(hexagons0, turn=3)
+        plot_elevation(hexagons0, turn=3)
     except FileNotFoundError:
         pass
     """

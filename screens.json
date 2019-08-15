@@ -2,11 +2,11 @@
     "settings": {
         "fullscreen": true,
         "width": 600,
-        "height": 400
+        "height": 450
     },
     "screens": [
         {
-            "title": "Water levels",
+            "title": "Blank",
             "key": "1",
             "layers": [
                 {
@@ -44,7 +44,26 @@
                     "variable": "HEIGHT_CELLS",
 					"grid": "CELLS",
 					"blur": false,
-                    "colormap": "viridis",
+                    "colormap": "gist_earth",
+                    "type": "imshow"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
+		{
+            "title": "Bed level2",
+            "key": "4",
+            "layers": [
+                {
+                    "min": 0,
+                    "max": 20,
+                    "variable": "HEIGHT_CELLS",
+					"grid": "CELLS",
+					"blur": false,
+                    "colormap": "terrain",
                     "type": "imshow"
                 },
                 {
@@ -55,7 +74,7 @@
         },
 		{
             "title": "Water flow",
-            "key": "4",
+            "key": "5",
             "layers": [
                 {
                     "min": 0,
@@ -63,7 +82,7 @@
                     "variable": "FLOW",
 					"grid": "CELLS",
 					"blur": false,
-                    "colormap": "YlGnBu",
+                    "colormap": "GnBu",
                     "type": "imshow"
                 },
                 {
@@ -74,7 +93,7 @@
         },
 		{
             "title": "Roughness",
-            "key": "5",
+            "key": "6",
             "layers": [
                 {
                     "min": 0,
@@ -82,7 +101,7 @@
                     "variable": "ROUGHNESS",
 					"grid": "LINKS",
 					"blur": true,
-                    "colormap": "GnBu",
+                    "colormap": "viridis_r",
                     "type": "imshow"
                 },
                 {

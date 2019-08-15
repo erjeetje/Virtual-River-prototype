@@ -411,20 +411,9 @@ class Visualization():
     def imshow(self, layer):
         # get the variable for this layer
         var = self.data[layer['variable']]
-        print("layer activated: " + str(layer['variable']))
         # get min and max if set
-        #min_value = layer.get('min', var.min())
-        #max_value = layer.get('max', var.max())
         min_value = min(var)
         max_value = max(var)
-        print("layer min value: " + str(min_value))
-        print("layer max value: " + str(max_value))
-        """
-        if min_value > layer['min']:
-            min_value = layer['min']
-        if max_value > layer['max']:
-            max_value = layer['max']
-        """
 
         # the normalization function
         N = matplotlib.colors.Normalize(min_value, max_value)
@@ -432,14 +421,16 @@ class Visualization():
         cmap = getattr(matplotlib.cm, layer['colormap'])
 
         # The gridded image
-        # TODO: use approriate lookup map for cells or nodes
         if layer['grid'] == "CELLS":
             arr = var[self.grid['ravensburger_cells']]
         elif layer['grid'] == "NODES":
             arr = var[self.grid['ravensburger_nodes']]
-        else:
+        elif layer['grid'] == "LINKS":
             arr = var[self.grid['ravensburger_links']]
-            print("I found my links!")
+        else:
+            msg = "variable has an unspecified or unknown grid"
+            raise ValueError(msg)
+
         
         # the colored image
         rgba = cmap(N(arr))

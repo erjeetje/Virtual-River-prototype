@@ -1,0 +1,95 @@
+{
+    "settings": {
+        "fullscreen": true,
+        "width": 600,
+        "height": 400
+    },
+    "screens": [
+        {
+            "title": "Water levels",
+            "key": "1",
+            "layers": [
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
+        {
+            "title": "Water levels",
+            "key": "2",
+            "layers": [
+                {
+                    "min": 6,
+                    "max": 20,
+                    "variable": "WATERLEVEL",
+					"grid": "CELLS",
+					"blur": false,
+                    "colormap": "winter_r",
+                    "type": "imshow"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
+		{
+            "title": "Bed level",
+            "key": "3",
+            "layers": [
+                {
+                    "min": 0,
+                    "max": 20,
+                    "variable": "HEIGHT_CELLS",
+					"grid": "CELLS",
+					"blur": false,
+                    "colormap": "viridis",
+                    "type": "imshow"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
+		{
+            "title": "Water flow",
+            "key": "4",
+            "layers": [
+                {
+                    "min": 0,
+                    "max": 0,
+                    "variable": "FLOW",
+					"grid": "CELLS",
+					"blur": false,
+                    "colormap": "GnBu",
+                    "type": "imshow"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        },
+		{
+            "title": "Roughness",
+            "key": "5",
+            "layers": [
+                {
+                    "min": 0,
+                    "max": 70,
+                    "variable": "ROUGHNESS",
+					"grid": "LINKS",
+					"blur": true,
+                    "colormap": "cividis_r",
+                    "type": "imshow"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
+        }
+    ]
+}
