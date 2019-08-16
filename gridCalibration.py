@@ -21,7 +21,8 @@ def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", te
     transforms that can be used by other functions.
     """
     calibration = {}
-    # model points following SandBox implementation; between [-600, -400] and [600, 400] 
+    # model points following SandBox implementation; 
+    # between [-600, -400] and [600, 400] 
     calibration['model_points'] = ([-400, 300 ], [400, 300], [400, -300], [-400, -300])
     # resolution camera; FullHD
     calibration['img_points'] = [0, 0], [1920, 0], [1920, 1080], [0, 1080]

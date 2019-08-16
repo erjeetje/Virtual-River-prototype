@@ -167,8 +167,8 @@ def determine_ownership(hexagons):
                 neighbour_hexagon.properties["owner"] = owner
                 i += 1
                 taken_hexagons.append(chosen_neighbour)
-                print(owner + " ownership of hexagons: " + str(random_hexagon) +
-                      ", " + str(chosen_neighbour))
+                print(owner + " ownership of hexagons: " +
+                      str(random_hexagon) + ", " + str(chosen_neighbour))
                 continue
         else:
             if len(floodplain_neighbours) == 2:
@@ -198,8 +198,8 @@ def determine_ownership(hexagons):
                 neighbour_hexagon2.properties["owner"] = owner
                 i += 1
                 taken_hexagons.append(chosen_neighbours[1])
-                print(owner + " ownership of hexagons: " + str(random_hexagon) +
-                      ", " + str(chosen_neighbours[1]))
+                print(owner + " ownership of hexagons: " +
+                      str(random_hexagon) + ", " + str(chosen_neighbours[1]))
             elif (neighbour_hexagon2.properties["owned"] or
                   neighbour_hexagon2.properties["landuse"] == 0 or
                   neighbour_hexagon2.properties["landuse"] == 1):
@@ -209,8 +209,8 @@ def determine_ownership(hexagons):
                 neighbour_hexagon1.properties["owner"] = owner
                 i += 1
                 taken_hexagons.append(chosen_neighbours[0])
-                print(owner + " ownership of hexagons: " + str(random_hexagon) +
-                      ", " + str(chosen_neighbours[0]))
+                print(owner + " ownership of hexagons: " +
+                      str(random_hexagon) + ", " + str(chosen_neighbours[0]))
             else:
                 hexagon.properties["owned"] = True
                 hexagon.properties["owner"] = owner
@@ -221,9 +221,9 @@ def determine_ownership(hexagons):
                 i += 1
                 taken_hexagons.append(chosen_neighbours[0])
                 taken_hexagons.append(chosen_neighbours[1])
-                print(owner + " ownership of hexagons: " + str(random_hexagon) +
-                      ", " + str(chosen_neighbours[0]) + ", " +
-                      str(chosen_neighbours[1]))
+                print(owner + " ownership of hexagons: " +
+                      str(random_hexagon) + ", " + str(chosen_neighbours[0]) +
+                      ", " + str(chosen_neighbours[1]))
     return hexagons
 
 

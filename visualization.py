@@ -65,11 +65,15 @@ def blend_transparent(background_img, overlay_img):
 
     # Create a masked out background image, and masked out overlay
     # We convert the images to floating point in range 0.0 - 1.0
-    background_part = (background_img * (1 / 255.0)) * (background_mask * (1 / 255.0))
-    overlay_part = (overlay_bgr * (1 / 255.0)) * (overlay_mask * (1 / 255.0))
+    background_part = ((background_img * (1 / 255.0)) *
+                       (background_mask * (1 / 255.0)))
+    overlay_part = ((overlay_bgr * (1 / 255.0)) *
+                    (overlay_mask * (1 / 255.0)))
 
-    # And finally just add them together, and rescale it back to an 8bit integer image    
-    return np.uint8(cv2.addWeighted(background_part, 255.0, overlay_part, 255.0, 0.0))
+    # And finally just add them together, and rescale it back to an 8bit
+    # integer image    
+    return np.uint8(cv2.addWeighted(background_part, 255.0, overlay_part,
+                                    255.0, 0.0))
 
 
 class Visualization():
@@ -123,7 +127,9 @@ class Visualization():
 
     def get_ds(self):
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        nc_path = os.path.join(dir_path, 'models', 'Waal_schematic', 'DFM_OUTPUT_Virtual_River', 'Virtual_River_map.nc')
+        nc_path = os.path.join(dir_path, 'models', 'Waal_schematic',
+                               'DFM_OUTPUT_Virtual_River',
+                               'Virtual_River_map.nc')
         ds = netCDF4.Dataset(nc_path)
         return ds
 
@@ -168,7 +174,7 @@ class Visualization():
                         'yk',
                         'zk',
                         'ndx',
-                        'ndxi',             # number of internal points (no boundaries)
+                        'ndxi',  # number of internal points (no boundaries)
                         'flowelemnode',
                         'ln',
                         'frcu'
@@ -204,12 +210,15 @@ class Visualization():
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
         self.data['FLOW'] = np.sqrt((self.data['U'])**2 + (self.data['V'])**2)
-        self.data['WATERDEPTH'] = self.data['WATERLEVEL'] - self.data['HEIGHT_CELLS']
+        self.data['WATERDEPTH'] = (self.data['WATERLEVEL'] -
+                 self.data['HEIGHT_CELLS'])
         return
 
 
     def update_vars(self, model=None, engine='dflowfm_nc', t=0):
-        """get the variables from the model and put them in the data dictionary"""
+        """
+        get the variables from the model and put them in the data dictionary
+        """
         meta = {
                 "initial_vars": [
                         'xzw',
@@ -218,7 +227,7 @@ class Visualization():
                         'yk',
                         'zk',
                         'ndx',
-                        'ndxi',             # number of internal points (no boundaries)
+                        'ndxi',  # number of internal points (no boundaries)
                         'flowelemnode',
                         'ln',
                         'frcu'
@@ -252,7 +261,8 @@ class Visualization():
         for key, val in meta["mapping"].items():
             self.data[key] = self.data[val]
         self.data['FLOW'] = np.sqrt((self.data['U'])**2 + (self.data['V'])**2)
-        self.data['WATERDEPTH'] = self.data['WATERLEVEL'] - self.data['HEIGHT_CELLS']
+        self.data['WATERDEPTH'] = (self.data['WATERLEVEL'] -
+                 self.data['HEIGHT_CELLS'])
     
     
     def add_image(self, key, data):
@@ -261,7 +271,9 @@ class Visualization():
 
 
     def dflowfm_compute(self):
-        """compute variables that are missing/buggy/not available"""
+        """
+        compute variables that are missing/buggy/not available
+        """
         numk = self.data['zk'].shape[0]
         self.data['numk'] = numk
         # fix shapes
@@ -383,7 +395,8 @@ class Visualization():
         # make main window full screen
         if self.config['settings'].get('fullscreen', False):
             cv2.moveWindow('main', -1920, -1080)
-            cv2.setWindowProperty('main', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+            cv2.setWindowProperty('main', cv2.WND_PROP_FULLSCREEN,
+                                  cv2.WINDOW_FULLSCREEN)
 
 
     def set_screen(self, key):
@@ -578,7 +591,8 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
     model = D3D.Model()
     #dir_path = os.path.dirname(os.path.realpath(__file__))
-    #nc_path = os.path.join(dir_path, 'models', 'Waal_schematic', 'DFM_OUTPUT_Virtual_River', 'Virtual_River_map.nc')
+    #nc_path = os.path.join(dir_path, 'models', 'Waal_schematic',
+    #                       'DFM_OUTPUT_Virtual_River', 'Virtual_River_map.nc')
     #ds = netCDF4.Dataset(nc_path)
     viz = Visualization(model)
     viz.loop()
