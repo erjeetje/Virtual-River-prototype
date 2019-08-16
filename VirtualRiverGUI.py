@@ -357,6 +357,8 @@ class runScript():
                 ltds, self.node_grid, mode="ltd")
         self.node_grid = gridmap.add_bedslope(self.node_grid, slope=self.slope)
         self.node_grid = gridmap.set_active(self.node_grid)
+        self.node_grid = structures.create_buildings(self.hexagons_sandbox,
+                                                     self.node_grid)
         
         # initiate the interpolation to get the initial elevation model.
         self.node_grid = gridmap.interpolate_node_grid(

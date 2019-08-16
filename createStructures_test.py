@@ -398,8 +398,11 @@ def apply_hydraulic_structures_corrections(grid):
 
 def create_buildings(hexagons, grid):
     building_size = 20
+    building_ids = []
     buildings = []
     for feature in hexagons.features:
+        if feature.properties["behind_dike"]:
+            continue
         if (feature.properties["z_reference"] < 4 and
             feature.properties["landuse"] == 0):
             shape = geometry.asShape(feature.geometry)
@@ -412,12 +415,43 @@ def create_buildings(hexagons, grid):
             polygon = geojson.Polygon([[point1, point2, point3, point4,
                                         point1]])
             building = geojson.Feature(id=feature.id, geometry=polygon)
+            building_ids.append(feature.id)
             buildings.append(building)
     buildings = geojson.FeatureCollection(buildings)
-    print(buildings)
-    with open('buildings.geojson', 'w') as f:
-        geojson.dump(buildings, f, sort_keys=True, indent=2)
-    return
+    for feature in grid.features:
+        if type(feature.properties["nearest"]) is int:
+            if feature.properties["nearest"] not in building_ids:
+                continue
+            else:
+                reference = building_ids.index(feature.properties["nearest"])
+        else:
+            continue
+        """
+        elif any(True for x in feature.properties["nearest"]
+                 if x not in building_ids):
+            continue
+        else:
+            reference = building_ids.index(feature.properties["nearest"][0])
+        """
+        point = geometry.asShape(feature.geometry)
+        building = buildings.features[reference]
+        polygon = geometry.asShape(feature.geometry)
+        if polygon.contains(point):
+            feature.properties["building_active"] = True
+            feature.properties["z_building"] = 6
+    return grid
+
+
+def add_buildings(grid):
+    for feature in grid.features:
+        if not feature.properties["building_active"]:
+            continue
+        else:
+            feature.properties["z"] += (
+                    feature.properties["z_building"] -
+                    feature.properties["bedslope_correction"])
+    with open('node_grid_with_buildings.geojson', 'w') as f:
+        geojson.dump(grid, f, sort_keys=True, indent=2)
 
 
 if __name__ == '__main__':
@@ -442,4 +476,5 @@ if __name__ == '__main__':
     filled_node_grid = set_active(filled_node_grid)
     apply_hydraulic_structures_corrections(filled_node_grid)
     """
-    create_buildings(hexagons, filled_node_grid)
+    filled_node_grid = create_buildings(hexagons, filled_node_grid)
+    add_buildings(filled_node_grid)

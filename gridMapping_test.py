@@ -469,12 +469,16 @@ def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_ty
         if type(feature.properties["nearest"]) is int:
             if feature.properties["nearest"] in indices_updated:
                 feature.properties["changed"] = True
+                if turn != 0:
+                    feature.properties["building_active"] = False
                 counter += 1
             else:
                 feature.properties["changed"] = False
         elif any(True for x in feature.properties["nearest"]
                  if x in indices_updated):
             feature.properties["changed"] = True
+            if turn != 0:
+                feature.properties["building_active"] = False
             counter += 1
         else:
             feature.properties["changed"] = False
@@ -556,6 +560,10 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
                                      feature.properties["bedslope_correction"])
                 if height_correction > feature.properties["z"]:
                     feature.properties["z"] = height_correction
+        elif feature.properties["building_active"]:
+            feature.properties["z"] += (
+                    feature.properties["z_building"] -
+                    feature.properties["bedslope_correction"])
 
     # block of code that sets the z variable for each grid point outside of the
     # game board by setting the z value equal to the z value of the nearest
