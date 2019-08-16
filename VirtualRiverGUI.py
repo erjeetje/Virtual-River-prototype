@@ -12,12 +12,12 @@ import os
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping as gridmap
+import gridMapping_test as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
-import createStructures as structures
+import createStructures_test as structures
 import costModule as costs
 import waterModule as water
 import indicatorModule_IHE as indicator
@@ -304,7 +304,9 @@ class runScript():
         ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
         self.viz.add_image("OWNERSHIP", ownership_viz)
         
-        #channel = structures.get_channel(self.hexagons_sandbox)
+        channel = structures.get_channel(self.hexagons_sandbox)
+        groynes = structures.create_groynes(channel)
+        ltds = structures.create_LTDs(channel)
         #weirs = structures.create_structures(channel)
         #D3D.geojson2pli(weirs)
         print("Created structure files (groynes and ltds).")
@@ -350,6 +352,12 @@ class runScript():
                                                  self.flow_grid)
         self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
                                                        self.face_grid)
+        self.node_grid = structures.index_structures(groynes, self.node_grid)
+        self.node_grid = structures.index_structures(
+                ltds, self.node_grid, mode="ltd")
+        self.node_grid = gridmap.add_bedslope(self.node_grid, slope=self.slope)
+        self.node_grid = gridmap.set_active(self.node_grid)
+        
         # initiate the interpolation to get the initial elevation model.
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,

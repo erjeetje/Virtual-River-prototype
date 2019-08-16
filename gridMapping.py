@@ -376,6 +376,8 @@ def index_node_grid(hexagons, grid, slope):
     # change after a board state update. Otherwise index the grid point to
     # the closest neighbour that falls within the board bbox.
     for feature in grid.features:
+        # to test:
+        #xy = feature.geometry["coordinates"]
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
