@@ -12,12 +12,12 @@ import os
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping as gridmap
+import gridMapping_test as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
-import createStructures as structures
+import createStructures_test as structures
 import costModule as costs
 import waterModule as water
 import indicatorModule_IHE as indicator
@@ -155,7 +155,7 @@ class runScript():
         self.model_ini_save = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
         self.slope = 10**-3  # tested and proposed range: 10**-3 to 10**-4
-        self.vert_scale = 0.25  # setting matches current z scaling, testing.
+        self.vert_scale = 1  # setting matches current z scaling, testing.
         # Mixtype vegetation class ratio in % for natural grass/reed/brushwood
         # Currently not used, but can be passed to landuse_to_friction function
         # of the updateRoughness module.
@@ -189,7 +189,7 @@ class runScript():
         self.fig = None
         self.axes = None
         # water safety module
-        self.indicators = indicator.Indicators()
+        #self.indicators = indicator.Indicators()
         # cost module
         self.cost_module = costs.Costs()
         # total costs made up until the end of the rounds ended
@@ -297,12 +297,16 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = owner.generate_ownership(
                 self.hexagons_sandbox)
-        # turned ownership off for the IHE session! TURN IT BACK ON
-        #self.hexagons_sandbox = owner.determine_ownership(
-        #        self.hexagons_sandbox)
+        self.hexagons_sandbox = owner.determine_ownership(
+                self.hexagons_sandbox)
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
-        #channel = structures.get_channel(self.hexagons_sandbox)
+        ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
+        self.viz.add_image("OWNERSHIP", ownership_viz)
+        
+        channel = structures.get_channel(self.hexagons_sandbox)
+        groynes = structures.create_groynes(channel)
+        ltds = structures.create_LTDs(channel)
         #weirs = structures.create_structures(channel)
         #D3D.geojson2pli(weirs)
         print("Created structure files (groynes and ltds).")
@@ -348,6 +352,14 @@ class runScript():
                                                  self.flow_grid)
         self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
                                                        self.face_grid)
+        self.node_grid = structures.index_structures(groynes, self.node_grid)
+        self.node_grid = structures.index_structures(
+                ltds, self.node_grid, mode="ltd")
+        self.node_grid = gridmap.add_bedslope(self.node_grid, slope=self.slope)
+        self.node_grid = gridmap.set_active(self.node_grid)
+        self.node_grid = structures.create_buildings(self.hexagons_sandbox,
+                                                     self.node_grid)
+        
         # initiate the interpolation to get the initial elevation model.
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,
@@ -407,6 +419,7 @@ class runScript():
         """
         # system is now initialized
         self.initialized = True
+        self.run_model()
         self.scores()
         toc = time.time()
         try:
@@ -577,6 +590,8 @@ class runScript():
                     self.hexagons_sandbox, self.filled_node_grid,
                     turn=self.turn, fill=True, save=False, path=self.dir_path)
         toc = time.time()
+        ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
+        self.viz.add_image("OWNERSHIP", ownership_viz)
         if self.tygron:
             # create a new geotiff and set the new elevation in tygron.
             t2 = time.time()
@@ -615,7 +630,8 @@ class runScript():
               " seconds. Interpolation update time: " +
               str(round(toc-tec, 2)) + " seconds. Total update time: " +
               str(round(toc-tic, 2)) + " seconds.")
-        self.update_viz()
+        self.run_model()
+        #2self.update_viz()
         return
     
     def run_model(self):
@@ -967,6 +983,7 @@ class runScript():
         return
     
     def scores(self):
+        """
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
@@ -979,6 +996,7 @@ class runScript():
         self.indicators.update_biodiversity_score(self.hexagons_sandbox,
                                                   self.turn)
         self.indicators.plot(self.turn)
+        """
         return
     
     def update_viz(self):

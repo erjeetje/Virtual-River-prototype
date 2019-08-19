@@ -166,6 +166,7 @@ class runScript():
         self.turn = 0
         self.token = ""
         self.model = D3D.Model()
+        self.turn_img = None
         self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
@@ -200,40 +201,133 @@ class runScript():
         # TODO
         # visualization
         self.viz = visualize.Visualization(self.model)
-    
-    
+
+
     def initialize(self):
         if self.initialized:
             print("Virtual River is already initialized, please use Update "
                   "instead.")
             return
         tic = time.time()
-        with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
-            username = f.read()
-        with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
-            password = g.read()
-        api_key = tygron.join_session(username, password)
-        if api_key is None:
-            print("logging in to Tygron failed, running Virtual River without "
-                  "Tygron")
-            self.tygron = False
-        else:
-            self.token = "token=" + api_key
-            print("logged in to Tygron")
-        # get image from camera
-        img = webcam.get_image(self.turn, mirror=True)
+        self.tygron_login()
+        self.get_image()
+        self.calibrate_camera()
+        self.get_hexagons()
+        self.transform_hexagons()
+        if self.tygron:
+            self.tygron_update_buildings()
+        self.set_up_hexagons()
+        if self.tygron:
+            self.tygron_transform()
+        self.update_ownership_viz()
+        tac = time.time()
+        self.create_grids()
+        self.index_grids()
+        self.set_up_structures()
+        self.process_grids() 
+        tec = time.time()
+        if self.tygron:
+            t0 = time.time()
+            self.tygron_update()
+            t1 = time.time()
+        self.initialized = True
+        self.index_model()
+        self.run_model()
+        self.scores()
+        self.update_viz()
+        toc = time.time()
+        try:
+            print("Finished startup and calibration" +
+                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
+                  " seconds. Indexing and interpolation time: " +
+                  str(round(tec-tac, 2)) +
+                  " seconds. Tygron terrain update time: " +
+                  str(round(t1-t0, 2)) +
+                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
+                  " seconds. Total initialization time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        except UnboundLocalError:
+            print("Finished startup and calibration" +
+                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
+                  " seconds. Indexing and interpolation time: " +
+                  str(round(tec-tac, 2)) +
+                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
+                  " seconds. Total initialization time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        return
+
+
+    def update(self):
+        if not self.initialized:
+            print("ERROR: Virtual River is not yet calibrated, "
+                  "please first run initialize")
+            return
+        if (self.initialized and self.turn == 0):
+            print("ERROR: It seems Virtual River is initialized, but that end "
+                  "end round has not yet been triggered.")
+            return
+        tic = time.time()
+        if not self.test:
+            self.get_image()
+        self.get_hexagons()
+        self.transform_hexagons()
+        if self.tygron:
+            self.tygron_update_buildings()
+            self.tygron_transform()
+        dike_moved = self.compare_hexagons()
+        tac = time.time()
+        self.update_ownership_viz()
+        self.process_grids(dike_moved=dike_moved)
+        tec = time.time()
+        if self.tygron:
+            t0 = time.time()
+            self.tygron_update()
+            t1 = time.time()
+        self.run_model()
+        self.scores()
+        self.update_viz()
+        self.print_costs()
+        self.start_new_turn = False
+        toc = time.time()
+        try:
+            print("Updated to turn " + str(self.turn) +
+                  ". Comparison update time: " + str(round(tac-tic, 2)) +
+                  " seconds. Interpolation update time: " +
+                  str(round(toc-tec, 2)) + " seconds. Tygron update time: " +
+                  str(round((t1-t0), 2)) + " seconds. Total update time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        except UnboundLocalError:
+            print("Updated to turn " + str(self.turn) +
+                  ". Comparison update time: " + str(round(tac-tic, 2)) +
+                  " seconds. Interpolation update time: " +
+                  str(round(toc-tec, 2)) + " seconds. Total update time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        return
+
+
+    def get_image(self):
+        """
+        Get a camera image.
+        """
+        self.turn_img = webcam.get_image(self.turn, mirror=True)
         print("Retrieved initial board image")
+        return
+
+
+    def calibrate_camera(self):
+        """
+        Calibrate the camera/board.
+        """
         # calibrate camera
         # try - except TypeError --> if nothing returned by method, then go to
         # test mode.
         try:
-            canvas, thresh = cali.detect_corners(img, method='adaptive',
-                                                 path=self.processing_path)
+            canvas, thresh = cali.detect_corners(
+                    self.turn_img, method='adaptive',
+                    path=self.processing_path)
         except TypeError:
             self.test = True
             print("TEST MODE: No camera detected, entering test mode")
-        # adjust image, get the hexagons and store calibration values as global
-        # variables.
         if not self.test:
             self.pers, self.img_x, self.img_y, self.origins, self.radius, \
                 cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
@@ -242,51 +336,56 @@ class runScript():
             # change dir_path to config_path
             self.transforms = cali.create_calibration_file(
                     self.img_x, self.img_y, cut_points, path=self.config_path)
-            
-            # update the hexagons to initial board state.
-            self.hexagons = detect.detect_markers(
-                    img, self.pers, self.img_x, self.img_y, self.origins,
-                    self.radius, self.hexagons, method='LAB', path=self.store_path)
-            self.hexagons = ghosts.set_values(self.hexagons)
-            print("Processed initial board state.")
         else:
             self.transforms = cali.create_calibration_file(
                     path=self.config_path, test = self.test)
-        # update the tygron_ids of the hexagons. These must be updated to match
-        # the hexagons to the correct hexagons in Tygron.
-        
-        # transform the hexagons to sandbox coordinates
+        return
+    
+    
+    def get_hexagons(self):
         if not self.test:
-            if self.tygron:
-                self.hexagons = tygron.update_hexagons_tygron_id(self.token,
-                                                                 self.hexagons)
-            self.hexagons_sandbox = detect.transform(
-                    self.hexagons, self.transforms, export="sandbox",
-                    path=self.dir_path)
-            self.hexagons_sandbox = adjust.add_bedslope(
-                    self.hexagons_sandbox, self.slope)
-            self.hexagons_sandbox = adjust.z_correction(
-                    self.hexagons_sandbox, initialized=self.initialized)
-        
-            # detect where the main channel and dikes are located and construct
-            # both the groynes and longitudinal training dams for the model.
+            # update the hexagons to initial board state.
+            self.hexagons = detect.detect_markers(
+                    self.turn_img, self.pers, self.img_x, self.img_y,
+                    self.origins, self.radius, self.hexagons, method='LAB',
+                    path=self.store_path)
+            if not self.initialized:
+                self.hexagons = ghosts.set_values(self.hexagons)
         else:
             print("TEST MODE: Getting new board state from test folder.")
             self.hexagons_sandbox = gridmap.read_hexagons(
                     filename='hexagons%d.geojson' % self.turn,
                     path=self.test_path)
-            self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
-            self.hexagons_sandbox = owner.determine_neighbours(
-                    self.hexagons_sandbox)
             self.hexagons_sandbox = adjust.test_mode_z_correction(
                     self.hexagons_sandbox)
-            #self.hexagons_sandbox = adjust.add_bedslope(
-            #        self.hexagons_sandbox, self.slope)
-            #self.hexagons_sandbox = adjust.z_correction(self.hexagons_sandbox)
-            if self.tygron:
-                self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
-                        self.token, self.hexagons_sandbox)
-            print("Received current board state.")
+            if not self.initialized:
+                self.hexagons_sandbox = ghosts.set_values(
+                        self.hexagons_sandbox)
+        print("Retrieved board state.")
+        return
+    
+    
+    def transform_hexagons(self):
+        if not self.test:
+            # update the hexagons to initial board state.
+            self.hexagons_sandbox = detect.transform(
+                    self.hexagons, self.transforms, export="sandbox",
+                    path=self.dir_path)
+        if not self.initialized:
+            self.hexagons_sandbox = adjust.add_bedslope(
+                    self.hexagons_sandbox, self.slope)
+            self.hexagons_sandbox = adjust.z_correction(
+                    self.hexagons_sandbox, initialized=self.initialized)
+        self.hexagons_tygron = detect.transform(
+                    self.hexagons_sandbox, self.transforms,
+                    export="sandbox2tygron")
+        print("Transformed hexagons suitable for model and tygron.")
+        return
+    
+    
+    def set_up_hexagons(self):        
+        # detect where the main channel and dikes are located and construct
+        # both the groynes and longitudinal training dams for the model.
         self.hexagons_sandbox = structures.determine_dikes(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = structures.determine_channel(
@@ -301,57 +400,44 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
-        ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
-        self.viz.add_image("OWNERSHIP", ownership_viz)
-        
-        channel = structures.get_channel(self.hexagons_sandbox)
-        groynes = structures.create_groynes(channel)
-        ltds = structures.create_LTDs(channel)
-        #weirs = structures.create_structures(channel)
-        #D3D.geojson2pli(weirs)
-        print("Created structure files (groynes and ltds).")
+        return
+    
+    
+    def compare_hexagons(self):
         """
-        # doesn't work properly after changing the shapes to linestrings
-        # instead of polygons --> to fix
-        
-            structures_tygron = detect.transform(weirs,
-                                                 self.transforms,
-                                                 export="sandbox2tygron")
+        if not self.test:
+            self.hexagons, self.turn_costs, dike_moved = compare.compare_hex(
+                    self.cost_module, self.hexagons_prev, self.hexagons)
+        else:
         """
-        if self.tygron:
-            # transform the hexagons to tygron initialization coordinates -->
-            # this may now be obsolete after the tygron LTS upgrade, transform
-            # is the same, although correct CRS is still required.
-            if not self.test:
-                hexagons_tygron_int = detect.transform(
-                        self.hexagons, self.transforms,
-                        export="tygron_initialize")
-                # transform hexagons to tygron coordinates.
-                self.hexagons_tygron = detect.transform(
-                        self.hexagons, self.transforms, export="tygron")
-            else:
-                self.hexagons_tygron = detect.transform(
-                        self.hexagons_sandbox, self.transforms,
-                        export="sandbox2tygron")
-        print("Prepared and transformed geojson featurecollections.")
-        # initialize Delft3D-FM model
-        tac = time.time()
-        #self.model = D3D.initialize_model()
-        # get node grid (cell corner coordinates) and face grid (cell
-        # center coordinates)
+        self.hexagons_sandbox, self.turn_costs, dike_moved = \
+        compare.compare_hex(
+                self.cost_module, self.hexagons_prev, self.hexagons_sandbox)
+        return dike_moved
+    
+    def create_grids(self):
         self.node_grid = gridmap.read_node_grid(path=self.store_path)
         self.flow_grid = gridmap.create_flow_grid(self.model.model,
                                                   path=self.store_path)
         self.face_grid = gridmap.read_face_grid(self.model.model,
                                                 path=self.store_path)
-        print("Loaded grids (cell corners and cell centers).")
-        # index both grids to the hexagons.
+        return
+    
+    
+    def index_grids(self):
         self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox,
                                                  self.node_grid, self.slope)
         self.flow_grid = gridmap.index_flow_grid(self.hexagons_sandbox,
                                                  self.flow_grid)
         self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
                                                        self.face_grid)
+        return
+    
+    
+    def set_up_structures(self):
+        channel = structures.get_channel(self.hexagons_sandbox)
+        groynes = structures.create_groynes(channel)
+        ltds = structures.create_LTDs(channel)
         self.node_grid = structures.index_structures(groynes, self.node_grid)
         self.node_grid = structures.index_structures(
                 ltds, self.node_grid, mode="ltd")
@@ -359,14 +445,21 @@ class runScript():
         self.node_grid = gridmap.set_active(self.node_grid)
         self.node_grid = structures.create_buildings(self.hexagons_sandbox,
                                                      self.node_grid)
-        
-        # initiate the interpolation to get the initial elevation model.
+        return
+    
+    
+    def process_grids(self, dike_moved=False):
+        if self.initialized:
+            self.node_grid = gridmap.update_node_grid(
+                    self.hexagons_sandbox, self.node_grid, turn=self.turn,
+                    printing=True)
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
-        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
+        self.hexagons_sandbox = self.model.update_waterlevel(
+                self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
                 self.hexagons_sandbox, vert_scale=self.vert_scale,
                 initialization=True)
@@ -375,264 +468,121 @@ class runScript():
         print("Executed grid interpolation.")
         # create a deepcopy of the node grid and fill the grid behind the
         # dikes. The filled node grid is for the hydrodynamic model.
-        self.filled_node_grid = deepcopy(self.node_grid)
-        filled_hexagons = deepcopy(self.hexagons_sandbox)
-        filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
-        self.filled_node_grid = gridmap.update_node_grid(
-                filled_hexagons, self.filled_node_grid, fill=True)
-        self.filled_node_grid = gridmap.interpolate_node_grid(
-                filled_hexagons, self.filled_node_grid, turn=self.turn,
-                fill=True, path=self.dir_path)
-        print("Executed grid fill interpolation.")
-        tec = time.time()
-        if self.tygron:
-            # a geotiff of the node grid is required to set the elevation in
-            # tygron.
-            t0 = time.time()
-            self.heightmap = gridmap.create_geotiff(
-                self.node_grid, turn=self.turn, path=self.store_path)
-            print("Created geotiff elevation map")
-            self.hexagons_tygron = tygron.set_terrain_type(
-                    self.token, self.hexagons_tygron)
-            tygron.hex_to_terrain(self.token, self.hexagons_tygron)
-            file_location = (self.store_path + "\\grid_height_map" +
-                             str(self.turn) + ".tif")
-            heightmap_id = tygron.set_elevation(
-                    file_location, self.token, turn=self.turn)
-            t1 = time.time()
-            print("Updated Tygron world from current board state.")
-        """
-        # run the model. --> this is currently separate from the initialization
-        # as the whole system becomes rather slow. Added a temporary run model
-        # button to the Virtual River GUI to run the model instead.
-        self.fig, self.axes = D3D.run_model(
-                self.model, self.filled_node_grid, self.flow_grid,
-                self.hexagons_sandbox, initialized=self.initialized)
-        """
-        """
-        # Not sure it makes sense to store the structures ?
-        with open(os.path.join(self.store_path,
-                               'structures.geojson'), 'w') as f:
-            geojson.dump(weirs, f, sort_keys=True,
-                         indent=2)
-        print("Saved structures file (conditional).")
-        """
-        # system is now initialized
-        self.initialized = True
-        self.run_model()
-        self.scores()
-        toc = time.time()
-        try:
-            print("Finished startup and calibration" +
-                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
-                  " seconds. Indexing and interpolation time: " +
-                  str(round(tec-tac, 2)) +
-                  " seconds. Tygron terrain update time: " +
-                  str(round(t1-t0, 2)) +
-                  " seconds. Total initialization time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
-        except UnboundLocalError:
-            print("Finished startup and calibration" +
-                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
-                  " seconds. Indexing and interpolation time: " +
-                  str(round(tec-tac, 2)) +
-                  " seconds. Total initialization time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
-        #self.update_viz()
-        return
-
-
-    def update(self):
-        """
-        function that initiates and handles all update steps. Returns all update
-        variables
-        """
         if not self.initialized:
-            print("ERROR: Virtual River is not yet calibrated, "
-                  "please first run initialize")
-            return
-        if (self.initialized and self.turn == 0):
-            print("ERROR: It seems Virtual River is initialized, but that end "
-                  "end round has not yet been triggered.")
-            return
-        tic = time.time()
-        print("Updating board state")
-        #self.turn += 1
-        # get new image of board state from camera.
-        if not self.test:
-            img = webcam.get_image(self.turn, mirror=True)
-            print("Retrieved board image after turn " + str(self.turn) + ".")
-            # create a deepcopy of the previous board state to compare with the new
-            # board state.
-            #self.hexagons_prev = deepcopy(self.hexagons)
-            self.hexagons = detect.detect_markers(
-                    img, self.pers, self.img_x, self.img_y, self.origins,
-                    self.radius, self.hexagons, turn=self.turn, method='LAB',
-                    path=self.store_path)
-            self.hexagons = adjust.z_correction(self.hexagons)
-            print("Processed current board state.")
-            if self.tygron:
-                # update hexagon ids to matching ids in tygron.
-                self.hexagons = tygron.update_hexagons_tygron_id(
-                        self.token, self.hexagons)
-            # compare the new board state to the old board state. Sets 'z_changed'
-            # and 'landuse_changed' to True or False accordingly. Also tracks if
-            # either or both of the dike locations changed.
-            self.hexagons, self.turn_costs, dike_moved = compare.compare_hex(
-                    self.cost_module, self.hexagons_prev, self.hexagons)
-            #self.total_costs = self.total_costs + turn_costs
-            # transform the hexagons to the sandbox coordinates --> check if this
-            # is necessary, as the main hexagons are already updated, they should
-            # be linked in memory to the sandbox hexagons.
-            self.hexagons_sandbox = detect.transform(
-                    self.hexagons, self.transforms, export="sandbox")
-            # THIS SHOULD BE MOVED TO INITIALIZE AFTER MODEL IS FIXED TO INITIALIZATION
-            if not self.ghost_hexagons_fixed:
-                self.hexagons_sandbox = ghosts.update_values(
-                        self.hexagons_sandbox)
-                self.ghost_hexagons_fixed = True
-                print("Fixed the ghost cell values")
-        else:
-            #self.hexagons_prev = deepcopy(self.hexagons_sandbox)
-            try:
-                print("TEST MODE: Getting new board state from test folder.")
-                self.hexagons_sandbox = gridmap.read_hexagons(
-                        filename='hexagons%d.geojson' % self.turn,
-                        path=self.test_path)
-                self.hexagons_sandbox = ghosts.set_values(
-                        self.hexagons_sandbox)
-                self.hexagons_sandbox = adjust.test_mode_z_correction(
-                    self.hexagons_sandbox)
-                print("Received current board state.")
-            except FileNotFoundError:
-                print("ERROR: Ran out of test files, aborting update function."
-                      " Please restart the application to continue testing.")
-                return
-            # THIS SHOULD BE MOVED TO INITIALIZE AFTER MODEL IS FIXED TO INITIALIZATION
-            if not self.ghost_hexagons_fixed:
-                self.hexagons_sandbox = ghosts.update_values(
-                        self.hexagons_sandbox)
-                self.ghost_hexagons_fixed = True
-                print("Fixed the ghost cell values")
-            if self.tygron:
-                # update hexagon ids to matching ids in tygron.
-                self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
-                        self.token, self.hexagons_sandbox)
-            self.hexagons_sandbox, self.turn_costs, dike_moved = compare.compare_hex(
-                    self.cost_module, self.hexagons_prev,
-                    self.hexagons_sandbox)
-            #self.total_costs = self.total_costs + turn_costs
-        # update the Chezy coefficients of all hexagons.
-        if self.test:
-            self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
-        self.hexagons_sandbox = roughness.landuse_to_friction(
-                self.hexagons_sandbox, vert_scale=self.vert_scale)
-        self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                self.model.model, self.hexagons_sandbox, self.flow_grid)
-
-        tac = time.time()
-        if self.tygron:
-            # transform the hexagons to the sandbox coordinates --> check if this
-            # is necessary, as the main hexagons are already updated, they should
-            # be linked in memory to the sandbox hexagons.
-            t0 = time.time()
-            if not self.test:
-                self.hexagons_tygron = detect.transform(
-                        self.hexagons, self.transforms, export="tygron")
-            else:
-                self.hexagons_tygron = detect.transform(
-                        self.hexagons_sandbox, self.transforms,
-                        export="sandbox2tygron")
-            # get the hexagons that should be changed to water or land in
-            # tygron.
-            #hexagons_to_water, hexagons_to_land = compare.terrain_updates(
-            #        self.hexagons_tygron)
-            # update tygron terrain
-            tygron.set_terrain_type(
-                    self.token, self.hexagons_tygron)
-            tygron.hex_to_terrain(self.token, self.hexagons_tygron)
-            t1 = time.time()
-
-        tec = time.time()
-        # set the 'changed' property of each node grid point to True or False
-        # based on the comparison with the previous turn (only update what
-        # needs to be updated).
-        self.node_grid = gridmap.update_node_grid(
-                self.hexagons_sandbox, self.node_grid, turn=self.turn,
-                printing=True)
-        # update the elevation model by only performing interpolation for the
-        # points that have changed.
-        self.node_grid = gridmap.interpolate_node_grid(
-                self.hexagons_sandbox, self.node_grid, fill=False, 
-                turn=self.turn, save=False, path=self.dir_path)
-        if dike_moved:
-            # if the dike locations changed, the filled node grid needs to be
-            # rebuild as the filled hexagon locations are changed as well.
-            self.hexagons_sandbox = structures.determine_dikes(
-                self.hexagons_sandbox)
-            self.hexagons_sandbox = structures.determine_floodplains_and_behind_dikes(
-                self.hexagons_sandbox)
+            self.filled_node_grid = deepcopy(self.node_grid)
             filled_hexagons = deepcopy(self.hexagons_sandbox)
             filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
-            self.filled_node_grid = deepcopy(self.node_grid)
             self.filled_node_grid = gridmap.update_node_grid(
                     filled_hexagons, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     filled_hexagons, self.filled_node_grid, turn=self.turn,
-                    fill=True, save=False, path=self.dir_path)
-            print("updated complete grid, dike relocation detected")
+                    fill=True, path=self.dir_path)
         else:
-            # if the dike locations did not change, a simple update suffices.
-            self.filled_node_grid = gridmap.update_node_grid(
-                    self.hexagons_sandbox, self.filled_node_grid,
-                    turn=self.turn, grid_type="filled")
-            self.filled_node_grid = gridmap.interpolate_node_grid(
-                    self.hexagons_sandbox, self.filled_node_grid,
-                    turn=self.turn, fill=True, save=False, path=self.dir_path)
-        toc = time.time()
+            if dike_moved:
+                self.hexagons_sandbox = structures.determine_dikes(
+                        self.hexagons_sandbox)
+                self.hexagons_sandbox = \
+                structures.determine_floodplains_and_behind_dikes(
+                        self.hexagons_sandbox)
+                filled_hexagons = deepcopy(self.hexagons_sandbox)
+                filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
+                self.filled_node_grid = deepcopy(self.node_grid)
+                self.filled_node_grid = gridmap.update_node_grid(
+                        filled_hexagons, self.filled_node_grid, fill=True)
+                self.filled_node_grid = gridmap.interpolate_node_grid(
+                        filled_hexagons, self.filled_node_grid, turn=self.turn,
+                        fill=True, save=False, path=self.dir_path)
+            else:
+                # if the dike locations did not change, a simple update suffices.
+                self.filled_node_grid = gridmap.update_node_grid(
+                        self.hexagons_sandbox, self.filled_node_grid,
+                        turn=self.turn, grid_type="filled")
+                self.filled_node_grid = gridmap.interpolate_node_grid(
+                        self.hexagons_sandbox, self.filled_node_grid,
+                        turn=self.turn, fill=True, save=False,
+                        path=self.dir_path)
+        return
+    
+    
+    def tygron_login(self):
+        try:
+            with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
+                username = f.read()
+            with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
+                password = g.read()
+        except FileNotFoundError:
+            username = "No"
+            password = "login"
+        api_key = tygron.join_session(username, password)
+        if api_key is None:
+            print("logging in to Tygron failed, running Virtual River without "
+                  "Tygron")
+            self.tygron = False
+        else:
+            self.token = "token=" + api_key
+            print("logged in to Tygron")
+        return
+    
+    
+    def tygron_transform(self):
+        """
+        Transform the hexagon features to the internal coordinates used by
+        Tygron.
+        """
+        if not self.test:
+            # transform hexagons to tygron coordinates.
+            self.hexagons_tygron = detect.transform(
+                    self.hexagons, self.transforms, export="tygron")
+        else:
+            self.hexagons_tygron = detect.transform(
+                    self.hexagons_sandbox, self.transforms,
+                    export="sandbox2tygron")
+        return
+    
+    
+    def tygron_update_buildings(self):
+        if not self.test:
+            self.hexagons = tygron.update_hexagons_tygron_id(
+                    self.token, self.hexagons)
+        else:
+            self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
+                    self.token, self.hexagons_sandbox)
+        return
+    
+    
+    def tygron_update(self):
+        self.heightmap = gridmap.create_geotiff(
+            self.node_grid, turn=self.turn, path=self.store_path)
+        print("Created geotiff elevation map")
+        tygron.set_terrain_type(self.token, self.hexagons_tygron)
+        tygron.hex_to_terrain(self.token, self.hexagons_tygron)
+        file_location = (self.store_path + "\\grid_height_map" +
+                         str(self.turn) + ".tif")
+        heightmap_id = tygron.set_elevation(
+                file_location, self.token, turn=self.turn)
+        return
+    
+    
+    def tygron_initialize(self):
+        """
+        This is no longer necessary, but may be called in case a new Tygron
+        project is created.
+        """
+        hexagons_tygron_int = detect.transform(
+                self.hexagons, self.transforms,
+                export="tygron_initialize")
+        return
+            
+    def update_ownership_viz(self):
         ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
         self.viz.add_image("OWNERSHIP", ownership_viz)
-        if self.tygron:
-            # create a new geotiff and set the new elevation in tygron.
-            t2 = time.time()
-            self.heightmap = gridmap.create_geotiff(
-                    self.node_grid, turn=self.turn, path=self.store_path)
-            file_location = (self.store_path + "\\grid_height_map" +
-                             str(self.turn) + ".tif")
-            heightmap_id = tygron.set_elevation(
-                    file_location, self.token, turn=0)
-            print("Updated Tygron heightmap.")
-            t3 = time.time()
-        """
-        # run the model. --> this is currently separate from the initialization
-        # as the whole system becomes rather slow. Added a temporary run model
-        # button to the Virtual River GUI to run the model instead.
-        self.fig, self.axes = D3D.run_model(
-                    self.model, self.filled_node_grid, self.flow_grid,
-                    self.hexagons_sandbox, initialized=self.initialized,
-                    fig=self.fig, axes=self.axes)
-        """
-        self.scores()
-        self.start_new_turn = False
-        print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
-              str(self.total_costs + self.turn_costs))
-        try:
-            print("Updated to turn " + str(self.turn) +
-              ". Comparison update time: " + str(round(tac-tic, 2)) +
-              " seconds. Interpolation update time: " +
-              str(round(toc-tec, 2)) + " seconds. Tygron update time: " +
-              str(round((t1-t0)+(t3-t2), 2)) +
-              " seconds. Total update time: " + str(round(t3-tic, 2)) +
-              " seconds.")
-        except UnboundLocalError:
-            print("Updated to turn " + str(self.turn) +
-              ". Comparison update time: " + str(round(tac-tic, 2)) +
-              " seconds. Interpolation update time: " +
-              str(round(toc-tec, 2)) + " seconds. Total update time: " +
-              str(round(toc-tic, 2)) + " seconds.")
-        self.run_model()
-        #2self.update_viz()
         return
+
+    
+    def index_model(self):
+        self.model.set_indexes(self.filled_node_grid, self.face_grid)
+        return
+    
     
     def run_model(self):
         """
@@ -646,25 +596,9 @@ class runScript():
             print("Running model after initialization, updating the elevation "
                   "in the model will take some time. Running "+ str(self.ini_loops) +
                   " loops to stabilize.")
-            self.model.set_indexes(self.filled_node_grid, self.face_grid)
             self.hexagons_sandbox, self.flow_grid = self.model.run_model(
-                    self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
-                    self.vert_scale, turn=self.turn)
-            """
-            self.model.run_model(grid, self.hexagons_sandbox,
-                                 self.flow_grid, self.vert_scale,
-                                 turn=self.turn)
-            self.hexagons_sandbox = self.model.update_waterlevel(
-                    self.hexagons_sandbox)
-            self.hexagons_sandbox = roughness.landuse_to_friction(
-                self.hexagons_sandbox, vert_scale=self.vert_scale)
-            self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
-                self.model.model, self.hexagons_sandbox, self.flow_grid)
-            """
-            print("Finished running the model after initialization.")
-            print("NOTE: If you are running tests, make sure to first press "
-                  "'Update'. Otherwise the elevation in the model will be "
-                  "updated again (which is slow).")
+                self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
+                self.vert_scale, turn=self.turn)
             if self.model_ini_save:
                 with open(os.path.join(self.store_path,
                                        'flow_grid_model_ini%d.geojson' % self.turn),
@@ -679,7 +613,6 @@ class runScript():
         else:
             print("Running model after turn update, running " +
                   str(self.update_loops) + " loops.")
-            #for i in range(0, self.update_loops):
             self.hexagons_sandbox, self.flow_grid = self.model.run_model(
                     self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
                     self.vert_scale, turn=self.turn)
@@ -693,13 +626,15 @@ class runScript():
                 geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
                              indent=2)
             print("stored hexagon files with model output (conditional)")
-        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
-        self.scores()
-        self.update_viz()
         return
     
     
     def reload(self):
+        """
+        TO DO:
+            - update to match and reuse functions listed above
+            - test if reload works properly
+        """
         if not self.reload_enabled:
             print("Are you sure you want to iniate a reload? If you intended "
                   "to press reload, press reload again to engage the reload.")
@@ -983,6 +918,7 @@ class runScript():
         return
     
     def scores(self):
+        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         """
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
@@ -997,6 +933,11 @@ class runScript():
                                                   self.turn)
         self.indicators.plot(self.turn)
         """
+        return
+    
+    def print_costs(self):
+        print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
+              str(self.total_costs + self.turn_costs))
         return
     
     def update_viz(self):

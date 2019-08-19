@@ -185,7 +185,7 @@ def set_terrain_type(api_key, hexagons):
         print(pastebin_url)
     except ValueError:
         print("Land terrain updated in Tygron.")
-    return hexagons
+    return
 
 
 def remove_polygon(api_key, hexagon_id, hexagon_shape,
