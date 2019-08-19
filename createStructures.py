@@ -9,6 +9,7 @@ import geojson
 import numpy as np
 from shapely import geometry
 from copy import deepcopy
+from scipy.spatial import cKDTree
 import modelInterface as D3D
 
 
@@ -136,48 +137,97 @@ def determine_channel(hexagons):
 def get_channel(hexagons):
     """
     Function that only returns the main channel hexagons.
+    
+    Also sorts the channel from west to east, including the ghost hexagons.
     """
     hexagons_copy = deepcopy(hexagons)
     channel = []
     for feature in hexagons_copy.features:
-        #if feature.properties["ghost_hexagon"]:
-        #    continue
+        if (not feature.properties["ghost_hexagon"] or
+            feature.id > 180):
+            continue
+        if feature.properties["main_channel"]:
+            channel.append(feature)
+    for feature in hexagons_copy.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
+        if feature.properties["main_channel"]:
+            channel.append(feature)
+    for feature in hexagons_copy.features:
+        if (not feature.properties["ghost_hexagon"] or
+            feature.id <= 180):
+            continue
         if feature.properties["main_channel"]:
             channel.append(feature)
     channel = geojson.FeatureCollection(channel)
     for i, feature in enumerate(channel.features):
+        feature.properties["reference_id"] = feature.id
         feature.id = i
+    with open('channel.geojson', 'w') as f:
+        geojson.dump(channel, f, sort_keys=True, indent=2)
     return channel
 
 
-def create_structures(hexagons):
+def create_groynes(hexagons):
+    height = 0.0
+    y_dist = 0.0
+    groynes = []
+    for feature in hexagons.features:
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        y_hex = shape.centroid.y
+        if feature.id == 0:
+            line = list(geojson.utils.coords(feature.geometry))
+            maxy = 0.0
+            for x, y in line:
+                y = abs(y)
+                if y > maxy:
+                    maxy = y
+            height = (maxy - abs(y_hex))
+            y_dist = height * 0.25
+        if feature.properties["south_side_channel"]:
+            y_dist = y_dist * -1
+            height = height * -1
+        else:
+            y_dist = abs(y_dist)
+            height = abs(height)
+        top_point = [x_hex, y_hex+height]
+        bottom_point = [x_hex, y_hex+y_dist]
+        line = geojson.LineString([top_point, bottom_point])
+        #groyne = geojson.Feature(id="groyne" + str(feature.id).zfill(2), geometry=line)
+        groyne = geojson.Feature(id=feature.id, geometry=line)
+        groyne.properties["active"] = True
+        groyne.properties["reference_id"] = feature.properties["reference_id"]
+        groynes.append(groyne)
+    groynes = geojson.FeatureCollection(groynes)
+    with open('groynes_test_line.geojson', 'w') as f:
+        geojson.dump(groynes, f, sort_keys=True, indent=2)
+    return groynes
+
+
+def create_LTDs(hexagons):
     """
-    Function that determines where the structures (groynes and ltds) should be
-    located in the main channel at the start of the game. Creates linestrings
-    for both and returns them as a single featurecollection.
-    
-    NOTE: Results are better with 59 degrees for some reason that I cannot
-    figure out yet.
+    Results are better with 59 degrees for some reason that I cannot figure
+    out yet.
     """
     sin = np.sin(np.deg2rad(60))
     cosin = np.cos(np.deg2rad(60))
     height = 0.0
     x_dist = 0.0
     y_dist = 0.0
-    groyne_dist = 0.0
-    structures = []
+    ltd_features = []
     for feature in hexagons.features:
-        #if feature.properties["ghost_hexagon"]:
-        #    continue
-        height = abs(height)
-        groyne_dist = abs(groyne_dist)
+        """
+        Ideally would also want to do this with a try/except KeyError, but -1
+        index would find a hexagon.
+        """
         edge = False
         west_edge = False
         east_edge = False
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         y_hex = shape.centroid.y
-        if feature.id == 0:
+        if feature.id == 0 or feature.id == 1:
             # determine hexagon size and reusable variables for other hexagons
             # only for the first hexagon
             line = list(geojson.utils.coords(feature.geometry))
@@ -187,20 +237,8 @@ def create_structures(hexagons):
                 if y > maxy:
                     maxy = y
             height = (maxy - abs(y_hex))
-            x_dist = sin * height
+            x_dist = sin * height * 0.95
             y_dist = cosin * height
-        # Ideally would also want to do this with a try/except KeyError, but -1
-        # index would find a hexagon
-        """
-        # The combination of groynes and ltds makes the model extremely slow,
-        # especially at crest height 0 for the ltds. With a crest height of 3,
-        # same as the groynes, the model runs smoother, albeit still ~5 slower.
-        # ltds are therefore currently placed in this comment block.
-        # 
-        # TODO: figure out a fix to make the model be able to smoothly
-        # transition from groynes to ltds.
-        
-        if feature.id == 0 or feature.id == 1:
             edge = True
             west_edge = True
         else:
@@ -269,42 +307,174 @@ def create_structures(hexagons):
             left_point = [x_top_left, y_top_left]
             x_top_left = x_hex + x_dist
             right_point = [x_top_left, y_top_left]
-        line = geojson.LineString([left_point, mid_point, right_point])
-        ltd = geojson.Feature(id="LTD" + str(feature.id).zfill(2),
-                              geometry=line)
+        if west_edge:
+            line = geojson.LineString([mid_point, right_point])
+        elif east_edge:
+            line = geojson.LineString([left_point, mid_point])
+        else:
+            line = geojson.LineString([left_point, mid_point, right_point])
+        #ltd = geojson.Feature(id="LTD" + str(feature.id).zfill(2), geometry=line)
+        ltd = geojson.Feature(id=feature.id, geometry=line)
         ltd.properties["active"] = False
-        ltd.properties["crest_level"] = 0.00000001
-        structures.append(ltd)
-        """
+        ltd.properties["reference_id"] = feature.properties["reference_id"]
+        ltd_features.append(ltd)
+    ltd_features = geojson.FeatureCollection(ltd_features)
+    with open('ltds_test_line_correct.geojson', 'w') as f:
+        geojson.dump(ltd_features, f, sort_keys=True, indent=2)
+    return ltd_features
 
-        groyne_dist = height * 0.25
-        if feature.properties["south_side_channel"]:
-            groyne_dist = groyne_dist * -1
-            height = height * -1
-        top_point = [x_hex, y_hex+height]
-        bottom_point = [x_hex, y_hex+groyne_dist]
-        line = geojson.LineString([top_point, bottom_point])
-        groyne = geojson.Feature(id="groyne" + str(feature.id).zfill(2),
-                                 geometry=line)
-        groyne.properties["active"] = True
-        groyne.properties["crest_level"] = 3.0
-        structures.append(groyne)
-        
-    structures = geojson.FeatureCollection(structures)
-    if False:
-        # saving is currently skipped, hence in if False statement.
-        with open('structures_test.geojson', 'w') as f:
-            geojson.dump(structures, f, sort_keys=True, indent=2)
-    return structures
+
+def index_structures(structures, grid, mode="groyne"):
+    structures_coor = []
+    structures_id = []
+    # get x, y coordinates of each point and add it to hex_coor list to create
+    # a cKDTree. Also add the shape of the hexagon to polygons to create a
+    # single polygon of the game board.
+    for feature in structures.features:
+        pts = feature.geometry["coordinates"]
+        for point in pts:
+            structures_coor.append(point)
+            structures_id.append(feature.id)
+    structures_coor = np.array(structures_coor)
+    length = len(structures_coor)
+    structures_locations = cKDTree(structures_coor)
+    z_correct = "z_" + mode
+    for feature in grid.features:
+        xy = feature.geometry["coordinates"]
+        dist, index = structures_locations.query(xy, distance_upper_bound = 25)
+        if index < length:
+            feature.properties[mode] = structures_id[index]
+            structure = structures.features[structures_id[index]]
+            shape = geometry.asShape(structure.geometry)
+            point = geometry.asShape(feature.geometry)
+            distance = point.distance(shape)
+            try:
+                covered = feature.properties[z_correct]
+                print(covered)
+            except KeyError:
+                covered = 0
+            if distance < 2.5:
+                feature.properties[z_correct] = max(covered, 6)
+            elif distance < 5:
+                feature.properties[z_correct] = max(covered, 4)
+            elif distance < 7.5:
+                feature.properties[z_correct] = max(covered, 2)
+            else:
+                feature.properties[z_correct] = max(covered, 0)
+            if covered != 0:
+                print("found value: " + str(covered) + ". set value: " +
+                      str(feature.properties[z_correct]))
+        else:
+            try:
+                covered = feature.properties[z_correct]
+            except KeyError:
+                feature.properties[mode] = None
+                pass
+    return grid
+
+
+def apply_hydraulic_structures_corrections(grid):
+    for feature in grid.features:
+        if feature.properties["groyne_active"]:
+            if feature.properties["groyne"] != None:
+                height_correction = (feature.properties["z_groyne"] +
+                                     feature.properties["bedslope_correction"])
+                if height_correction < feature.properties["z"]:
+                    continue
+                else:
+                    feature.properties["z"] = height_correction
+        if feature.properties["ltd_active"]:
+            if feature.properties["ltd"] != None:
+                height_correction = (feature.properties["z_ltd"] +
+                                     feature.properties["bedslope_correction"])
+                if height_correction < feature.properties["z"]:
+                    continue
+                else:
+                    feature.properties["z"] = height_correction
+    with open('node_grid_with_groynes3.geojson', 'w') as f:
+        geojson.dump(grid, f, sort_keys=True, indent=2)
+    return
+
+
+def create_buildings(hexagons, grid):
+    building_size = 20
+    building_ids = []
+    buildings = []
+    for feature in hexagons.features:
+        if feature.properties["behind_dike"]:
+            continue
+        if (feature.properties["z_reference"] < 4 and
+            feature.properties["landuse"] == 0):
+            shape = geometry.asShape(feature.geometry)
+            x_hex = shape.centroid.x
+            y_hex = shape.centroid.y
+            point1 = [x_hex - building_size, y_hex + building_size]
+            point2 = [x_hex + building_size, y_hex + building_size]
+            point3 = [x_hex + building_size, y_hex - building_size]
+            point4 = [x_hex - building_size, y_hex - building_size]
+            polygon = geojson.Polygon([[point1, point2, point3, point4,
+                                        point1]])
+            building = geojson.Feature(id=feature.id, geometry=polygon)
+            building_ids.append(feature.id)
+            buildings.append(building)
+    buildings = geojson.FeatureCollection(buildings)
+    for feature in grid.features:
+        if type(feature.properties["nearest"]) is int:
+            if feature.properties["nearest"] not in building_ids:
+                continue
+            else:
+                reference = building_ids.index(feature.properties["nearest"])
+        else:
+            continue
+        """
+        elif any(True for x in feature.properties["nearest"]
+                 if x not in building_ids):
+            continue
+        else:
+            reference = building_ids.index(feature.properties["nearest"][0])
+        """
+        point = geometry.asShape(feature.geometry)
+        building = buildings.features[reference]
+        polygon = geometry.asShape(feature.geometry)
+        if polygon.contains(point):
+            feature.properties["building_active"] = True
+            feature.properties["z_building"] = 6
+    return grid
+
+
+def add_buildings(grid):
+    for feature in grid.features:
+        if not feature.properties["building_active"]:
+            continue
+        else:
+            feature.properties["z"] += (
+                    feature.properties["z_building"] -
+                    feature.properties["bedslope_correction"])
+    with open('node_grid_with_buildings.geojson', 'w') as f:
+        geojson.dump(grid, f, sort_keys=True, indent=2)
 
 
 if __name__ == '__main__':
     with open('storing_files\\hexagons0.geojson', 'r') as f:
         hexagons = geojson.load(f)
-    hexagons = determine_dikes(hexagons)
-    hexagons = determine_channel(hexagons)
-    with open('hexagons_with_structures.geojson', 'w') as f:
-        geojson.dump(hexagons, f, sort_keys=True, indent=2)
+    with open('storing_files\\filled_node_grid0.geojson', 'r') as f:
+        filled_node_grid = geojson.load(f)
+    #hexagons = determine_dikes(hexagons)
+    #hexagons = determine_channel(hexagons)
+    #with open('hexagons_with_structures.geojson', 'w') as f:
+    #    geojson.dump(hexagons, f, sort_keys=True, indent=2)
+    #channel = get_channel(hexagons)
+    #structures = create_structures(channel)
+    #D3D.geojson2pli(structures, name="structures_test")
+    """
     channel = get_channel(hexagons)
-    structures = create_structures(channel)
-    D3D.geojson2pli(structures, name="structures_test")
+    groynes = create_groynes(channel)
+    ltds = create_LTDs(channel)
+    filled_node_grid = index_structures(groynes, filled_node_grid)
+    filled_node_grid = index_structures(ltds, filled_node_grid, mode="ltd")
+    filled_node_grid = add_bedslope(filled_node_grid)
+    filled_node_grid = set_active(filled_node_grid)
+    apply_hydraulic_structures_corrections(filled_node_grid)
+    """
+    filled_node_grid = create_buildings(hexagons, filled_node_grid)
+    add_buildings(filled_node_grid)

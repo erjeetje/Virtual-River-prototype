@@ -12,12 +12,12 @@ import os
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping_test as gridmap
+import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
-import createStructures_test as structures
+import createStructures as structures
 import costModule as costs
 import waterModule as water
 import indicatorModule_IHE as indicator
@@ -204,6 +204,9 @@ class runScript():
 
 
     def initialize(self):
+        """
+        Function that handles configuring and calibrating the game board.
+        """
         if self.initialized:
             print("Virtual River is already initialized, please use Update "
                   "instead.")
@@ -258,6 +261,9 @@ class runScript():
 
 
     def update(self):
+        """
+        Function that handles updating the game board.
+        """
         if not self.initialized:
             print("ERROR: Virtual River is not yet calibrated, "
                   "please first run initialize")
@@ -269,6 +275,8 @@ class runScript():
         tic = time.time()
         if not self.test:
             self.get_image()
+            # it may be more robust to recalibrate the camera every update -->
+            # check the time the system needs for that.
         self.get_hexagons()
         self.transform_hexagons()
         if self.tygron:
@@ -317,10 +325,10 @@ class runScript():
     def calibrate_camera(self):
         """
         Calibrate the camera/board.
-        """
-        # calibrate camera
-        # try - except TypeError --> if nothing returned by method, then go to
+        
+        try - except TypeError --> if nothing returned by method, then go to
         # test mode.
+        """
         try:
             canvas, thresh = cali.detect_corners(
                     self.turn_img, method='adaptive',
@@ -333,18 +341,20 @@ class runScript():
                 cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
             print("Calibrated camera.")
             # create the calibration file for use by other methods and store it
-            # change dir_path to config_path
             self.transforms = cali.create_calibration_file(
                     self.img_x, self.img_y, cut_points, path=self.config_path)
         else:
             self.transforms = cali.create_calibration_file(
                     path=self.config_path, test = self.test)
         return
-    
-    
+
+
     def get_hexagons(self):
+        """
+        Function that creates/gets the new hexagons. Gets them from either the
+        camera (live mode) or file (test mode).
+        """
         if not self.test:
-            # update the hexagons to initial board state.
             self.hexagons = detect.detect_markers(
                     self.turn_img, self.pers, self.img_x, self.img_y,
                     self.origins, self.radius, self.hexagons, method='LAB',
@@ -363,9 +373,13 @@ class runScript():
                         self.hexagons_sandbox)
         print("Retrieved board state.")
         return
-    
-    
+
+
     def transform_hexagons(self):
+        """
+        Function that transforms the hexagons to the coordinates that the
+        SandBox / Tygron uses.
+        """
         if not self.test:
             # update the hexagons to initial board state.
             self.hexagons_sandbox = detect.transform(
@@ -381,11 +395,14 @@ class runScript():
                     export="sandbox2tygron")
         print("Transformed hexagons suitable for model and tygron.")
         return
-    
-    
+
+
     def set_up_hexagons(self):        
-        # detect where the main channel and dikes are located and construct
-        # both the groynes and longitudinal training dams for the model.
+        """
+        Function that determines the location of the main channel, dikes and
+        floodplains. Function also finds the neighbours of hexagons and
+        generates ownership for the players (only called on initialization).
+        """
         self.hexagons_sandbox = structures.determine_dikes(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = structures.determine_channel(
@@ -401,8 +418,8 @@ class runScript():
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
         return
-    
-    
+
+
     def compare_hexagons(self):
         """
         if not self.test:
@@ -414,17 +431,24 @@ class runScript():
         compare.compare_hex(
                 self.cost_module, self.hexagons_prev, self.hexagons_sandbox)
         return dike_moved
-    
+
+
     def create_grids(self):
+        """
+        Function that generates the grids (only called on initialization).
+        """
         self.node_grid = gridmap.read_node_grid(path=self.store_path)
         self.flow_grid = gridmap.create_flow_grid(self.model.model,
                                                   path=self.store_path)
         self.face_grid = gridmap.read_face_grid(self.model.model,
                                                 path=self.store_path)
         return
-    
-    
+
+
     def index_grids(self):
+        """
+        Function that indexes the grids (only called on initialization).
+        """
         self.node_grid = gridmap.index_node_grid(self.hexagons_sandbox,
                                                  self.node_grid, self.slope)
         self.flow_grid = gridmap.index_flow_grid(self.hexagons_sandbox,
@@ -432,9 +456,13 @@ class runScript():
         self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
                                                        self.face_grid)
         return
-    
-    
+
+
     def set_up_structures(self):
+        """
+        Function that adds structures to the grids (only called on
+        initialization).
+        """
         channel = structures.get_channel(self.hexagons_sandbox)
         groynes = structures.create_groynes(channel)
         ltds = structures.create_LTDs(channel)
@@ -446,9 +474,13 @@ class runScript():
         self.node_grid = structures.create_buildings(self.hexagons_sandbox,
                                                      self.node_grid)
         return
-    
-    
+
+
     def process_grids(self, dike_moved=False):
+        """
+        Function that handles the interpolation of the node grids, as well as
+        roughness setting of the flow grid.
+        """
         if self.initialized:
             self.node_grid = gridmap.update_node_grid(
                     self.hexagons_sandbox, self.node_grid, turn=self.turn,
@@ -502,9 +534,13 @@ class runScript():
                         turn=self.turn, fill=True, save=False,
                         path=self.dir_path)
         return
-    
-    
+
+
     def tygron_login(self):
+        """
+        Function that handles logging in to Tygron (only called on
+        initialization).
+        """
         try:
             with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
                 username = f.read()
@@ -522,8 +558,8 @@ class runScript():
             self.token = "token=" + api_key
             print("logged in to Tygron")
         return
-    
-    
+
+
     def tygron_transform(self):
         """
         Transform the hexagon features to the internal coordinates used by
@@ -538,9 +574,12 @@ class runScript():
                     self.hexagons_sandbox, self.transforms,
                     export="sandbox2tygron")
         return
-    
-    
+
+
     def tygron_update_buildings(self):
+        """
+        Function that handles updating the tygron IDs of the hexagons.
+        """
         if not self.test:
             self.hexagons = tygron.update_hexagons_tygron_id(
                     self.token, self.hexagons)
@@ -548,9 +587,12 @@ class runScript():
             self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
                     self.token, self.hexagons_sandbox)
         return
-    
-    
+
+
     def tygron_update(self):
+        """
+        Function that handles updating the Tygron virtual world.
+        """
         self.heightmap = gridmap.create_geotiff(
             self.node_grid, turn=self.turn, path=self.store_path)
         print("Created geotiff elevation map")
@@ -561,33 +603,41 @@ class runScript():
         heightmap_id = tygron.set_elevation(
                 file_location, self.token, turn=self.turn)
         return
-    
-    
+
+
     def tygron_initialize(self):
         """
-        This is no longer necessary, but may be called in case a new Tygron
-        project is created.
+        This function is no longer necessary, but may be called in case a new
+        Tygron project is created (currently not called).
         """
         hexagons_tygron_int = detect.transform(
                 self.hexagons, self.transforms,
                 export="tygron_initialize")
         return
-            
+
+
     def update_ownership_viz(self):
+        """
+        Function that adds non-model visualizations to the visualization
+        object.
+        """
         ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
         self.viz.add_image("OWNERSHIP", ownership_viz)
         return
 
-    
+
     def index_model(self):
+        """
+        Function that indexes the model to only the visualized area (only
+        called on initialization, not sure this is still necessary).
+        """
         self.model.set_indexes(self.filled_node_grid, self.face_grid)
         return
-    
-    
+
+
     def run_model(self):
         """
-        Temporary separate function to update and run the model. Called by
-        clicking the run model button in the GUI
+        Function that handles running the model.
         """
         if not self.initialized:
             print("Virtual River is not yet calibrated, please first run initialize")
@@ -627,8 +677,8 @@ class runScript():
                              indent=2)
             print("stored hexagon files with model output (conditional)")
         return
-    
-    
+
+
     def reload(self):
         """
         TO DO:
@@ -853,6 +903,7 @@ class runScript():
             self.update_viz()
             return
 
+
     def end_round(self):
         if not self.initialized:
             print("Virtual River is not yet calibrated, please first run "
@@ -876,6 +927,7 @@ class runScript():
         self.start_new_turn = True
         self.turn += 1
         return
+
 
     def save_files(self):
         if not self.initialized:
@@ -902,10 +954,12 @@ class runScript():
         print("Saved flow grid for turn " + str(self.turn) + ".")
         return
 
+
     def update_costs(self):
         self.total_costs = self.total_costs + self.turn_costs
         self.turn_costs = 0
         return
+
 
     def store_previous_turn(self):
         self.hexagons_prev = deepcopy(self.hexagons_sandbox)
@@ -916,7 +970,8 @@ class runScript():
         #self.node_grid_prev = deepcopy(self.node_grid)
         #self.filled_node_grid_prev = deepcopy(self.filled_node_grid)
         return
-    
+
+
     def scores(self):
         self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         """
@@ -934,14 +989,17 @@ class runScript():
         self.indicators.plot(self.turn)
         """
         return
-    
+
+
     def print_costs(self):
         print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
               str(self.total_costs + self.turn_costs))
         return
-    
+
+
     def update_viz(self):
         self.viz.loop()
+
 
 def main():
     app = QApplication(sys.argv)

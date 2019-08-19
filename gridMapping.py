@@ -439,12 +439,14 @@ def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_ty
     need updating are updated, speeding up the updating process.
     """
     indices_updated = []
+    becomes_ltd = []
     counter = 0
     # add feature ids of the changed hexagons to a list.
     for feature in hexagons.features:
         if feature.properties["ghost_hexagon"]:
             if not turn == 0:
                 continue
+        # add hexagons where the z value changed to indices_updated
         if fill:
             if (feature.properties["behind_dike"] or
                 feature.properties["z_changed"]):
@@ -455,6 +457,10 @@ def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_ty
                     feature.properties["behind_dike"]):
                         continue
                 indices_updated.append(feature.id)
+        # add hexagons where groynes were replaced with ltds to becomes_ltd
+        if (feature.properties["landuse_changed"] and
+            feature.properties["landuse"] == 8):
+            becomes_ltd.append(feature.id)
     # set the changed properties of the points in the grid indexed to a hexagon
     # indices_updated to True. Set the points that should not change to False.
     for feature in grid.features:
@@ -463,15 +469,35 @@ def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_ty
         if type(feature.properties["nearest"]) is int:
             if feature.properties["nearest"] in indices_updated:
                 feature.properties["changed"] = True
+                if turn != 0:
+                    feature.properties["building_active"] = False
                 counter += 1
             else:
                 feature.properties["changed"] = False
-        elif any((True for x in feature.properties["nearest"]
-                  if x in indices_updated)):
+        elif any(True for x in feature.properties["nearest"]
+                 if x in indices_updated):
             feature.properties["changed"] = True
+            if turn != 0:
+                feature.properties["building_active"] = False
             counter += 1
         else:
             feature.properties["changed"] = False
+        # in case groynes were replaced to ltds, change the correction
+        # reference
+        if type(feature.properties["nearest"]) is int:
+            if feature.properties["nearest"] in becomes_ltd:
+                feature.properties["changed"] = True
+                counter += 1
+                if feature.properties["ltd"] != None:
+                    feature.properties["groyne_active"] = False
+                    feature.properties["ltd_active"] = True
+        elif any(True for x in feature.properties["nearest"]
+                 if x in becomes_ltd):
+            feature.properties["changed"] = True
+            counter += 1
+            if feature.properties["ltd"] != None:
+                feature.properties["groyne_active"] = False
+                feature.properties["ltd_active"] = True
     if printing:
         print("Hexagons updated are: "+str(indices_updated))
         print("Number of gridpoints inside the board to update: "+str(counter))
@@ -500,8 +526,7 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
         if type(nearest) is int:
             hexagon = hexagons_by_id[nearest]
             feature.properties["z"] = hexagon.properties["z"]
-            continue
-        if len(nearest) == 2:
+        elif len(nearest) == 2:
             weights = feature.properties["weight"]
             weights_sum = feature.properties["weight_sum"]
             hexagon1 = hexagons_by_id[nearest[0]]
@@ -522,6 +547,23 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
                       (weights[1] / weights_sum) +
                       hexagon3.properties["z"] * (weights[2] /
                       weights_sum), 5)
+        # add corrections to for the groynes and ltds respectively
+        if feature.properties["groyne_active"]:
+            if feature.properties["groyne"] != None:
+                height_correction = (feature.properties["z_groyne"] +
+                                     feature.properties["bedslope_correction"])
+                if height_correction > feature.properties["z"]:
+                    feature.properties["z"] = height_correction
+        elif feature.properties["ltd_active"]:
+            if feature.properties["ltd"] != None:
+                height_correction = (feature.properties["z_ltd"] +
+                                     feature.properties["bedslope_correction"])
+                if height_correction > feature.properties["z"]:
+                    feature.properties["z"] = height_correction
+        elif feature.properties["building_active"]:
+            feature.properties["z"] += (
+                    feature.properties["z_building"] -
+                    feature.properties["bedslope_correction"])
 
     # block of code that sets the z variable for each grid point outside of the
     # game board by setting the z value equal to the z value of the nearest
@@ -547,6 +589,28 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
 def set_change_false(grid):
     for feature in grid.features:
         feature.properties["changed"] = False
+    return grid
+
+
+def set_active(grid):
+    for feature in grid.features:
+        if feature.properties["groyne"] != None:
+            feature.properties["groyne_active"] = True
+            feature.properties["ltd_active"] = False
+            feature.properties["building_active"] = False
+        else:
+            feature.properties["groyne_active"] = False
+            feature.properties["ltd_active"] = False
+            feature.properties["building_active"] = False
+    return grid
+
+
+def add_bedslope(grid, slope=10**-3):
+    for feature in grid.features:
+        shape = geometry.asShape(feature.geometry)
+        x_hex = shape.centroid.x
+        x_hex = abs(x_hex - 600)
+        feature.properties["bedslope_correction"] = slope * x_hex
     return grid
 
 

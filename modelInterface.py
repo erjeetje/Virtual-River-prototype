@@ -49,7 +49,7 @@ class Model():
             x_top_board = 300
             indexes = []
             for feature in grid.features:
-                shape = shape = geometry.asShape(feature.geometry)
+                shape = geometry.asShape(feature.geometry)
                 x = shape.centroid.x
                 y = shape.centroid.y
                 if ((x >= x_left_board and x <= x_right_board) and
