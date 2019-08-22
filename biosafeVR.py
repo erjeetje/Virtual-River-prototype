@@ -39,46 +39,6 @@ class BiosafeVR():
     def pjoin(self, in_dir, file_name):
         return os.path.join(in_dir, file_name)
     
-    def ecotope_area_sums(self, board):
-        """Calculate the total area of all ecotopes on the playing board.
-        
-        input:
-            board: GeoDataFrame 
-                   with columns geometry, z_reference, landuse and biosafe
-            vr_ecotopes: Dataframe with two ecotope fractions per label
-                   as defined in the Virtual River
-            
-        Returns a dataframe with the total area per ecotope in hexagons.
-        """
-        
-        # clean up the input and merge into a single dataframe
-        cols = ['geometry', 'z_reference', 'landuse', 'biosafe']
-        board_clean = board.loc[board.biosafe, cols]
-        board_eco = pd.merge(board_clean, self.vr_eco,
-                             on=['z_reference', 'landuse'])
-        
-        # optional: output gdf to shp
-    #    gdf = board_eco.copy()
-    #    gdf['biosafe'] = gdf.biosafe.values.astype('int')
-    #    gdf.to_file('board_eco.shp')
-        
-        # calculate the total area of all columns
-        # note: landuse-z_reference combinations not in vr_ecotopes are excluded
-        area_eco1 = board_eco.groupby('ecotope1').sum()
-        area_eco2 = board_eco.groupby('ecotope2').sum()
-        area_fractions = pd.concat([area_eco1.fraction1, area_eco2.fraction2],
-                                   axis=1, sort=True)
-        area_total = area_fractions.fillna(0).sum(axis=1).reset_index()
-        area_total.columns = ['ecotope', 'area_m2']    
-        
-        # assert that that total area of the ecotopes matches the biosafe hexagons
-        assert int(area_total.sum().area_m2) == int(board_clean.shape[0])
-        
-        area_out = area_total.set_index('ecotope')
-        area_out.index.name=None
-        return area_out
-    
-    
     def set_variables(self):
         root_dir = os.path.dirname(os.path.realpath(__file__))
         #root_dir = os.path.dirname(os.getcwd())
@@ -138,7 +98,47 @@ class BiosafeVR():
         return hexagons_new, hexagons_old
     
     
-    def compare(self, hexagons_new, hexagons_old):
+    def ecotope_area_sums(self, board):
+        """Calculate the total area of all ecotopes on the playing board.
+        
+        input:
+            board: GeoDataFrame 
+                   with columns geometry, z_reference, landuse and biosafe
+            vr_ecotopes: Dataframe with two ecotope fractions per label
+                   as defined in the Virtual River
+            
+        Returns a dataframe with the total area per ecotope in hexagons.
+        """
+        
+        # clean up the input and merge into a single dataframe
+        cols = ['geometry', 'z_reference', 'landuse', 'biosafe']
+        board_clean = board.loc[board.biosafe, cols]
+        board_eco = pd.merge(board_clean, self.vr_eco,
+                             on=['z_reference', 'landuse'])
+        
+        # optional: output gdf to shp
+    #    gdf = board_eco.copy()
+    #    gdf['biosafe'] = gdf.biosafe.values.astype('int')
+    #    gdf.to_file('board_eco.shp')
+        
+        # calculate the total area of all columns
+        # note: landuse-z_reference combinations not in vr_ecotopes are excluded
+        area_eco1 = board_eco.groupby('ecotope1').sum()
+        area_eco2 = board_eco.groupby('ecotope2').sum()
+        area_fractions = pd.concat([area_eco1.fraction1, area_eco2.fraction2],
+                                   axis=1, sort=True)
+        area_total = area_fractions.fillna(0).sum(axis=1).reset_index()
+        area_total.columns = ['ecotope', 'area_m2']    
+        
+        # assert that that total area of the ecotopes matches the biosafe hexagons
+        assert int(area_total.sum().area_m2) == int(board_clean.shape[0])
+        
+        area_out = area_total.set_index('ecotope')
+        area_out.index.name=None
+        return area_out
+    
+    
+    def compare(self, hexagons_new, hexagons_old, plot=False):
         # Input data Virtual River
         board_reference = gpd.GeoDataFrame.from_features(hexagons_old.features)
         board_intervention = gpd.GeoDataFrame.from_features(hexagons_new.features)
@@ -147,36 +147,37 @@ class BiosafeVR():
         eco_area_reference = self.ecotope_area_sums(board_reference)
         self.bsf_model.ecotopeArea = eco_area_reference
         PotTax_reference = self.bsf_model.TFI()
-        PotAll_reference = self.bsf_model.FI()
+        #PotAll_reference = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_reference.xlsx')
         
         # Evaluate new board
         eco_area_intervention = self.ecotope_area_sums(board_intervention)
         self.bsf_model.ecotopeArea = eco_area_intervention
         PotTax_intervention = self.bsf_model.TFI()
-        PotAll_intervention = self.bsf_model.FI()
+        #PotAll_intervention = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_intervention.xlsx')
         
-        #%% plot the data for checking
-        fig, [[ax1,ax2],[ax3,ax4], [ax5,ax6]] = plt.subplots(3,2, figsize=(10,8))
-        
-        # Relative height
-        board_reference.plot(column='z_reference', cmap='GnBu_r', legend=True, ax=ax1)
-        board_intervention.plot(column='z_reference', cmap='GnBu_r', legend=True, ax=ax2)
-        
-        # Landuse
-        board_reference.plot(column='landuse', legend=True, ax=ax3,
-                             cmap='viridis', scheme='equal_interval', k=11)
-        board_intervention.plot(column='landuse', legend=True, ax=ax4,
-                                cmap='viridis', scheme='equal_interval', k=11)
-        
-        # BIOSAFE score per taxonomic group
-        PotTax_reference.plot.bar(ax=ax5)
-        ax5.set_ylim(0,37)
-        PotTax_intervention.plot.bar(ax=ax6)
-        ax6.set_ylim(0,37)
-        
-        #plt.savefig('biosafe_comparison.png', dpi=300)
+        # plot the data for checking
+        if plot:
+            fig, [[ax1,ax2],[ax3,ax4], [ax5,ax6]] = plt.subplots(3,2, figsize=(10,8))
+            
+            # Relative height
+            board_reference.plot(column='z_reference', cmap='GnBu_r', legend=True, ax=ax1)
+            board_intervention.plot(column='z_reference', cmap='GnBu_r', legend=True, ax=ax2)
+            
+            # Landuse
+            board_reference.plot(column='landuse', legend=True, ax=ax3,
+                                 cmap='viridis', scheme='equal_interval', k=11)
+            board_intervention.plot(column='landuse', legend=True, ax=ax4,
+                                    cmap='viridis', scheme='equal_interval', k=11)
+            
+            # BIOSAFE score per taxonomic group
+            PotTax_reference.plot.bar(ax=ax5)
+            ax5.set_ylim(0,37)
+            PotTax_intervention.plot.bar(ax=ax6)
+            ax6.set_ylim(0,37)
+            
+            #plt.savefig('biosafe_comparison.png', dpi=300)
         return
 
 
@@ -186,30 +187,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
