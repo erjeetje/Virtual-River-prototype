@@ -16,6 +16,7 @@ from geojson import load
 
 class BiosafeVR():
     def __init__(self):
+        self.bsf_model = None
         self.legal_weights = None
         self.links_law = None
         self.links_eco1 = None
@@ -24,18 +25,21 @@ class BiosafeVR():
         self.vr_eco = None
         tic = time.time()
         self.set_variables()
+        tec = time.time()
+        self.setup_biosafe()
         tac = time.time()
         hexagons_new, hexagons_old = self.test()
         self.compare(hexagons_new, hexagons_old)
         toc = time.time()
-        print("Setup time: " + str(tac-tic))
+        print("Load time: " + str(tec-tic))
+        print("Setup time: " + str(tac-tec))
         print("Process time: " + str(toc-tac))
         return
         
     def pjoin(self, in_dir, file_name):
         return os.path.join(in_dir, file_name)
     
-    def ecotope_area_sums(self, board, vr_ecotopes):
+    def ecotope_area_sums(self, board):
         """Calculate the total area of all ecotopes on the playing board.
         
         input:
@@ -50,7 +54,7 @@ class BiosafeVR():
         # clean up the input and merge into a single dataframe
         cols = ['geometry', 'z_reference', 'landuse', 'biosafe']
         board_clean = board.loc[board.biosafe, cols]
-        board_eco = pd.merge(board_clean, vr_ecotopes,
+        board_eco = pd.merge(board_clean, self.vr_eco,
                              on=['z_reference', 'landuse'])
         
         # optional: output gdf to shp
@@ -100,25 +104,7 @@ class BiosafeVR():
         return
     
     
-    def test(self):
-        root_path = os.path.dirname(os.path.realpath(__file__))
-        test_path = os.path.join(root_path, 'test_files')
-        with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
-            hexagons_old = load(f)
-        with open(os.path.join(test_path, 'hexagons7.geojson')) as f:
-            hexagons_new = load(f)        
-        return hexagons_new, hexagons_old
-    
-    
-    def compare(self, hexagons_new, hexagons_old):
-        # Input data Virtual River
-        board_reference = gpd.GeoDataFrame.from_features(hexagons_old.features)
-        board_intervention = gpd.GeoDataFrame.from_features(hexagons_new.features)
-        
-        #board_reference = gpd.read_file(self.pjoin(self.input_dir, 'hexagons_biosafe1.geojson'))
-        #board_intervention = gpd.read_file(self.pjoin(self.input_dir, 'hexagons_biosafe2.geojson'))
-        
-        
+    def setup_biosafe(self):
         # Generate dummy data in the right format
         species_presence = pd.DataFrame(np.random.randint(2, size=len(self.links_law)),
                                         columns=['speciesPresence'],
@@ -134,23 +120,41 @@ class BiosafeVR():
         ecotope_area = ecotope_area.reindex(index=unique_eco)
         
         # Run a first version of Biosafe
-        bsf_model = bsf.biosafe(self.legal_weights, self.links_law, links_eco3,
+        self.bsf_model = bsf.biosafe(self.legal_weights, self.links_law, links_eco3,
                       species_presence, ecotope_area)
         
-        PotTax = bsf_model.TFI()
-        PotAll = bsf_model.FI()
+        PotTax = self.bsf_model.TFI()
+        PotAll = self.bsf_model.FI()
+        return
+    
+    
+    def test(self):
+        root_path = os.path.dirname(os.path.realpath(__file__))
+        test_path = os.path.join(root_path, 'test_files')
+        with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
+            hexagons_old = load(f)
+        with open(os.path.join(test_path, 'hexagons7.geojson')) as f:
+            hexagons_new = load(f)        
+        return hexagons_new, hexagons_old
+    
+    
+    def compare(self, hexagons_new, hexagons_old):
+        # Input data Virtual River
+        board_reference = gpd.GeoDataFrame.from_features(hexagons_old.features)
+        board_intervention = gpd.GeoDataFrame.from_features(hexagons_new.features)
         
-        # Evaluate board 1
-        eco_area_reference = self.ecotope_area_sums(board_reference, self.vr_eco)
-        bsf_model.ecotopeArea = eco_area_reference
-        PotTax_reference = bsf_model.TFI()
-        PotAll_reference = bsf_model.FI()
+        # Evaluate initial board
+        eco_area_reference = self.ecotope_area_sums(board_reference)
+        self.bsf_model.ecotopeArea = eco_area_reference
+        PotTax_reference = self.bsf_model.TFI()
+        PotAll_reference = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_reference.xlsx')
         
-        eco_area_intervention = self.ecotope_area_sums(board_intervention, self.vr_eco)
-        bsf_model.ecotopeArea = eco_area_intervention
-        PotTax_intervention = bsf_model.TFI()
-        PotAll_intervention = bsf_model.FI()
+        # Evaluate new board
+        eco_area_intervention = self.ecotope_area_sums(board_intervention)
+        self.bsf_model.ecotopeArea = eco_area_intervention
+        PotTax_intervention = self.bsf_model.TFI()
+        PotAll_intervention = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_intervention.xlsx')
         
         #%% plot the data for checking
