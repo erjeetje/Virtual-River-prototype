@@ -147,14 +147,14 @@ class BiosafeVR():
         eco_area_reference = self.ecotope_area_sums(board_reference)
         self.bsf_model.ecotopeArea = eco_area_reference
         PotTax_reference = self.bsf_model.TFI()
-        #PotAll_reference = self.bsf_model.FI()
+        PotAll_reference = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_reference.xlsx')
         
         # Evaluate new board
         eco_area_intervention = self.ecotope_area_sums(board_intervention)
         self.bsf_model.ecotopeArea = eco_area_intervention
         PotTax_intervention = self.bsf_model.TFI()
-        #PotAll_intervention = self.bsf_model.FI()
+        PotAll_intervention = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_intervention.xlsx')
         
         # plot the data for checking

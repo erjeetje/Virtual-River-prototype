@@ -190,7 +190,7 @@ class runScript():
         self.fig = None
         self.axes = None
         # water safety module
-        #self.indicators = indicator.Indicators()
+        self.indicators = indicator.Indicators()
         # cost module
         self.cost_module = costs.Costs()
         # total costs made up until the end of the rounds ended
@@ -437,7 +437,8 @@ class runScript():
         """
         Function that generates the grids (only called on initialization).
         """
-        self.node_grid = gridmap.read_node_grid(path=self.store_path)
+        self.node_grid = gridmap.read_node_grid(self.model.model,
+                                                path=self.store_path)
         self.flow_grid = gridmap.create_flow_grid(self.model.model,
                                                   path=self.store_path)
         self.face_grid = gridmap.read_face_grid(self.model.model,
@@ -546,10 +547,9 @@ class runScript():
                 username = f.read()
             with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
                 password = g.read()
+            api_key = tygron.join_session(username, password)
         except FileNotFoundError:
-            username = "No"
-            password = "login"
-        api_key = tygron.join_session(username, password)
+            api_key = None
         if api_key is None:
             print("logging in to Tygron failed, running Virtual River without "
                   "Tygron")
@@ -974,7 +974,6 @@ class runScript():
 
     def scores(self):
         self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
-        """
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
@@ -987,7 +986,6 @@ class runScript():
         self.indicators.update_biodiversity_score(self.hexagons_sandbox,
                                                   self.turn)
         self.indicators.plot(self.turn)
-        """
         return
 
 

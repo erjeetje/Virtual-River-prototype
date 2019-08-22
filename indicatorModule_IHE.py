@@ -40,7 +40,7 @@ class Indicators():
         
         self.ax1.set_ylim([0, 100])
         self.ax2.set_ylim([0, 100])
-        self.ax3.set_ylim([3.5, 5.5])
+        self.ax3.set_ylim([14, 22])
         self.ax6.set_ylim([0, 25000000])
         
         self.ax1.set_title("Overall score on indicators")

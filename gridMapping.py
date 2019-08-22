@@ -59,7 +59,28 @@ def read_hexagons(filename='hexagons1.geojson', path=""):
     return features
 
 
-def read_node_grid(save=False, path=""):
+def read_node_grid(model, save=False, path=""):
+    """
+    function that loads and returns the node grid (corners of the cells) from
+    the netCDF file.
+    """
+    x = model.get_var('xk')
+    y = model.get_var('yk')
+
+    xy = np.c_[x, y]
+    features = []
+    for i, xy_i in enumerate(xy):
+        pt = geojson.Point(coordinates=list(xy_i))
+        feature = geojson.Feature(geometry=pt, id=i)
+        features.append(feature)
+    feature_collection = geojson.FeatureCollection(features)
+    if save:
+        with open(os.path.join(path, 'node_grid.geojson'), 'w') as f:
+            geojson.dump(feature_collection, f, sort_keys=True, indent=2)
+    return feature_collection
+
+
+def read_node_grid_old(save=False, path=""):
     """
     function that loads and returns the node grid (corners of the cells) from
     the netCDF file.
