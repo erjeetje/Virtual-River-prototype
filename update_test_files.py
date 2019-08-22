@@ -9,11 +9,17 @@ Created on Tue Jul  2 10:05:07 2019
 import os
 import geojson
 import gridMapping as gridmap
+import hexagonAdjustments as adjust
 
 
 def update(turn):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     test_path = os.path.join(dir_path, 'test_files')
+    hexagons = gridmap.read_hexagons(
+            filename='hexagons%d.geojson' % turn,
+            path=test_path)
+    hexagons = adjust.biosafe_area(hexagons)
+    """
     hexagons_old = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
@@ -30,14 +36,15 @@ def update(turn):
     print("done turn: " + str(turn))
     with open(os.path.join(test_path, 'hexagons%d.geojson' % turn), 'w') as f:
         geojson.dump(hexagons_new, f, sort_keys=True, indent=2)
+    """
+    with open(os.path.join(test_path, 'hexagons%d.geojson' % turn), 'w') as f:
+        geojson.dump(hexagons, f, sort_keys=True, indent=2)
     return
 
 
 def main():
-    update(0)
-    update(1)
-    update(2)
-    update(5)
+    for i in range(0, 8):
+        update(i)
 
 
 if __name__ == '__main__':

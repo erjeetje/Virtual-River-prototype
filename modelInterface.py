@@ -147,6 +147,7 @@ class Model():
         if turn == 0:
             step = 120
         else:
+            # convergeren toepassen ipv hardcode
             step = 40
         for i in range(step):
             if i % 10 == 0:
