@@ -1,0 +1,18 @@
+label,z_reference,landuse,ecotope1,ecotope2,fraction1,fraction2
+main channel with groyne,0,9,RzD,II.2,0.75,0.25
+main channel with LTD,0,8,RzD,RnM,0.6,0.4
+secondary channel,1,7,RnM,RnM,1,0
+"production meadow, floodplain",2,1,UG-2,UG-2,1,0
+"prduction meadow, natural levee",3,1,OG-2,OG-2,1,0
+"natural grassland, floodplain",2,2,UG-1,UG-1,1,0
+"natural grassland, natural levee",3,2,OG-1,OG-1,1,0
+"reed, floodplain",2,3,IV.9,IV.9,1,0
+"reed, natural levee",3,3,HM-1,HM-1,1,0
+"shrubs, floodplain",2,4,UB-2,UB-2,1,0
+"shrubs, natural levee",3,4,OB-2,OB-2,1,0
+"forest, floodplain",2,5,UB-1,UB-1,1,0
+"forest, natural levee",3,5,OB-1,OB-1,1,0
+"builtup, floodplain",2,0,UA-2,UA-2,1,0
+"builtup, natural",3,0,OA-2,OA-2,1,0
+"70 natural grassland 30 forest, floodplain",2,6,UG-1,UB-1,0.7,0.3
+"70 natural grassland 30 forest, natural levee",3,6,OG-1,OB-1,0.7,0.3
