@@ -20,12 +20,17 @@ class Indicators():
         self.set_figure_variables()
 
     def set_figure_variables(self):
+        """
+        Needs to be reconsidered
+        """
         #self.fig.canvas.manager.full_screen_toggle()
-        self.gs = self.fig.add_gridspec(2, 2)
+        self.gs = self.fig.add_gridspec(2, 3)
         self.ax1 = self.fig.add_subplot(self.gs[0, 0])
         self.ax2 = self.fig.add_subplot(self.gs[0, 1])
-        self.ax3 = self.fig.add_subplot(self.gs[1, 0])
-        self.ax6 = self.fig.add_subplot(self.gs[1, 1])
+        self.ax3 = self.fig.add_subplot(self.gs[0, 2])
+        self.ax4 = self.fig.add_subplot(self.gs[1, 0])
+        self.ax5 = self.fig.add_subplot(self.gs[1, 1])
+        self.ax6 = self.fig.add_subplot(self.gs[1, 2])
         # histogram with indicator scoring
         self.ax1.set_xlabel("indicators")
         self.ax1.set_ylabel("score (%)")
@@ -40,7 +45,7 @@ class Indicators():
         
         self.ax1.set_ylim([0, 100])
         self.ax2.set_ylim([0, 100])
-        self.ax3.set_ylim([14, 22])
+        self.ax3.set_ylim([14, 18])
         self.ax6.set_ylim([0, 25000000])
         
         self.ax1.set_title("Overall score on indicators")
@@ -59,10 +64,15 @@ class Indicators():
         self.plot1 = None
         self.plot2 = None
         self.plot3 = None
+        self.plot4 = None
+        self.plot5 = None
         self.plot6 = None
         return
     
     def default_indicator_values(self):
+        """
+        This is ok
+        """
         self.indicators = ["flood safety", "biodiversity", "costs"]
         #self.indicators = ["flood safety", "budget"]
         self.flood_safety = []
@@ -70,10 +80,16 @@ class Indicators():
         self.cost_score = []
         self.total_costs = []
         self.turn = []
+        self.biosafe_percentage = None
+        self.biosafe_reference = None
+        self.biosafe_intervention = None
         return
         
     def add_indicator_values(self, flood_safety_score, biodiversity_score,
                              total_cost, turn):
+        """
+        Needs to be reconsidered
+        """
         cost_score = ((25000000 - total_cost) / 25000000) * 100
         
         if turn < len(self.turn):
@@ -90,6 +106,9 @@ class Indicators():
         return
     
     def update_flood_safety_score(self, turn):
+        """
+        Needs to be reconsidered
+        """
         flood_safety_score = (sum(self.flood_safety_level) / 3750) * 100
         if turn < len(self.turn):
             self.flood_safety[turn] = flood_safety_score
@@ -98,6 +117,9 @@ class Indicators():
         return
     
     def update_biodiversity_score(self, hexagons, turn):
+        """
+        Needs to be completely redone
+        """
         floodplain_count = 0
         non_eco_count = 0
         for feature in hexagons.features:
@@ -116,6 +138,19 @@ class Indicators():
         else:
             self.biodiversity.append(eco_score)
         return
+    
+    def store_biosafe_output(self, data, reference=False, percentage=False):
+        """
+        This function is ok
+        """
+        if percentage:
+            self.biosafe_percentage = data
+        elif reference:
+            self.biosafe_reference = data
+        else:
+            self.biosafe_intervention = data
+        return
+        
     
     def indicator_feedback_values(self):
         self.water_levels = []
@@ -213,8 +248,33 @@ class Indicators():
             if turn == 0:
                 self.plot31.set_ydata(self.original_water_levels)
 
-        self.ax3.legend(loc='lower right', fontsize='x-large')
-
+        self.ax3.set_ylim([min(min(self.dike_levels)-2, 14), max(max(self.dike_levels)+2, 18)])
+        self.ax3.legend(loc='best', fontsize='x-large')
+        
+        self.ax4.clear()
+        index = np.arange(7)
+        xticks = self.biosafe_reference.index.values
+        bar_width = 0.3
+        self.plot4 = self.ax4.bar(index, self.biosafe_reference.values.flatten(), bar_width, label="reference", tick_label=xticks)
+        if self.biosafe_intervention is not None:
+            self.plot41 = self.ax4.bar(index+bar_width, self.biosafe_intervention.values.flatten(), bar_width, label="intervention", tick_label=xticks)
+        self.ax4.legend(loc='best', fontsize='x-large')
+        for tick in self.ax4.get_xticklabels():
+            tick.set_rotation(90)
+            
+        self.ax5.clear()
+        if self.biosafe_percentage is not None:
+            data = self.biosafe_percentage.values.flatten()
+            self.plot5 = self.ax5.bar(index, data, bar_width, label="reference", tick_label=xticks)
+            self.ax5.set_ylabel("increase (%)")
+            minimum = min(data)
+            maximum = max(data)
+            maximum = int(str(maximum)[:1])
+            maximum = (maximum + 1) * 10
+            self.ax5.set_ylim([min(0, minimum), maximum])
+            for tick in self.ax5.get_xticklabels():
+                tick.set_rotation(90)
+        
         self.ax6.clear()
         self.plot6 = self.ax6.plot(self.turn, self.total_costs, color='r')
         self.ax6.set_ylim([0, max(25000000, max(self.total_costs))])
@@ -238,12 +298,11 @@ def main():
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
-    """
+
     turn += 1
     hexagons_new = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=test_path)
-    """
     #cost = Costs()
     #cost.cost_per_hex()
     indicators = Indicators()
@@ -252,8 +311,8 @@ def main():
     indicators.add_indicator_values(60, 30, 80, 1)
     indicators.add_indicator_values(70, 30, 60, 2)
     indicators.add_indicator_values(70, 60, 40, 3)
-    indicators.update_flood_safety([600, 400, 800])
-    indicators.update_water_and_dike_levels(hexagons)
+    indicators.update_flood_safety([600, 400, 800], [600, 400, 600])
+    indicators.update_water_and_dike_levels(hexagons, hexagons_new, turn)
     indicators.plot(3)
 
 

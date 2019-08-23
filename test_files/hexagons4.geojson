@@ -8438,7 +8438,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": false,
-        "landuse": 6,
+        "landuse": 7,
         "landuse_changed": true,
         "main_channel": false,
         "neighbours": [

@@ -43,7 +43,7 @@ def update(turn):
 
 
 def main():
-    for i in range(0, 8):
+    for i in range(0, 9):
         update(i)
 
 

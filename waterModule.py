@@ -42,7 +42,8 @@ def dike_levels(hexagons):
             continue
         if (feature.properties["north_dike"] or
             feature.properties["south_dike"]):
-            dike_level = feature.properties["z"] - feature.properties["bedslope_correction"]
+            #dike_level = feature.properties["z"] - feature.properties["bedslope_correction"]
+            dike_level = feature.properties["z_reference"] * 4
             column = feature.properties["column"] - 1
             water_level_columns[column].append(dike_level)
     dike_level = []

@@ -5,7 +5,7 @@ Created on Thu Jul 11 15:56:30 2019
 @author: straa005
 """
 import os
-import time
+#import time
 import numpy as np
 import pandas as pd
 import geopandas as gpd
@@ -23,22 +23,26 @@ class BiosafeVR():
         self.links_eco2 = None
         self.lut = None
         self.vr_eco = None
-        tic = time.time()
+        self.PotTax_reference = None
+        self.PotTax_intervention = None
+        self.PotTax_increase = None
+        self.PotTax_percentage = None
+        #tic = time.time()
         self.set_variables()
-        tec = time.time()
+        #tec = time.time()
         self.setup_biosafe()
-        tac = time.time()
-        hexagons_new, hexagons_old = self.test()
-        self.compare(hexagons_new, hexagons_old)
-        toc = time.time()
-        print("Load time: " + str(tec-tic))
-        print("Setup time: " + str(tac-tec))
-        print("Process time: " + str(toc-tac))
+        #tac = time.time()
+        #toc = time.time()
+        #print("Load time: " + str(tec-tic))
+        #print("Setup time: " + str(tac-tec))
+        #print("Process time: " + str(toc-tac))
         return
-        
+
+
     def pjoin(self, in_dir, file_name):
         return os.path.join(in_dir, file_name)
-    
+
+
     def set_variables(self):
         root_dir = os.path.dirname(os.path.realpath(__file__))
         #root_dir = os.path.dirname(os.getcwd())
@@ -62,8 +66,8 @@ class BiosafeVR():
         # Aggregate BIOSAFE ecotopes into RWES ecotopes
         self.links_eco2 = bsf.aggregateEcotopes(self.links_eco1, self.lut)
         return
-    
-    
+
+
     def setup_biosafe(self):
         # Generate dummy data in the right format
         species_presence = pd.DataFrame(np.random.randint(2, size=len(self.links_law)),
@@ -83,21 +87,21 @@ class BiosafeVR():
         self.bsf_model = bsf.biosafe(self.legal_weights, self.links_law, links_eco3,
                       species_presence, ecotope_area)
         
-        PotTax = self.bsf_model.TFI()
-        PotAll = self.bsf_model.FI()
+        #PotTax = self.bsf_model.TFI()
+        #PotAll = self.bsf_model.FI()
         return
-    
-    
+
+
     def test(self):
         root_path = os.path.dirname(os.path.realpath(__file__))
         test_path = os.path.join(root_path, 'test_files')
         with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
             hexagons_old = load(f)
-        with open(os.path.join(test_path, 'hexagons7.geojson')) as f:
+        with open(os.path.join(test_path, 'hexagons4.geojson')) as f:
             hexagons_new = load(f)        
         return hexagons_new, hexagons_old
-    
-    
+
+
     def ecotope_area_sums(self, board):
         """Calculate the total area of all ecotopes on the playing board.
         
@@ -131,13 +135,108 @@ class BiosafeVR():
         area_total.columns = ['ecotope', 'area_m2']    
         
         # assert that that total area of the ecotopes matches the biosafe hexagons
-        assert int(area_total.sum().area_m2) == int(board_clean.shape[0])
+        try:
+            assert int(area_total.sum().area_m2) == int(board_clean.shape[0]),\
+            ("ERROR: There appears to be one or more polygons that is not " +
+            "detected correctly")
+        except AssertionError as error:
+            print(error)
+            pass
         
         area_out = area_total.set_index('ecotope')
         area_out.index.name=None
         return area_out
+
+
+    def process_board(self, hexagons, reference=False):
+        # Input data Virtual River
+        board = gpd.GeoDataFrame.from_features(hexagons.features)
+        if reference:
+            self.board_reference = board
+        else:
+            self.board_intervention = board
+            
+        # Evaluate the board
+        eco_area = self.ecotope_area_sums(board)
+        self.bsf_model.ecotopeArea = eco_area
+        PotTax = self.bsf_model.TFI()
+        if reference:
+            self.PotTax_reference = PotTax
+        else:
+            self.PotTax_intervention = PotTax
+        return
+
+
+    def plot(self):
+        # plot the data for checking
+        fig, [[ax1,ax2],[ax3,ax4], [ax5,ax6]] = plt.subplots(3,2, figsize=(10,8))
+            
+        # Relative height
+        self.board_reference.plot(column='z_reference', cmap='GnBu_r', legend=True, ax=ax1)
+        self.board_intervention.plot(column='z_reference', cmap='GnBu_r', legend=True, ax=ax2)
+        
+        # Landuse
+        self.board_reference.plot(column='landuse', legend=True, ax=ax3,
+                             cmap='viridis', scheme='equal_interval', k=11)
+        self.board_intervention.plot(column='landuse', legend=True, ax=ax4,
+                                cmap='viridis', scheme='equal_interval', k=11)
+        """
+        # BIOSAFE score per taxonomic group
+        self.PotTax_reference.plot.bar(ax=ax5)
+        ax5.set_ylim(0,37)
+        self.PotTax_intervention.plot.bar(ax=ax5)
+        ax6.set_ylim(0,37)
+        """
+        index = np.arange(7)
+        #index = self.PotTax_reference.index.values
+        xticks = self.PotTax_reference.index.values
+        bar_width = 0.3
+        
+        reference = ax5.bar(index, self.PotTax_reference.values.flatten(), bar_width, label="reference", tick_label=xticks)
+        intervention = ax5.bar(index+bar_width, self.PotTax_intervention.values.flatten(), bar_width, label="intervention", tick_label=xticks)
+        ax5.set_ylabel("total value")
+        ax5.legend(loc='best')
+        for tick in ax5.get_xticklabels():
+            tick.set_rotation(90)
+        
+        data = self.PotTax_percentage.values.flatten()
+        percentage = ax6.bar(index, data, bar_width, label="reference", tick_label=xticks)
+        ax6.set_ylabel("increase (%)")
+        minimum = min(data)
+        maximum = max(data)
+        maximum = int(str(maximum)[:1])
+        maximum = (maximum + 1) * 10
+        ax6.set_ylim([min(0, minimum), maximum])
+        for tick in ax6.get_xticklabels():
+            tick.set_rotation(90)
+
+
+    def compare(self):
+        self.PotTax_increase = self.PotTax_intervention - self.PotTax_reference
+        #print(self.PotTax_increase)
+        self.PotTax_percentage = (self.PotTax_increase / self.PotTax_reference) * 100
+        """
+        self.PotTax_percentage['TFI'] = pd.Series(
+                ["{0:.2f}%".format(val * 100) for val in
+                 self.PotTax_percentage['TFI']], index = self.PotTax_percentage.index)
+        """
+        #print(self.PotTax_percentage)
+        return
     
     
+    def get_reference(self):
+        return self.PotTax_reference
+    
+    
+    def get_intervention(self):
+        return self.PotTax_intervention
+    
+    
+    def get_percentage(self):
+        return self.PotTax_percentage
+
+
+    """
     def compare(self, hexagons_new, hexagons_old, plot=False):
         # Input data Virtual River
         board_reference = gpd.GeoDataFrame.from_features(hexagons_old.features)
@@ -146,15 +245,19 @@ class BiosafeVR():
         # Evaluate initial board
         eco_area_reference = self.ecotope_area_sums(board_reference)
         self.bsf_model.ecotopeArea = eco_area_reference
-        PotTax_reference = self.bsf_model.TFI()
-        PotAll_reference = self.bsf_model.FI()
+        self.PotTax_reference = self.bsf_model.TFI()
+        
+        # currently not running PotAll
+        #PotAll_reference = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_reference.xlsx')
         
         # Evaluate new board
         eco_area_intervention = self.ecotope_area_sums(board_intervention)
         self.bsf_model.ecotopeArea = eco_area_intervention
-        PotTax_intervention = self.bsf_model.TFI()
-        PotAll_intervention = self.bsf_model.FI()
+        self.PotTax_intervention = self.bsf_model.TFI()
+        
+        # currently not running PotAll
+        #PotAll_intervention = self.bsf_model.FI()
         #bsf.output2xlsx(bsf_model, 'bsf_intervention.xlsx')
         
         # plot the data for checking
@@ -172,17 +275,25 @@ class BiosafeVR():
                                     cmap='viridis', scheme='equal_interval', k=11)
             
             # BIOSAFE score per taxonomic group
-            PotTax_reference.plot.bar(ax=ax5)
+            self.PotTax_reference.plot.bar(ax=ax5)
             ax5.set_ylim(0,37)
-            PotTax_intervention.plot.bar(ax=ax6)
+            self.PotTax_intervention.plot.bar(ax=ax6)
             ax6.set_ylim(0,37)
             
             #plt.savefig('biosafe_comparison.png', dpi=300)
         return
+    """
 
 
 def main():
     biosafe = BiosafeVR()
+    hexagons_new, hexagons_old = biosafe.test()
+    biosafe.process_board(hexagons_old, reference=True)
+    biosafe.process_board(hexagons_new)
+    #print(biosafe.PotTax_reference)
+    #print(biosafe.PotTax_intervention)
+    biosafe.compare()
+    biosafe.plot()
 
 
 if __name__ == "__main__":

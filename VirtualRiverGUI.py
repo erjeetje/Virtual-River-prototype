@@ -25,6 +25,7 @@ import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
 import visualization as visualize
+import biosafeVR as biosafe
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -193,6 +194,7 @@ class runScript():
         self.indicators = indicator.Indicators()
         # cost module
         self.cost_module = costs.Costs()
+        self.biosafe = biosafe.BiosafeVR()
         # total costs made up until the end of the rounds ended
         self.total_costs = 0
         # turn costs of the current round
@@ -233,11 +235,11 @@ class runScript():
             t0 = time.time()
             self.tygron_update()
             t1 = time.time()
+        self.run_biosafe()
         self.initialized = True
         self.index_model()
         self.run_model()
         self.scores()
-        self.update_viz()
         toc = time.time()
         try:
             print("Finished startup and calibration" +
@@ -257,6 +259,7 @@ class runScript():
                   " seconds. Model run time: " + str(round(toc-tec, 2)) +
                   " seconds. Total initialization time: " +
                   str(round(toc-tic, 2)) + " seconds.")
+        self.update_viz()
         return
 
 
@@ -273,6 +276,7 @@ class runScript():
                   "end round has not yet been triggered.")
             return
         tic = time.time()
+        self.start_new_turn = False
         if not self.test:
             self.get_image()
             # it may be more robust to recalibrate the camera every update -->
@@ -291,11 +295,9 @@ class runScript():
             t0 = time.time()
             self.tygron_update()
             t1 = time.time()
+        self.run_biosafe()
         self.run_model()
         self.scores()
-        self.update_viz()
-        self.print_costs()
-        self.start_new_turn = False
         toc = time.time()
         try:
             print("Updated to turn " + str(self.turn) +
@@ -310,6 +312,7 @@ class runScript():
                   " seconds. Interpolation update time: " +
                   str(round(toc-tec, 2)) + " seconds. Total update time: " +
                   str(round(toc-tic, 2)) + " seconds.")
+        self.update_viz()
         return
 
 
@@ -679,6 +682,14 @@ class runScript():
         return
 
 
+    def run_biosafe(self):
+        if not self.initialized:
+            self.biosafe.process_board(self.hexagons_sandbox, reference=True)
+        else:
+            self.biosafe.process_board(self.hexagons_sandbox, reference=False)
+            self.biosafe.compare()
+
+
     def reload(self):
         """
         TO DO:
@@ -910,7 +921,7 @@ class runScript():
                   "initialize")
             return
         if self.start_new_turn:
-            print("It appears as if you have pressed end_round twice, there"
+            print("It appears as if you have pressed end_round twice, there "
                   "has been no update from the previous board state so far.")
             return
         print("Ending round " + str(self.turn) + ", applying all the changes. "
@@ -983,8 +994,15 @@ class runScript():
         self.indicators.update_water_and_dike_levels(
                 self.hexagons_sandbox, self.hexagons_prev, self.turn)
         self.indicators.update_flood_safety_score(self.turn)
-        self.indicators.update_biodiversity_score(self.hexagons_sandbox,
-                                                  self.turn)
+        #self.indicators.update_biodiversity_score(self.hexagons_sandbox,
+        #                                          self.turn)
+        if self.turn == 0:
+            biosafe_ref = self.biosafe.get_reference()
+            self.indicators.store_biosafe_output(biosafe_ref, reference=True)
+        biosafe_int = self.biosafe.get_intervention()
+        self.indicators.store_biosafe_output(biosafe_int)
+        biosafe_perc = self.biosafe.get_percentage()
+        self.indicators.store_biosafe_output(biosafe_perc, percentage=True)
         self.indicators.plot(self.turn)
         return
 

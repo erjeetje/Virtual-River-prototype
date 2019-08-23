@@ -438,7 +438,7 @@ def create_buildings(hexagons, grid):
         polygon = geometry.asShape(feature.geometry)
         if polygon.contains(point):
             feature.properties["building_active"] = True
-            feature.properties["z_building"] = 6
+            feature.properties["z_building"] = 4
     return grid
 
 
