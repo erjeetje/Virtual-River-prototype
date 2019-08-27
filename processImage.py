@@ -16,13 +16,14 @@ import sandbox_fm.calibrate
 
 
 def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
-                   method='rgb', path=""):
+                   method='rgb', path="", debug=False):
     # warp image it to calibrated perspective
     warped = cv2.warpPerspective(img, pers, (img_x, img_y))
     # save the file of this turn
-    filename = 'turn_%d.jpg' % turn
-    cv2.imwrite(os.path.join(path, filename), warped)
-    if method is 'LAB':
+    if debug:    
+        filename = 'turn_%d.jpg' % turn
+        cv2.imwrite(os.path.join(path, filename), warped)
+    if method == 'LAB':
         # convert the image to labspace and get the A and B channels.
         lab = cv2.cvtColor(warped, cv2.COLOR_BGR2Lab)
         L, A, B = cv2.split(lab)
@@ -40,11 +41,12 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         kernel = np.ones((2, 2), np.uint8)
         red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
-        cv2.imwrite(os.path.join(path, 'red_mask_dilated_LAB%d.jpg' % turn),
-                    red_dilate)
-        cv2.imwrite(os.path.join(path, 'blue_mask_dilated_LAB%d.jpg' % turn),
-                    blue_dilate)
-    elif method is 'YCrCb':
+        if debug:
+            cv2.imwrite(os.path.join(path, 'red_mask_dilated_LAB%d.jpg' % turn),
+                        red_dilate)
+            cv2.imwrite(os.path.join(path, 'blue_mask_dilated_LAB%d.jpg' % turn),
+                        blue_dilate)
+    elif method == 'YCrCb':
         # convert to image to YCRCb and get the Cb and Cr channels.
         ycrcb = cv2.cvtColor(warped, cv2.COLOR_BGR2YCrCb)
         Y, Cr, Cb = cv2.split(ycrcb)
@@ -62,10 +64,11 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         kernel = np.ones((2, 2), np.uint8)
         red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
-        cv2.imwrite(os.path.join(path, 'red_mask_dilated_YCrCb%d.jpg' % turn),
-                    red_dilate)
-        cv2.imwrite(os.path.join(path, 'blue_mask_dilated_YCrCb%d.jpg' % turn),
-                                 blue_dilate)
+        if debug:
+            cv2.imwrite(os.path.join(path, 'red_mask_dilated_YCrCb%d.jpg' % turn),
+                        red_dilate)
+            cv2.imwrite(os.path.join(path, 'blue_mask_dilated_YCrCb%d.jpg' % turn),
+                                     blue_dilate)
     else:
         # split the RGB channels and get the B and R channels.
         B, G, R = cv2.split(warped)
@@ -84,10 +87,11 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
         red_dilate = cv2.dilate(red_mask, kernel, iterations=1)
         blue_dilate = cv2.dilate(blue_mask, kernel, iterations=1)
         # save masks, can be removed later.
-        cv2.imwrite(os.path.join(path, 'red_mask_dilated_RGB%d.jpg' % turn),
-                    red_dilate)
-        cv2.imwrite(os.path.join(path, 'blue_mask_dilated_RGB%d.jpg' % turn),
-                    blue_dilate)
+        if debug:
+            cv2.imwrite(os.path.join(path, 'red_mask_dilated_RGB%d.jpg' % turn),
+                        red_dilate)
+            cv2.imwrite(os.path.join(path, 'blue_mask_dilated_RGB%d.jpg' % turn),
+                        blue_dilate)
 
     # create a mask for the region of interest processing.
     # convert diameter to actual radius as int value.

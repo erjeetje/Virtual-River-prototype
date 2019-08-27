@@ -14,10 +14,10 @@ import hexagonAdjustments as adjust
 
 def update(turn):
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(dir_path, 'test_files')
+    store_path = os.path.join(dir_path, 'storing_files')
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
-            path=test_path)
+            path=store_path)
     hexagons = adjust.biosafe_area(hexagons)
     """
     hexagons_old = gridmap.read_hexagons(
@@ -37,7 +37,7 @@ def update(turn):
     with open(os.path.join(test_path, 'hexagons%d.geojson' % turn), 'w') as f:
         geojson.dump(hexagons_new, f, sort_keys=True, indent=2)
     """
-    with open(os.path.join(test_path, 'hexagons%d.geojson' % turn), 'w') as f:
+    with open(os.path.join(store_path, 'hexagons%d.geojson' % turn), 'w') as f:
         geojson.dump(hexagons, f, sort_keys=True, indent=2)
     return
 
