@@ -161,7 +161,7 @@ class runScript():
         self.tygron = True
         self.ghost_hexagons_fixed = False
         # save variables, adjust as you wish how to run Virtual River
-        self.save = False
+        self.save = True
         self.model_save = False
         self.model_ini_save = False
         self.reloading = False
@@ -766,6 +766,7 @@ class runScript():
 
 
     def run_biosafe(self):
+        self.hexagons_sandbox = adjust.biosafe_area(self.hexagons_sandbox)
         if not self.initialized:
             self.biosafe.process_board(self.hexagons_sandbox, reference=True)
         else:
@@ -803,29 +804,32 @@ class runScript():
             print("Virtual River is not yet calibrated, please first run "
                   "initialize")
             return
-        with open(os.path.join(
-                self.store_path,
-                'hexagons%d.geojson' % self.turn), 'w') as f:
-            geojson.dump(self.hexagons_sandbox, f, sort_keys=True, indent=2)
-        print("Saved hexagon file for turn " + str(self.turn) + ".")
-        if self.debug:
+        if not self.test:
             with open(os.path.join(
                     self.store_path,
-                    'node_grid%d.geojson' % self.turn), 'w') as f:
-                geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
-            print("Saved node grid for turn " + str(self.turn) + ".")
-            with open(os.path.join(
-                    self.store_path,
-                    'filled_node_grid%d.geojson' % self.turn),
-                      'w') as f:
+                    'hexagons%d.geojson' % self.turn), 'w') as f:
                 geojson.dump(
-                        self.filled_node_grid, f, sort_keys=True, indent=2)
-            print("Saved filled node grid for turn " + str(self.turn) + ".")
-            with open(os.path.join(
-                    self.store_path,
-                    'flow_grid%d.geojson' % self.turn), 'w') as f:
-                geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
-            print("Saved flow grid for turn " + str(self.turn) + ".")
+                        self.hexagons_sandbox, f, sort_keys=True, indent=2)
+            print("Saved hexagon file for turn " + str(self.turn) + ".")
+            if self.debug:
+                with open(os.path.join(
+                        self.store_path,
+                        'node_grid%d.geojson' % self.turn), 'w') as f:
+                    geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
+                print("Saved node grid for turn " + str(self.turn) + ".")
+                with open(os.path.join(
+                        self.store_path,
+                        'filled_node_grid%d.geojson' % self.turn),
+                          'w') as f:
+                    geojson.dump(
+                            self.filled_node_grid, f, sort_keys=True, indent=2)
+                print("Saved filled node grid for turn " + str(self.turn) +
+                      ".")
+                with open(os.path.join(
+                        self.store_path,
+                        'flow_grid%d.geojson' % self.turn), 'w') as f:
+                    geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
+                print("Saved flow grid for turn " + str(self.turn) + ".")
         return
 
 
