@@ -229,14 +229,14 @@ class runScript():
         self.tygron_login()
         self.get_image()
         self.calibrate_camera()
-        self.get_hexagons()
         self.transform_hexagons()
+        self.get_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
         self.set_up_hexagons()
         self.process_hexagons()
-        #if self.tygron:
-        #    self.tygron_transform()
+        if self.tygron:
+            self.tygron_transform()
         self.update_ownership_viz()
         tac = time.time()
         self.create_grids()
@@ -294,11 +294,11 @@ class runScript():
             self.get_image()
             # it may be more robust to recalibrate the camera every update -->
             # check the time the system needs for that.
+        #self.transform_hexagons()
         self.get_hexagons()
-        self.transform_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
-            #self.tygron_transform()
+            self.tygron_transform()
         self.process_hexagons()
         dike_moved = self.compare_hexagons()
         tac = time.time()
@@ -346,10 +346,11 @@ class runScript():
             self.get_image()
             self.calibrate_camera()
         self.get_hexagons()
-        self.transform_hexagons()
+        #self.transform_hexagons()
         #self.process_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
+            self.tygron_transform()
         dike_moved = None
         if self.initialized:
             dike_moved = self.compare_hexagons()
@@ -434,18 +435,38 @@ class runScript():
         return
 
 
+    def transform_hexagons(self):
+        """
+        Function that transforms the hexagons to the coordinates that the
+        SandBox / Tygron uses.
+        """
+        if not (self.test or self.reloading):
+            # update the hexagons to initial board state.
+            self.hexagons_sandbox = detect.transform(
+                    self.hexagons, self.transforms, export="sandbox",
+                    path=self.dir_path)
+        """
+        if self.tygron:
+            self.hexagons_tygron = detect.transform(
+                        self.hexagons_sandbox, self.transforms,
+                        export="sandbox2tygron")
+        """
+        print("Transformed hexagons suitable for model and tygron.")
+        return
+    
+    
     def get_hexagons(self):
         """
         Function that creates/gets the new hexagons. Gets them from either the
         camera (live mode) or file (test mode).
         """
         if not (self.test or self.reloading):
-            self.hexagons = detect.detect_markers(
+            self.hexagons_sandbox = detect.detect_markers(
                     self.turn_img, self.pers, self.img_x, self.img_y,
-                    self.origins, self.radius, self.hexagons, method='LAB',
+                    self.origins, self.radius, self.hexagons_sandbox, method='LAB',
                     path=self.store_path, debug=self.debug)
             if not self.initialized:
-                self.hexagons = ghosts.set_values(self.hexagons)
+                self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
         else:
             if self.reloading:
                 path = self.store_path
@@ -463,24 +484,6 @@ class runScript():
                     self.hexagons_sandbox = ghosts.set_values(
                             self.hexagons_sandbox)
         print("Retrieved board state.")
-        return
-
-
-    def transform_hexagons(self):
-        """
-        Function that transforms the hexagons to the coordinates that the
-        SandBox / Tygron uses.
-        """
-        if not (self.test or self.reloading):
-            # update the hexagons to initial board state.
-            self.hexagons_sandbox = detect.transform(
-                    self.hexagons, self.transforms, export="sandbox",
-                    path=self.dir_path)
-        if self.tygron:
-            self.hexagons_tygron = detect.transform(
-                        self.hexagons_sandbox, self.transforms,
-                        export="sandbox2tygron")
-        print("Transformed hexagons suitable for model and tygron.")
         return
 
 
@@ -659,14 +662,9 @@ class runScript():
         Transform the hexagon features to the internal coordinates used by
         Tygron.
         """
-        if not self.test:
-            # transform hexagons to tygron coordinates.
-            self.hexagons_tygron = detect.transform(
-                    self.hexagons, self.transforms, export="tygron")
-        else:
-            self.hexagons_tygron = detect.transform(
-                    self.hexagons_sandbox, self.transforms,
-                    export="sandbox2tygron")
+        self.hexagons_tygron = detect.transform(
+                self.hexagons_sandbox, self.transforms,
+                export="sandbox2tygron")
         return
 
 
