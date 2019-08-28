@@ -164,10 +164,13 @@ def hexagons_to_fill(hexagons):
     """
     for feature in hexagons.features:
         if not feature.properties["behind_dike"]:
-            continue
+            feature.properties["z_correction"] = 0
         else:
             dike = hexagons[feature.properties["dike_reference"]]
-            feature.properties["z"] = dike.properties["z"]
+            #feature.properties["z_reference"] = dike.properties["z_reference"]
+            feature.properties["z_correction"] = (
+                    dike.properties["z_reference"] -
+                    feature.properties["z_reference"])
     return hexagons
 
 
@@ -306,6 +309,10 @@ def index_node_grid(hexagons, grid, slope):
     closest hexagons to a point in the node grid. Also calculates weight
     factors based on the distance to the hexagon centers.
     """
+    
+    def add_bedslope(x, slope):
+        return abs(x - 600) * slope
+    
     hex_coor = []
     polygons = []
     # get x, y coordinates of each point and add it to hex_coor list to create
@@ -367,6 +374,7 @@ def index_node_grid(hexagons, grid, slope):
         point = geometry.asShape(feature.geometry)
         x_point = point.centroid.x
         y_point = point.centroid.y
+        feature.properties["bedslope_correction"] = add_bedslope(x_point, slope)
         if not bbox.contains(point):
             feature.properties["board"] = False
             feature.properties["border"] = False
@@ -374,7 +382,8 @@ def index_node_grid(hexagons, grid, slope):
             feature.properties["fill"] = False
             if (y_point > maxy or y_point < miny):
                 feature.properties["fill"] = True
-                feature.properties["z"] = 16 + (abs(x_point - 600) * slope)
+                feature.properties["z"] = (
+                        20 + feature.properties["bedslope_correction"])
             elif (x_point == x_min or x_point == x_max):
                 feature.properties["border"] = True
         else:  
@@ -546,28 +555,53 @@ def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
         # factors.
         if type(nearest) is int:
             hexagon = hexagons_by_id[nearest]
-            feature.properties["z"] = hexagon.properties["z"]
+            if fill:
+                z = (hexagon.properties["z_reference"] +
+                     hexagon.properties["z_correction"])
+            else:
+                z = hexagon.properties["z_reference"]
+            feature.properties["z"] = round(
+                    z * 4 + feature.properties["bedslope_correction"], 5)
+            
         elif len(nearest) == 2:
             weights = feature.properties["weight"]
             weights_sum = feature.properties["weight_sum"]
             hexagon1 = hexagons_by_id[nearest[0]]
             hexagon2 = hexagons_by_id[nearest[1]]
+            if fill:
+                z1 = (hexagon1.properties["z_reference"] +
+                      hexagon1.properties["z_correction"])
+                z2 = (hexagon2.properties["z_reference"] +
+                      hexagon2.properties["z_correction"])
+            else:
+                z1 = hexagon1.properties["z_reference"]
+                z2 = hexagon2.properties["z_reference"]
             feature.properties["z"] = \
-                round(hexagon1.properties["z"] * (weights[0] /
-                      weights_sum) + hexagon2.properties["z"] *
-                      (weights[1] / weights_sum), 5)
+                round((z1 * 4 * (weights[0] / weights_sum) + z2 * 4 *
+                       (weights[1] / weights_sum)) +
+                      feature.properties["bedslope_correction"], 5)
         else:
             weights = feature.properties["weight"]
             weights_sum = feature.properties["weight_sum"]
             hexagon1 = hexagons_by_id[nearest[0]]
             hexagon2 = hexagons_by_id[nearest[1]]
             hexagon3 = hexagons_by_id[nearest[2]]
-            feature.properties["z"] = \
-                round(hexagon1.properties["z"] * (weights[0] /
-                      weights_sum) + hexagon2.properties["z"] *
-                      (weights[1] / weights_sum) +
-                      hexagon3.properties["z"] * (weights[2] /
-                      weights_sum), 5)
+            if fill:
+                z1 = (hexagon1.properties["z_reference"] +
+                      hexagon1.properties["z_correction"])
+                z2 = (hexagon2.properties["z_reference"] +
+                      hexagon2.properties["z_correction"])
+                z3 = (hexagon3.properties["z_reference"] +
+                      hexagon3.properties["z_correction"])
+            else:
+                z1 = hexagon1.properties["z_reference"]
+                z2 = hexagon2.properties["z_reference"]
+                z3 = hexagon3.properties["z_reference"]
+            feature.properties["z"] = round(
+                    (z1 * 4 * (weights[0] / weights_sum) + z2 * 4 *
+                     (weights[1] / weights_sum) + z3 * 4 * (weights[2] /
+                     weights_sum)) + feature.properties["bedslope_correction"],
+                                       5)
         # add corrections to for the groynes and ltds respectively
         if feature.properties["groyne_active"]:
             if feature.properties["groyne"] != None:
@@ -614,6 +648,10 @@ def set_change_false(grid):
 
 
 def set_active(grid):
+    """
+    Function that sets the initial board settings for z corrections for
+    groynes, ltds and buildings.
+    """
     for feature in grid.features:
         if feature.properties["groyne"] != None:
             feature.properties["groyne_active"] = True
@@ -627,12 +665,18 @@ def set_active(grid):
 
 
 def add_bedslope(grid, slope=10**-3):
+    """
+    Function to add the bedslope_correction to the grid.
+    
+    Function is no longer called, integrated with the grid index function.
+    """
     for feature in grid.features:
         shape = geometry.asShape(feature.geometry)
         x_hex = shape.centroid.x
         x_hex = abs(x_hex - 600)
         feature.properties["bedslope_correction"] = slope * x_hex
     return grid
+
 
 
 def create_geotiff(grid, turn=0, path="", save=False):

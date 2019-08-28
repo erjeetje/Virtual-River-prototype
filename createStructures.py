@@ -438,11 +438,16 @@ def create_buildings(hexagons, grid):
         polygon = geometry.asShape(feature.geometry)
         if polygon.contains(point):
             feature.properties["building_active"] = True
-            feature.properties["z_building"] = 4
+            feature.properties["z_building"] = 5
     return grid
 
 
 def add_buildings(grid):
+    """
+    Function to add grid corrections for buildings.
+    
+    Function is no longer called, integrated in the grid interpolation method
+    """
     for feature in grid.features:
         if not feature.properties["building_active"]:
             continue

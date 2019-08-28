@@ -10,8 +10,8 @@ import time
 import geojson
 import os
 import tygronInterface as tygron
-import gridCalibration_test as cali
-import processImage_test as detect
+import gridCalibration as cali
+import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
@@ -231,6 +231,7 @@ class runScript():
         self.calibrate_camera()
         self.get_hexagons()
         self.transform_hexagons()
+        self.process_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
         self.set_up_hexagons()
@@ -295,6 +296,7 @@ class runScript():
             # check the time the system needs for that.
         self.get_hexagons()
         self.transform_hexagons()
+        self.process_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
             self.tygron_transform()
@@ -315,13 +317,15 @@ class runScript():
             print("Updated to turn " + str(self.turn) +
                   ". Comparison update time: " + str(round(tac-tic, 2)) +
                   " seconds. Interpolation update time: " +
-                  str(round(toc-tec, 2)) + " seconds. Tygron update time: " +
-                  str(round((t1-t0), 2)) + " seconds. Total update time: " +
+                  str(round(tec-tac, 2)) + " seconds. Tygron update time: " +
+                  str(round((t1-t0), 2)) + " seconds. Model update time: " +
+                  str(round(toc-tec, 2)) + " seconds. Total update time: " +
                   str(round(toc-tic, 2)) + " seconds.")
         except UnboundLocalError:
             print("Updated to turn " + str(self.turn) +
                   ". Comparison update time: " + str(round(tac-tic, 2)) +
                   " seconds. Interpolation update time: " +
+                  str(round(tec-tac, 2)) + " seconds. Model update time: " +
                   str(round(toc-tec, 2)) + " seconds. Total update time: " +
                   str(round(toc-tic, 2)) + " seconds.")
         self.update_viz()
@@ -343,6 +347,7 @@ class runScript():
             self.calibrate_camera()
         self.get_hexagons()
         self.transform_hexagons()
+        #self.process_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
         dike_moved = None
@@ -471,15 +476,20 @@ class runScript():
             self.hexagons_sandbox = detect.transform(
                     self.hexagons, self.transforms, export="sandbox",
                     path=self.dir_path)
+        self.hexagons_tygron = detect.transform(
+                    self.hexagons_sandbox, self.transforms,
+                    export="sandbox2tygron")
+        print("Transformed hexagons suitable for model and tygron.")
+        return
+
+
+    def process_hexagons(self):
         if not self.initialized:
             self.hexagons_sandbox = adjust.add_bedslope(
                     self.hexagons_sandbox, self.slope)
             self.hexagons_sandbox = adjust.z_correction(
                     self.hexagons_sandbox, initialized=self.initialized)
-        self.hexagons_tygron = detect.transform(
-                    self.hexagons_sandbox, self.transforms,
-                    export="sandbox2tygron")
-        print("Transformed hexagons suitable for model and tygron.")
+        self.hexagons_sandbox = gridmap.hexagons_to_fill(self.hexagons_sandbox)
         return
 
 
@@ -556,7 +566,7 @@ class runScript():
         self.node_grid = structures.index_structures(groynes, self.node_grid)
         self.node_grid = structures.index_structures(
                 ltds, self.node_grid, mode="ltd")
-        self.node_grid = gridmap.add_bedslope(self.node_grid, slope=self.slope)
+        #self.node_grid = gridmap.add_bedslope(self.node_grid, slope=self.slope)
         self.node_grid = gridmap.set_active(self.node_grid)
         self.node_grid = structures.create_buildings(self.hexagons_sandbox,
                                                      self.node_grid)
@@ -589,13 +599,11 @@ class runScript():
         # dikes. The filled node grid is for the hydrodynamic model.
         if not self.initialized:
             self.filled_node_grid = deepcopy(self.node_grid)
-            filled_hexagons = deepcopy(self.hexagons_sandbox)
-            filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
             self.filled_node_grid = gridmap.update_node_grid(
-                    filled_hexagons, self.filled_node_grid, fill=True)
+                    self.hexagons_sandbox, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
-                    filled_hexagons, self.filled_node_grid, turn=self.turn,
-                    fill=True, path=self.dir_path)
+                    self.hexagons_sandbox, self.filled_node_grid,
+                    turn=self.turn, fill=True, path=self.dir_path)
         else:
             if dike_moved:
                 self.hexagons_sandbox = structures.determine_dikes(
@@ -603,13 +611,13 @@ class runScript():
                 self.hexagons_sandbox = \
                 structures.determine_floodplains_and_behind_dikes(
                         self.hexagons_sandbox)
-                filled_hexagons = deepcopy(self.hexagons_sandbox)
-                filled_hexagons = gridmap.hexagons_to_fill(filled_hexagons)
                 self.filled_node_grid = deepcopy(self.node_grid)
                 self.filled_node_grid = gridmap.update_node_grid(
-                        filled_hexagons, self.filled_node_grid, fill=True)
+                        self.hexagons_sandbox, self.filled_node_grid,
+                        fill=True)
                 self.filled_node_grid = gridmap.interpolate_node_grid(
-                        filled_hexagons, self.filled_node_grid, turn=self.turn,
+                        self.hexagons_sandbox, self.filled_node_grid,
+                        turn=self.turn,
                         fill=True, save=False, path=self.dir_path)
             else:
                 # if the dike locations did not change, a simple update suffices.
@@ -618,8 +626,7 @@ class runScript():
                         turn=self.turn, grid_type="filled")
                 self.filled_node_grid = gridmap.interpolate_node_grid(
                         self.hexagons_sandbox, self.filled_node_grid,
-                        turn=self.turn, fill=True, save=False,
-                        path=self.dir_path)
+                        turn=self.turn, fill=True, path=self.dir_path)
         return
 
 
