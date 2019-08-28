@@ -10,8 +10,8 @@ import time
 import geojson
 import os
 import tygronInterface as tygron
-import gridCalibration as cali
-import processImage as detect
+import gridCalibration_test as cali
+import processImage_test as detect
 import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam

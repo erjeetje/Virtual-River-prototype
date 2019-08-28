@@ -11,8 +11,20 @@ import os
 import cv2
 import numpy as np
 import geojson
-import sandbox_fm.calibrate
-from sandbox_fm.calibration_wizard import NumpyEncoder
+#import sandbox_fm.calibrate
+#from sandbox_fm.calibration_wizard import NumpyEncoder
+
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return super(NumpyEncoder, self).default(obj)
 
 
 def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", test=False):
@@ -20,6 +32,63 @@ def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", te
     Function that creates the calibration file (json format) and returns the
     transforms that can be used by other functions.
     """
+    def compute_transforms(calibration):
+        """compute transformation matrices based on calibration data"""
+    
+        point_names = [
+            "model",
+            "img",
+            "box",
+            "img_pre_cut",
+            "img_post_cut",
+            "beamer",
+    		"tygron_export",
+    		"tygron_update"
+        ]
+        """
+        WIDTH, HEIGHT = 640, 480
+        
+        DEFAULT_BOX = np.array([
+            [0, 0],
+            [WIDTH, 0],
+            [WIDTH, HEIGHT],
+            [0, HEIGHT]
+        ], dtype='float32')
+        """
+        
+        point_arrays = {}
+        for name in point_names:
+            """
+            if name == 'box':
+                arr = np.array(DEFAULT_BOX, dtype='float32')
+            el
+            """
+            if name in calibration:
+                arr = np.array(calibration[name], dtype='float32')
+            elif name + "_points" in calibration:
+                arr = np.array(calibration[name + "_points"], dtype='float32')
+            else:
+                continue
+            point_arrays[name] = arr
+    
+        transforms = {}
+        for a in point_names:
+            for b in point_names:
+                if a == b:
+                    continue
+                if not (a in point_arrays):
+                    continue
+                if not (b in point_arrays):
+                    continue
+                transform_name = a + '2' + b
+                transform = cv2.getPerspectiveTransform(
+                    point_arrays[a],
+                    point_arrays[b]
+                )
+                transforms[transform_name] = transform
+    
+        return transforms
+    
     calibration = {}
     # model points following SandBox implementation; 
     # between [-600, -400] and [600, 400] 
@@ -41,7 +110,8 @@ def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", te
     calibration['z_values'] = [0, 5]
     # box == beamer
     calibration['box'] = [0, 0], [640, 0], [640, 480], [0, 480]
-    transforms = sandbox_fm.calibrate.compute_transforms(calibration)
+    #transforms = sandbox_fm.calibrate.compute_transforms(calibration)
+    transforms = compute_transforms(calibration)
     calibration.update(transforms)
     with open(os.path.join(path, 'calibration.json'), 'w') as f:
         json.dump(calibration, f, sort_keys=True, indent=2, cls=NumpyEncoder)

@@ -12,7 +12,7 @@ import cv2
 import geojson
 import numpy as np
 import gridCalibration as cali
-import sandbox_fm.calibrate
+#import sandbox_fm.calibrate
 
 
 def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
@@ -258,6 +258,21 @@ def transform(features, transforms, export=None, path=""):
     the geojson needs to be transformed to (e.g. from the image processed to
     the model: 'img_post_cut2model').
     """
+    def execute_transform(x, y, M):
+        """perspective transform x,y with M"""
+        xy_t = np.squeeze(
+            cv2.perspectiveTransform(
+                np.dstack(
+                    [
+                        x,
+                        y
+                    ]
+                ),
+                np.asarray(M)
+            )
+        )
+        return xy_t[:, 0], xy_t[:, 1]
+    
     transformed_features = []
     # get correct transform.
     if export == "sandbox":
@@ -277,7 +292,7 @@ def transform(features, transforms, export=None, path=""):
         pts = np.array(feature.geometry["coordinates"][0], dtype="float32")
         # points should be channels.
         x, y = pts[:, 0], pts[:, 1]
-        x_t, y_t = sandbox_fm.calibrate.transform(x, y, transform)
+        x_t, y_t = execute_transform(x, y, transform)
         xy_t = np.c_[x_t, y_t]
         new_feature = geojson.Feature(id=feature.id,
                                       geometry=geojson.Polygon([xy_t.tolist()]),
