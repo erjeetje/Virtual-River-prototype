@@ -231,12 +231,12 @@ class runScript():
         self.calibrate_camera()
         self.get_hexagons()
         self.transform_hexagons()
-        self.process_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
         self.set_up_hexagons()
-        if self.tygron:
-            self.tygron_transform()
+        self.process_hexagons()
+        #if self.tygron:
+        #    self.tygron_transform()
         self.update_ownership_viz()
         tac = time.time()
         self.create_grids()
@@ -296,10 +296,10 @@ class runScript():
             # check the time the system needs for that.
         self.get_hexagons()
         self.transform_hexagons()
-        self.process_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
-            self.tygron_transform()
+            #self.tygron_transform()
+        self.process_hexagons()
         dike_moved = self.compare_hexagons()
         tac = time.time()
         self.update_ownership_viz()
@@ -476,20 +476,11 @@ class runScript():
             self.hexagons_sandbox = detect.transform(
                     self.hexagons, self.transforms, export="sandbox",
                     path=self.dir_path)
-        self.hexagons_tygron = detect.transform(
-                    self.hexagons_sandbox, self.transforms,
-                    export="sandbox2tygron")
+        if self.tygron:
+            self.hexagons_tygron = detect.transform(
+                        self.hexagons_sandbox, self.transforms,
+                        export="sandbox2tygron")
         print("Transformed hexagons suitable for model and tygron.")
-        return
-
-
-    def process_hexagons(self):
-        if not self.initialized:
-            self.hexagons_sandbox = adjust.add_bedslope(
-                    self.hexagons_sandbox, self.slope)
-            self.hexagons_sandbox = adjust.z_correction(
-                    self.hexagons_sandbox, initialized=self.initialized)
-        self.hexagons_sandbox = gridmap.hexagons_to_fill(self.hexagons_sandbox)
         return
 
 
@@ -513,6 +504,16 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
+        return
+    
+    
+    def process_hexagons(self):
+        if not self.initialized:
+            self.hexagons_sandbox = adjust.add_bedslope(
+                    self.hexagons_sandbox, self.slope)
+            self.hexagons_sandbox = adjust.z_correction(
+                    self.hexagons_sandbox, initialized=self.initialized)
+        self.hexagons_sandbox = gridmap.hexagons_to_fill(self.hexagons_sandbox)
         return
 
 
