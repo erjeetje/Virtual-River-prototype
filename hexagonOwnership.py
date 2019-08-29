@@ -120,8 +120,8 @@ def determine_ownership(hexagons):
     #for i in range(0, nature_count):
     i = 0
     while i < total_count:
-        #print(taken_hexagons)
-        #print("Trial loop nature ownership: " + str(i))
+        if len(taken_hexagons) == total_count:
+            break
         random_value = random.randint(0, floodplain_count-1)
         if random_value in taken_hexagons:
             #i += -1
