@@ -12,7 +12,7 @@ import os
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping as gridmap
+import gridMapping_test as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
@@ -27,7 +27,7 @@ import hexagonOwnership as owner
 import visualization as visualize
 import biosafeVR as biosafe
 from copy import deepcopy
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from PyQt5.QtCore import QCoreApplication
 
 
@@ -199,6 +199,8 @@ class runScript():
         self.img_y = None
         self.origins = None
         self.radius = None
+        # 
+        self.groyne_tracker = None
         # temporary variables in relation to colormap plots
         self.fig = None
         self.axes = None
@@ -299,8 +301,8 @@ class runScript():
         if self.tygron:
             self.tygron_update_buildings()
             self.tygron_transform()
-        self.process_hexagons()
         dike_moved = self.compare_hexagons()
+        self.process_hexagons(dike_moved=dike_moved)
         tac = time.time()
         self.update_ownership_viz()
         self.process_grids(dike_moved=dike_moved)
@@ -510,13 +512,22 @@ class runScript():
         return
     
     
-    def process_hexagons(self):
+    def process_hexagons(self, dike_moved=False):
         if not self.initialized:
             self.hexagons_sandbox = adjust.add_bedslope(
                     self.hexagons_sandbox, self.slope)
             self.hexagons_sandbox = adjust.z_correction(
                     self.hexagons_sandbox, initialized=self.initialized)
-        self.hexagons_sandbox = gridmap.hexagons_to_fill(self.hexagons_sandbox)
+            self.hexagons_sandbox = gridmap.hexagons_to_fill(
+                    self.hexagons_sandbox)
+        if dike_moved:
+            self.hexagons_sandbox = structures.determine_dikes(
+                        self.hexagons_sandbox)
+            self.hexagons_sandbox = \
+                structures.determine_floodplains_and_behind_dikes(
+                        self.hexagons_sandbox)
+            self.hexagons_sandbox = gridmap.hexagons_to_fill(
+                    self.hexagons_sandbox)
         return
 
 
@@ -583,8 +594,9 @@ class runScript():
         roughness setting of the flow grid.
         """
         if self.initialized:
-            self.node_grid = gridmap.update_node_grid(
-                    self.hexagons_sandbox, self.node_grid, turn=self.turn,
+            self.node_grid, ignore = gridmap.update_node_grid(
+                    self.hexagons_sandbox, self.node_grid,
+                    were_groynes = self.groyne_tracker, turn=self.turn,
                     printing=True)
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,
@@ -603,34 +615,32 @@ class runScript():
         # dikes. The filled node grid is for the hydrodynamic model.
         if not self.initialized:
             self.filled_node_grid = deepcopy(self.node_grid)
-            self.filled_node_grid = gridmap.update_node_grid(
+            self.filled_node_grid, self.groyne_tracker = \
+            gridmap.update_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
                     turn=self.turn, fill=True, path=self.dir_path)
         else:
             if dike_moved:
-                self.hexagons_sandbox = structures.determine_dikes(
-                        self.hexagons_sandbox)
-                self.hexagons_sandbox = \
-                structures.determine_floodplains_and_behind_dikes(
-                        self.hexagons_sandbox)
+                # if the dike locations changed, make a deepcopy of the
+                # node_grid and update it accordingly.
                 self.filled_node_grid = deepcopy(self.node_grid)
-                self.filled_node_grid = gridmap.update_node_grid(
+                self.filled_node_grid, self.groyne_tracker = \
+                gridmap.update_node_grid(
                         self.hexagons_sandbox, self.filled_node_grid,
-                        fill=True)
-                self.filled_node_grid = gridmap.interpolate_node_grid(
-                        self.hexagons_sandbox, self.filled_node_grid,
-                        turn=self.turn,
-                        fill=True, save=False, path=self.dir_path)
+                        were_groynes = self.groyne_tracker, fill=True)
             else:
-                # if the dike locations did not change, a simple update suffices.
-                self.filled_node_grid = gridmap.update_node_grid(
+                # if the dike locations did not change, a simple update
+                # suffices.
+                self.filled_node_grid, self.groyne_tracker = \
+                gridmap.update_node_grid(
                         self.hexagons_sandbox, self.filled_node_grid,
-                        turn=self.turn, grid_type="filled")
-                self.filled_node_grid = gridmap.interpolate_node_grid(
-                        self.hexagons_sandbox, self.filled_node_grid,
-                        turn=self.turn, fill=True, path=self.dir_path)
+                        were_groynes = self.groyne_tracker, turn=self.turn,
+                        grid_type="filled")
+            self.filled_node_grid = gridmap.interpolate_node_grid(
+                    self.hexagons_sandbox, self.filled_node_grid,
+                    turn=self.turn, fill=True, path=self.dir_path)
         return
 
 

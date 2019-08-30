@@ -462,14 +462,16 @@ def index_node_grid(hexagons, grid, slope):
     return grid
 
 
-def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_type="node"):
+def update_node_grid(hexagons, grid, were_groynes=[], fill=False, turn=0, printing=False, grid_type="node"):
     """ 
     Function to update the grid: determine which grid points require updating
     based on which hexagons are changed. This way, only the grid points that
     need updating are updated, speeding up the updating process.
     """
+    print("Were_groynes list contains: " + str(were_groynes))
     indices_updated = []
     becomes_ltd = []
+    becomes_groyne = []
     counter = 0
     # add feature ids of the changed hexagons to a list.
     for feature in hexagons.features:
@@ -491,6 +493,9 @@ def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_ty
         if (feature.properties["landuse_changed"] and
             feature.properties["landuse"] == 8):
             becomes_ltd.append(feature.id)
+        if (feature.properties["landuse_changed"] and
+            feature.properties["landuse"] == 9):
+            becomes_groyne.append(feature.id)
     # set the changed properties of the points in the grid indexed to a hexagon
     # indices_updated to True. Set the points that should not change to False.
     for feature in grid.features:
@@ -521,18 +526,34 @@ def update_node_grid(hexagons, grid, fill=False, turn=0, printing=False, grid_ty
                 if feature.properties["ltd"] != None:
                     feature.properties["groyne_active"] = False
                     feature.properties["ltd_active"] = True
-        elif any(True for x in feature.properties["nearest"]
-                 if x in becomes_ltd):
+            elif feature.properties["nearest"] in were_groynes:
+                feature.properties["changed"] = True
+                counter += 1
+                if feature.properties["groyne"] != None:
+                    feature.properties["groyne_active"] = True
+                    feature.properties["ltd_active"] = False
+        elif feature.properties["nearest"][0] in becomes_ltd:
             feature.properties["changed"] = True
             counter += 1
             if feature.properties["ltd"] != None:
                 feature.properties["groyne_active"] = False
                 feature.properties["ltd_active"] = True
+        elif feature.properties["nearest"][0] in were_groynes:
+            feature.properties["changed"] = True
+            counter += 1
+            if feature.properties["groyne"] != None:
+                feature.properties["groyne_active"] = True
+                feature.properties["ltd_active"] = False
     if printing:
         print("Hexagons updated are: "+str(indices_updated))
         print("Number of gridpoints inside the board to update: "+str(counter))
-    return grid
+    return grid, becomes_ltd
 
+
+"""
+elif any(True for x in feature.properties["nearest"]
+         if x in becomes_ltd):
+"""
 
 def interpolate_node_grid(hexagons, grid, turn=0, fill=False, save=False,
                           path=""):

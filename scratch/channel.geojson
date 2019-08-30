@@ -1298,7 +1298,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": false,
-        "landuse": 9,
+        "landuse": 8,
         "landuse_changed": true,
         "main_channel": true,
         "neighbours": [
@@ -1454,7 +1454,7 @@
         "floodplain_south": false,
         "ghost_hexagon": false,
         "land": false,
-        "landuse": 9,
+        "landuse": 8,
         "landuse_changed": true,
         "main_channel": true,
         "neighbours": [

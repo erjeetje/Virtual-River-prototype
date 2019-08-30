@@ -206,12 +206,16 @@ class BiosafeVR():
         bar_width = 0.3
 
         # plot the initial and new situation comparison
+        label = ("reference: " +
+                 str(round(self.PotTax_reference.sum().TFI, 2)))
         reference = ax5.bar(
                 index, self.PotTax_reference.values.flatten(), bar_width,
-                label="reference", tick_label=xticks)
+                label=label, tick_label=xticks)
+        label = ("intervention: " +
+                 str(round(self.PotTax_intervention.sum().TFI, 2)))
         intervention = ax5.bar(
                 index+bar_width, self.PotTax_intervention.values.flatten(),
-                bar_width, label="intervention", tick_label=xticks)
+                bar_width, label=label, tick_label=xticks)
         ax5.set_ylabel("total value")
         ax5.legend(loc='best')
         for tick in ax5.get_xticklabels():
@@ -221,12 +225,13 @@ class BiosafeVR():
         # situation
         data = self.PotTax_percentage.values.flatten()
         percentage = ax6.bar(
-                index, data, bar_width, label="reference", tick_label=xticks)
+                index, data, bar_width, label="percentage", tick_label=xticks)
         ax6.set_ylabel("increase (%)")
         minimum = min(data)
         maximum = max(data)
+        size = len(str(int(round(maximum))))
         maximum = int(str(maximum)[:1])
-        maximum = (maximum + 1) * 10
+        maximum = (maximum + 1) * (10**(size-1))
         ax6.set_ylim([min(0, minimum), maximum])
         for tick in ax6.get_xticklabels():
             tick.set_rotation(90)
@@ -269,6 +274,12 @@ class BiosafeVR():
         Getter for the percentage difference.
         """
         return self.PotTax_percentage
+    
+    
+    def print_output(self):
+        print("Reference score: " + str(self.PotTax_reference.sum().TFI))
+        print("Intervention score: " + str(self.PotTax_intervention.sum().TFI))
+        return
 
 
 def test():
@@ -276,10 +287,10 @@ def test():
     Function to test the code separately from the Virtual River.
     """
     root_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(root_path, 'test_files')
-    with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
+    test_path = os.path.join(root_path, 'balance_tests')
+    with open(os.path.join(test_path, 'all_agriculture.geojson')) as f:
         hexagons_old = load(f)
-    with open(os.path.join(test_path, 'hexagons7.geojson')) as f:
+    with open(os.path.join(test_path, 'all_nature9.geojson')) as f:
         hexagons_new = load(f)        
     return hexagons_new, hexagons_old
 
@@ -291,6 +302,7 @@ def main():
     biosafe.process_board(hexagons_new)
     biosafe.compare()
     biosafe.plot()
+    biosafe.print_output()
 
 
 if __name__ == "__main__":
