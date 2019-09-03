@@ -12,7 +12,7 @@ import os
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping_test as gridmap
+import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
@@ -20,7 +20,7 @@ import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
 import waterModule as water
-import indicatorModule_IHE as indicator
+import indicatorModule as indicator
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
@@ -212,8 +212,10 @@ class runScript():
         self.total_costs = 0
         # turn costs of the current round
         self.turn_costs = 0
+        self.cost_score = None
         # BIOSAFE module
         self.biosafe = biosafe.BiosafeVR()
+        self.biosafe_score = None
         # visualization
         self.viz = visualize.Visualization(self.model)
         return
@@ -251,6 +253,7 @@ class runScript():
             self.tygron_update()
             t1 = time.time()
         self.run_biosafe()
+        self.update_cost_score()
         self.initialized = True
         self.index_model()
         self.run_model()
@@ -312,6 +315,7 @@ class runScript():
             self.tygron_update()
             t1 = time.time()
         self.run_biosafe()
+        self.update_cost_score()
         self.run_model()
         self.scores()
         toc = time.time()
@@ -372,6 +376,7 @@ class runScript():
             self.tygron_update()
             t1 = time.time()
         self.run_biosafe()
+        self.update_cost_score()
         if not self.initialized:
             self.initialized = True
         self.reload_enabled = False
@@ -788,6 +793,9 @@ class runScript():
         else:
             self.biosafe.process_board(self.hexagons_sandbox, reference=False)
             self.biosafe.compare()
+        self.biosafe.set_score()
+        self.biosafe_score = self.biosafe.get_score()
+        return
 
 
     def end_round(self):
@@ -804,7 +812,7 @@ class runScript():
         """
         TODO: code to handle whatever needs to be handled, e.g. the indicators.
         """
-        self.update_costs()
+        self.store_costs()
         self.store_previous_turn()
         # if self.save is defined as True, the end of turn files are
         # automatically stored.
@@ -849,9 +857,15 @@ class runScript():
         return
 
 
-    def update_costs(self):
+    def store_costs(self):
         self.total_costs = self.total_costs + self.turn_costs
         self.turn_costs = 0
+        return
+    
+    
+    def update_cost_score(self):
+        costs = self.total_costs + self.turn_costs
+        self.cost_score = self.indicators.calculate_cost_score(costs)
         return
 
 
@@ -872,13 +886,17 @@ class runScript():
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
             return
+        #self.indicators.add_flood_safety_score(50, self.turn)
+        #self.indicators.add_biosafe_score(self.biosafe_score, self.turn)
+        #self.indicators.add_cost_score(self.cost_score, self.turn)
         costs = self.total_costs + self.turn_costs
-        self.indicators.add_indicator_values(50.0, 50.0, costs, self.turn)
+        #self.indicators.add_total_costs(costs, self.turn)
+        self.indicators.add_indicator_values(
+                50.0, self.biosafe_score, self.cost_score, costs,
+                turn=self.turn)
         self.indicators.update_water_and_dike_levels(
                 self.hexagons_sandbox, self.hexagons_prev, self.turn)
         self.indicators.update_flood_safety_score(self.turn)
-        #self.indicators.update_biodiversity_score(self.hexagons_sandbox,
-        #                                          self.turn)
         if self.turn == 0:
             biosafe_ref = self.biosafe.get_reference()
             self.indicators.store_biosafe_output(biosafe_ref, reference=True)

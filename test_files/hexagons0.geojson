@@ -71,6 +71,7 @@
         "y_center": 50,
         "z": 3.3500129614935985,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -148,6 +149,7 @@
         "y_center": 150,
         "z": 5.750012961493598,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -225,6 +227,7 @@
         "y_center": 250,
         "z": 3.3500129614935985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -302,6 +305,7 @@
         "y_center": 350,
         "z": 3.3500129614935985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -379,6 +383,7 @@
         "y_center": 450,
         "z": 0.9500129614935986,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -456,6 +461,7 @@
         "y_center": 550,
         "z": 0.9500129614935987,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -533,6 +539,7 @@
         "y_center": 650,
         "z": 3.3500129614935985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -610,6 +617,7 @@
         "y_center": 750,
         "z": 3.3500129614935985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -687,6 +695,7 @@
         "y_center": 850,
         "z": 5.750012961493598,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -762,6 +771,7 @@
         "y_center": 950,
         "z": 3.3500129614935985,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -840,6 +850,7 @@
         "y_center": 100,
         "z": 4.500025924682617,
         "z_changed": true,
+        "z_correction": 1,
         "z_reference": 3
       },
       "type": "Feature"
@@ -919,6 +930,7 @@
         "y_center": 200,
         "z": 5.700025924682617,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -998,6 +1010,7 @@
         "y_center": 300,
         "z": 3.3000259246826174,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -1077,6 +1090,7 @@
         "y_center": 400,
         "z": 3.3000259246826174,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -1156,6 +1170,7 @@
         "y_center": 500,
         "z": 0.9000259246826172,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -1235,6 +1250,7 @@
         "y_center": 600,
         "z": 0.9000259246826172,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -1314,6 +1330,7 @@
         "y_center": 700,
         "z": 3.3000259246826174,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -1393,6 +1410,7 @@
         "y_center": 800,
         "z": 5.700025924682617,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -1471,6 +1489,7 @@
         "y_center": 900,
         "z": 3.3000259246826174,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -1547,6 +1566,7 @@
         "y_center": 50,
         "z": 3.250038891262478,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -1626,6 +1646,7 @@
         "y_center": 150,
         "z": 5.650038891262478,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -1705,6 +1726,7 @@
         "y_center": 250,
         "z": 4.450038891262478,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -1784,6 +1806,7 @@
         "y_center": 350,
         "z": 3.250038891262478,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -1863,6 +1886,7 @@
         "y_center": 450,
         "z": 0.8500388912624783,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -1942,6 +1966,7 @@
         "y_center": 550,
         "z": 0.8500388912624783,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -2021,6 +2046,7 @@
         "y_center": 650,
         "z": 3.250038891262478,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2100,6 +2126,7 @@
         "y_center": 750,
         "z": 3.250038891262478,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2179,6 +2206,7 @@
         "y_center": 850,
         "z": 5.650038891262478,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -2255,6 +2283,7 @@
         "y_center": 950,
         "z": 3.250038891262478,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2333,6 +2362,7 @@
         "y_center": 100,
         "z": 5.600051852756076,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -2412,6 +2442,7 @@
         "y_center": 200,
         "z": 3.200051852756076,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2491,6 +2522,7 @@
         "y_center": 300,
         "z": 3.200051852756076,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2570,6 +2602,7 @@
         "y_center": 400,
         "z": 0.8000518527560764,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -2649,6 +2682,7 @@
         "y_center": 500,
         "z": 0.8000518527560764,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -2728,6 +2762,7 @@
         "y_center": 600,
         "z": 3.200051852756076,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2807,6 +2842,7 @@
         "y_center": 700,
         "z": 3.200051852756076,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2886,6 +2922,7 @@
         "y_center": 800,
         "z": 3.200051852756076,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -2964,6 +3001,7 @@
         "y_center": 900,
         "z": 5.600051852756076,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -3040,6 +3078,7 @@
         "y_center": 50,
         "z": 5.550064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -3119,6 +3158,7 @@
         "y_center": 150,
         "z": 3.150064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -3198,6 +3238,7 @@
         "y_center": 250,
         "z": 3.150064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -3277,6 +3318,7 @@
         "y_center": 350,
         "z": 0.7500648138258192,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -3356,6 +3398,7 @@
         "y_center": 450,
         "z": 0.7500648138258194,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -3435,6 +3478,7 @@
         "y_center": 550,
         "z": 3.150064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -3514,6 +3558,7 @@
         "y_center": 650,
         "z": 4.350064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -3593,6 +3638,7 @@
         "y_center": 750,
         "z": 3.150064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -3672,6 +3718,7 @@
         "y_center": 850,
         "z": 3.150064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -3748,6 +3795,7 @@
         "y_center": 950,
         "z": 5.550064813825819,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -3826,6 +3874,7 @@
         "y_center": 100,
         "z": 5.500077779134114,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -3905,6 +3954,7 @@
         "y_center": 200,
         "z": 3.100077779134114,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -3984,6 +4034,7 @@
         "y_center": 300,
         "z": 0.7000777791341141,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -4063,6 +4114,7 @@
         "y_center": 400,
         "z": 0.7000777791341141,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -4142,6 +4194,7 @@
         "y_center": 500,
         "z": 3.100077779134114,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -4221,6 +4274,7 @@
         "y_center": 600,
         "z": 4.300077779134114,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -4300,6 +4354,7 @@
         "y_center": 700,
         "z": 1.9000777791341141,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 1
       },
       "type": "Feature"
@@ -4379,6 +4434,7 @@
         "y_center": 800,
         "z": 3.100077779134114,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -4457,6 +4513,7 @@
         "y_center": 900,
         "z": 5.500077779134114,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -4533,6 +4590,7 @@
         "y_center": 50,
         "z": 5.450090749740601,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -4612,6 +4670,7 @@
         "y_center": 150,
         "z": 3.0500907497406002,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -4691,6 +4750,7 @@
         "y_center": 250,
         "z": 3.0500907497406002,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -4770,6 +4830,7 @@
         "y_center": 350,
         "z": 0.6500907497406005,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -4849,6 +4910,7 @@
         "y_center": 450,
         "z": 0.6500907497406005,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -4928,6 +4990,7 @@
         "y_center": 550,
         "z": 3.0500907497406002,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -5007,6 +5070,7 @@
         "y_center": 650,
         "z": 4.2500907497406,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -5086,6 +5150,7 @@
         "y_center": 750,
         "z": 3.0500907497406002,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -5165,6 +5230,7 @@
         "y_center": 850,
         "z": 3.0500907497406002,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -5241,6 +5307,7 @@
         "y_center": 950,
         "z": 5.450090749740601,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -5319,6 +5386,7 @@
         "y_center": 100,
         "z": 5.400103707843357,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -5398,6 +5466,7 @@
         "y_center": 200,
         "z": 3.0001037078433566,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -5477,6 +5546,7 @@
         "y_center": 300,
         "z": 3.0001037078433566,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -5556,6 +5626,7 @@
         "y_center": 400,
         "z": 0.6001037078433566,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -5635,6 +5706,7 @@
         "y_center": 500,
         "z": 0.6001037078433566,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -5714,6 +5786,7 @@
         "y_center": 600,
         "z": 4.200103707843356,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -5793,6 +5866,7 @@
         "y_center": 700,
         "z": 3.0001037078433566,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -5872,6 +5946,7 @@
         "y_center": 800,
         "z": 3.0001037078433566,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -5950,6 +6025,7 @@
         "y_center": 900,
         "z": 5.400103707843357,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -6026,6 +6102,7 @@
         "y_center": 50,
         "z": 5.350116663297017,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -6105,6 +6182,7 @@
         "y_center": 150,
         "z": 2.9501166632970173,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -6184,6 +6262,7 @@
         "y_center": 250,
         "z": 2.9501166632970173,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -6263,6 +6342,7 @@
         "y_center": 350,
         "z": 2.9501166632970173,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -6342,6 +6422,7 @@
         "y_center": 450,
         "z": 0.5501166632970176,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -6421,6 +6502,7 @@
         "y_center": 550,
         "z": 0.5501166632970175,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -6500,6 +6582,7 @@
         "y_center": 650,
         "z": 2.9501166632970173,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -6579,6 +6662,7 @@
         "y_center": 750,
         "z": 2.9501166632970173,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -6658,6 +6742,7 @@
         "y_center": 850,
         "z": 5.350116663297017,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -6734,6 +6819,7 @@
         "y_center": 950,
         "z": 2.9501166632970173,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -6812,6 +6898,7 @@
         "y_center": 100,
         "z": 5.300129629347059,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -6891,6 +6978,7 @@
         "y_center": 200,
         "z": 2.9001296293470595,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -6970,6 +7058,7 @@
         "y_center": 300,
         "z": 1.7001296293470594,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 1
       },
       "type": "Feature"
@@ -7049,6 +7138,7 @@
         "y_center": 400,
         "z": 2.9001296293470595,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -7128,6 +7218,7 @@
         "y_center": 500,
         "z": 0.5001296293470594,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -7207,6 +7298,7 @@
         "y_center": 600,
         "z": 0.5001296293470594,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -7286,6 +7378,7 @@
         "y_center": 700,
         "z": 4.100129629347059,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -7365,6 +7458,7 @@
         "y_center": 800,
         "z": 2.9001296293470595,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -7443,6 +7537,7 @@
         "y_center": 900,
         "z": 5.300129629347059,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -7519,6 +7614,7 @@
         "y_center": 50,
         "z": 5.250142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -7598,6 +7694,7 @@
         "y_center": 150,
         "z": 2.850142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -7677,6 +7774,7 @@
         "y_center": 250,
         "z": 2.850142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -7756,6 +7854,7 @@
         "y_center": 350,
         "z": 2.850142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -7835,6 +7934,7 @@
         "y_center": 450,
         "z": 2.850142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -7914,6 +8014,7 @@
         "y_center": 550,
         "z": 0.450142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -7993,6 +8094,7 @@
         "y_center": 650,
         "z": 0.45014259126451295,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -8072,6 +8174,7 @@
         "y_center": 750,
         "z": 2.850142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -8151,6 +8254,7 @@
         "y_center": 850,
         "z": 5.250142591264513,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -8227,6 +8331,7 @@
         "y_center": 950,
         "z": 2.850142591264513,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -8305,6 +8410,7 @@
         "y_center": 100,
         "z": 5.200155564202202,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -8384,6 +8490,7 @@
         "y_center": 200,
         "z": 2.8001555642022016,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -8463,6 +8570,7 @@
         "y_center": 300,
         "z": 1.6001555642022018,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 1
       },
       "type": "Feature"
@@ -8542,6 +8650,7 @@
         "y_center": 400,
         "z": 2.8001555642022016,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -8621,6 +8730,7 @@
         "y_center": 500,
         "z": 2.8001555642022016,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -8700,6 +8810,7 @@
         "y_center": 600,
         "z": 0.4001555642022019,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -8779,6 +8890,7 @@
         "y_center": 700,
         "z": 0.4001555642022019,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -8858,6 +8970,7 @@
         "y_center": 800,
         "z": 2.8001555642022016,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -8936,6 +9049,7 @@
         "y_center": 900,
         "z": 5.200155564202202,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -9012,6 +9126,7 @@
         "y_center": 50,
         "z": 2.750168537563747,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -9091,6 +9206,7 @@
         "y_center": 150,
         "z": 5.150168537563746,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -9170,6 +9286,7 @@
         "y_center": 250,
         "z": 2.750168537563747,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -9249,6 +9366,7 @@
         "y_center": 350,
         "z": 3.950168537563746,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -9328,6 +9446,7 @@
         "y_center": 450,
         "z": 2.750168537563747,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -9407,6 +9526,7 @@
         "y_center": 550,
         "z": 0.35016853756374666,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -9486,6 +9606,7 @@
         "y_center": 650,
         "z": 0.35016853756374666,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -9565,6 +9686,7 @@
         "y_center": 750,
         "z": 2.750168537563747,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -9644,6 +9766,7 @@
         "y_center": 850,
         "z": 2.750168537563747,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -9720,6 +9843,7 @@
         "y_center": 950,
         "z": 5.150168537563746,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -9798,6 +9922,7 @@
         "y_center": 100,
         "z": 5.100181503295898,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -9877,6 +10002,7 @@
         "y_center": 200,
         "z": 2.7001815032958985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -9956,6 +10082,7 @@
         "y_center": 300,
         "z": 2.7001815032958985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -10035,6 +10162,7 @@
         "y_center": 400,
         "z": 2.7001815032958985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -10114,6 +10242,7 @@
         "y_center": 500,
         "z": 0.3001815032958985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -10193,6 +10322,7 @@
         "y_center": 600,
         "z": 0.30018150329589843,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -10272,6 +10402,7 @@
         "y_center": 700,
         "z": 2.7001815032958985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -10351,6 +10482,7 @@
         "y_center": 800,
         "z": 2.7001815032958985,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -10429,6 +10561,7 @@
         "y_center": 900,
         "z": 5.100181503295898,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -10504,6 +10637,7 @@
         "y_center": 50,
         "z": 5.050194447835289,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -10581,6 +10715,7 @@
         "y_center": 150,
         "z": 2.6501944478352897,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -10658,6 +10793,7 @@
         "y_center": 250,
         "z": 2.6501944478352897,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -10735,6 +10871,7 @@
         "y_center": 350,
         "z": 2.6501944478352897,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -10812,6 +10949,7 @@
         "y_center": 450,
         "z": 0.25019444783528955,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -10889,6 +11027,7 @@
         "y_center": 550,
         "z": 0.25019444783528955,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -10966,6 +11105,7 @@
         "y_center": 650,
         "z": 3.850194447835289,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 3
       },
       "type": "Feature"
@@ -11043,6 +11183,7 @@
         "y_center": 750,
         "z": 2.6501944478352897,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11120,6 +11261,7 @@
         "y_center": 850,
         "z": 5.050194447835289,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -11195,6 +11337,7 @@
         "y_center": 950,
         "z": 2.6501944478352897,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11265,6 +11408,7 @@
         "y_center": 50,
         "z": 5.94996110365126,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -11335,6 +11479,7 @@
         "y_center": 150,
         "z": 3.5499611036512606,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11405,6 +11550,7 @@
         "y_center": 250,
         "z": 3.5499611036512606,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11475,6 +11621,7 @@
         "y_center": 350,
         "z": 3.5499611036512606,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11545,6 +11692,7 @@
         "y_center": 450,
         "z": 1.1499611036512607,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -11615,6 +11763,7 @@
         "y_center": 550,
         "z": 1.1499611036512607,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -11685,6 +11834,7 @@
         "y_center": 650,
         "z": 3.5499611036512606,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11755,6 +11905,7 @@
         "y_center": 750,
         "z": 3.5499611036512606,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11825,6 +11976,7 @@
         "y_center": 850,
         "z": 3.5499611036512606,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -11895,6 +12047,7 @@
         "y_center": 950,
         "z": 5.94996110365126,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -11965,6 +12118,7 @@
         "y_center": 100,
         "z": 5.899974075317383,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -12035,6 +12189,7 @@
         "y_center": 200,
         "z": 3.4999740753173825,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12105,6 +12260,7 @@
         "y_center": 300,
         "z": 3.4999740753173825,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12175,6 +12331,7 @@
         "y_center": 400,
         "z": 3.4999740753173825,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12245,6 +12402,7 @@
         "y_center": 500,
         "z": 1.0999740753173828,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -12315,6 +12473,7 @@
         "y_center": 600,
         "z": 1.0999740753173828,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -12385,6 +12544,7 @@
         "y_center": 700,
         "z": 3.4999740753173825,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12455,6 +12615,7 @@
         "y_center": 800,
         "z": 3.4999740753173825,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12525,6 +12686,7 @@
         "y_center": 900,
         "z": 5.899974075317383,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -12595,6 +12757,7 @@
         "y_center": 50,
         "z": 5.849987038506401,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -12665,6 +12828,7 @@
         "y_center": 150,
         "z": 3.4499870385064013,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12735,6 +12899,7 @@
         "y_center": 250,
         "z": 3.4499870385064013,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12805,6 +12970,7 @@
         "y_center": 350,
         "z": 3.4499870385064013,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12875,6 +13041,7 @@
         "y_center": 450,
         "z": 3.4499870385064013,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -12945,6 +13112,7 @@
         "y_center": 550,
         "z": 1.0499870385064014,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -13015,6 +13183,7 @@
         "y_center": 650,
         "z": 1.0499870385064014,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -13085,6 +13254,7 @@
         "y_center": 750,
         "z": 3.4499870385064013,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -13155,6 +13325,7 @@
         "y_center": 850,
         "z": 3.4499870385064013,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -13225,6 +13396,7 @@
         "y_center": 950,
         "z": 5.849987038506401,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -13295,6 +13467,7 @@
         "y_center": 100,
         "z": 5.8,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -13365,6 +13538,7 @@
         "y_center": 200,
         "z": 3.4,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -13435,6 +13609,7 @@
         "y_center": 300,
         "z": 3.4,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -13505,6 +13680,7 @@
         "y_center": 400,
         "z": 3.4,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -13575,6 +13751,7 @@
         "y_center": 500,
         "z": 1.0,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -13645,6 +13822,7 @@
         "y_center": 600,
         "z": 1.0,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -13715,6 +13893,7 @@
         "y_center": 700,
         "z": 3.4,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -13785,6 +13964,7 @@
         "y_center": 800,
         "z": 3.4,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -13855,6 +14035,7 @@
         "y_center": 900,
         "z": 5.8,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -13925,6 +14106,7 @@
         "y_center": 100,
         "z": 5.000207397460938,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -13995,6 +14177,7 @@
         "y_center": 200,
         "z": 2.600207397460937,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14065,6 +14248,7 @@
         "y_center": 300,
         "z": 2.600207397460937,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14135,6 +14319,7 @@
         "y_center": 400,
         "z": 0.2002073974609375,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -14205,6 +14390,7 @@
         "y_center": 500,
         "z": 0.2002073974609375,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -14275,6 +14461,7 @@
         "y_center": 600,
         "z": 2.600207397460937,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14345,6 +14532,7 @@
         "y_center": 700,
         "z": 2.600207397460937,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14415,6 +14603,7 @@
         "y_center": 800,
         "z": 2.600207397460937,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14485,6 +14674,7 @@
         "y_center": 900,
         "z": 5.000207397460938,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -14555,6 +14745,7 @@
         "y_center": 50,
         "z": 2.5502203606499574,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14625,6 +14816,7 @@
         "y_center": 150,
         "z": 4.950220360649958,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -14695,6 +14887,7 @@
         "y_center": 250,
         "z": 2.5502203606499574,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14765,6 +14958,7 @@
         "y_center": 350,
         "z": 0.15022036064995764,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -14835,6 +15029,7 @@
         "y_center": 450,
         "z": 0.15022036064995764,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -14905,6 +15100,7 @@
         "y_center": 550,
         "z": 2.5502203606499574,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -14975,6 +15171,7 @@
         "y_center": 650,
         "z": 2.5502203606499574,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15045,6 +15242,7 @@
         "y_center": 750,
         "z": 2.5502203606499574,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15115,6 +15313,7 @@
         "y_center": 850,
         "z": 4.950220360649958,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -15185,6 +15384,7 @@
         "y_center": 950,
         "z": 2.5502203606499574,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15255,6 +15455,7 @@
         "y_center": 100,
         "z": 2.5002333221435546,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15325,6 +15526,7 @@
         "y_center": 200,
         "z": 4.900233322143555,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -15395,6 +15597,7 @@
         "y_center": 300,
         "z": 2.5002333221435546,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15465,6 +15668,7 @@
         "y_center": 400,
         "z": 0.1002333221435547,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -15535,6 +15739,7 @@
         "y_center": 500,
         "z": 0.1002333221435547,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -15605,6 +15810,7 @@
         "y_center": 600,
         "z": 2.5002333221435546,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15675,6 +15881,7 @@
         "y_center": 700,
         "z": 2.5002333221435546,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15745,6 +15952,7 @@
         "y_center": 800,
         "z": 4.900233322143555,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -15815,6 +16023,7 @@
         "y_center": 900,
         "z": 2.5002333221435546,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15885,6 +16094,7 @@
         "y_center": 50,
         "z": 2.4502462904188325,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -15955,6 +16165,7 @@
         "y_center": 150,
         "z": 2.4502462904188325,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -16025,6 +16236,7 @@
         "y_center": 250,
         "z": 4.850246290418832,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -16095,6 +16307,7 @@
         "y_center": 350,
         "z": 2.4502462904188325,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -16165,6 +16378,7 @@
         "y_center": 450,
         "z": 0.050246290418832704,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -16235,6 +16449,7 @@
         "y_center": 550,
         "z": 0.050246290418832586,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 0
       },
       "type": "Feature"
@@ -16305,6 +16520,7 @@
         "y_center": 650,
         "z": 2.4502462904188325,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 2
       },
       "type": "Feature"
@@ -16375,6 +16591,7 @@
         "y_center": 750,
         "z": 4.850246290418832,
         "z_changed": true,
+        "z_correction": 0,
         "z_reference": 4
       },
       "type": "Feature"
@@ -16445,6 +16662,7 @@
         "y_center": 850,
         "z": 2.4502462904188325,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"
@@ -16515,6 +16733,7 @@
         "y_center": 950,
         "z": 2.4502462904188325,
         "z_changed": true,
+        "z_correction": 2,
         "z_reference": 2
       },
       "type": "Feature"

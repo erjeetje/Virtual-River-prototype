@@ -30,6 +30,7 @@ class BiosafeVR():
         self.PotTax_intervention = None
         self.PotTax_increase = None
         self.PotTax_percentage = None
+        self.score = None
         self.set_variables()
         self.setup_biosafe()
         return
@@ -178,6 +179,24 @@ class BiosafeVR():
         return
 
 
+    def set_score(self):
+        """
+        Function that calculates the biodiversity score based on the Biosafe
+        output. the numbers 29.33 and 1.4349 follow from running MC simulations
+        to determine the lowest and highest possible scores. The biodiversity
+        score reflects the 0-100% range between the two.
+        """
+        if self.PotTax_intervention is None:
+            if self.PotTax_reference is not None:
+                self.score = (self.PotTax_reference.sum().TFI - 29.33) / 1.4349
+            else:
+                print("There is no Biosafe output to score")
+                return
+        else:
+            self.score = (self.PotTax_intervention.sum().TFI - 29.33) / 1.4349
+        return
+
+
     def plot(self):
         """
         Function to plot the biosafe output, not called as such in the Virtual
@@ -276,7 +295,18 @@ class BiosafeVR():
         return self.PotTax_percentage
     
     
+    def get_score(self):
+        """
+        Getter for the score.
+        """
+        return self.score
+    
+    
     def print_output(self):
+        """
+        Function that prints the biosafe output. Useful for doing multiple runs
+        (e.g. MC), not called in Virtual River.
+        """
         print("Reference score: " + str(self.PotTax_reference.sum().TFI))
         print("Intervention score: " + str(self.PotTax_intervention.sum().TFI))
         return
@@ -287,10 +317,10 @@ def test():
     Function to test the code separately from the Virtual River.
     """
     root_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(root_path, 'balance_tests')
-    with open(os.path.join(test_path, 'all_agriculture.geojson')) as f:
+    test_path = os.path.join(root_path, 'test_files')
+    with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
         hexagons_old = load(f)
-    with open(os.path.join(test_path, 'all_nature9.geojson')) as f:
+    with open(os.path.join(test_path, 'hexagons7.geojson')) as f:
         hexagons_new = load(f)        
     return hexagons_new, hexagons_old
 

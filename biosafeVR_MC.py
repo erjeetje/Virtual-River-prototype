@@ -348,10 +348,10 @@ def test():
     Function to test the code separately from the Virtual River.
     """
     root_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(root_path, 'test_files')
-    with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
+    test_path = os.path.join(root_path, 'storing_files')
+    with open(os.path.join(test_path, 'hexagons_wide_basin.geojson')) as f:
         hexagons_old = load(f)
-    with open(os.path.join(test_path, 'hexagons7.geojson')) as f:
+    with open(os.path.join(test_path, 'hexagons_wide_basin.geojson')) as f:
         hexagons_new = load(f)        
     return hexagons_new, hexagons_old
 
@@ -361,7 +361,7 @@ def main():
     biosafe = BiosafeVR()
     hexagons_old = boards.all_agriculture(hexagons_old)
     biosafe.process_board(hexagons_old, reference=True)
-    for i in range(1, 5001):
+    for i in range(1, 25001):
         hexagons_new = boards.all_nature(hexagons_new)
         biosafe.process_board(hexagons_new)
         biosafe.store_average(i)

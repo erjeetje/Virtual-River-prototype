@@ -57,9 +57,20 @@ def all_nature(hexagons):
             continue_bool = False
         if not continue_bool:
             continue
-        if feature.properties["landuse"] < 7:
-            random_value = random.randint(2, 5)
-            feature.properties["landuse"] = random_value
+        random_value = random.randint(2, 5)
+        feature.properties["landuse"] = random_value
+        """
+        if feature.properties["z_reference"] == 1:
+            feature.properties["landuse"] = 7
+            continue
+        """
+        range_value = random.randint(2, 8)
+        random_value = random.randint(1, range_value)
+        if random_value == range_value:
+            feature.properties["z_reference"] = 3
+        else:
+            feature.properties["z_reference"] = 2
+        
         """
         if (feature.properties["z_reference"] > 1 and
             feature.properties["z_reference"] < 4):
@@ -68,11 +79,12 @@ def all_nature(hexagons):
                 feature.properties["z_reference"] = 3
             else:
                 feature.properties["z_reference"] = 2
-        """
+        
         if feature.properties["z_reference"] == 3:
             feature.properties["z_reference"] = 2
         if feature.properties["z_reference"] == 1:
             feature.properties["landuse"] = 7
+        """
     return hexagons
 
 

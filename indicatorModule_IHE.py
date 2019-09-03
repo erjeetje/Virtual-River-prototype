@@ -84,13 +84,46 @@ class Indicators():
         self.biosafe_reference = None
         self.biosafe_intervention = None
         return
-        
+
+
+    def add_flood_safety_score(self, score, turn=0):
+        if turn < len(self.turn):
+            self.flood_safety[turn] = score
+        else:
+            self.flood_safety.append(score)
+        return
+    
+    
+    def add_biosafe_score(self, score, turn=0):
+        if turn < len(self.turn):
+            self.biodiversity[turn] = score
+        else:
+            self.biodiversity.append(score)
+        return
+    
+    
+    def add_cost_score(self, score, turn=0):
+        if turn < len(self.turn):
+            self.cost_score[turn] = score
+        else:
+            self.cost_score.append(score)
+        return
+    
+    
+    def add_total_costs(self, costs, turn=0):
+        if turn < len(self.turn):
+            self.total_costs[turn] = costs
+        else:
+            self.total_costs.append(costs)
+        return
+    
+    
     def add_indicator_values(self, flood_safety_score, biodiversity_score,
-                             total_cost, turn):
+                             cost_score, total_cost, turn=0):
         """
         Needs to be reconsidered
         """
-        cost_score = ((25000000 - total_cost) / 25000000) * 100
+        #cost_score = ((25000000 - total_cost) / 25000000) * 100
         
         if turn < len(self.turn):
             self.flood_safety[turn] = flood_safety_score
@@ -104,6 +137,11 @@ class Indicators():
             self.cost_score.append(cost_score)
             self.turn.append(turn)
         return
+    
+    def calculate_cost_score(self, costs):
+        cost_score = ((25000000 - costs) / 25000000) * 100
+        return cost_score
+    
     
     def update_flood_safety_score(self, turn):
         """
@@ -200,14 +238,22 @@ class Indicators():
         return
 
     def plot(self, turn):
-        performance = [self.flood_safety[turn], self.biodiversity[turn], self.cost_score[turn]]
+        reference = [self.flood_safety[0], self.biodiversity[0], self.cost_score[0]]
+        intervention = [self.flood_safety[turn], self.biodiversity[turn], self.cost_score[turn]]
         x_labels = [("turn " + str(self.turn[value])) for value in self.turn]
         self.ax1.clear()
-        self.barlist = self.ax1.bar(self.x_pos, performance, align='center',
-                                    width=0.2)
-        self.barlist[0].set_color('b')
-        self.barlist[1].set_color('g')
-        self.barlist[2].set_color('r')
+        bar_width = 0.3
+        offset = bar_width / 2
+        self.barlist_ref = self.ax1.bar(self.x_pos-offset, reference, width=bar_width,
+                                    align='center')
+        self.barlist_ref[0].set_color('DodgerBlue')
+        self.barlist_ref[1].set_color('LimeGreen')
+        self.barlist_ref[2].set_color('Salmon')
+        self.barlist_int = self.ax1.bar(self.x_pos+offset, intervention, width=bar_width,
+                                    align='center')
+        self.barlist_int[0].set_color('b')
+        self.barlist_int[1].set_color('g')
+        self.barlist_int[2].set_color('r')
         self.ax1.plot([-0.3, 0.3], [60, 60], "k--", color='r', label="minimum")
         self.ax1.plot([-0.3, 0.3], [80, 80], "k--", color='y', label="good")
         self.ax1.plot([-0.3, 0.3], [100, 100], "k--", color='g', label="excellent")
@@ -254,7 +300,6 @@ class Indicators():
         self.ax4.clear()
         index = np.arange(7)
         xticks = self.biosafe_reference.index.values
-        bar_width = 0.3
         self.plot4 = self.ax4.bar(index, self.biosafe_reference.values.flatten(), bar_width, label="reference", tick_label=xticks)
         if self.biosafe_intervention is not None:
             self.plot41 = self.ax4.bar(index+bar_width, self.biosafe_intervention.values.flatten(), bar_width, label="intervention", tick_label=xticks)

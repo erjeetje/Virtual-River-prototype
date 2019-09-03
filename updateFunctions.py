@@ -85,7 +85,7 @@ def terrain_updates(hexagons):
     return becomes_water, becomes_land
 
 
-if __name__ == '__main__':
+def main():
     """
     dir_path = os.path.dirname(os.path.realpath(__file__))
     test_path = os.path.join(dir_path, 'test_files')
@@ -100,4 +100,9 @@ if __name__ == '__main__':
     cost = costs.Costs()
     hexagons_new, dike_moved = compare_hex(hexagons_old, hexagons_new)
     """
+    return
+
+
+if __name__ == '__main__':
+    main()
 
