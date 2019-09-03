@@ -188,12 +188,14 @@ class BiosafeVR():
         """
         if self.PotTax_intervention is None:
             if self.PotTax_reference is not None:
-                self.score = (self.PotTax_reference.sum().TFI - 29.33) / 1.4349
+                self.score = (((self.PotTax_reference.sum().TFI - 29.33) /
+                               1.4349) / 100)
             else:
                 print("There is no Biosafe output to score")
                 return
         else:
-            self.score = (self.PotTax_intervention.sum().TFI - 29.33) / 1.4349
+            self.score = (((self.PotTax_intervention.sum().TFI - 29.33) /
+                           1.4349) / 100)
         return
 
 

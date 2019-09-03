@@ -254,10 +254,16 @@ class runScript():
             t1 = time.time()
         self.run_biosafe()
         self.update_cost_score()
+        if self.tygron:
+            # this is here temporary for testing purposes, will be only below
+            # eventually (see few lines down).
+            self.tygron_set_indicators()
         self.initialized = True
         self.index_model()
         self.run_model()
         self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
         toc = time.time()
         try:
             print("Finished startup and calibration" +
@@ -318,6 +324,8 @@ class runScript():
         self.update_cost_score()
         self.run_model()
         self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
         toc = time.time()
         try:
             print("Updated to turn " + str(self.turn) +
@@ -383,6 +391,8 @@ class runScript():
         self.reloading = False
         self.run_model()
         self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
         toc = time.time()
         try:
             print("Finished reloading to turn " + str(self.turn) +
@@ -709,6 +719,16 @@ class runScript():
                          str(self.turn) + ".tif")
         heightmap_id = tygron.set_elevation(
                 file_location, self.token, turn=self.turn)
+        return
+    
+    
+    def tygron_set_indicators(self):
+        tygron.set_indicator(0.5, self.token,
+                             indicator="flood", index=self.turn)
+        tygron.set_indicator(self.biosafe_score, self.token,
+                             indicator="biodiversity", index=self.turn)
+        tygron.set_indicator(self.cost_score, self.token,
+                             indicator="budget", index=self.turn)
         return
 
 

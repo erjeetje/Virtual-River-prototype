@@ -125,19 +125,19 @@ class Indicators():
         """        
         if turn < len(self.turn):
             self.flood_safety[turn] = flood_safety_score
-            self.biodiversity[turn] = biodiversity_score
-            self.cost_score[turn] = cost_score
+            self.biodiversity[turn] = biodiversity_score * 100
+            self.cost_score[turn] = cost_score * 100
             self.total_costs[turn] = total_cost
         else:
             self.flood_safety.append(flood_safety_score)
-            self.biodiversity.append(biodiversity_score)
+            self.biodiversity.append(biodiversity_score * 100)
             self.total_costs.append(total_cost)
-            self.cost_score.append(cost_score)
+            self.cost_score.append(cost_score * 100)
             self.turn.append(turn)
         return
     
     def calculate_cost_score(self, costs):
-        cost_score = ((25000000 - costs) / 25000000) * 100
+        cost_score = ((25000000 - costs) / 25000000)
         return cost_score
     
     

@@ -30,7 +30,7 @@ def join_session(username, password, application_type="EDITOR",
     session_id = -1
     sessions = sessions_data.json()
     for item in sessions:
-        if item["name"] == "virtual_river2":
+        if item["name"] == "virtual_river":
             session_id = item["id"]
             break
     if session_id > -1:
@@ -298,6 +298,45 @@ def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
     except ValueError:
         print("UPLOAD FAILED: Received no heightmap id from Tygron.")
     return
+
+
+def set_indicator(score, api_key, indicator="budget", index=0,
+                       api_endpoint=("https://engine.tygron.com/api/session/"
+                                     "event/editorindicator/set_attribute/?")):
+    if indicator == "flood":
+        indicator_id = 0
+        excel_id = 1000000
+    elif indicator == "biodiversity":
+        indicator_id = 1
+        excel_id = 1000001
+    else:
+        indicator_id = 2
+        excel_id = 1000002
+    score_input = "SCORE_INPUT_" + str(index)
+    score_index = "SCORE_INPUT_INDEX"
+    r = requests.post(url=api_endpoint+api_key, json=[indicator_id, score_input, score])
+    r = requests.post(url=api_endpoint+api_key, json=[indicator_id, score_index, index])
+    api_endpoint=("https://engine.tygron.com/api/session/event/"
+                  "editorindicator/set_excel/?")
+    r = requests.post(url=api_endpoint+api_key, json=[indicator_id, excel_id])
+    return
+
+
+def set_indicator_text(string, api_key, indicator="flood",
+                       api_endpoint=("https://engine.tygron.com/api/session/"
+                                     "event/editorindicator/"
+                                     "set_description/?")):
+    if indicator == "biodiversity":
+        indicator_id = 1
+    elif indicator == "budget":
+        indicator_id = 2
+    else:
+        indicator_id = 0
+    r = requests.post(url=api_endpoint+api_key, json=[indicator_id, string])
+    return
+
+
+
 
 
 def elevation_json(tiff_id, heightmap):
