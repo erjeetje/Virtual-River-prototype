@@ -26,6 +26,7 @@ import hexagonAdjustments as adjust
 import hexagonOwnership as owner
 import visualization as visualize
 import biosafeVR as biosafe
+import localServer as server
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from PyQt5.QtCore import QCoreApplication
@@ -142,6 +143,13 @@ class runScript():
         except FileExistsError:
             print("Directory ", self.processing_path,
                   " already exists, overwriting files.")
+        self.web_path = os.path.join(self.dir_path, 'webserver')
+        try:
+            os.mkdir(self.web_path)
+            print("Directory ", self.web_path, " Created.")
+        except FileExistsError:
+            print("Directory ", self.web_path,
+                  " already exists, overwriting files.")
         self.model_path = os.path.join(self.dir_path, 'models',
                                        'Waal_schematic')
         self.config_path = os.path.join(self.dir_path, 'config_files')
@@ -254,10 +262,10 @@ class runScript():
             t1 = time.time()
         self.run_biosafe()
         self.update_cost_score()
-        if self.tygron:
+        #if self.tygron:
             # this is here temporary for testing purposes, will be only below
             # eventually (see few lines down).
-            self.tygron_set_indicators()
+            #self.tygron_set_indicators()
         self.initialized = True
         self.index_model()
         self.run_model()
@@ -416,6 +424,11 @@ class runScript():
         return
 
 
+    def create_server(self):
+        server.run_server(self.web_path, path=self.dir_path)
+        return
+    
+    
     def get_image(self):
         """
         Get a camera image.

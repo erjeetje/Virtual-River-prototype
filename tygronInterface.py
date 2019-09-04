@@ -336,9 +336,6 @@ def set_indicator_text(string, api_key, indicator="flood",
     return
 
 
-
-
-
 def elevation_json(tiff_id, heightmap):
     """
     Function that creates a base64 string for the geotiff that can be sent to
