@@ -85,6 +85,7 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
         # to False by default.
         test_list = []
     for feature in hexagons.features:    
+        """
         if not initialization:
             try:
                 behind_dike = feature.properties["behind_dike"]
@@ -121,6 +122,25 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
                     h = 16 - (feature.properties["z"])
                 except KeyError:
                     h = 8
+        """
+        try:
+            z = (feature.properties["z"] +
+                 (feature.properties["z_correction"] * 4))
+        except KeyError:
+            try:
+                z = feature.properties["z"]
+            except KeyError:
+                try:
+                    z = 8 + feature.properties["bedslope_correction"]
+                except KeyError:
+                    z = 8
+        try:
+            h = feature.properties["water_level"] - z
+        except KeyError:
+            try:
+                h = 16 + feature.properties["bedslope_correction"] - z
+            except KeyError:
+                h = 16 - z
         #if h < 0:
         #    h = 0.0001
         if feature.properties["landuse"] == 0:

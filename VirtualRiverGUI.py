@@ -544,10 +544,10 @@ class runScript():
         if not self.initialized:
             self.hexagons_sandbox = adjust.add_bedslope(
                     self.hexagons_sandbox, self.slope)
-            self.hexagons_sandbox = adjust.z_correction(
-                    self.hexagons_sandbox, initialized=self.initialized)
             self.hexagons_sandbox = gridmap.hexagons_to_fill(
                     self.hexagons_sandbox)
+        self.hexagons_sandbox = adjust.z_correction(
+                    self.hexagons_sandbox, initialized=self.initialized)
         if dike_moved:
             self.hexagons_sandbox = structures.determine_dikes(
                         self.hexagons_sandbox)

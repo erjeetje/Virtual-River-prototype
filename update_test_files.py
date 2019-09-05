@@ -18,8 +18,14 @@ def update(turn):
     hexagons = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
             path=store_path)
-    hexagons = adjust.biosafe_area(hexagons)
-    hexagons = gridmap.hexagons_to_fill(hexagons)
+    #hexagons = adjust.biosafe_area(hexagons)
+    #hexagons = gridmap.hexagons_to_fill(hexagons)
+    for feature in hexagons.features:
+        feature.properties["z_changed"] = True
+        feature.properties["landuse_changed"] = True
+        feature.properties["owned"] = False
+        feature.properties["owner"] = None
+        feature.properties["ownership_change"] = False
     """
     hexagons_old = gridmap.read_hexagons(
             filename='hexagons%d.geojson' % turn,
@@ -44,7 +50,7 @@ def update(turn):
 
 
 def main():
-    for i in range(0, 9):
+    for i in range(0, 1):
         update(i)
 
 
