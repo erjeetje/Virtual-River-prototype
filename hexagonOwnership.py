@@ -104,23 +104,25 @@ def determine_ownership(hexagons):
     floodplain_count = north_count + south_count
     floodplain_indices = north_indices + south_indices
     if floodplain_count < 55:
-        nature_count = 4
-        water_count = 2
-        province_count = 2
+        nature_count = 3
+        water_count = 1
+        province_count = 1
     elif floodplain_count < 65:
+        nature_count = 4
+        water_count = 1
+        province_count = 2
+    else:
         nature_count = 5
         water_count = 2
-        province_count = 3
-    else:
-        nature_count = 6
-        water_count = 3
-        province_count = 3
+        province_count = 2
     total_count = nature_count + water_count + province_count
+
     taken_hexagons = []
-    #for i in range(0, nature_count):
     i = 0
     while i < total_count:
-        if len(taken_hexagons) == total_count:
+        if len(taken_hexagons) == floodplain_count:
+            print("Tried all floodplain areas to assign ownership, but ran out"
+                  " of options. Breaking loop and continuing initialization.")
             break
         random_value = random.randint(0, floodplain_count-1)
         if random_value in taken_hexagons:

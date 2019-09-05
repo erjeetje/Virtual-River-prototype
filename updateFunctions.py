@@ -50,6 +50,10 @@ def compare_hex(cost, hexagons_old, hexagons_new):
             print("Hexagon " + str(feature.id) + " land use value changed")
             feature.properties["landuse_changed"] = True
             landuse_changed.append(feature)
+            if reference_hex.properties["landuse"] == 0:
+                feature.properties["was_building"] = True
+            else:
+                feature.properties["was_building"] = False
         else:
             feature.properties["landuse_changed"] = False
         if (feature.properties["z_changed"] or feature.properties["landuse"]):
@@ -60,6 +64,14 @@ def compare_hex(cost, hexagons_old, hexagons_new):
             feature = owner.update_ownership(feature, ownership_change)
             costs = costs + z_cost + l_cost
     return hexagons_new, costs, dike_moved
+
+
+def update_behind_dikes(hexagons_old, hexagons_new):
+    for feature in hexagons_new.features:
+        reference_hex = hexagons_old[feature.id]
+        if (feature.properties["behind_dike"] != reference_hex.properties["behind_dike"]):
+            feature.properties["z_changed"] = True
+    return hexagons_new
 
 
 def terrain_updates(hexagons):

@@ -401,6 +401,7 @@ def create_buildings(hexagons, grid):
     building_ids = []
     buildings = []
     for feature in hexagons.features:
+        feature.properties["was_building"] = False
         if feature.properties["behind_dike"]:
             continue
         if (feature.properties["z_reference"] < 4 and

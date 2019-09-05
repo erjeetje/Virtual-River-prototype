@@ -554,6 +554,8 @@ class runScript():
             self.hexagons_sandbox = \
                 structures.determine_floodplains_and_behind_dikes(
                         self.hexagons_sandbox)
+            self.hexagons_sandbox = compare.update_behind_dikes(
+                    self.hexagons_prev, self.hexagons_sandbox)
             self.hexagons_sandbox = gridmap.hexagons_to_fill(
                     self.hexagons_sandbox)
         return
@@ -561,10 +563,7 @@ class runScript():
 
     def compare_hexagons(self):
         """
-        if not self.test:
-            self.hexagons, self.turn_costs, dike_moved = compare.compare_hex(
-                    self.cost_module, self.hexagons_prev, self.hexagons)
-        else:
+        
         """
         self.hexagons_sandbox, self.turn_costs, dike_moved = \
         compare.compare_hex(
@@ -868,25 +867,25 @@ class runScript():
                 geojson.dump(
                         self.hexagons_sandbox, f, sort_keys=True, indent=2)
             print("Saved hexagon file for turn " + str(self.turn) + ".")
-            if self.debug:
-                with open(os.path.join(
-                        self.store_path,
-                        'node_grid%d.geojson' % self.turn), 'w') as f:
-                    geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
-                print("Saved node grid for turn " + str(self.turn) + ".")
-                with open(os.path.join(
-                        self.store_path,
-                        'filled_node_grid%d.geojson' % self.turn),
-                          'w') as f:
-                    geojson.dump(
-                            self.filled_node_grid, f, sort_keys=True, indent=2)
-                print("Saved filled node grid for turn " + str(self.turn) +
-                      ".")
-                with open(os.path.join(
-                        self.store_path,
-                        'flow_grid%d.geojson' % self.turn), 'w') as f:
-                    geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
-                print("Saved flow grid for turn " + str(self.turn) + ".")
+        if self.debug:
+            with open(os.path.join(
+                    self.store_path,
+                    'node_grid%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
+            print("Saved node grid for turn " + str(self.turn) + ".")
+            with open(os.path.join(
+                    self.store_path,
+                    'filled_node_grid%d.geojson' % self.turn),
+                      'w') as f:
+                geojson.dump(
+                        self.filled_node_grid, f, sort_keys=True, indent=2)
+            print("Saved filled node grid for turn " + str(self.turn) +
+                  ".")
+            with open(os.path.join(
+                    self.store_path,
+                    'flow_grid%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
+            print("Saved flow grid for turn " + str(self.turn) + ".")
         return
 
 
