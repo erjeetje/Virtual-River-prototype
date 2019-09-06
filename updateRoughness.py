@@ -148,6 +148,7 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
             vegpar = {"hv": 0.1, "n": 12, "Cd": 1.8, "kb": 0.1}  # TO DO
             handler = "building"
             name = "building          "
+            #h += -2.5
         elif feature.properties["landuse"] == 1:
             # agricultural land / production meadow?
             vegpar = {"hv": 0.06, "n": 45, "Cd": 1.8, "kb": 0.1}
@@ -201,15 +202,10 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
         if h < 0.025:
                 h = 0.025
         if handler == "vegetation":
-            # vegetation height scale test
-            #vegpar["hv"] = vegpar["hv"] * vert_scale
             feature.properties["Chezy"] = klopstra(h, vegpar)
         elif handler == "bed":
             feature.properties["Chezy"] = manning(h, n)
         elif handler == "mixtype":
-            #vegpar["hv"] = vegpar["hv"] * vert_scale
-            #vegpar2["hv"] = vegpar2["hv"] * vert_scale
-            #vegpar3["hv"] = vegpar3["hv"] * vert_scale
             C1 = klopstra(h, vegpar)
             C2 = klopstra(h, vegpar2)
             C3 = klopstra(h, vegpar3)

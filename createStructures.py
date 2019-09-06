@@ -134,7 +134,7 @@ def determine_channel(hexagons):
     return hexagons
 
 
-def get_channel(hexagons):
+def get_channel(hexagons, save=False):
     """
     Function that only returns the main channel hexagons.
     
@@ -163,12 +163,13 @@ def get_channel(hexagons):
     for i, feature in enumerate(channel.features):
         feature.properties["reference_id"] = feature.id
         feature.id = i
-    with open('channel.geojson', 'w') as f:
-        geojson.dump(channel, f, sort_keys=True, indent=2)
+    if save:
+        with open('channel.geojson', 'w') as f:
+            geojson.dump(channel, f, sort_keys=True, indent=2)
     return channel
 
 
-def create_groynes(hexagons):
+def create_groynes(hexagons, save=False):
     height = 0.0
     y_dist = 0.0
     groynes = []
@@ -200,12 +201,13 @@ def create_groynes(hexagons):
         groyne.properties["reference_id"] = feature.properties["reference_id"]
         groynes.append(groyne)
     groynes = geojson.FeatureCollection(groynes)
-    with open('groynes_test_line.geojson', 'w') as f:
-        geojson.dump(groynes, f, sort_keys=True, indent=2)
+    if save:
+        with open('groynes_test_line.geojson', 'w') as f:
+            geojson.dump(groynes, f, sort_keys=True, indent=2)
     return groynes
 
 
-def create_LTDs(hexagons):
+def create_LTDs(hexagons, save=False):
     """
     Results are better with 59 degrees for some reason that I cannot figure
     out yet.
@@ -319,8 +321,9 @@ def create_LTDs(hexagons):
         ltd.properties["reference_id"] = feature.properties["reference_id"]
         ltd_features.append(ltd)
     ltd_features = geojson.FeatureCollection(ltd_features)
-    with open('ltds_test_line_correct.geojson', 'w') as f:
-        geojson.dump(ltd_features, f, sort_keys=True, indent=2)
+    if save:
+        with open('ltds_test_line_correct.geojson', 'w') as f:
+            geojson.dump(ltd_features, f, sort_keys=True, indent=2)
     return ltd_features
 
 
@@ -373,7 +376,7 @@ def index_structures(structures, grid, mode="groyne"):
     return grid
 
 
-def apply_hydraulic_structures_corrections(grid):
+def apply_hydraulic_structures_corrections(grid, save=False):
     for feature in grid.features:
         if feature.properties["groyne_active"]:
             if feature.properties["groyne"] != None:
@@ -391,8 +394,9 @@ def apply_hydraulic_structures_corrections(grid):
                     continue
                 else:
                     feature.properties["z"] = height_correction
-    with open('node_grid_with_groynes3.geojson', 'w') as f:
-        geojson.dump(grid, f, sort_keys=True, indent=2)
+    if save:
+        with open('node_grid_with_groynes3.geojson', 'w') as f:
+            geojson.dump(grid, f, sort_keys=True, indent=2)
     return
 
 
@@ -460,7 +464,7 @@ def add_buildings(grid):
         geojson.dump(grid, f, sort_keys=True, indent=2)
 
 
-if __name__ == '__main__':
+def main():
     with open('storing_files\\hexagons0.geojson', 'r') as f:
         hexagons = geojson.load(f)
     with open('storing_files\\filled_node_grid0.geojson', 'r') as f:
@@ -484,3 +488,8 @@ if __name__ == '__main__':
     """
     filled_node_grid = create_buildings(hexagons, filled_node_grid)
     add_buildings(filled_node_grid)
+    return
+
+
+if __name__ == '__main__':
+    main()

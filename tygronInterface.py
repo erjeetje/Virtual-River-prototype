@@ -5,6 +5,7 @@ Created on Wed Mar 27 11:25:35 2019
 @author: HaanRJ
 """
 
+import os
 import requests
 import base64
 import json
@@ -51,14 +52,16 @@ def join_session(username, password, application_type="EDITOR",
 
 
 def get_buildings(api_key, api_endpoint=("https://engine.tygron.com/api/"
-                                         "session/items/buildings/?f=JSON&")):
+                                         "session/items/buildings/?f=JSON&"),
+            save=False):
     """
     Function to retrieve all building information from Tygron.
     """
     data = requests.get(api_endpoint+api_key)
     buildings_json = data.json()
-    with open('buildings.json', 'w') as f:
-        json.dump(buildings_json, f, sort_keys=True, indent=2)
+    if save:
+        with open('buildings.json', 'w') as f:
+            json.dump(buildings_json, f, sort_keys=True, indent=2)
     return buildings_json
 
 
@@ -308,7 +311,7 @@ def set_indicator(score, api_key, indicator="budget", index=0,
         excel_id = 1000000
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000001
+        excel_id = 1000003
     else:
         indicator_id = 2
         excel_id = 1000002
@@ -316,6 +319,13 @@ def set_indicator(score, api_key, indicator="budget", index=0,
     score_index = "SCORE_INPUT_INDEX"
     r = requests.post(url=api_endpoint+api_key, json=[indicator_id, score_input, score])
     r = requests.post(url=api_endpoint+api_key, json=[indicator_id, score_index, index])
+    """
+    # below code was a test, but seems it is not necessary to push a "hard" update.
+    if indicator == "biodiversity":
+        html = '<img src="http://localhost:8000/biodiversity_score1.png" height="240" width="320">'
+        link = "IMAGE_LINK"
+        r = requests.post(url=api_endpoint+api_key, json=[indicator_id, link, html])
+    """
     api_endpoint=("https://engine.tygron.com/api/session/event/"
                   "editorindicator/set_excel/?")
     r = requests.post(url=api_endpoint+api_key, json=[indicator_id, excel_id])
@@ -450,9 +460,9 @@ def hex_to_terrain(api_key, hexagons):
 
 
 if __name__ == '__main__':
-    with open('storing_files\\node_grid0.geojson', 'r') as f:
-        grid = load(f)
-    heightmap = gridmap.create_geotiff(grid)
+    #with open('storing_files\\node_grid0.geojson', 'r') as f:
+    #    grid = load(f)
+    #heightmap = gridmap.create_geotiff(grid)
     with open(r'C:\Users\HaanRJ\Documents\Storage\username.txt', 'r') as f:
         username = f.read()
     with open(r'C:\Users\HaanRJ\Documents\Storage\password.txt', 'r') as g:
@@ -462,6 +472,10 @@ if __name__ == '__main__':
         print("logging in to Tygron failed, unable to make changes in Tygron")
     else:
         api_key = "token="+api_key
+        root_dir = os.path.dirname(os.path.realpath(__file__))
+        web_dir = os.path.join(root_dir, 'webserver')
+        os.chdir(web_dir)
+        set_indicator(0.6, api_key, indicator="biodiversity", index=2)
         #print(api_key)
         #set_function(api_key, 60, 1000001)
         #add_standard(api_key)
@@ -472,8 +486,8 @@ if __name__ == '__main__':
         #hexagons = update_hexagons_tygron_id(api_key, hexagons)
         #set_terrain_type(api_key, hexagons, terrain_type="water")
         #tiff_file = "grid_height_map0.tif"
-        filename = 'test_grid_height_map0.tif'
-        heightmap_id = set_elevation(filename, api_key)
+        #filename = 'test_grid_height_map0.tif'
+        #heightmap_id = set_elevation(filename, api_key)
         #print(heightmap_id)
         #time.sleep(5)
         #filename = 'test_grid_height_map.tif'

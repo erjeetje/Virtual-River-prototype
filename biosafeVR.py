@@ -50,7 +50,8 @@ class BiosafeVR():
         root_dir = os.path.dirname(os.path.realpath(__file__))
         self.scratch_dir = os.path.join(root_dir, 'scratch')
         self.input_dir  = os.path.join(root_dir, 'input_data')
-        os.chdir(self.scratch_dir)
+        self.web_dir = os.path.join(root_dir, 'webserver')
+        #os.chdir(self.scratch_dir)
         
         # Input data BIOSAFE
         self.legal_weights = pd.read_csv(
@@ -274,6 +275,75 @@ class BiosafeVR():
                 index = self.PotTax_percentage.index)
         """
         return
+    
+    
+    def biodiversity_graph(self, graph="percentage"):
+        fig, ax = plt.subplots()
+        index = np.arange(7)
+        bar_width = 0.3
+        offset = bar_width / 2
+        if graph == "score":
+            if self.PotTax_reference is not None:
+                xticks = self.PotTax_reference.index.values
+                for i, item in enumerate(xticks):
+                    if item == "DragonDamselflies":
+                        xticks[i] = "Dragon &\nDamselflies"
+                    if item == "HigherPlants":
+                        xticks[i] = "Higher\nPlants"
+                label = ("reference: " +
+                         str(round(self.PotTax_reference.sum().TFI, 2)))
+                reference = ax.bar(
+                        index-offset, self.PotTax_reference.values.flatten(),
+                        bar_width, label=label, tick_label=xticks)
+            if self.PotTax_intervention is not None:
+                label = ("intervention: " +
+                         str(round(self.PotTax_intervention.sum().TFI, 2)))
+                intervention = ax.bar(
+                        index+offset, self.PotTax_intervention.values.flatten(),
+                        bar_width, label=label, tick_label=xticks)
+            ax.set_title("Biodiversity score")
+            ax.set_ylabel("total value")
+            legend = ax.legend(loc='best', facecolor='black', edgecolor='w',
+                               fancybox=True, framealpha=0.5, fontsize="large")
+            plt.setp(legend.get_texts(), color='w')
+            
+        else:
+            if self.PotTax_percentage is not None:
+                xticks = self.PotTax_percentage.index.values
+                for i, item in enumerate(xticks):
+                    if item == "DragonDamselflies":
+                        xticks[i] = "Dragon &\nDamselflies"
+                    if item == "HigherPlants":
+                        xticks[i] = "Higher\nPlants"
+                data = self.PotTax_percentage.values.flatten()
+                percentage = ax.bar(
+                        index, data, bar_width, label="percentage",
+                        tick_label=xticks)
+                ax.set_title("Biodiversity increase")
+                ax.set_ylabel("increase (%)")
+        for tick in ax.get_xticklabels():
+            tick.set_rotation(90)
+            tick.set_fontsize(14)
+        ax.spines['bottom'].set_color('w')
+        ax.spines['top'].set_color('w') 
+        ax.spines['right'].set_color('w')
+        ax.spines['left'].set_color('w')
+        ax.tick_params(axis='x', colors='w')
+        ax.tick_params(axis='y', colors='w')
+        ax.yaxis.label.set_color('w')
+        ax.yaxis.label.set_fontsize(14)
+        ax.xaxis.label.set_color('w')
+        ax.xaxis.label.set_fontsize(14)
+        ax.title.set_fontsize(20)
+        ax.title.set_color('w')
+        plt.tight_layout()
+        #os.chdir(self.web_dir)
+        if graph == "score":
+            plt.savefig(os.path.join(self.web_dir, "biodiversity_score1.png"), edgecolor='w',transparent=True)
+        else:
+            plt.savefig(os.path.join(self.web_dir, "biodiversity_score2.png"), edgecolor='w',transparent=True)
+        #os.chdir(self.scratch_dir)
+        return
 
 
     def get_reference(self):
@@ -322,19 +392,23 @@ def test():
     test_path = os.path.join(root_path, 'test_files')
     with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
         hexagons_old = load(f)
-    with open(os.path.join(test_path, 'hexagons7.geojson')) as f:
+    with open(os.path.join(test_path, 'hexagons6.geojson')) as f:
         hexagons_new = load(f)        
     return hexagons_new, hexagons_old
 
 
 def main():
     hexagons_new, hexagons_old = test()
+    plt.ioff()
     biosafe = BiosafeVR()
     biosafe.process_board(hexagons_old, reference=True)
     biosafe.process_board(hexagons_new)
     biosafe.compare()
+    biosafe.biodiversity_graph(graph="score")
+    biosafe.biodiversity_graph(graph="percentage")
     biosafe.plot()
     biosafe.print_output()
+    os.chdir(biosafe.web_dir)
 
 
 if __name__ == "__main__":

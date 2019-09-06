@@ -226,6 +226,8 @@ class runScript():
         self.biosafe_score = None
         # visualization
         self.viz = visualize.Visualization(self.model)
+        # localhost webserver
+        #self.server = server.Webserver()
         return
 
 
@@ -244,6 +246,7 @@ class runScript():
         self.transform_hexagons()
         self.get_hexagons()
         if self.tygron:
+            #self.create_server()
             self.tygron_update_buildings()
         self.set_up_hexagons()
         self.process_hexagons()
@@ -720,8 +723,10 @@ class runScript():
 
     def tygron_update(self):
         """
-        Function that handles updating the Tygron virtual world.
+        Function that handles updating the Tygron virtual world. Changes the
+        localhost directory to the webserver to avoid problems with loading.
         """
+        os.chdir(self.web_path)
         self.heightmap = gridmap.create_geotiff(
             self.node_grid, turn=self.turn, path=self.store_path)
         print("Created geotiff elevation map")
@@ -735,12 +740,18 @@ class runScript():
     
     
     def tygron_set_indicators(self):
+        """
+        Function that handles updating the indicators in Tygron. changes the
+        localhost directory to the webserver to avoid problems with loading.
+        """
+        os.chdir(self.web_path)
         tygron.set_indicator(0.5, self.token,
                              indicator="flood", index=self.turn)
         tygron.set_indicator(self.biosafe_score, self.token,
                              indicator="biodiversity", index=self.turn)
         tygron.set_indicator(self.cost_score, self.token,
                              indicator="budget", index=self.turn)
+        #os.chdir(self.store_path)
         return
 
 
@@ -827,6 +838,7 @@ class runScript():
             self.biosafe.compare()
         self.biosafe.set_score()
         self.biosafe_score = self.biosafe.get_score()
+        self.biosafe.biodiversity_graph()
         return
 
 
@@ -936,7 +948,7 @@ class runScript():
         self.indicators.store_biosafe_output(biosafe_int)
         biosafe_perc = self.biosafe.get_percentage()
         self.indicators.store_biosafe_output(biosafe_perc, percentage=True)
-        self.indicators.plot(self.turn)
+        #self.indicators.plot(self.turn)
         return
 
 

@@ -25,7 +25,7 @@ class Model():
         self.axes = None
         self.node_index = None
         self.face_index = None
-        plt.interactive(True)
+        #plt.interactive(True)
         #plt.ion()
 
     def initialize_model(self):
@@ -263,7 +263,7 @@ ${point[0]} ${point[1]}
 if __name__ == "__main__":
     save = False
     turn = 0
-    plt.interactive(True)
+    #plt.interactive(True)
     calibration = gridmap.read_calibration()
     t0 = time.time()
     hexagons = gridmap.read_hexagons(filename='storing_files\\hexagons0.geojson')
