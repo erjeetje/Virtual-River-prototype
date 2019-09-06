@@ -18,7 +18,7 @@ import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
-import costModule as costs
+import costModule_test as costs
 import waterModule as water
 import indicatorModule as indicator
 import ghostCells as ghosts
@@ -571,6 +571,7 @@ class runScript():
         self.hexagons_sandbox, self.turn_costs, dike_moved = \
         compare.compare_hex(
                 self.cost_module, self.hexagons_prev, self.hexagons_sandbox)
+        self.cost_module.update_total_costs(self.turn_costs, turn=self.turn)
         return dike_moved
 
 
@@ -838,7 +839,8 @@ class runScript():
             self.biosafe.compare()
         self.biosafe.set_score()
         self.biosafe_score = self.biosafe.get_score()
-        self.biosafe.biodiversity_graph()
+        self.biosafe.biodiversity_graph(graph="score")
+        self.biosafe.biodiversity_graph(graph="percentage")
         return
 
 
@@ -925,6 +927,7 @@ class runScript():
 
 
     def scores(self):
+        self.cost_module.costs_graph()
         self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "

@@ -11,6 +11,7 @@ import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import biosafe as bsf
+from copy import deepcopy
 from geojson import load
 
 
@@ -203,7 +204,7 @@ class BiosafeVR():
     def plot(self):
         """
         Function to plot the biosafe output, not called as such in the Virtual
-        River.
+        River. biodiversity_graph() is called instead in Virtual River.
         """
         # plot the data for checking
         fig, [[ax1,ax2],[ax3,ax4], [ax5,ax6]] = plt.subplots(
@@ -284,7 +285,7 @@ class BiosafeVR():
         offset = bar_width / 2
         if graph == "score":
             if self.PotTax_reference is not None:
-                xticks = self.PotTax_reference.index.values
+                xticks = deepcopy(self.PotTax_reference.index.values)
                 for i, item in enumerate(xticks):
                     if item == "DragonDamselflies":
                         xticks[i] = "Dragon &\nDamselflies"
@@ -309,13 +310,25 @@ class BiosafeVR():
             
         else:
             if self.PotTax_percentage is not None:
-                xticks = self.PotTax_percentage.index.values
+                xticks = deepcopy(self.PotTax_percentage.index.values)
+                #print("xticks:")
+                #print(xticks)
                 for i, item in enumerate(xticks):
                     if item == "DragonDamselflies":
                         xticks[i] = "Dragon &\nDamselflies"
                     if item == "HigherPlants":
                         xticks[i] = "Higher\nPlants"
+                #print("xticks:")
+                #print(xticks)
+                #print("xticks shape:")
+                #print(xticks.shape)
+                #print("xticks type:")
+                #print(xticks.dtype)
                 data = self.PotTax_percentage.values.flatten()
+                #print("data:")
+                #print(data)
+                #print("index:")
+                #print(index)
                 percentage = ax.bar(
                         index, data, bar_width, label="percentage",
                         tick_label=xticks)
@@ -392,7 +405,7 @@ def test():
     test_path = os.path.join(root_path, 'test_files')
     with open(os.path.join(test_path, 'hexagons0.geojson')) as f:
         hexagons_old = load(f)
-    with open(os.path.join(test_path, 'hexagons6.geojson')) as f:
+    with open(os.path.join(test_path, 'hexagons1.geojson')) as f:
         hexagons_new = load(f)        
     return hexagons_new, hexagons_old
 
@@ -406,8 +419,16 @@ def main():
     biosafe.compare()
     biosafe.biodiversity_graph(graph="score")
     biosafe.biodiversity_graph(graph="percentage")
-    biosafe.plot()
-    biosafe.print_output()
+    #biosafe.plot()
+    #biosafe.print_output()
+    root_path = os.path.dirname(os.path.realpath(__file__))
+    test_path = os.path.join(root_path, 'test_files')
+    with open(os.path.join(test_path, 'hexagons2.geojson')) as f:
+        hexagons_new2 = load(f)
+    biosafe.process_board(hexagons_new2)
+    biosafe.compare()
+    biosafe.biodiversity_graph(graph="score")
+    biosafe.biodiversity_graph(graph="percentage")
     os.chdir(biosafe.web_dir)
 
 

@@ -22,6 +22,7 @@ class Costs():
         self.total_costs = None
         self.hexagon_height = None
         self.hexagon_area = None
+        self.total_costs = 0
         self.set_variables()
 
     def set_variables(self):
@@ -449,35 +450,48 @@ class Costs():
 
     def cost_per_hex(self):
         all_costs = []
-        costs = self.getCost(self.acquisition["agriculture"], self.hexagon_area, "agricultural land acquisition")
+        costs = self.get_cost(self.acquisition["agriculture"],
+                              self.hexagon_area, "agricultural land acquisition")
         all_costs.append(costs)
-        costs = self.getCost(self.acquisition["nature"], self.hexagon_area, "non-production land acquisition")
+        costs = self.get_cost(self.acquisition["nature"], self.hexagon_area,
+                              "non-production land acquisition")
         all_costs.append(costs)
-        costs = self.getCost(self.acquisition["water"], self.hexagon_area, "water acquisition")
+        costs = self.get_cost(self.acquisition["water"], self.hexagon_area,
+                              "water acquisition")
         all_costs.append(costs)
-        costs = self.getCost(self.acquisition["farm"], 1, "farm acquisition")
+        costs = self.get_cost(self.acquisition["farm"], 1, "farm acquisition")
         all_costs.append(costs)
-        costs = self.getCost(self.acquisition["business"], 1, "business acquisition")
+        costs = self.get_cost(self.acquisition["business"], 1,
+                              "business acquisition")
         all_costs.append(costs)
-        costs = self.getCost(self.demolition["farm"], 1, "farm demolition")
+        costs = self.get_cost(self.demolition["farm"], 1, "farm demolition")
         all_costs.append(costs)
-        costs = self.getCost(self.demolition["business"], 1, "business demolition")
+        costs = self.get_cost(self.demolition["business"], 1,
+                              "business demolition")
         all_costs.append(costs)
-        costs = self.getCost(self.floodplain_lowering["storage"], self.hexagon_area, "floodplain lowering")
+        costs = self.get_cost(self.floodplain_lowering["storage"],
+                              self.hexagon_area, "floodplain lowering")
         all_costs.append(costs)
-        costs = self.getCost(self.sidechannel["storage"], self.hexagon_area, "digging sidechannel")
+        costs = self.get_cost(self.sidechannel["storage"], self.hexagon_area,
+                              "digging sidechannel")
         all_costs.append(costs)
-        costs = self.getCost(self.roughness_smooth["grass"], self.hexagon_area, "grass smoothing")
+        costs = self.get_cost(self.roughness_smooth["grass"],
+                              self.hexagon_area, "grass smoothing")
         all_costs.append(costs)
-        costs = self.getCost(self.roughness_smooth["herbaceous"], self.hexagon_area, "herbaceous smoothing")
+        costs = self.get_cost(self.roughness_smooth["herbaceous"],
+                              self.hexagon_area, "herbaceous smoothing")
         all_costs.append(costs)
-        costs = self.getCost(self.roughness_smooth["forest"], self.hexagon_area, "forest smoothing")
+        costs = self.get_cost(self.roughness_smooth["forest"],
+                              self.hexagon_area, "forest smoothing")
         all_costs.append(costs)
-        costs = self.getCost(self.structures["ltd"], self.hexagon_height, "ltd construction")
+        costs = self.get_cost(self.structures["ltd"], self.hexagon_height,
+                              "ltd construction")
         all_costs.append(costs)
-        costs = self.getCost(self.dike["raise"], self.hexagon_height, "dike reinforcement")
+        costs = self.get_cost(self.dike["raise"], self.hexagon_height,
+                              "dike reinforcement")
         all_costs.append(costs)
-        costs = self.getCost(self.dike["relocate"], self.hexagon_height, "dike relocation")
+        costs = self.get_cost(self.dike["relocate"], self.hexagon_height,
+                              "dike relocation")
         all_costs.append(costs)
         with open('costs_test.txt', 'w') as f:
             for item in all_costs:
@@ -485,7 +499,12 @@ class Costs():
                 f.write("\n")
         return
             
-    def getCost(self, cost_type, multiplier, what):
+    
+    def update_total_costs(self):
+        return
+    
+    
+    def get_cost(self, cost_type, multiplier, what):
         calc = cost_type * multiplier
         string = ("Costs for " + str(what) + " per hexagon are: " + str(calc))
         return string

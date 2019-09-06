@@ -311,10 +311,10 @@ def set_indicator(score, api_key, indicator="budget", index=0,
         excel_id = 1000000
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000003
+        excel_id = 1000006
     else:
         indicator_id = 2
-        excel_id = 1000002
+        excel_id = 1000007
     score_input = "SCORE_INPUT_" + str(index)
     score_index = "SCORE_INPUT_INDEX"
     r = requests.post(url=api_endpoint+api_key, json=[indicator_id, score_input, score])
