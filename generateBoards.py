@@ -88,6 +88,21 @@ def all_nature(hexagons):
     return hexagons
 
 
+def update_single_hexagon(hexagons):
+    boolean = False
+    for feature in hexagons.features:
+        if boolean:
+            return hexagons
+        if feature.properties["ghost_hexagon"]:
+            continue
+        if feature.properties["floodplain_north"]:
+            if feature.properties["landuse"] != 0:
+                feature.properties["z_reference"] = 3
+                feature.properties["landuse"] = 6
+                boolean = True
+    return hexagons
+
+
 def create_settings():
     return
 

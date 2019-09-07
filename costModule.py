@@ -28,8 +28,8 @@ class Costs():
     def set_variables(self):
         self.acquisition = {
                 "agriculture": 362500,
-                "nature": 650000,
-                "water": 425000,
+                "nature": 65000,
+                "water": 42500,
                 "farm": 900000,
                 "business": 1400000
                 }
