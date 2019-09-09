@@ -18,7 +18,7 @@ import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
-import costModule_test as costs
+import costModule as costs
 import waterModule as water
 import indicatorModule as indicator
 import ghostCells as ghosts
@@ -188,7 +188,7 @@ class runScript():
         self.token = ""
         self.model = D3D.Model()
         self.turn_img = None
-        self.hexagons = None
+        #self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
         self.hexagons_prev = None
@@ -314,6 +314,7 @@ class runScript():
         self.start_new_turn = False
         if not self.test:
             self.get_image()
+            self.calibrate_camera()
             # it may be more robust to recalibrate the camera every update -->
             # check the time the system needs for that.
         #self.transform_hexagons()
@@ -448,6 +449,7 @@ class runScript():
         try - except TypeError --> if nothing returned by method, then go to
         # test mode.
         """
+        t0 = time.time()
         try:
             canvas, thresh = cali.detect_corners(
                     self.turn_img, method='adaptive',
@@ -456,15 +458,25 @@ class runScript():
             self.test = True
             print("TEST MODE: No camera detected, entering test mode")
         if not self.test:
-            self.pers, self.img_x, self.img_y, self.origins, self.radius, \
-                cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
+            #self.pers, self.img_x, self.img_y, self.origins, self.radius, \
+            #    cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
+            self.pers, self.img_x, self.img_y, cut_points = \
+                    cali.rotate_grid(canvas, thresh)
             print("Calibrated camera.")
             # create the calibration file for use by other methods and store it
+            save_calibration = False
+            if not self.initialized:
+                self.hexagons_sandbox, self.origins, self.radius = cali.create_features(
+                        self.img_y, self.img_x)
+                save_calibration = True
             self.transforms = cali.create_calibration_file(
-                    self.img_x, self.img_y, cut_points, path=self.config_path)
+                    self.img_x, self.img_y, cut_points, path=self.config_path,
+                    save=save_calibration)
         else:
             self.transforms = cali.create_calibration_file(
-                    path=self.config_path, test = self.test)
+                    path=self.config_path, test=self.test)
+        t1 = time.time()
+        print("Camera calibration time: " + str(t1-t0))
         return
 
 
@@ -476,7 +488,7 @@ class runScript():
         if not (self.test or self.reloading):
             # update the hexagons to initial board state.
             self.hexagons_sandbox = detect.transform(
-                    self.hexagons, self.transforms, export="sandbox",
+                    self.hexagons_sandbox, self.transforms, export="sandbox",
                     path=self.dir_path)
         """
         if self.tygron:

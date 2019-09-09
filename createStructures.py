@@ -447,7 +447,7 @@ def create_buildings(hexagons, grid):
     return grid
 
 
-def add_buildings(grid):
+def add_buildings(grid, save=False):
     """
     Function to add grid corrections for buildings.
     
@@ -460,8 +460,9 @@ def add_buildings(grid):
             feature.properties["z"] += (
                     feature.properties["z_building"] -
                     feature.properties["bedslope_correction"])
-    with open('node_grid_with_buildings.geojson', 'w') as f:
-        geojson.dump(grid, f, sort_keys=True, indent=2)
+    if save:
+        with open('node_grid_with_buildings.geojson', 'w') as f:
+            geojson.dump(grid, f, sort_keys=True, indent=2)
 
 
 def main():

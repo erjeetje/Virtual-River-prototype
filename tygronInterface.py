@@ -459,7 +459,7 @@ def hex_to_terrain(api_key, hexagons):
     return
 
 
-if __name__ == '__main__':
+def main():
     #with open('storing_files\\node_grid0.geojson', 'r') as f:
     #    grid = load(f)
     #heightmap = gridmap.create_geotiff(grid)
@@ -500,3 +500,8 @@ if __name__ == '__main__':
         heightmap = f.read()
     print(heightmap)
     """
+    return
+
+
+if __name__ == '__main__':
+    main()

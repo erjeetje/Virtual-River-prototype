@@ -849,7 +849,7 @@ def create_heatmap(data, min_data, max_data, name="plot", cmap="viridis", sigma=
     return
 
 
-if __name__ == "__main__":
+def main():
     save = False
     turn = 0
     plt.interactive(True)
@@ -932,3 +932,8 @@ if __name__ == "__main__":
             geojson.dump(flow_grid, f, sort_keys=True,
                          indent=2)
         print("saved files")
+    return
+
+
+if __name__ == "__main__":
+    main()

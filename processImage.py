@@ -309,7 +309,6 @@ def transform(features, transforms, export=None, path=""):
                     os.path.join(path, 'hexagons_sandbox_transformed.geojson'),
                     'w') as f:
                 geojson.dump(transformed_features, f, sort_keys=True, indent=2)
-        return transformed_features
     elif export == "tygron_initialize":
         crs = {
             "type": "name",
@@ -327,7 +326,6 @@ def transform(features, transforms, export=None, path=""):
                     os.path.join(path, 'hexagons_tygron_transformed.geojson'),
                     'w') as f:
                 geojson.dump(transformed_features, f, sort_keys=True, indent=2)
-        return transformed_features
     else:
         transformed_features = geojson.FeatureCollection(transformed_features)
         if False:
@@ -339,10 +337,10 @@ def transform(features, transforms, export=None, path=""):
                                  'hexagons_tygron_update_transformed.geojson'),
                     'w') as f:
                 geojson.dump(transformed_features, f, sort_keys=True, indent=2)
-        return transformed_features
+    return transformed_features
 
 
-if __name__ == '__main__':
+def main():
     tic = time.time()  # start performance timer
     filename = 'board_image0.jpg'
     #filename = 'webcam_test.jpg'
@@ -363,3 +361,8 @@ if __name__ == '__main__':
     # print calibration and image processing performance time
     print('calibration time:', tac-tic)
     print('image processing time:', toc-tac)
+    return
+
+
+if __name__ == '__main__':
+    main()

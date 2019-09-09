@@ -10,7 +10,7 @@ import time
 import geojson
 import os
 import tygronInterface as tygron
-import gridCalibration as cali
+import gridCalibration_test as cali
 import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
@@ -18,16 +18,17 @@ import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
-import costModule as costs
+import costModule_test as costs
 import waterModule as water
-import indicatorModule_IHE as indicator
+import indicatorModule as indicator
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
 import visualization as visualize
 import biosafeVR as biosafe
+import localServer as server
 from copy import deepcopy
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from PyQt5.QtCore import QCoreApplication
 
 
@@ -142,6 +143,13 @@ class runScript():
         except FileExistsError:
             print("Directory ", self.processing_path,
                   " already exists, overwriting files.")
+        self.web_path = os.path.join(self.dir_path, 'webserver')
+        try:
+            os.mkdir(self.web_path)
+            print("Directory ", self.web_path, " Created.")
+        except FileExistsError:
+            print("Directory ", self.web_path,
+                  " already exists, overwriting files.")
         self.model_path = os.path.join(self.dir_path, 'models',
                                        'Waal_schematic')
         self.config_path = os.path.join(self.dir_path, 'config_files')
@@ -180,7 +188,7 @@ class runScript():
         self.token = ""
         self.model = D3D.Model()
         self.turn_img = None
-        self.hexagons = None
+        #self.hexagons = None
         self.hexagons_sandbox = None
         self.hexagons_tygron = None
         self.hexagons_prev = None
@@ -199,6 +207,8 @@ class runScript():
         self.img_y = None
         self.origins = None
         self.radius = None
+        # 
+        self.groyne_tracker = None
         # temporary variables in relation to colormap plots
         self.fig = None
         self.axes = None
@@ -210,10 +220,14 @@ class runScript():
         self.total_costs = 0
         # turn costs of the current round
         self.turn_costs = 0
+        self.cost_score = None
         # BIOSAFE module
         self.biosafe = biosafe.BiosafeVR()
+        self.biosafe_score = None
         # visualization
         self.viz = visualize.Visualization(self.model)
+        # localhost webserver
+        #self.server = server.Webserver()
         return
 
 
@@ -229,14 +243,15 @@ class runScript():
         self.tygron_login()
         self.get_image()
         self.calibrate_camera()
-        self.get_hexagons()
         self.transform_hexagons()
+        self.get_hexagons()
         if self.tygron:
+            #self.create_server()
             self.tygron_update_buildings()
         self.set_up_hexagons()
         self.process_hexagons()
-        #if self.tygron:
-        #    self.tygron_transform()
+        if self.tygron:
+            self.tygron_transform()
         self.update_ownership_viz()
         tac = time.time()
         self.create_grids()
@@ -249,10 +264,17 @@ class runScript():
             self.tygron_update()
             t1 = time.time()
         self.run_biosafe()
+        self.update_cost_score()
+        #if self.tygron:
+            # this is here temporary for testing purposes, will be only below
+            # eventually (see few lines down).
+            #self.tygron_set_indicators()
         self.initialized = True
         self.index_model()
         self.run_model()
         self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
         toc = time.time()
         try:
             print("Finished startup and calibration" +
@@ -292,15 +314,16 @@ class runScript():
         self.start_new_turn = False
         if not self.test:
             self.get_image()
+            self.calibrate_camera()
             # it may be more robust to recalibrate the camera every update -->
             # check the time the system needs for that.
+        #self.transform_hexagons()
         self.get_hexagons()
-        self.transform_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
-            #self.tygron_transform()
-        self.process_hexagons()
+            self.tygron_transform()
         dike_moved = self.compare_hexagons()
+        self.process_hexagons(dike_moved=dike_moved)
         tac = time.time()
         self.update_ownership_viz()
         self.process_grids(dike_moved=dike_moved)
@@ -310,8 +333,11 @@ class runScript():
             self.tygron_update()
             t1 = time.time()
         self.run_biosafe()
+        self.update_cost_score()
         self.run_model()
         self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
         toc = time.time()
         try:
             print("Updated to turn " + str(self.turn) +
@@ -346,10 +372,11 @@ class runScript():
             self.get_image()
             self.calibrate_camera()
         self.get_hexagons()
-        self.transform_hexagons()
+        #self.transform_hexagons()
         #self.process_hexagons()
         if self.tygron:
             self.tygron_update_buildings()
+            self.tygron_transform()
         dike_moved = None
         if self.initialized:
             dike_moved = self.compare_hexagons()
@@ -369,12 +396,15 @@ class runScript():
             self.tygron_update()
             t1 = time.time()
         self.run_biosafe()
+        self.update_cost_score()
         if not self.initialized:
             self.initialized = True
         self.reload_enabled = False
         self.reloading = False
         self.run_model()
         self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
         toc = time.time()
         try:
             print("Finished reloading to turn " + str(self.turn) +
@@ -398,6 +428,11 @@ class runScript():
         return
 
 
+    def create_server(self):
+        server.run_server(self.web_path, path=self.dir_path)
+        return
+    
+    
     def get_image(self):
         """
         Get a camera image.
@@ -414,6 +449,7 @@ class runScript():
         try - except TypeError --> if nothing returned by method, then go to
         # test mode.
         """
+        t0 = time.time()
         try:
             canvas, thresh = cali.detect_corners(
                     self.turn_img, method='adaptive',
@@ -422,30 +458,60 @@ class runScript():
             self.test = True
             print("TEST MODE: No camera detected, entering test mode")
         if not self.test:
-            self.pers, self.img_x, self.img_y, self.origins, self.radius, \
-                cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
+            #self.pers, self.img_x, self.img_y, self.origins, self.radius, \
+            #    cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
+            self.pers, self.img_x, self.img_y, cut_points = \
+                    cali.rotate_grid(canvas, thresh)
             print("Calibrated camera.")
             # create the calibration file for use by other methods and store it
+            save_calibration = False
+            if not self.initialized:
+                self.hexagons_sandbox, self.origins, self.radius = cali.create_features(
+                        self.img_y, self.img_x)
+                save_calibration = True
             self.transforms = cali.create_calibration_file(
-                    self.img_x, self.img_y, cut_points, path=self.config_path)
+                    self.img_x, self.img_y, cut_points, path=self.config_path,
+                    save=save_calibration)
         else:
             self.transforms = cali.create_calibration_file(
-                    path=self.config_path, test = self.test)
+                    path=self.config_path, test=self.test)
+        t1 = time.time()
+        print("Camera calibration time: " + str(t1-t0))
         return
 
 
+    def transform_hexagons(self):
+        """
+        Function that transforms the hexagons to the coordinates that the
+        SandBox / Tygron uses.
+        """
+        if not (self.test or self.reloading):
+            # update the hexagons to initial board state.
+            self.hexagons_sandbox = detect.transform(
+                    self.hexagons_sandbox, self.transforms, export="sandbox",
+                    path=self.dir_path)
+        """
+        if self.tygron:
+            self.hexagons_tygron = detect.transform(
+                        self.hexagons_sandbox, self.transforms,
+                        export="sandbox2tygron")
+        """
+        print("Transformed hexagons suitable for model and tygron.")
+        return
+    
+    
     def get_hexagons(self):
         """
         Function that creates/gets the new hexagons. Gets them from either the
         camera (live mode) or file (test mode).
         """
         if not (self.test or self.reloading):
-            self.hexagons = detect.detect_markers(
+            self.hexagons_sandbox = detect.detect_markers(
                     self.turn_img, self.pers, self.img_x, self.img_y,
-                    self.origins, self.radius, self.hexagons, method='LAB',
+                    self.origins, self.radius, self.hexagons_sandbox, method='LAB',
                     path=self.store_path, debug=self.debug)
             if not self.initialized:
-                self.hexagons = ghosts.set_values(self.hexagons)
+                self.hexagons_sandbox = ghosts.set_values(self.hexagons_sandbox)
         else:
             if self.reloading:
                 path = self.store_path
@@ -463,24 +529,6 @@ class runScript():
                     self.hexagons_sandbox = ghosts.set_values(
                             self.hexagons_sandbox)
         print("Retrieved board state.")
-        return
-
-
-    def transform_hexagons(self):
-        """
-        Function that transforms the hexagons to the coordinates that the
-        SandBox / Tygron uses.
-        """
-        if not (self.test or self.reloading):
-            # update the hexagons to initial board state.
-            self.hexagons_sandbox = detect.transform(
-                    self.hexagons, self.transforms, export="sandbox",
-                    path=self.dir_path)
-        if self.tygron:
-            self.hexagons_tygron = detect.transform(
-                        self.hexagons_sandbox, self.transforms,
-                        export="sandbox2tygron")
-        print("Transformed hexagons suitable for model and tygron.")
         return
 
 
@@ -507,26 +555,35 @@ class runScript():
         return
     
     
-    def process_hexagons(self):
+    def process_hexagons(self, dike_moved=False):
         if not self.initialized:
             self.hexagons_sandbox = adjust.add_bedslope(
                     self.hexagons_sandbox, self.slope)
-            self.hexagons_sandbox = adjust.z_correction(
+            self.hexagons_sandbox = gridmap.hexagons_to_fill(
+                    self.hexagons_sandbox)
+        self.hexagons_sandbox = adjust.z_correction(
                     self.hexagons_sandbox, initialized=self.initialized)
-        self.hexagons_sandbox = gridmap.hexagons_to_fill(self.hexagons_sandbox)
+        if dike_moved:
+            self.hexagons_sandbox = structures.determine_dikes(
+                        self.hexagons_sandbox)
+            self.hexagons_sandbox = \
+                structures.determine_floodplains_and_behind_dikes(
+                        self.hexagons_sandbox)
+            self.hexagons_sandbox = compare.update_behind_dikes(
+                    self.hexagons_prev, self.hexagons_sandbox)
+            self.hexagons_sandbox = gridmap.hexagons_to_fill(
+                    self.hexagons_sandbox)
         return
 
 
     def compare_hexagons(self):
         """
-        if not self.test:
-            self.hexagons, self.turn_costs, dike_moved = compare.compare_hex(
-                    self.cost_module, self.hexagons_prev, self.hexagons)
-        else:
+        
         """
         self.hexagons_sandbox, self.turn_costs, dike_moved = \
         compare.compare_hex(
                 self.cost_module, self.hexagons_prev, self.hexagons_sandbox)
+        self.cost_module.update_total_costs(self.turn_costs, turn=self.turn)
         return dike_moved
 
 
@@ -580,8 +637,9 @@ class runScript():
         roughness setting of the flow grid.
         """
         if self.initialized:
-            self.node_grid = gridmap.update_node_grid(
-                    self.hexagons_sandbox, self.node_grid, turn=self.turn,
+            self.node_grid, ignore = gridmap.update_node_grid(
+                    self.hexagons_sandbox, self.node_grid,
+                    were_groynes = self.groyne_tracker, turn=self.turn,
                     printing=True)
         self.node_grid = gridmap.interpolate_node_grid(
                 self.hexagons_sandbox, self.node_grid, turn=self.turn,
@@ -600,34 +658,32 @@ class runScript():
         # dikes. The filled node grid is for the hydrodynamic model.
         if not self.initialized:
             self.filled_node_grid = deepcopy(self.node_grid)
-            self.filled_node_grid = gridmap.update_node_grid(
+            self.filled_node_grid, self.groyne_tracker = \
+            gridmap.update_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
                     turn=self.turn, fill=True, path=self.dir_path)
         else:
             if dike_moved:
-                self.hexagons_sandbox = structures.determine_dikes(
-                        self.hexagons_sandbox)
-                self.hexagons_sandbox = \
-                structures.determine_floodplains_and_behind_dikes(
-                        self.hexagons_sandbox)
+                # if the dike locations changed, make a deepcopy of the
+                # node_grid and update it accordingly.
                 self.filled_node_grid = deepcopy(self.node_grid)
-                self.filled_node_grid = gridmap.update_node_grid(
+                self.filled_node_grid, self.groyne_tracker = \
+                gridmap.update_node_grid(
                         self.hexagons_sandbox, self.filled_node_grid,
-                        fill=True)
-                self.filled_node_grid = gridmap.interpolate_node_grid(
-                        self.hexagons_sandbox, self.filled_node_grid,
-                        turn=self.turn,
-                        fill=True, save=False, path=self.dir_path)
+                        were_groynes = self.groyne_tracker, fill=True)
             else:
-                # if the dike locations did not change, a simple update suffices.
-                self.filled_node_grid = gridmap.update_node_grid(
+                # if the dike locations did not change, a simple update
+                # suffices.
+                self.filled_node_grid, self.groyne_tracker = \
+                gridmap.update_node_grid(
                         self.hexagons_sandbox, self.filled_node_grid,
-                        turn=self.turn, grid_type="filled")
-                self.filled_node_grid = gridmap.interpolate_node_grid(
-                        self.hexagons_sandbox, self.filled_node_grid,
-                        turn=self.turn, fill=True, path=self.dir_path)
+                        were_groynes = self.groyne_tracker, turn=self.turn,
+                        grid_type="filled")
+            self.filled_node_grid = gridmap.interpolate_node_grid(
+                    self.hexagons_sandbox, self.filled_node_grid,
+                    turn=self.turn, fill=True, path=self.dir_path)
         return
 
 
@@ -659,14 +715,9 @@ class runScript():
         Transform the hexagon features to the internal coordinates used by
         Tygron.
         """
-        if not self.test:
-            # transform hexagons to tygron coordinates.
-            self.hexagons_tygron = detect.transform(
-                    self.hexagons, self.transforms, export="tygron")
-        else:
-            self.hexagons_tygron = detect.transform(
-                    self.hexagons_sandbox, self.transforms,
-                    export="sandbox2tygron")
+        self.hexagons_tygron = detect.transform(
+                self.hexagons_sandbox, self.transforms,
+                export="sandbox2tygron")
         return
 
 
@@ -685,8 +736,10 @@ class runScript():
 
     def tygron_update(self):
         """
-        Function that handles updating the Tygron virtual world.
+        Function that handles updating the Tygron virtual world. Changes the
+        localhost directory to the webserver to avoid problems with loading.
         """
+        os.chdir(self.web_path)
         self.heightmap = gridmap.create_geotiff(
             self.node_grid, turn=self.turn, path=self.store_path)
         print("Created geotiff elevation map")
@@ -696,6 +749,22 @@ class runScript():
                          str(self.turn) + ".tif")
         heightmap_id = tygron.set_elevation(
                 file_location, self.token, turn=self.turn)
+        return
+    
+    
+    def tygron_set_indicators(self):
+        """
+        Function that handles updating the indicators in Tygron. changes the
+        localhost directory to the webserver to avoid problems with loading.
+        """
+        os.chdir(self.web_path)
+        tygron.set_indicator(0.5, self.token,
+                             indicator="flood", index=self.turn)
+        tygron.set_indicator(self.biosafe_score, self.token,
+                             indicator="biodiversity", index=self.turn)
+        tygron.set_indicator(self.cost_score, self.token,
+                             indicator="budget", index=self.turn)
+        #os.chdir(self.store_path)
         return
 
 
@@ -780,6 +849,11 @@ class runScript():
         else:
             self.biosafe.process_board(self.hexagons_sandbox, reference=False)
             self.biosafe.compare()
+        self.biosafe.set_score()
+        self.biosafe_score = self.biosafe.get_score()
+        self.biosafe.biodiversity_graph(graph="score")
+        self.biosafe.biodiversity_graph(graph="percentage")
+        return
 
 
     def end_round(self):
@@ -796,7 +870,7 @@ class runScript():
         """
         TODO: code to handle whatever needs to be handled, e.g. the indicators.
         """
-        self.update_costs()
+        self.store_costs()
         self.store_previous_turn()
         # if self.save is defined as True, the end of turn files are
         # automatically stored.
@@ -819,31 +893,37 @@ class runScript():
                 geojson.dump(
                         self.hexagons_sandbox, f, sort_keys=True, indent=2)
             print("Saved hexagon file for turn " + str(self.turn) + ".")
-            if self.debug:
-                with open(os.path.join(
-                        self.store_path,
-                        'node_grid%d.geojson' % self.turn), 'w') as f:
-                    geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
-                print("Saved node grid for turn " + str(self.turn) + ".")
-                with open(os.path.join(
-                        self.store_path,
-                        'filled_node_grid%d.geojson' % self.turn),
-                          'w') as f:
-                    geojson.dump(
-                            self.filled_node_grid, f, sort_keys=True, indent=2)
-                print("Saved filled node grid for turn " + str(self.turn) +
-                      ".")
-                with open(os.path.join(
-                        self.store_path,
-                        'flow_grid%d.geojson' % self.turn), 'w') as f:
-                    geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
-                print("Saved flow grid for turn " + str(self.turn) + ".")
+        if self.debug:
+            with open(os.path.join(
+                    self.store_path,
+                    'node_grid%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
+            print("Saved node grid for turn " + str(self.turn) + ".")
+            with open(os.path.join(
+                    self.store_path,
+                    'filled_node_grid%d.geojson' % self.turn),
+                      'w') as f:
+                geojson.dump(
+                        self.filled_node_grid, f, sort_keys=True, indent=2)
+            print("Saved filled node grid for turn " + str(self.turn) +
+                  ".")
+            with open(os.path.join(
+                    self.store_path,
+                    'flow_grid%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
+            print("Saved flow grid for turn " + str(self.turn) + ".")
         return
 
 
-    def update_costs(self):
+    def store_costs(self):
         self.total_costs = self.total_costs + self.turn_costs
         self.turn_costs = 0
+        return
+    
+    
+    def update_cost_score(self):
+        costs = self.total_costs + self.turn_costs
+        self.cost_score = self.indicators.calculate_cost_score(costs)
         return
 
 
@@ -859,18 +939,23 @@ class runScript():
 
 
     def scores(self):
+        self.cost_module.costs_graph()
         self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
             return
+        #self.indicators.add_flood_safety_score(50, self.turn)
+        #self.indicators.add_biosafe_score(self.biosafe_score, self.turn)
+        #self.indicators.add_cost_score(self.cost_score, self.turn)
         costs = self.total_costs + self.turn_costs
-        self.indicators.add_indicator_values(50.0, 50.0, costs, self.turn)
+        #self.indicators.add_total_costs(costs, self.turn)
+        self.indicators.add_indicator_values(
+                50.0, self.biosafe_score, self.cost_score, costs,
+                turn=self.turn)
         self.indicators.update_water_and_dike_levels(
                 self.hexagons_sandbox, self.hexagons_prev, self.turn)
         self.indicators.update_flood_safety_score(self.turn)
-        #self.indicators.update_biodiversity_score(self.hexagons_sandbox,
-        #                                          self.turn)
         if self.turn == 0:
             biosafe_ref = self.biosafe.get_reference()
             self.indicators.store_biosafe_output(biosafe_ref, reference=True)
@@ -878,7 +963,7 @@ class runScript():
         self.indicators.store_biosafe_output(biosafe_int)
         biosafe_perc = self.biosafe.get_percentage()
         self.indicators.store_biosafe_output(biosafe_perc, percentage=True)
-        self.indicators.plot(self.turn)
+        #self.indicators.plot(self.turn)
         return
 
 

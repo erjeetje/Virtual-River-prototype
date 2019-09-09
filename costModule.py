@@ -5,8 +5,9 @@ Created on Wed Jun 26 14:20:02 2019
 @author: HaanRJ
 """
 
-
+import matplotlib.pyplot as plt
 from numpy import sqrt
+from os.path import join, dirname, realpath
 
 class Costs():  
     def __init__(self):
@@ -22,7 +23,9 @@ class Costs():
         self.total_costs = None
         self.hexagon_height = None
         self.hexagon_area = None
-        self.total_costs = 0
+        self.turn = []
+        self.total_costs = []
+        self.web_dir = None
         self.set_variables()
 
     def set_variables(self):
@@ -66,6 +69,11 @@ class Costs():
                 "raise": 887500,
                 "relocate": 1100000
                 }
+        self.turn.append(0)
+        self.total_costs.append(25000000)
+        root_dir = dirname(realpath(__file__))
+        self.web_dir = join(root_dir, 'webserver')
+        return
         
     def set_variables2(self):
         self.acqi_m2 = {
@@ -500,7 +508,13 @@ class Costs():
         return
             
     
-    def update_total_costs(self):
+    def update_total_costs(self, costs, turn=0):
+        total_costs = self.total_costs[turn-1] - costs
+        if turn < len(self.turn):
+            self.total_costs[turn] = total_costs
+        else:
+            self.total_costs.append(total_costs)
+            self.turn.append(turn)
         return
     
     
@@ -508,6 +522,35 @@ class Costs():
         calc = cost_type * multiplier
         string = ("Costs for " + str(what) + " per hexagon are: " + str(calc))
         return string
+    
+    
+    def costs_graph(self):
+        fig, ax = plt.subplots()
+        if self.total_costs:    
+            budget = ax.plot(self.turn, self.total_costs, color='r')
+        ax.set_ylim([min(0, min(self.total_costs)), 27500000])
+        ax.set_xticks(self.turn)
+        x_labels = [("turn " + str(self.turn[value])) for value in self.turn]
+        ax.set_xticklabels(x_labels)
+        #ax.set_xlabel("turn")
+        ax.set_ylabel("million Euros")
+        ax.set_title("Budget spending")
+        ax.spines['bottom'].set_color('w')
+        ax.spines['top'].set_color('w') 
+        ax.spines['right'].set_color('w')
+        ax.spines['left'].set_color('w')
+        ax.ticklabel_format(axis='y', style='sci', scilimits=(6,6))
+        ax.tick_params(axis='x', colors='w')
+        ax.tick_params(axis='y', colors='w')
+        ax.yaxis.label.set_color('w')
+        ax.yaxis.label.set_fontsize(14)
+        ax.xaxis.label.set_color('w')
+        ax.xaxis.label.set_fontsize(14)
+        ax.title.set_fontsize(20)
+        ax.title.set_color('w')
+        plt.tight_layout()
+        plt.savefig(join(self.web_dir, "budget_score1.png"), edgecolor='w',transparent=True)
+        return
 
 
 def main():
@@ -523,7 +566,12 @@ def main():
             path=test_path)
     """
     cost = Costs()
-    cost.cost_per_hex()
+    cost.update_total_costs(5000000, turn=1)
+    cost.update_total_costs(4000000, turn=2)
+    cost.update_total_costs(3000000, turn=3)
+    cost.update_total_costs(2000000, turn=4)
+    cost.update_total_costs(1000000, turn=5)
+    cost.costs_graph()
 
 
 if __name__ == '__main__':

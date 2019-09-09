@@ -27,7 +27,8 @@ class NumpyEncoder(json.JSONEncoder):
             return super(NumpyEncoder, self).default(obj)
 
 
-def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", test=False):
+def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="",
+                            test=False, save=False):
     """
     Function that creates the calibration file (json format) and returns the
     transforms that can be used by other functions.
@@ -92,14 +93,16 @@ def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", te
     calibration = {}
     # model points following SandBox implementation; 
     # between [-600, -400] and [600, 400] 
-    calibration['model_points'] = ([-400, 300 ], [400, 300], [400, -300], [-400, -300])
+    calibration['model_points'] = (
+            [-400, 300 ], [400, 300], [400, -300], [-400, -300])
     # resolution camera; FullHD
     calibration['img_points'] = [0, 0], [1920, 0], [1920, 1080], [0, 1080]
     if not test:
         # calibration points used to cut images
         calibration['img_pre_cut_points'] = cut_points.tolist()
         # corners of image after image cut
-        calibration['img_post_cut_points'] = [0, 0], [img_x, 0], [img_x, img_y],  [0, img_y]
+        calibration['img_post_cut_points'] = (
+                [0, 0], [img_x, 0], [img_x, img_y],  [0, img_y])
     # tygron project creation; empty world coordinates
     calibration['tygron_export'] = [0, 0], [1000, 0], [1000, -750],  [0, -750]
     # tygron project update; world coordinates once created
@@ -113,8 +116,10 @@ def create_calibration_file(img_x=None, img_y=None, cut_points=None, path="", te
     #transforms = sandbox_fm.calibrate.compute_transforms(calibration)
     transforms = compute_transforms(calibration)
     calibration.update(transforms)
-    with open(os.path.join(path, 'calibration.json'), 'w') as f:
-        json.dump(calibration, f, sort_keys=True, indent=2, cls=NumpyEncoder)
+    if save:
+        with open(os.path.join(path, 'calibration.json'), 'w') as f:
+            json.dump(calibration, f, sort_keys=True, indent=2,
+                      cls=NumpyEncoder)
     return transforms
 
 
@@ -241,8 +246,8 @@ def rotate_grid(canvas, img):
     # warp image according to the perspective transform and store image
     # warped = cv2.warpPerspective(img, perspective, (img_x, img_y))
     # cv2.imwrite('warpedGrid.jpg', warped)
-    features, origins, radius = create_features(img_y, img_x)
-    return perspective, img_x, img_y, origins, radius, pts1, features
+    #features, origins, radius = create_features(img_y, img_x)
+    return perspective, img_x, img_y, pts1
 
 
 def create_features(height, width):
