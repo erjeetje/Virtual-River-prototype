@@ -270,6 +270,7 @@ class BiosafeVR():
         self.PotTax_percentage = (
                 (self.PotTax_increase / self.PotTax_reference) * 100)
         """
+        # this sets the PotTax_percentage to actual percentages.
         self.PotTax_percentage['TFI'] = pd.Series(
                 ["{0:.2f}%".format(val * 100) for val in
                  self.PotTax_percentage['TFI']],
@@ -279,12 +280,17 @@ class BiosafeVR():
     
     
     def biodiversity_graph(self, graph="percentage"):
+        """
+        Function to generate the output graphs displayed in the Tygron engine.
+        """
         fig, ax = plt.subplots()
         index = np.arange(7)
         bar_width = 0.3
         offset = bar_width / 2
         if graph == "score":
             if self.PotTax_reference is not None:
+                # this requires a deepcopy, otherwise the xticks updates also
+                # updates the PotTax_percentage indexes.
                 xticks = deepcopy(self.PotTax_reference.index.values)
                 for i, item in enumerate(xticks):
                     if item == "DragonDamselflies":
@@ -307,36 +313,27 @@ class BiosafeVR():
             legend = ax.legend(loc='best', facecolor='black', edgecolor='w',
                                fancybox=True, framealpha=0.5, fontsize="large")
             plt.setp(legend.get_texts(), color='w')
-            
         else:
             if self.PotTax_percentage is not None:
+                # this requires a deepcopy, otherwise the xticks updates also
+                # updates the PotTax_percentage indexes.
                 xticks = deepcopy(self.PotTax_percentage.index.values)
-                #print("xticks:")
-                #print(xticks)
                 for i, item in enumerate(xticks):
                     if item == "DragonDamselflies":
                         xticks[i] = "Dragon &\nDamselflies"
                     if item == "HigherPlants":
                         xticks[i] = "Higher\nPlants"
-                #print("xticks:")
-                #print(xticks)
-                #print("xticks shape:")
-                #print(xticks.shape)
-                #print("xticks type:")
-                #print(xticks.dtype)
                 data = self.PotTax_percentage.values.flatten()
-                #print("data:")
-                #print(data)
-                #print("index:")
-                #print(index)
                 percentage = ax.bar(
                         index, data, bar_width, label="percentage",
                         tick_label=xticks)
                 ax.set_title("Biodiversity increase")
                 ax.set_ylabel("increase (%)")
+        # the xticks rotation could probably be handled better.
         for tick in ax.get_xticklabels():
             tick.set_rotation(90)
             tick.set_fontsize(14)
+        # set the color of all figure borders, axis ticks and text to white.
         ax.spines['bottom'].set_color('w')
         ax.spines['top'].set_color('w') 
         ax.spines['right'].set_color('w')
@@ -350,12 +347,12 @@ class BiosafeVR():
         ax.title.set_fontsize(20)
         ax.title.set_color('w')
         plt.tight_layout()
-        #os.chdir(self.web_dir)
         if graph == "score":
-            plt.savefig(os.path.join(self.web_dir, "biodiversity_score1.png"), edgecolor='w',transparent=True)
+            plt.savefig(os.path.join(self.web_dir, "biodiversity_score1.png"),
+                        edgecolor='w',transparent=True)
         else:
-            plt.savefig(os.path.join(self.web_dir, "biodiversity_score2.png"), edgecolor='w',transparent=True)
-        #os.chdir(self.scratch_dir)
+            plt.savefig(os.path.join(self.web_dir, "biodiversity_score2.png"),
+                        edgecolor='w',transparent=True)
         return
 
 
@@ -429,7 +426,7 @@ def main():
     biosafe.compare()
     biosafe.biodiversity_graph(graph="score")
     biosafe.biodiversity_graph(graph="percentage")
-    os.chdir(biosafe.web_dir)
+    return
 
 
 if __name__ == "__main__":

@@ -348,7 +348,7 @@ def test():
     Function to test the code separately from the Virtual River.
     """
     root_path = os.path.dirname(os.path.realpath(__file__))
-    test_path = os.path.join(root_path, 'storing_files')
+    test_path = os.path.join(root_path, 'test_files')
     with open(os.path.join(test_path, 'hexagons_wide_basin.geojson')) as f:
         hexagons_old = load(f)
     with open(os.path.join(test_path, 'hexagons_wide_basin.geojson')) as f:
