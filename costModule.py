@@ -370,10 +370,14 @@ class Costs():
             # exceptional situations if they exist?
             pass
         """
-        self.z_cost[turn-1] += z_cost
-        self.s_cost[turn-1] += s_cost
-        self.l_cost[turn-1] += l_cost
-        self.o_cost[turn-1] += o_cost
+        try:
+            self.z_cost[turn-1] += z_cost
+            self.s_cost[turn-1] += s_cost
+            self.l_cost[turn-1] += l_cost
+            self.o_cost[turn-1] += o_cost
+        except IndexError:
+            print("Ran out of options to store the turn costs, probably you "
+                  "are now at turn 5?")
         cost = z_cost + s_cost + l_cost + o_cost
         return cost, ownership_change
 
