@@ -308,7 +308,7 @@ class BiosafeVR():
                 intervention = ax.bar(
                         index+offset, self.PotTax_intervention.values.flatten(),
                         bar_width, label=label, tick_label=xticks)
-            ax.set_title("Biodiversity score")
+            ax.set_title("Biodiversity scores")
             ax.set_ylabel("total value")
             legend = ax.legend(loc='best', facecolor='black', edgecolor='w',
                                fancybox=True, framealpha=0.5, fontsize="large")
@@ -327,8 +327,8 @@ class BiosafeVR():
                 percentage = ax.bar(
                         index, data, bar_width, label="percentage",
                         tick_label=xticks)
-                ax.set_title("Biodiversity increase")
-                ax.set_ylabel("increase (%)")
+                ax.set_title("Biodiversity change")
+                ax.set_ylabel("change (%)")
         # the xticks rotation could probably be handled better.
         for tick in ax.get_xticklabels():
             tick.set_rotation(90)

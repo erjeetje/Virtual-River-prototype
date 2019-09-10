@@ -128,6 +128,230 @@ class Costs():
 
     def calc_Costs(self, hexagon_new, hexagon_old, mixtype_ratio=[50,20,30],
                    z_changed=False, landuse_changed=False):
+        # different costs that may apply: costs for changing the elevation,
+        # costs for hydraulic structures, costs for changing the land use and
+        # costs for changing the ownership.
+        z_cost = 0
+        s_cost = 0
+        l_cost = 0
+        o_cost = 0
+        # in case of a floodplain lowering, landuse might not change, even
+        # though costs for removal (e.g. a building) should be calculated.
+        # In such a scenario, landuse_trigger activates the landuse loop.
+        landuse_trigger = False
+        ownership_change = None
+        if z_changed:
+            if hexagon_old.properties["z_reference"] >= 5:
+                if hexagon_new.properties["z_reference"] >= 4:
+                    # dike lowering (for whatever reason)
+                    s_type = "lowered reinforced dike [NEEDS costs calculation]"
+                else:
+                    # relocated reinforced dike from this hexagon
+                    s_type = "relocated reinforced dike (removal)"
+                    # since dike relocation involves two hexagon changes, costs
+                    # are split
+                    s_cost = (s_cost + self.dike["relocate"] / 2.0)
+                    if hexagon_old.properties["owner"] != "Water":
+                        ownership_change = "Water"
+            elif hexagon_new.properties["z_reference"] >= 5:
+                if hexagon_old.properties["z_reference"] >= 4:
+                    # dike reinforcement
+                    s_type = "reinforced dike"
+                    s_cost = (s_cost + self.dike["raise"])
+                else:
+                    # relocated reinforced dike to this hexagon
+                    s_type = "relocated reinforced dike (construction)"
+                    # since dike relocation involves two hexagon changes, costs
+                    # are split
+                    s_cost = (s_cost + self.dike["relocate"] / 2.0)
+            elif hexagon_old.properties["z_reference"] >= 4:
+                s_type = "dike relocation (removal)"
+                # since dike relocation involves two hexagon changes, costs
+                # are split
+                s_cost = (s_cost + self.dike["relocate"] / 2.0)
+                if hexagon_old.properties["owner"] != "Water":
+                    ownership_change = "Water"
+            elif hexagon_new.properties["z_reference"] >= 4:
+                s_type = "dike relocation (construction)"
+                # since dike relocation involves two hexagon changes, costs
+                # are split
+                s_cost = (s_cost + self.dike["relocate"] / 2.0)
+            elif hexagon_old.properties["z_reference"] >= 3:
+                if hexagon_new.properties["z_reference"] == 2:
+                    z_type = "lowered floodplain"
+                    z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                               hexagon_new.properties["z_reference"])
+                              * self.floodplain_lowering["storage"])
+                    landuse_trigger = True
+                else:
+                    z_type = "constructed sidechannel"
+                    z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                                hexagon_new.properties["z_reference"])
+                              * self.sidechannel["storage"])
+                    if hexagon_old.properties["owner"] != "Water":
+                        ownership_change = "Water"
+            elif hexagon_new.properties["z_reference"] >= 3:
+                if hexagon_old.properties["z_reference"] == 2:
+                    z_type = "raised floodplain"
+                    z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                                hexagon_new.properties["z_reference"])
+                              * self.floodplain_lowering["storage"])
+                else:
+                    z_type = "filled up sidechannel (for whatever reason)"
+                    z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                                hexagon_new.properties["z_reference"])
+                              * self.sidechannel["storage"])
+            elif hexagon_old.properties["z_reference"] >= 2:
+                z_type = "constructed sidechannel"
+                z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                            hexagon_new.properties["z_reference"])
+                          * self.sidechannel["storage"])
+                if hexagon_old.properties["owner"] != "Water":
+                    ownership_change = "Water"
+            elif hexagon_new.properties["z_reference"] >= 2:
+                z_type = "filled up sidechannel (for whatever reason)"
+                z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                            hexagon_new.properties["z_reference"])
+                          * self.sidechannel["storage"])
+            elif hexagon_old.properties["z_reference"] >= 1:
+                z_type = "deepened existing sidechannel"
+                z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                            hexagon_new.properties["z_reference"])
+                          * self.sidechannel["storage"])
+            elif hexagon_new.properties["z_reference"] >= 1:
+                z_type = "undeepened existing sidechannel"
+                z_cost = ((z_cost + hexagon_old.properties["z_reference"] -
+                            hexagon_new.properties["z_reference"])
+                          * self.sidechannel["storage"])
+        if (landuse_changed or landuse_trigger):
+            if hexagon_old.properties["landuse"] == 0:
+                if (hexagon_old.properties["owner"] is None and
+                    ownership_change is None):
+                    if hexagon_old.properties["factory"]:
+                        l_type = "factory demolition"
+                        l_cost = self.demolition["business"]
+                    else:
+                        l_type = "farm demolition"
+                        l_cost = self.demolition["farm"]
+                    # This if scenario of when not to assign ownership might
+                    # need to be changed. Currently doesn't overwrite an
+                    # ownership change in relation to a dike relocation.
+                    if (ownership_change is None and
+                        hexagon_new.properties["landuse"] != 10):
+                        ownership_change = "Province"
+            elif hexagon_old.properties["landuse"] == 1:
+                l_type = "production grass removal"
+                l_cost = (l_cost + self.roughness_smooth["grass"])
+                if (hexagon_old.properties["owner"] is None and
+                    ownership_change is None and
+                    hexagon_new.properties["landuse"] != 10):
+                    ownership_change = "Province"
+            elif hexagon_old.properties["landuse"] == 2:
+                l_type = "natural grass removal"
+                l_cost = (l_cost + self.roughness_smooth["grass"])
+            elif hexagon_old.properties["landuse"] == 3:
+                l_type = "herbaceous vegetation removal"
+                l_cost = (l_cost + self.roughness_smooth["herbaceous"])
+            elif hexagon_old.properties["landuse"] == 4:
+                l_type = "forest clearing and removal"
+                l_cost = (l_cost + self.roughness_smooth["forest"])
+            elif hexagon_old.properties["landuse"] == 5:
+                l_type = "forest clearing and removal"
+                l_cost = (l_cost + self.roughness_smooth["forest"])
+            elif hexagon_old.properties["landuse"] == 6:
+                l_type = "vegetation mixtype removal"
+                l_cost = (l_cost + round(
+                        ((mixtype_ratio[0] * self.roughness_smooth["grass"] +
+                          mixtype_ratio[1] * self.roughness_smooth["herbaceous"] +
+                          mixtype_ratio[2] * self.roughness_smooth["forest"]) /
+                        10000)) * 100)
+            elif hexagon_old.properties["landuse"] == 7:
+                l_type = "changing sidechannel to floodplain"
+                # no costs in land use changed, all in z changed
+                pass
+            elif hexagon_old.properties["landuse"] == 8:
+                if hexagon_new.properties["landuse"] == 9:
+                    s_type = "replacing ltd with groyne"
+                    s_cost = (s_cost + self.structures["ltd"])
+                else:
+                    print("INVALID MOVE, no costs calculated")
+            elif hexagon_old.properties["landuse"] == 9:
+                if hexagon_new.properties["landuse"] == 8:
+                    s_type = "replacing groyne with ltd"
+                    s_cost = (s_cost + self.structures["ltd"])
+                else:
+                    print("INVALID MOVE, no costs calculated")
+            else:
+                print("dike relocation")
+                # no costs in land use changed, all in z changed
+            if hexagon_new.properties["landuse"] == 6:
+                if (hexagon_old.properties["owner"] is None and
+                    ownership_change != "Water"):
+                    # Changing to a nature area overwrites ownership.
+                    ownership_change = "Nature"
+            elif hexagon_new.properties["landuse"] == 7:
+                # this elif statement is for redundancy in this specific case.
+                ownership_change = "Water"
+            
+            if (hexagon_old.properties["owner"] is None and
+                hexagon_old.properties["owner"] is not None):
+                if hexagon_old.properties["landuse"] == 0:
+                    if hexagon_old.properties["factory"]:
+                        o_type = "factory acquisition"
+                        o_cost = self.acquisition["business"]
+                    else:
+                        o_type = "farm acquisition"
+                        o_cost = self.acquisition["farm"]
+                elif hexagon_old.properties["landuse"] == 1:
+                    o_type = "acquired the agricultural land"
+                    o_cost = (self.acquisition["agriculture"])
+                elif (hexagon_old.properties["landuse"] > 1 and
+                      hexagon_old.properties["landuse"] < 7):
+                    o_type = "acquired the land"
+                    o_cost = self.acquisition["nature"]
+                else:
+                    o_type = "acquired the land"
+                    o_cost = o_cost + self.acquisition["water"]
+        try:
+            z_cost = int(round(abs(z_cost)))
+            print("Costs for hexagon " + str(hexagon_new.id) + " for " +
+                  z_type + ": " + str(z_cost) + " Euros")
+        except UnboundLocalError:
+            print("No elevation change detected, no costs calculated for "
+                  "for hexagon " + str(hexagon_new.id) + ".")
+        try:
+            s_cost = int(round(abs(s_cost)))
+            print("Costs for hexagon " + str(hexagon_new.id) + " for " +
+                  s_type + ": " + str(s_cost) + " Euros")
+        except UnboundLocalError:
+            print("No hydraulic structures change detected, no costs "
+                  "calculated for hexagon: " + str(hexagon_new.id) + ".")
+        try:
+            l_cost = int(round(l_cost))
+            print("Costs for hexagon " + str(hexagon_new.id) + " for " +
+                  l_type + ": " + str(l_cost) + " Euros")
+        except UnboundLocalError:
+            print("No landuse change detected, no costs calculated for "
+                  "hexagon " + str(hexagon_new.id) + ".")
+        try:
+            o_cost = int(round(o_cost))
+            print("Costs for hexagon " + str(hexagon_new.id) + " for " +
+                  o_type + ": " + str(o_cost) + " Euros")
+        except UnboundLocalError:
+            print("No ownership change detected, no costs calculated for "
+                  "hexagon " + str(hexagon_new.id) + ".")
+                    
+                    
+        """
+        if (z_changed and landuse_changed):
+            # exceptional situations if they exist?
+            pass
+        """
+        return z_cost, s_cost, l_cost, o_cost, ownership_change
+
+
+    def calc_Costs2(self, hexagon_new, hexagon_old, mixtype_ratio=[50,20,30],
+                   z_changed=False, landuse_changed=False):
         z_cost = 0
         l_cost = 0
         # in case of a floodplain lowering, landuse might not change, even
@@ -157,7 +381,7 @@ class Costs():
                             else:
                                 z_type = (z_type +
                                           " and farm acquisition and demolition")
-                                l_cost = (z_cost + self.acquisition["farm"] +
+                                z_cost = (z_cost + self.acquisition["farm"] +
                                           self.demolition["farm"])
                         elif hexagon_old.properties["landuse"] == 1:
                             z_type = z_type + " and acquired the land"

@@ -303,7 +303,7 @@ def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
     return
 
 
-def set_indicator(score, api_key, indicator="budget", index=0,
+def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                        api_endpoint=("https://engine.tygron.com/api/session/"
                                      "event/editorindicator/set_attribute/?")):
     if indicator == "flood":
@@ -314,11 +314,17 @@ def set_indicator(score, api_key, indicator="budget", index=0,
         excel_id = 1000011
     else:
         indicator_id = 2
-        excel_id = 1000012
+        excel_id = 1000013
+        value_input = "TOTAL_COSTS"
+        r = requests.post(
+                url=api_endpoint+api_key,
+                json=[indicator_id, value_input, value])
     score_input = "SCORE_INPUT_" + str(index)
     score_index = "SCORE_INPUT_INDEX"
-    r = requests.post(url=api_endpoint+api_key, json=[indicator_id, score_input, score])
-    r = requests.post(url=api_endpoint+api_key, json=[indicator_id, score_index, index])
+    r = requests.post(
+            url=api_endpoint+api_key, json=[indicator_id, score_input, score])
+    r = requests.post(
+            url=api_endpoint+api_key, json=[indicator_id, score_index, index])
     """
     # below code was a test, but seems it is not necessary to push a "hard" update.
     if indicator == "biodiversity":

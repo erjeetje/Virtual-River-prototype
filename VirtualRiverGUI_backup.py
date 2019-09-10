@@ -10,7 +10,7 @@ import time
 import geojson
 import os
 import tygronInterface as tygron
-import gridCalibration_test as cali
+import gridCalibration as cali
 import processImage as detect
 import gridMapping as gridmap
 import updateFunctions as compare
@@ -18,7 +18,7 @@ import webcamControl as webcam
 import modelInterface as D3D
 import updateRoughness as roughness
 import createStructures as structures
-import costModule_test as costs
+import costModule as costs
 import waterModule as water
 import indicatorModule as indicator
 import ghostCells as ghosts
@@ -762,9 +762,9 @@ class runScript():
                              indicator="flood", index=self.turn)
         tygron.set_indicator(self.biosafe_score, self.token,
                              indicator="biodiversity", index=self.turn)
+        costs = self.total_costs + self.turn_costs
         tygron.set_indicator(self.cost_score, self.token,
-                             indicator="budget", index=self.turn)
-        #os.chdir(self.store_path)
+                             indicator="budget", index=self.turn, value=costs)
         return
 
 

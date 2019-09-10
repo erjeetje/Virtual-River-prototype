@@ -9,7 +9,7 @@ import hexagonOwnership as owner
 from geojson import FeatureCollection
 
 
-def compare_hex(cost, hexagons_old, hexagons_new):
+def compare_hex(cost, hexagons_old, hexagons_new, turn=1):
     """
     compares the current state of each location to the previous state, should
     handle:
@@ -56,13 +56,12 @@ def compare_hex(cost, hexagons_old, hexagons_new):
                 feature.properties["was_building"] = False
         else:
             feature.properties["landuse_changed"] = False
-        if (feature.properties["z_changed"] or feature.properties["landuse"]):
-            z_cost, l_cost, ownership_change = cost.calc_Costs(
-                    feature, reference_hex,
-                    z_changed=feature.properties["z_changed"],
-                    landuse_changed=feature.properties["landuse_changed"])
+        if (feature.properties["z_changed"] or
+            feature.properties["landuse_changed"]):
+            cost_changes, ownership_change = cost.calc_Costs(
+                    feature, reference_hex, turn=turn)
             feature = owner.update_ownership(feature, ownership_change)
-            costs = costs + z_cost + l_cost
+            costs += cost_changes
     return hexagons_new, costs, dike_moved
 
 
