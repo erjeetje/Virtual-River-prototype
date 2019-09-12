@@ -791,6 +791,9 @@ class Costs():
             self.turn.append(turn)
         return
     
+    def calculate_cost_score(self, costs):
+        cost_score = max(((25000000 - costs) / 25000000), 0)
+        return cost_score
     
     def get_cost(self, cost_type, multiplier, what):
         calc = cost_type * multiplier

@@ -213,7 +213,7 @@ class runScript():
         self.fig = None
         self.axes = None
         # water safety module
-        self.indicators = indicator.Indicators()
+        #self.indicators = indicator.Indicators()
         # water safety module
         self.water_module = water.Water()
         # cost module
@@ -563,8 +563,6 @@ class runScript():
                 self.hexagons_sandbox)
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
-        #self.hexagons_sandbox = water.get_crosssection(self.hexagons_sandbox,
-        #                                               self.face_grid)
         return
     
     
@@ -953,7 +951,7 @@ class runScript():
     
     def update_cost_score(self):
         costs = self.total_costs + self.turn_costs
-        self.cost_score = self.indicators.calculate_cost_score(costs)
+        self.cost_score = self.cost_module.calculate_cost_score(costs)
         return
 
 
@@ -979,21 +977,21 @@ class runScript():
         #self.indicators.add_flood_safety_score(50, self.turn)
         #self.indicators.add_biosafe_score(self.biosafe_score, self.turn)
         #self.indicators.add_cost_score(self.cost_score, self.turn)
-        costs = self.total_costs + self.turn_costs
+        #costs = self.total_costs + self.turn_costs
         #self.indicators.add_total_costs(costs, self.turn)
-        self.indicators.add_indicator_values(
-                50.0, self.biosafe_score, self.cost_score, costs,
-                turn=self.turn)
-        self.indicators.update_water_and_dike_levels(
-                self.hexagons_sandbox, self.hexagons_prev, self.turn)
-        self.indicators.update_flood_safety_score(self.turn)
-        if self.turn == 0:
-            biosafe_ref = self.biosafe.get_reference()
-            self.indicators.store_biosafe_output(biosafe_ref, reference=True)
-        biosafe_int = self.biosafe.get_intervention()
-        self.indicators.store_biosafe_output(biosafe_int)
-        biosafe_perc = self.biosafe.get_percentage()
-        self.indicators.store_biosafe_output(biosafe_perc, percentage=True)
+        #self.indicators.add_indicator_values(
+        #        50.0, self.biosafe_score, self.cost_score, costs,
+        #        turn=self.turn)
+        #self.indicators.update_water_and_dike_levels(
+        #        self.hexagons_sandbox, self.hexagons_prev, self.turn)
+        #self.indicators.update_flood_safety_score(self.turn)
+        #if self.turn == 0:
+        #    biosafe_ref = self.biosafe.get_reference()
+        #    self.indicators.store_biosafe_output(biosafe_ref, reference=True)
+        #biosafe_int = self.biosafe.get_intervention()
+        #self.indicators.store_biosafe_output(biosafe_int)
+        #biosafe_perc = self.biosafe.get_percentage()
+        #self.indicators.store_biosafe_output(biosafe_perc, percentage=True)
         #self.indicators.plot(self.turn)
         return
 
