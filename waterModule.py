@@ -10,7 +10,9 @@ import os
 import geojson
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import gridMapping as gridmap
+from shapely import geometry
 from os.path import join, dirname, realpath
 
 
@@ -24,6 +26,9 @@ class Water():
         self.dike_levels = []
         self.bed_levels = []
         self.set_dirs()
+        self.north_dike = None
+        self.south_dike = None
+        self.flood_safety_score = 0
         return
     
     def set_dirs(self):
@@ -99,6 +104,7 @@ class Water():
                 continue
             s = s1[feature.id]
             #s = feature.properties["water_level"]
+            feature.properties["water_level"] = s
             column = feature.properties["column"]
             columns.append(column)
             model_output[column].append(s)
@@ -112,7 +118,7 @@ class Water():
             self.initial_water_levels = np.flip(s1_output, 0)
         else:
             self.intervention_water_levels = np.flip(s1_output, 0)
-        return
+        return grid
     
     def determine_x_grid(self):
         x_values = []
@@ -120,7 +126,129 @@ class Water():
             x_values.append(i * 30)
         self.x_grid = x_values
         return
+
+    def get_dike_location(self, hexagons):
+        def create_dikes(coor, z_values):
+            dike_lines = []
+            for i, xy in enumerate(coor):
+                try:
+                    xy_new = [i * -1 for i in xy]
+                    z_this = z_values[i]
+                    xy_next = coor[i+1]
+                    xy_next_new = [i * -1 for i in xy_next]
+                    z_next = z_values[i+1]
+                except IndexError:
+                    continue
+                z = (z_this + z_next) / 2
+                line = geojson.LineString([xy_new, xy_next_new])
+                dike_segment = geojson.Feature(id=i, geometry=line)
+                dike_segment.properties["z"] = z
+                dike_lines.append(dike_segment)
+            dike_lines = geojson.FeatureCollection(dike_lines)
+            return dike_lines
+        north_dike = []
+        south_dike = []
+        z_north = []
+        z_south = []
+        for feature in hexagons.features:
+            if feature.properties["ghost_hexagon"]:
+                continue
+            if feature.properties["north_dike"]:
+                shape = geometry.asShape(feature.geometry)
+                x = shape.centroid.x
+                y = shape.centroid.y
+                north_dike.append([x, y])
+                z_north.append(feature.properties["z"])
+            elif feature.properties["south_dike"]:
+                shape = geometry.asShape(feature.geometry)
+                x = shape.centroid.x
+                y = shape.centroid.y
+                south_dike.append([x, y])
+                z_south.append(feature.properties["z"])
+        self.north_dike = create_dikes(north_dike, z_north)
+        self.south_dike = create_dikes(south_dike, z_south)
+        return
     
+    def index_dikes(self, grid):
+        def add_columns(dikes, x_coor, columns):
+            for feature in dikes.features:
+                points = feature.geometry["coordinates"]
+                pts1 = points[0]
+                pts2 = points[1]
+                x1 = pts1[0]
+                x2 = pts2[0]
+                column_list = []
+                for i, x in enumerate(x_coor):
+                    if x1 >= x >= x2:
+                        column_list.append(columns[i])
+                column_array = np.array(column_list)
+                column_array = np.unique(column_array)
+                feature.properties["grid_columns"] = column_array.tolist()
+            return dikes
+        x_coor = []
+        columns = []
+        for feature in grid.features:
+            if not feature.properties["river_axis"]:
+                continue
+            point = feature.geometry["coordinates"]
+            column = feature.properties["column"]
+            x_coor.append(point[0])
+            columns.append(column)
+        self.north_dike = add_columns(self.north_dike, x_coor, columns)
+        self.south_dike = add_columns(self.south_dike, x_coor, columns)
+        return
+    
+    def determine_dike_water_level(self, turn=0, save=False):
+        def water_levels_to_dike(dikes, water_levels):
+            deduct = dikes.features[-1].properties["grid_columns"][0]
+            for feature in dikes.features:
+                dike_water_level = []
+                for i in feature.properties["grid_columns"]:
+                    dike_water_level.append(water_levels[i-deduct])
+                average = sum(dike_water_level) / len(dike_water_level)
+                feature.properties["water_level"] = average
+                feature.properties["difference"] = (
+                        feature.properties["z"] - average)
+            return dikes
+        if turn == 0:
+            water_levels = self.initial_water_levels
+        else:
+            water_levels = self.intervention_water_levels
+        self.north_dike = water_levels_to_dike(self.north_dike, water_levels)
+        self.south_dike = water_levels_to_dike(self.south_dike, water_levels)
+        if save:
+            with open('north_dike_water_levels.geojson', 'w') as f:
+                geojson.dump(self.north_dike, f, sort_keys=True, indent=2)
+            with open('south_dike_water_levels.geojson', 'w') as f:
+                geojson.dump(self.south_dike, f, sort_keys=True, indent=2)
+        return
+    
+    def determine_flood_safety_score(self):
+        score = 0
+        multiplier = 1 / (len(self.north_dike.features) * 2)
+        for feature in self.north_dike.features:
+            if feature.properties["difference"] < 0.5:
+                segment_score = 0
+            elif feature.properties["difference"] < 1:
+                segment_score = 0.5 * multiplier
+            else:
+                segment_score = multiplier
+            score += segment_score
+        for feature in self.south_dike.features:
+            if feature.properties["difference"] < 0.5:
+                segment_score = 0
+            elif feature.properties["difference"] < 1:
+                segment_score = 0.5 * multiplier
+            else:
+                segment_score = multiplier
+            score += segment_score
+        self.flood_safety_score = score
+        print("flood safety score = " + str(score))
+        return
+    
+    def get_flood_safety_score(self):
+        return self.flood_safety_score
+
     def water_level_graph(self):
         plt.ioff()
         fig, ax = plt.subplots()
@@ -155,7 +283,61 @@ class Water():
         plt.tight_layout()
         plt.savefig(join(self.web_dir, "flood_safety_score1.png"), edgecolor='w',transparent=True)
         return
-
+    
+    def dike_safety_graph(self):
+        plt.ioff()
+        fig, ax = plt.subplots()
+        if self.north_dike:
+            for feature in self.north_dike.features:
+                points = feature.geometry["coordinates"]
+                x = [points[0][0],points[1][0]]
+                y = [points[0][1],points[1][1]]
+                if feature.properties["difference"] < 0.5:
+                    color = 'r'
+                elif feature.properties["difference"] < 1:
+                    color = 'y'
+                else:
+                    color = 'g'
+                ax.plot(x, y, color=color, linewidth=3.0)
+        if self.south_dike:
+            for feature in self.south_dike.features:
+                points = feature.geometry["coordinates"]
+                x = [points[0][0],points[1][0]]
+                y = [points[0][1],points[1][1]]
+                if feature.properties["difference"] < 0.5:
+                    color = 'r'
+                elif feature.properties["difference"] < 1:
+                    color = 'y'
+                else:
+                    color = 'g'
+                ax.plot(x, y, color=color, linewidth=3.0)
+        red_patch = mpatches.Patch(color='r', label='1/500')
+        yellow_patch = mpatches.Patch(color='y', label='1/1000')
+        green_patch = mpatches.Patch(color='g', label='1/1250')
+        
+        legend = ax.legend(handles=[red_patch, yellow_patch, green_patch],
+                           loc='best', facecolor='black', edgecolor='w',
+                           fancybox=True, framealpha=0.5, fontsize="large")
+        plt.setp(legend.get_texts(), color='w')
+        ax.set_xlabel("river section x")
+        ax.set_ylabel("river section y")
+        ax.set_title("Dike segment flooding chances")
+        ax.spines['bottom'].set_color('w')
+        ax.spines['top'].set_color('w') 
+        ax.spines['right'].set_color('w')
+        ax.spines['left'].set_color('w')
+        #ax.ticklabel_format(axis='y', style='sci', scilimits=(6,6))
+        ax.tick_params(axis='x', colors='w')
+        ax.tick_params(axis='y', colors='w')
+        ax.yaxis.label.set_color('w')
+        ax.yaxis.label.set_fontsize(14)
+        ax.xaxis.label.set_color('w')
+        ax.xaxis.label.set_fontsize(14)
+        ax.title.set_fontsize(20)
+        ax.title.set_color('w')
+        plt.tight_layout()
+        plt.savefig(join(self.web_dir, "flood_safety_score2.png"), edgecolor='w',transparent=True)
+        return
 
 def load(turn=0):
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -181,6 +363,12 @@ def main():
     water_module = Water()
     turn = 0
     hexagons = load(turn=turn)
+    water_module.determine_dike_levels(hexagons)
+    water_module.get_dike_location(hexagons)
+    face_grid = load_grid(turn=turn)
+    water_module.index_dikes(face_grid)
+    water_module.determine_dike_water_level(turn=turn)
+    """
     face_grid = load_grid(turn=turn)
     water_module.determine_dike_levels(hexagons)
     water_module.determine_x_hexagons()
@@ -194,6 +382,7 @@ def main():
     face_grid = gridmap.determine_grid_river_axis(hexagons, face_grid)
     water_module.grid_river_axis_water_levels(face_grid, turn=turn)
     water_module.water_level_graph()
+    """
     return
 
 if __name__ == '__main__':

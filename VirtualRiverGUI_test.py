@@ -216,6 +216,7 @@ class runScript():
         #self.indicators = indicator.Indicators()
         # water safety module
         self.water_module = water.Water()
+        self.flood_safety_score = None
         # cost module
         self.cost_module = costs.Costs()
         # total costs made up until the end of the rounds ended
@@ -533,12 +534,14 @@ class runScript():
             self.hexagons_sandbox = gridmap.read_hexagons(
                     filename='hexagons%d.geojson' % self.turn,
                     path=path)
+            """
             if self.test:
                 self.hexagons_sandbox = adjust.test_mode_z_correction(
                         self.hexagons_sandbox)
                 if not self.initialized:
                     self.hexagons_sandbox = ghosts.set_values(
                             self.hexagons_sandbox)
+            """
         print("Retrieved board state.")
         return
 
@@ -773,7 +776,7 @@ class runScript():
         localhost directory to the webserver to avoid problems with loading.
         """
         os.chdir(self.web_path)
-        tygron.set_indicator(0.5, self.token,
+        tygron.set_indicator(self.flood_safety_score, self.token,
                              indicator="flood", index=self.turn)
         tygron.set_indicator(self.biosafe_score, self.token,
                              indicator="biodiversity", index=self.turn)
@@ -860,13 +863,19 @@ class runScript():
     def update_water_module(self, dike_moved=False):
         if (self.turn == 0 or dike_moved):
             self.water_module.determine_dike_levels(self.hexagons_sandbox)
+            self.water_module.get_dike_location(self.hexagons_sandbox)
+            self.water_module.index_dikes(self.face_grid)
         if self.turn == 0:
             self.water_module.determine_x_hexagons()
-        self.water_module.grid_river_axis_water_levels(
+        self.face_grid = self.water_module.grid_river_axis_water_levels(
                 self.face_grid, self.model.model, turn=self.turn)
         if self.turn == 0:
             self.water_module.determine_x_grid()
+        self.water_module.determine_dike_water_level(turn=self.turn)
+        self.water_module.determine_flood_safety_score()
+        self.flood_safety_score = self.water_module.get_flood_safety_score()
         self.water_module.water_level_graph()
+        self.water_module.dike_safety_graph()
         return
     
     
@@ -924,6 +933,12 @@ class runScript():
         if self.debug:
             with open(os.path.join(
                     self.store_path,
+                    'hexagons_debug%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(
+                        self.hexagons_sandbox, f, sort_keys=True, indent=2)
+            print("Saved hexagon file for turn " + str(self.turn) + ".")
+            with open(os.path.join(
+                    self.store_path,
                     'node_grid%d.geojson' % self.turn), 'w') as f:
                 geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
             print("Saved node grid for turn " + str(self.turn) + ".")
@@ -940,6 +955,11 @@ class runScript():
                     'flow_grid%d.geojson' % self.turn), 'w') as f:
                 geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
             print("Saved flow grid for turn " + str(self.turn) + ".")
+            with open(os.path.join(
+                    self.store_path,
+                    'face_grid%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(self.face_grid, f, sort_keys=True, indent=2)
+            print("Saved face grid for turn " + str(self.turn) + ".")
         return
 
 

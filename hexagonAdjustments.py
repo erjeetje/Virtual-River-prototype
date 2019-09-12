@@ -25,7 +25,7 @@ def z_correction(hexagons, initialized=True):
         if (feature.properties["ghost_hexagon"] and initialized):
             continue
         else:
-            feature.properties["z"] = (feature.properties["z"] +
+            feature.properties["z"] = (feature.properties["z_reference"] * 4 +
                               feature.properties["bedslope_correction"])
     return hexagons
 

@@ -799,8 +799,7 @@ class Costs():
         calc = cost_type * multiplier
         string = ("Costs for " + str(what) + " per hexagon are: " + str(calc))
         return string
-    
-    
+
     def costs_graph(self):
         plt.ioff()
         fig, ax = plt.subplots()
