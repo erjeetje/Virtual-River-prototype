@@ -283,6 +283,7 @@ class BiosafeVR():
         """
         Function to generate the output graphs displayed in the Tygron engine.
         """
+        plt.ioff()
         fig, ax = plt.subplots()
         index = np.arange(7)
         bar_width = 0.3

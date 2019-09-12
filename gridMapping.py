@@ -214,6 +214,102 @@ def hexagons_to_fill2(hexagons):
     return hexagons
 
 
+def grid_columns(grid, save=False):
+    """
+    This function determines the crosssections (columns) of the grid. Function
+    is only called at the initialization of Virtual River.
+    """
+    x_coor = []
+    xrange_min = -400
+    xrange_max = 400
+    yrange_min = -300
+    yrange_max = 300
+    for feature in grid.features:
+        shape = geometry.asShape(feature.geometry)
+        x = shape.centroid.x
+        y = shape.centroid.y
+        if (x < xrange_min or x > xrange_max or y < yrange_min or y > yrange_max):
+            continue
+        x_coor.append(x)
+    x_coor = np.unique(x_coor)
+    x_coor.sort()
+    for feature in grid.features:
+        shape = geometry.asShape(feature.geometry)
+        x = shape.centroid.x
+        y = shape.centroid.y
+        if (x < xrange_min or x > xrange_max or y < yrange_min or y > yrange_max):
+            feature.properties["column"] = None
+            continue
+        x_index = np.where(x_coor == x)[0][0]
+        feature.properties["column"] = int(x_index)
+    if save:
+        with open('columns_grid.geojson', 'w') as f:
+            geojson.dump(grid, f, sort_keys=True, indent=2)
+    return grid
+
+
+def determine_grid_river_axis(hexagons, grid, save=False):
+    """
+    This function determines cells that other functions should look at to get
+    the water levels. Function is only called at the initialization of Virtual
+    River.
+    
+    This version of the function finds a 'wider axis' and includes multiple
+    cells for each crossection (cell columns).
+    """
+    def get_average(coor_list):
+        average_list = []
+        for values in coor_list:
+            average = sum(values) / len(values)
+            average_list.append(average)
+        return average_list
+    x_all = [[] for i in range(15)]
+    y_all = [[] for i in range(15)]
+    for feature in hexagons.features:
+        if feature.properties["ghost_hexagon"]:
+            continue
+        if not feature.properties["main_channel"]:
+            continue
+        shape = geometry.asShape(feature.geometry)
+        x = shape.centroid.x
+        y = shape.centroid.y
+        column = feature.properties["column"] - 1
+        x_all[column].append(x)
+        y_all[column].append(y)
+    x_coor = get_average(x_all)
+    y_coor = get_average(y_all)
+    xy = list(zip(x_coor, y_coor))
+    line = geojson.LineString(xy)
+    river_axis = geometry.asShape(line)
+    columns_covered = []
+    #distances = []
+    feature_ids = []
+    for feature in grid.features:
+        if feature.properties["column"] is None:
+            continue
+        point = geometry.asShape(feature.geometry)
+        distance = point.distance(river_axis)
+        # change the value to compare here to determine the width of the river
+        # axis
+        if distance < 6:
+            column = feature.properties["column"]
+            columns_covered.append(column)
+            #distances.append(column)
+            feature_ids.append(feature.id)
+    for feature in grid.features:
+        if feature.properties["column"] is None:
+            feature.properties["river_axis"] = False
+            continue
+        if feature.id in feature_ids:
+            feature.properties["river_axis"] = True
+        else:
+            feature.properties["river_axis"] = False
+    if save:
+        with open('river_axis_grid_wide.geojson', 'w') as f:
+            geojson.dump(grid, f, sort_keys=True, indent=2)
+    return grid
+
+
 def index_hexagons(hexagons, grid):
     grid_coor = []
     for feature in grid.features:

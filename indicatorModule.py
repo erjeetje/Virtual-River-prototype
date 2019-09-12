@@ -216,10 +216,10 @@ class Indicators():
         return
     
     def update_water_and_dike_levels(self, hexagons, hexagons_old, turn):
-        water_levels = water.water_levels(hexagons)
+        water_levels = water.water_levels_new2(hexagons)
         self.water_levels = water_levels
         try:
-            ref_water_levels = water.water_levels(hexagons_old)
+            ref_water_levels = water.water_levels_new2(hexagons_old)
         except AttributeError:
             ref_water_levels = water_levels
         self.ref_water_levels = ref_water_levels
@@ -236,6 +236,7 @@ class Indicators():
         return
 
     def plot(self, turn):
+        plt.ioff()
         reference = [self.flood_safety[0], self.biodiversity[0], self.cost_score[0]]
         intervention = [self.flood_safety[turn], self.biodiversity[turn], self.cost_score[turn]]
         x_labels = [("turn " + str(self.turn[value])) for value in self.turn]
@@ -325,7 +326,7 @@ class Indicators():
         self.ax6.set_xticklabels(x_labels)
         self.ax6.set_ylabel("million Euros")
         self.ax6.set_title("Budget spent")
-        self.fig.canvas.draw()
+        #self.fig.canvas.draw()
         return
 
     def set_score(self, scores, waterlevels, bio_value, total_costs, turn=0):

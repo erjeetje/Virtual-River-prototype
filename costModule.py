@@ -799,6 +799,7 @@ class Costs():
     
     
     def costs_graph(self):
+        plt.ioff()
         fig, ax = plt.subplots()
         if self.total_costs:    
             budget = ax.plot(self.turn, self.total_costs, color='r')
@@ -828,6 +829,7 @@ class Costs():
 
 
     def costs_graph_breakdown(self):
+        plt.ioff()
         fig, ax = plt.subplots()
         index = np.arange(1, len(self.z_cost)+1)
         xticks = [("turn " + str(value)) for value in index]

@@ -203,6 +203,20 @@ class Model():
             index = feature.properties["face_cell"]
             feature.properties["water_level"] = s1[index]
         return hexagons
+    
+    def update_waterlevel_new(self, hexagons):
+        s1 = self.model.get_var('s1')
+        for feature in hexagons.features:
+            index = feature.properties["face_cell"]
+            feature.properties["water_level"] = s1[index]
+            if feature.properties["ghost_hexagon"]:
+                continue
+            if feature.properties["main_channel"]:
+                feature.properties["water_levels"] = []
+                indexes = feature.properties["crosssection"]
+                for index in indexes:
+                    feature.properties["water_levels"].append(s1[index])
+        return hexagons
 
 
 def geojson2pli(collection, name="structures"):
