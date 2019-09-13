@@ -29,6 +29,8 @@ class Water():
         self.north_dike = None
         self.south_dike = None
         self.flood_safety_score = 0
+        self.lowest_column = 50
+        self.highest_column = 50
         return
     
     def set_dirs(self):
@@ -53,7 +55,8 @@ class Water():
             #formatted = [ '%.2f' % elem for elem in values ]
             #print("water level values:", formatted, "average:", average)
             dike_level.append(round(dike_height, 2))
-        self.dike_levels = np.flip(dike_level, 0)
+        #self.dike_levels = np.flip(dike_level, 0)
+        self.dike_levels = dike_level
         return
     
     def determine_bed_levels(self, hexagons):
@@ -72,7 +75,8 @@ class Water():
             #formatted = [ '%.2f' % elem for elem in values ]
             #print("water level values:", formatted, "average:", average)
             bed_level.append(round(bed_level_min, 2))
-        self.bed_levels = np.flip(bed_level, 0)
+        #self.bed_levels = np.flip(bed_level, 0)
+        self.bed_levels = bed_level
         return
     
     def determine_x_hexagons(self):
@@ -115,9 +119,11 @@ class Water():
             with open('river_axis_grid.geojson', 'w') as f:
                 geojson.dump(grid, f, sort_keys=True, indent=2)
         if turn == 0:
-            self.initial_water_levels = np.flip(s1_output, 0)
+            #self.initial_water_levels = np.flip(s1_output, 0)
+            self.initial_water_levels = s1_output
         else:
-            self.intervention_water_levels = np.flip(s1_output, 0)
+            #self.intervention_water_levels = np.flip(s1_output, 0)
+            self.intervention_water_levels = s1_output
         return grid
     
     def determine_x_grid(self):
@@ -132,15 +138,16 @@ class Water():
             dike_lines = []
             for i, xy in enumerate(coor):
                 try:
-                    xy_new = [i * -1 for i in xy]
+                    #xy_new = [i * -1 for i in xy]
                     z_this = z_values[i]
                     xy_next = coor[i+1]
-                    xy_next_new = [i * -1 for i in xy_next]
+                    #xy_next_new = [i * -1 for i in xy_next]
                     z_next = z_values[i+1]
                 except IndexError:
                     continue
                 z = (z_this + z_next) / 2
-                line = geojson.LineString([xy_new, xy_next_new])
+                #line = geojson.LineString([xy_new, xy_next_new])
+                line = geojson.LineString([xy, xy_next])
                 dike_segment = geojson.Feature(id=i, geometry=line)
                 dike_segment.properties["z"] = z
                 dike_lines.append(dike_segment)
@@ -169,7 +176,7 @@ class Water():
         self.south_dike = create_dikes(south_dike, z_south)
         return
     
-    def index_dikes(self, grid):
+    def index_dikes_old(self, grid):
         def add_columns(dikes, x_coor, columns):
             for feature in dikes.features:
                 points = feature.geometry["coordinates"]
@@ -179,7 +186,8 @@ class Water():
                 x2 = pts2[0]
                 column_list = []
                 for i, x in enumerate(x_coor):
-                    if x1 >= x >= x2:
+                    # in case direction of graphs is flipped, change the < to >
+                    if x1 <= x <= x2:
                         column_list.append(columns[i])
                 column_array = np.array(column_list)
                 column_array = np.unique(column_array)
@@ -198,13 +206,49 @@ class Water():
         self.south_dike = add_columns(self.south_dike, x_coor, columns)
         return
     
+    def index_dikes(self, grid):
+        def add_columns(dikes, x_coor, columns):
+            columns_all = []
+            for feature in dikes.features:
+                points = feature.geometry["coordinates"]
+                pts1 = points[0]
+                pts2 = points[1]
+                x1 = pts1[0]
+                x2 = pts2[0]
+                column_list = []
+                for i, x in enumerate(x_coor):
+                    if x1 <= x <= x2:
+                        column_list.append(columns[i])
+                        columns_all.append(columns[i])
+                column_array = np.array(column_list)
+                column_array = np.unique(column_array)
+                feature.properties["grid_columns"] = column_array.tolist()
+            return dikes, columns_all
+        x_coor = []
+        columns = []
+        for feature in grid.features:
+            if not feature.properties["river_axis"]:
+                continue
+            point = feature.geometry["coordinates"]
+            column = feature.properties["column"]
+            x_coor.append(point[0])
+            columns.append(column)
+        self.north_dike, columns_all = add_columns(self.north_dike, x_coor, columns)
+        self.south_dike, columns_all = add_columns(self.south_dike, x_coor, columns)
+        self.lowest_column = min(columns_all)
+        self.highest_column = max(columns_all)
+        return
+    
     def determine_dike_water_level(self, turn=0, save=False):
-        def water_levels_to_dike(dikes, water_levels):
-            deduct = dikes.features[-1].properties["grid_columns"][0]
+        def water_levels_to_dike(dikes, water_levels, deduct=0):
+            #deduct = dikes.features[0].properties["grid_columns"][0]
             for feature in dikes.features:
                 dike_water_level = []
                 for i in feature.properties["grid_columns"]:
-                    dike_water_level.append(water_levels[i-deduct])
+                    try:
+                        dike_water_level.append(water_levels[i-deduct])
+                    except IndexError:
+                        continue
                 average = sum(dike_water_level) / len(dike_water_level)
                 feature.properties["water_level"] = average
                 feature.properties["difference"] = (
@@ -214,8 +258,10 @@ class Water():
             water_levels = self.initial_water_levels
         else:
             water_levels = self.intervention_water_levels
-        self.north_dike = water_levels_to_dike(self.north_dike, water_levels)
-        self.south_dike = water_levels_to_dike(self.south_dike, water_levels)
+        self.north_dike = water_levels_to_dike(self.north_dike, water_levels,
+                                               deduct=self.lowest_column)
+        self.south_dike = water_levels_to_dike(self.south_dike, water_levels,
+                                               deduct=self.lowest_column)
         if save:
             with open('north_dike_water_levels.geojson', 'w') as f:
                 geojson.dump(self.north_dike, f, sort_keys=True, indent=2)
