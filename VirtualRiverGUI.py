@@ -626,7 +626,7 @@ class runScript():
         self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
                                                        self.face_grid)
         self.face_grid = gridmap.grid_columns(self.face_grid)
-        self.face_grid = gridmap.determine_grid_river_axis(
+        self.face_grid = self.water_module.determine_grid_river_axis(
                 self.hexagons_sandbox, self.face_grid)
         return
 
