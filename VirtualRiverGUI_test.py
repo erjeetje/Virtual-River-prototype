@@ -208,7 +208,7 @@ class runScript():
         self.origins = None
         self.radius = None
         # 
-        self.groyne_tracker = None
+        self.groyne_tracker = []
         # temporary variables in relation to colormap plots
         self.fig = None
         self.axes = None
@@ -913,6 +913,7 @@ class runScript():
         # automatically stored.
         if self.save:
             self.save_files()
+        self.groyne_tracker = []
         self.start_new_turn = True
         self.turn += 1
         return
