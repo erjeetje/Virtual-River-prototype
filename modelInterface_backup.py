@@ -60,60 +60,7 @@ class Model():
         self.face_index = np.array(index(face_grid))
         return
 
-    
     def run_model(self, filled_node_grid, hexagons, flow_grid, vert_scale, turn=0, blit=False):
-        """
-        
-        """
-        changed = [
-                feature
-                for feature
-                in filled_node_grid.features
-                if feature.properties['changed']
-        ]
-
-        for feature in changed:
-            zk_new = np.array([feature.properties['z']], dtype='float64')
-            self.model.set_var_slice(
-                    'zk',
-                    [feature.id + 1],
-                    [1],
-                    zk_new
-                    )
-        print("updated grid in model")
-
-        if turn == 0:
-            step = 25
-        else:
-            step = 10
-        i = 0    
-        while i < step:
-            t0 = time.time()
-            self.model.update(150)
-            self.update_waterlevel(hexagons)
-            hexagons = roughness.landuse_to_friction(hexagons, vert_scale=vert_scale)
-            hexagons, flow_grid = roughness.hex_to_points(
-            self.model, hexagons, flow_grid)
-            d = self.model.get_var('s1') - self.model.get_var('s0')
-            mean = abs(np.mean(d))
-            var = abs(np.var(d))
-            print("Loop mean: " + str(mean) + ". Loop variance: " + str(var))
-            t1 = time.time()
-            if (mean < 0.0001 and var < 0.00000025):
-                print("Ending loop: Obtained a new equilibrium after " +
-                      str(i+1) + " loops. Last loop time: " + str(t1 - t0))
-                break
-            else:
-                i += 1
-                print("model update: " + str(t1 - t0))
-                print("Executed model loop " + str(i) +
-                      ", roughness updated. Loop time: " + str(t1 - t0))
-        print("Finished run model. Current time in model: " +
-              str(self.model.get_current_time()))
-        return hexagons, flow_grid
-    
-    
-    def run_model_old(self, filled_node_grid, hexagons, flow_grid, vert_scale, turn=0, blit=False):
         """
         Function that runs the model. Currently gets the variables from the model,
         updates the variables (e.g. zk to update the elevation model). Subsequently
