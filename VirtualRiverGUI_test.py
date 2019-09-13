@@ -664,7 +664,7 @@ class runScript():
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
-        self.hexagons_sandbox = self.model.update_waterlevel_new(
+        self.hexagons_sandbox = self.model.update_waterlevel(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
                 self.hexagons_sandbox, vert_scale=self.vert_scale,
@@ -989,7 +989,7 @@ class runScript():
     def scores(self):
         self.cost_module.costs_graph()
         self.cost_module.costs_graph_breakdown()
-        self.hexagons_sandbox = self.model.update_waterlevel_new(self.hexagons_sandbox)
+        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
