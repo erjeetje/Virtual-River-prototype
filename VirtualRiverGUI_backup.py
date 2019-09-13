@@ -312,6 +312,7 @@ class runScript():
             return
         tic = time.time()
         self.start_new_turn = False
+        self.prepare_turn()
         if not self.test:
             self.get_image()
             self.calibrate_camera()
@@ -430,6 +431,11 @@ class runScript():
 
     def create_server(self):
         server.run_server(self.web_path, path=self.dir_path)
+        return
+    
+    
+    def prepare_turn(self):
+        self.cost_module.reset_costs(turn=self.turn)
         return
     
     
@@ -582,7 +588,8 @@ class runScript():
         """
         self.hexagons_sandbox, self.turn_costs, dike_moved = \
         compare.compare_hex(
-                self.cost_module, self.hexagons_prev, self.hexagons_sandbox)
+                self.cost_module, self.hexagons_prev, self.hexagons_sandbox,
+                turn=self.turn)
         self.cost_module.update_total_costs(self.turn_costs, turn=self.turn)
         return dike_moved
 
@@ -940,6 +947,7 @@ class runScript():
 
     def scores(self):
         self.cost_module.costs_graph()
+        self.cost_module.costs_graph_breakdown()
         self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "

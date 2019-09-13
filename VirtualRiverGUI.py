@@ -20,7 +20,7 @@ import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
 import waterModule as water
-import indicatorModule as indicator
+#import indicatorModule as indicator
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
@@ -208,12 +208,15 @@ class runScript():
         self.origins = None
         self.radius = None
         # 
-        self.groyne_tracker = None
+        self.groyne_tracker = []
         # temporary variables in relation to colormap plots
         self.fig = None
         self.axes = None
         # water safety module
-        self.indicators = indicator.Indicators()
+        #self.indicators = indicator.Indicators()
+        # water safety module
+        self.water_module = water.Water()
+        self.flood_safety_score = None
         # cost module
         self.cost_module = costs.Costs()
         # total costs made up until the end of the rounds ended
@@ -248,13 +251,13 @@ class runScript():
         if self.tygron:
             #self.create_server()
             self.tygron_update_buildings()
+        self.create_grids()
         self.set_up_hexagons()
         self.process_hexagons()
         if self.tygron:
             self.tygron_transform()
         self.update_ownership_viz()
         tac = time.time()
-        self.create_grids()
         self.index_grids()
         self.set_up_structures()
         self.process_grids() 
@@ -272,6 +275,7 @@ class runScript():
         self.initialized = True
         self.index_model()
         self.run_model()
+        self.update_water_module()
         self.scores()
         if self.tygron:
             self.tygron_set_indicators()
@@ -336,6 +340,7 @@ class runScript():
         self.run_biosafe()
         self.update_cost_score()
         self.run_model()
+        self.update_water_module(dike_moved=dike_moved)
         self.scores()
         if self.tygron:
             self.tygron_set_indicators()
@@ -378,7 +383,7 @@ class runScript():
         if self.tygron:
             self.tygron_update_buildings()
             self.tygron_transform()
-        dike_moved = None
+        dike_moved = False
         if self.initialized:
             dike_moved = self.compare_hexagons()
         self.update_ownership_viz()
@@ -403,6 +408,7 @@ class runScript():
         self.reload_enabled = False
         self.reloading = False
         self.run_model()
+        self.update_water_module(dike_moved=dike_moved)
         self.scores()
         if self.tygron:
             self.tygron_set_indicators()
@@ -528,12 +534,14 @@ class runScript():
             self.hexagons_sandbox = gridmap.read_hexagons(
                     filename='hexagons%d.geojson' % self.turn,
                     path=path)
+            """
             if self.test:
                 self.hexagons_sandbox = adjust.test_mode_z_correction(
                         self.hexagons_sandbox)
                 if not self.initialized:
                     self.hexagons_sandbox = ghosts.set_values(
                             self.hexagons_sandbox)
+            """
         print("Retrieved board state.")
         return
 
@@ -617,6 +625,9 @@ class runScript():
                                                  self.flow_grid)
         self.hexagons_sandbox = gridmap.index_hexagons(self.hexagons_sandbox,
                                                        self.face_grid)
+        self.face_grid = gridmap.grid_columns(self.face_grid)
+        self.face_grid = gridmap.determine_grid_river_axis(
+                self.hexagons_sandbox, self.face_grid)
         return
 
 
@@ -765,7 +776,7 @@ class runScript():
         localhost directory to the webserver to avoid problems with loading.
         """
         os.chdir(self.web_path)
-        tygron.set_indicator(0.5, self.token,
+        tygron.set_indicator(self.flood_safety_score, self.token,
                              indicator="flood", index=self.turn)
         tygron.set_indicator(self.biosafe_score, self.token,
                              indicator="biodiversity", index=self.turn)
@@ -849,6 +860,25 @@ class runScript():
         return
 
 
+    def update_water_module(self, dike_moved=False):
+        if (self.turn == 0 or dike_moved):
+            self.water_module.determine_dike_levels(self.hexagons_sandbox)
+            self.water_module.get_dike_location(self.hexagons_sandbox)
+            self.water_module.index_dikes(self.face_grid)
+        if self.turn == 0:
+            self.water_module.determine_x_hexagons()
+        self.face_grid = self.water_module.grid_river_axis_water_levels(
+                self.face_grid, self.model.model, turn=self.turn)
+        if self.turn == 0:
+            self.water_module.determine_x_grid()
+        self.water_module.determine_dike_water_level(turn=self.turn)
+        self.water_module.determine_flood_safety_score()
+        self.flood_safety_score = self.water_module.get_flood_safety_score()
+        self.water_module.water_level_graph()
+        self.water_module.dike_safety_graph()
+        return
+    
+    
     def run_biosafe(self):
         self.hexagons_sandbox = adjust.biosafe_area(self.hexagons_sandbox)
         if not self.initialized:
@@ -883,6 +913,7 @@ class runScript():
         # automatically stored.
         if self.save:
             self.save_files()
+        self.groyne_tracker = []
         self.start_new_turn = True
         self.turn += 1
         return
@@ -903,6 +934,12 @@ class runScript():
         if self.debug:
             with open(os.path.join(
                     self.store_path,
+                    'hexagons_debug%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(
+                        self.hexagons_sandbox, f, sort_keys=True, indent=2)
+            print("Saved hexagon file for turn " + str(self.turn) + ".")
+            with open(os.path.join(
+                    self.store_path,
                     'node_grid%d.geojson' % self.turn), 'w') as f:
                 geojson.dump(self.node_grid, f, sort_keys=True, indent=2)
             print("Saved node grid for turn " + str(self.turn) + ".")
@@ -919,6 +956,11 @@ class runScript():
                     'flow_grid%d.geojson' % self.turn), 'w') as f:
                 geojson.dump(self.flow_grid, f, sort_keys=True, indent=2)
             print("Saved flow grid for turn " + str(self.turn) + ".")
+            with open(os.path.join(
+                    self.store_path,
+                    'face_grid%d.geojson' % self.turn), 'w') as f:
+                geojson.dump(self.face_grid, f, sort_keys=True, indent=2)
+            print("Saved face grid for turn " + str(self.turn) + ".")
         return
 
 
@@ -930,7 +972,7 @@ class runScript():
     
     def update_cost_score(self):
         costs = self.total_costs + self.turn_costs
-        self.cost_score = self.indicators.calculate_cost_score(costs)
+        self.cost_score = self.cost_module.calculate_cost_score(costs)
         return
 
 
@@ -956,21 +998,21 @@ class runScript():
         #self.indicators.add_flood_safety_score(50, self.turn)
         #self.indicators.add_biosafe_score(self.biosafe_score, self.turn)
         #self.indicators.add_cost_score(self.cost_score, self.turn)
-        costs = self.total_costs + self.turn_costs
+        #costs = self.total_costs + self.turn_costs
         #self.indicators.add_total_costs(costs, self.turn)
-        self.indicators.add_indicator_values(
-                50.0, self.biosafe_score, self.cost_score, costs,
-                turn=self.turn)
-        self.indicators.update_water_and_dike_levels(
-                self.hexagons_sandbox, self.hexagons_prev, self.turn)
-        self.indicators.update_flood_safety_score(self.turn)
-        if self.turn == 0:
-            biosafe_ref = self.biosafe.get_reference()
-            self.indicators.store_biosafe_output(biosafe_ref, reference=True)
-        biosafe_int = self.biosafe.get_intervention()
-        self.indicators.store_biosafe_output(biosafe_int)
-        biosafe_perc = self.biosafe.get_percentage()
-        self.indicators.store_biosafe_output(biosafe_perc, percentage=True)
+        #self.indicators.add_indicator_values(
+        #        50.0, self.biosafe_score, self.cost_score, costs,
+        #        turn=self.turn)
+        #self.indicators.update_water_and_dike_levels(
+        #        self.hexagons_sandbox, self.hexagons_prev, self.turn)
+        #self.indicators.update_flood_safety_score(self.turn)
+        #if self.turn == 0:
+        #    biosafe_ref = self.biosafe.get_reference()
+        #    self.indicators.store_biosafe_output(biosafe_ref, reference=True)
+        #biosafe_int = self.biosafe.get_intervention()
+        #self.indicators.store_biosafe_output(biosafe_int)
+        #biosafe_perc = self.biosafe.get_percentage()
+        #self.indicators.store_biosafe_output(biosafe_perc, percentage=True)
         #self.indicators.plot(self.turn)
         return
 
