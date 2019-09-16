@@ -5,7 +5,6 @@ Created on Thu Jul 11 15:56:30 2019
 @author: straa005
 """
 import os
-#import time
 import numpy as np
 import pandas as pd
 import geopandas as gpd

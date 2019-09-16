@@ -10,7 +10,6 @@ import numpy as np
 from shapely import geometry
 from copy import deepcopy
 from scipy.spatial import cKDTree
-import modelInterface as D3D
 
 
 def determine_dikes(hexagons):

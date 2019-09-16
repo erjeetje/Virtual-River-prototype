@@ -12,7 +12,6 @@ import cv2
 import geojson
 import numpy as np
 import gridCalibration as cali
-#import sandbox_fm.calibrate
 
 
 def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,

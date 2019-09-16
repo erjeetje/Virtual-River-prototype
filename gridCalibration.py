@@ -11,8 +11,6 @@ import os
 import cv2
 import numpy as np
 import geojson
-#import sandbox_fm.calibrate
-#from sandbox_fm.calibration_wizard import NumpyEncoder
 
 
 class NumpyEncoder(json.JSONEncoder):

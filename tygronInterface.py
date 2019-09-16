@@ -10,8 +10,6 @@ import requests
 import base64
 import json
 from shapely import geometry
-from geojson import load, FeatureCollection
-import gridMapping as gridmap
 
 
 def join_session(username, password, application_type="EDITOR",
