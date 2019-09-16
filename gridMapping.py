@@ -870,7 +870,7 @@ def create_geotiff(grid, turn=0, path="", save=False):
     raster and then to base64 string if possible, but adding crs may be a
     challenge).
     """
-    return interpolated_data
+    return
 
 
 def create_roughness_map(grid, turn=0, path="", save=False):

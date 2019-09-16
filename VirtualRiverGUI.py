@@ -16,11 +16,9 @@ import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
-import updateRoughness as roughness
 import createStructures as structures
 import costModule as costs
 import waterModule as water
-#import indicatorModule as indicator
 import ghostCells as ghosts
 import hexagonAdjustments as adjust
 import hexagonOwnership as owner
@@ -167,11 +165,10 @@ class runScript():
         self.start_new_turn = False
         self.test = False
         self.tygron = True
-        self.ghost_hexagons_fixed = False
+        self.update_count = 0
         # save variables, adjust as you wish how to run Virtual River
         self.save = True
         self.model_save = False
-        self.model_ini_save = False
         self.reloading = False
         self.debug = False
         # Virtual River variables. THESE ARE ADJUSTABLE!
@@ -181,8 +178,6 @@ class runScript():
         # Currently not used, but can be passed to landuse_to_friction function
         # of the updateRoughness module.
         self.mixtype_ratio = [50, 20, 30]
-        self.ini_loops = 12  # number of model loops to run on initialization
-        self.update_loops = 5  # number of model loops to run on updates
         # Memory variables
         self.turn = 0
         self.token = ""
@@ -199,7 +194,6 @@ class runScript():
         self.filled_node_grid_prev = None
         self.flow_grid = None
         self.face_grid = None
-        self.heightmap = None
         self.pers = None
         # may not be necessary to store these, but some methods would need to
         # be updated (in gridCalibration and processImage).
@@ -207,13 +201,9 @@ class runScript():
         self.img_y = None
         self.origins = None
         self.radius = None
-        # 
+        # list that tracks groyne/LTDs updates during a turn (both have to be
+        # reset if changes are reverted).
         self.groyne_tracker = []
-        # temporary variables in relation to colormap plots
-        self.fig = None
-        self.axes = None
-        # water safety module
-        #self.indicators = indicator.Indicators()
         # water safety module
         self.water_module = water.Water()
         self.flood_safety_score = None
@@ -229,8 +219,6 @@ class runScript():
         self.biosafe_score = None
         # visualization
         self.viz = visualize.Visualization(self.model)
-        # localhost webserver
-        #self.server = server.Webserver()
         return
 
 
@@ -249,7 +237,6 @@ class runScript():
         self.transform_hexagons()
         self.get_hexagons()
         if self.tygron:
-            #self.create_server()
             self.tygron_update_buildings()
         self.create_grids()
         self.set_up_hexagons()
@@ -268,10 +255,6 @@ class runScript():
             t1 = time.time()
         self.run_biosafe()
         self.update_cost_score()
-        #if self.tygron:
-            # this is here temporary for testing purposes, will be only below
-            # eventually (see few lines down).
-            #self.tygron_set_indicators()
         self.initialized = True
         self.index_model()
         self.run_model()
@@ -279,6 +262,7 @@ class runScript():
         self.scores()
         if self.tygron:
             self.tygron_set_indicators()
+        self.save_files()
         toc = time.time()
         try:
             print("Finished startup and calibration" +
@@ -316,12 +300,11 @@ class runScript():
             return
         tic = time.time()
         self.start_new_turn = False
+        self.update_count += 1
         self.prepare_turn()
         if not self.test:
             self.get_image()
             self.calibrate_camera()
-            # it may be more robust to recalibrate the camera every update -->
-            # check the time the system needs for that.
         #self.transform_hexagons()
         self.get_hexagons()
         if self.tygron:
@@ -344,6 +327,7 @@ class runScript():
         self.scores()
         if self.tygron:
             self.tygron_set_indicators()
+        self.save_files(end_round=False)
         toc = time.time()
         try:
             print("Updated to turn " + str(self.turn) +
@@ -436,11 +420,17 @@ class runScript():
 
 
     def create_server(self):
+        """
+        Create a localhost webserver (not called, run an apache server instead)
+        """
         server.run_server(self.web_path, path=self.dir_path)
         return
     
     
     def prepare_turn(self):
+        """
+        Reset the turn costs in the cost module to 0.
+        """
         self.cost_module.reset_costs(turn=self.turn)
         return
     
@@ -502,12 +492,6 @@ class runScript():
             self.hexagons_sandbox = detect.transform(
                     self.hexagons_sandbox, self.transforms, export="sandbox",
                     path=self.dir_path)
-        """
-        if self.tygron:
-            self.hexagons_tygron = detect.transform(
-                        self.hexagons_sandbox, self.transforms,
-                        export="sandbox2tygron")
-        """
         print("Transformed hexagons suitable for model and tygron.")
         return
     
@@ -570,11 +554,15 @@ class runScript():
     
     
     def process_hexagons(self, dike_moved=False):
+        """
+        Process the hexagons, add various properties.
+        """
         if not self.initialized:
             self.hexagons_sandbox = adjust.add_bedslope(
                     self.hexagons_sandbox, self.slope)
             self.hexagons_sandbox = gridmap.hexagons_to_fill(
                     self.hexagons_sandbox)
+        # not sure the z_correction is needed anymore.
         self.hexagons_sandbox = adjust.z_correction(
                     self.hexagons_sandbox, initialized=self.initialized)
         if dike_moved:
@@ -592,7 +580,7 @@ class runScript():
 
     def compare_hexagons(self):
         """
-        
+        Compare the previous turn hexagons with the updated hexagons.
         """
         self.hexagons_sandbox, self.turn_costs, dike_moved = \
         compare.compare_hex(
@@ -664,6 +652,7 @@ class runScript():
                 fill=False, path=self.dir_path)
         # set the Chezy coefficient for each hexagon (based on water levels
         # and trachytopes) 
+        """
         self.hexagons_sandbox = self.model.update_waterlevel(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = roughness.landuse_to_friction(
@@ -671,6 +660,7 @@ class runScript():
                 initialization=True)
         self.hexagons_sandbox, self.flow_grid = roughness.hex_to_points(
                 self.model.model, self.hexagons_sandbox, self.flow_grid)
+        """
         print("Executed grid interpolation.")
         # create a deepcopy of the node grid and fill the grid behind the
         # dikes. The filled node grid is for the hydrodynamic model.
@@ -743,12 +733,8 @@ class runScript():
         """
         Function that handles updating the tygron IDs of the hexagons.
         """
-        if not self.test:
-            self.hexagons = tygron.update_hexagons_tygron_id(
-                    self.token, self.hexagons)
-        else:
-            self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
-                    self.token, self.hexagons_sandbox)
+        self.hexagons_sandbox = tygron.update_hexagons_tygron_id(
+                self.token, self.hexagons_sandbox)
         return
 
 
@@ -758,7 +744,7 @@ class runScript():
         localhost directory to the webserver to avoid problems with loading.
         """
         os.chdir(self.web_path)
-        self.heightmap = gridmap.create_geotiff(
+        gridmap.create_geotiff(
             self.node_grid, turn=self.turn, path=self.store_path)
         print("Created geotiff elevation map")
         tygron.set_terrain_type(self.token, self.hexagons_tygron)
@@ -825,42 +811,34 @@ class runScript():
             return
         if self.turn == 0:
             print("Running model after initialization, updating the elevation "
-                  "in the model will take some time. Running "+ str(self.ini_loops) +
-                  " loops to stabilize.")
-            self.hexagons_sandbox, self.flow_grid = self.model.run_model(
-                self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
-                self.vert_scale, turn=self.turn)
-            if self.model_ini_save:
-                with open(os.path.join(self.store_path,
-                                       'flow_grid_model_ini%d.geojson' % self.turn),
-                          'w') as f:
-                    geojson.dump(self.flow_grid, f, sort_keys=True,
-                                 indent=2)
-                with open(os.path.join(self.store_path,
-                                       'hexagons_model_ini%d.geojson' % self.turn),
-                          'w') as f:
-                    geojson.dump(
-                            self.hexagons_sandbox, f, sort_keys=True, indent=2)
+                  "in the model will take some time. Running a maximum of 50 "
+                  "loops to stabilize.")
         else:
-            print("Running model after turn update, running " +
-                  str(self.update_loops) + " loops.")
-            self.hexagons_sandbox, self.flow_grid = self.model.run_model(
-                    self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
-                    self.vert_scale, turn=self.turn)
-            print("Finished running the model after turn " + str(self.turn) +
-                  ".")
+            print("Running model after turn update, running a maximum of 10 "
+                  "loops to stabilize.")
+        self.hexagons_sandbox, self.flow_grid = self.model.run_model(
+            self.filled_node_grid, self.hexagons_sandbox, self.flow_grid,
+            turn=self.turn)
         if self.model_save:
             with open(os.path.join(self.store_path,
-                                   'hexagons_with_model_output%d.geojson' %
-                                   self.turn),
+                                   'flow_grid_model_ini%d.geojson' % self.turn),
                       'w') as f:
-                geojson.dump(self.hexagons_sandbox, f, sort_keys=True,
+                geojson.dump(self.flow_grid, f, sort_keys=True,
                              indent=2)
+            with open(os.path.join(self.store_path,
+                                   'hexagons_model_ini%d.geojson' % self.turn),
+                      'w') as f:
+                geojson.dump(
+                        self.hexagons_sandbox, f, sort_keys=True, indent=2)
             print("stored hexagon files with model output (conditional)")
         return
 
 
     def update_water_module(self, dike_moved=False):
+        """
+        This function handles all things related to the water module/flood
+        safety indicator.
+        """
         if (self.turn == 0 or dike_moved):
             self.water_module.determine_dike_levels(self.hexagons_sandbox)
             self.water_module.get_dike_location(self.hexagons_sandbox)
@@ -880,6 +858,10 @@ class runScript():
     
     
     def run_biosafe(self):
+        """
+        This function handles all things related to BIOSAFE/biodiversity
+        indicator.
+        """
         self.hexagons_sandbox = adjust.biosafe_area(self.hexagons_sandbox)
         if not self.initialized:
             self.biosafe.process_board(self.hexagons_sandbox, reference=True)
@@ -894,6 +876,9 @@ class runScript():
 
 
     def end_round(self):
+        """
+        This function ends a game round, saves the board and resets variables.
+        """
         if not self.initialized:
             print("Virtual River is not yet calibrated, please first run "
                   "initialize")
@@ -913,21 +898,28 @@ class runScript():
         # automatically stored.
         if self.save:
             self.save_files()
+        self.update_count = 0
         self.groyne_tracker = []
         self.start_new_turn = True
         self.turn += 1
         return
 
 
-    def save_files(self):
+    def save_files(self, end_round=True):
+        """
+        This function save the game board, both intermediate and end of round.
+        """
         if not self.initialized:
             print("Virtual River is not yet calibrated, please first run "
                   "initialize")
             return
         if not self.test:
-            with open(os.path.join(
-                    self.store_path,
-                    'hexagons%d.geojson' % self.turn), 'w') as f:
+            if end_round:
+                filename = 'hexagons%d.geojson' % self.turn
+            else:
+                filename = ('hexagons%d' % self.turn + '_' +
+                            str(self.update_count) + '.geojson')
+            with open(os.path.join(self.store_path, filename), 'w') as f:
                 geojson.dump(
                         self.hexagons_sandbox, f, sort_keys=True, indent=2)
             print("Saved hexagon file for turn " + str(self.turn) + ".")

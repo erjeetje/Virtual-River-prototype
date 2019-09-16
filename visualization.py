@@ -1,5 +1,4 @@
 import os
-import time
 import json
 import itertools
 import logging
@@ -478,13 +477,15 @@ class Visualization():
         HEIGHT = self.config['settings']['height']
 
         coords = np.random.random((n_dots, 2)) * (HEIGHT, WIDTH)
+        #coords = np.random.random((n_dots, 2)) * (WIDTH, HEIGHT)
 
         if not 'lic' in self.data:
             self.data['lic'] = np.zeros((HEIGHT, WIDTH, 4))
+            #self.data['lic'] = np.zeros((WIDTH, HEIGHT, 4))
 
-        for x, y in coords:
+        for y, x in coords:
             # white
-            ref = self.grid['ravensburger_cells'][int(x), int(y)]
+            ref = self.grid['ravensburger_cells'][int(y), int(x)]
             """ 
             # only seed lics where water levels are high
             water_level = self.data['s1'][ref] - self.data['bl'][ref]
@@ -499,8 +500,8 @@ class Visualization():
             
             # make sure outline has the same color
             # create a little dot
-            #r, c = skimage.draw.circle(y, x, size, shape=(HEIGHT, WIDTH))
-            r, c = skimage.draw.circle(x, y, size, shape=(WIDTH, HEIGHT))
+            r, c = skimage.draw.circle(y, x, size, shape=(HEIGHT, WIDTH))
+            #r, c = skimage.draw.circle(x, y, size, shape=(WIDTH, HEIGHT))
             self.data['lic'][r, c] = 1
 
 

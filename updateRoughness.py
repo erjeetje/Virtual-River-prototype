@@ -6,7 +6,6 @@ Created on Tue May 21 14:23:49 2019
 """
 
 import geojson
-import random
 import numpy as np
 import gridMapping as gridmap
 import modelInterface as D3D
@@ -16,13 +15,8 @@ def hex_to_points(model, hexagons, grid, test=False, initialization=False):
     """
     Function that sets the Chezy value of all the grid points (centers of
     cells) based on the Chezy value of the hexagon where these are located.
-    
-    NOTE: frcu is much longer then expected (len 52k whereas 26k was expected),
-    meaning the slicing is not correct. Needs to be checked and updated.
     """
     frcu = model.get_var('frcu')
-    if test:
-        hexagons = randomizer(hexagons)
     hexagons_by_id = {feature.id: feature for feature in hexagons.features}
     for feature in grid.features:
         if feature.properties["fill"]:
@@ -38,31 +32,7 @@ def hex_to_points(model, hexagons, grid, test=False, initialization=False):
     return hexagons, grid
 
 
-def randomizer(hexagons):
-    """
-    temporary randomize function to add different trachytopes to the board for
-    testing purposes. Remove at a later stage.
-    
-    the function is no longer called, can be removed.
-    """
-    for feature in hexagons.features:
-        if feature.properties["landuse"] == 9:
-            continue
-        elif feature.properties["z_reference"] >= 4:
-            feature.properties["landuse"] = 10
-        else:
-            feature.properties["landuse"] = random.randint(1, 5)
-    return hexagons
-
-
-def update_Chezy_values(hexagons, filled_hexagons):
-    for feature in hexagons.features:
-        reference_hex = filled_hexagons[feature.id]
-        feature.properties["Chezy"] = reference_hex.properties["Chezy"]
-    return hexagons
-
-
-def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
+def landuse_to_friction(hexagons, mixtype_ratio=[50,20,30],
                         printing=False, initialization=False):
     """
     Function that turns the landuse into a trachytope.
@@ -84,45 +54,7 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
         # the test_list is only added to print the Chezy calculations, set
         # to False by default.
         test_list = []
-    for feature in hexagons.features:    
-        """
-        if not initialization:
-            try:
-                behind_dike = feature.properties["behind_dike"]
-            except KeyError:
-                behind_dike = False
-                print("KeyError on behind dike")
-            if behind_dike:
-                try:
-                    dike = hexagons[feature.properties["dike_reference"]]
-                    z = dike.properties["z"]
-                except KeyError:
-                    z = 16
-                    print("KeyError on dike reference")
-            else:
-                try:
-                    z = feature.properties["z"]
-                except KeyError:
-                    z = 8
-                    print("KeyError on z")
-    
-            try:
-                h = feature.properties["water_level"] - z
-            except KeyError:
-                try:
-                    h = 16 - z
-                    print("KeyError on water level")
-                except KeyError:
-                    h = 8
-        else:
-            try:
-                h = feature.properties["water_level"] - (feature.properties["z"])
-            except KeyError:
-                try:
-                    h = 16 - (feature.properties["z"])
-                except KeyError:
-                    h = 8
-        """
+    for feature in hexagons.features:
         try:
             z = (feature.properties["z"] +
                  (feature.properties["z_correction"] * 4))
@@ -218,8 +150,6 @@ def landuse_to_friction(hexagons, vert_scale=1, mixtype_ratio=[50,20,30],
             add buildings as a geometry or structure in the model? Use manning
             for the polygon?
             """
-            # vegetation height scale test
-            #vegpar["hv"] = vegpar["hv"] * vert_scale
             feature.properties["Chezy"] = klopstra(h, vegpar)
         """
         print("Chezy coefficient calculation for cell: " +
