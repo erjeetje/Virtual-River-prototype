@@ -306,13 +306,13 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                                      "event/editorindicator/set_attribute/?")):
     if indicator == "flood":
         indicator_id = 0
-        excel_id = 1000014
+        excel_id = 1000000
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000011
+        excel_id = 1000014
     else:
         indicator_id = 2
-        excel_id = 1000013
+        excel_id = 1000015
         value_input = "TOTAL_COSTS"
         r = requests.post(
                 url=api_endpoint+api_key,
