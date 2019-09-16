@@ -352,17 +352,26 @@ def index_structures(structures, grid, mode="groyne"):
             distance = point.distance(shape)
             try:
                 covered = feature.properties[z_correct]
-                print(covered)
             except KeyError:
                 covered = 0
-            if distance < 2.5:
-                feature.properties[z_correct] = max(covered, 6)
-            elif distance < 5:
-                feature.properties[z_correct] = max(covered, 4)
-            elif distance < 7.5:
-                feature.properties[z_correct] = max(covered, 2)
+            if mode == "ltd":
+                if distance < 2:
+                    feature.properties[z_correct] = max(covered, 6)
+                elif distance < 4:
+                    feature.properties[z_correct] = max(covered, 4)
+                elif distance < 6:
+                    feature.properties[z_correct] = max(covered, 2)
+                else:
+                    feature.properties[z_correct] = max(covered, 0)
             else:
-                feature.properties[z_correct] = max(covered, 0)
+                if distance < 2.5:
+                    feature.properties[z_correct] = max(covered, 8)
+                elif distance < 5:
+                    feature.properties[z_correct] = max(covered, 5)
+                elif distance < 7.5:
+                    feature.properties[z_correct] = max(covered, 2)
+                else:
+                    feature.properties[z_correct] = max(covered, 0)
             if covered != 0:
                 print("found value: " + str(covered) + ". set value: " +
                       str(feature.properties[z_correct]))
