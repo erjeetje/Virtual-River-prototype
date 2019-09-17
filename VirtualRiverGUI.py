@@ -9,6 +9,7 @@ import sys
 import time
 import geojson
 import os
+import pywinauto
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
@@ -45,14 +46,26 @@ class GUI(QWidget):
         btn_initialize.clicked.connect(self.on_initialize_button_clicked)
         btn_initialize.resize(180, 40)
         btn_initialize.move(20, 80)
+        """
         btn_model = QPushButton('Run model', self)
         btn_model.clicked.connect(self.on_model_button_clicked)
         btn_model.resize(180, 40)
         btn_model.move(20, 170)
+        """
+        btn_elevation = QPushButton('Elevation', self)
+        btn_elevation.clicked.connect(self.on_elevation_button_clicked)
+        btn_elevation.resize(180, 40)
+        btn_elevation.move(20, 170)
+        btn_flow = QPushButton('Flow velocities', self)
+        btn_flow.clicked.connect(self.on_flow_button_clicked)
+        btn_flow.resize(180, 40)
+        btn_flow.move(20, 260)
+        """
         btn_exit = QPushButton('Exit', self)
         btn_exit.clicked.connect(self.on_exit_button_clicked)
         btn_exit.resize(180, 40)
         btn_exit.move(20, 260)
+        """
         """
         # incorporated the score updates within the other script functions,
         # called and update automatically.
@@ -65,10 +78,16 @@ class GUI(QWidget):
         btn_round.clicked.connect(self.on_end_round_button_clicked)
         btn_round.resize(180, 40)
         btn_round.move(280, 80)
+        btn_roughness = QPushButton('Roughness', self)
+        btn_roughness.clicked.connect(self.on_roughness_button_clicked)
+        btn_roughness.resize(180, 40)
+        btn_roughness.move(280, 170)
+        """
         btn_save = QPushButton('Save', self)
         btn_save.clicked.connect(self.on_save_button_clicked)
         btn_save.resize(180, 40)
         btn_save.move(280, 170)
+        """
         btn_reload = QPushButton('Reload', self)
         btn_reload.clicked.connect(self.on_reload_button_clicked)
         btn_reload.resize(180, 40)
@@ -109,6 +128,15 @@ class GUI(QWidget):
     def on_score_button_clicked(self):
         print("Calling score function")
         self.script.scores()
+        
+    def on_elevation_button_clicked(self):
+        self.script.switch_viz(screen="elevation")
+        
+    def on_flow_button_clicked(self):
+        self.script.switch_viz(screen="flow")
+    
+    def on_roughness_button_clicked(self):
+        self.script.switch_viz(screen="roughness")
 
 
 class runScript():
@@ -219,6 +247,8 @@ class runScript():
         self.biosafe_score = None
         # visualization
         self.viz = visualize.Visualization(self.model)
+        app = pywinauto.application.Application().connect(title_re='main')
+        self.window = app.window(title_re='main')
         return
 
 
@@ -1013,6 +1043,20 @@ class runScript():
         print("Turn costs: " + str(self.turn_costs) + ". Total costs: " +
               str(self.total_costs + self.turn_costs))
         return
+    
+    
+    def switch_viz(self, screen="elevation"):
+        if screen == "flow":
+            key = '6'
+        elif screen == "roughness":
+            key = '8'
+        elif screen == "ownership":
+            key = '9'
+        else:
+            key = '5'
+        self.window.set_focus()
+        self.window.type_keys(key)
+        
 
 
     def update_viz(self):
