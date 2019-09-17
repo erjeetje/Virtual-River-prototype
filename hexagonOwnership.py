@@ -15,7 +15,7 @@ from scipy.spatial import cKDTree
 from shapely import geometry
 
 
-def determine_neighbours(hexagons):
+def determine_neighbours(hexagons, printing=False):
     """
     Function that indexes all hexagons to their neighbours. Finds all hexagons
     that are direct neighbours of each hexagon and stores their value in the
@@ -60,13 +60,14 @@ def determine_neighbours(hexagons):
         indices = list(map(int, indices))
         # remove itself
         indices.pop(0)
-        print("Neighbouring hexagons for hexagon " + str(feature.id) +
-              " are: " + str(indices))
+        if printing:
+            print("Neighbouring hexagons for hexagon " + str(feature.id) +
+                  " are: " + str(indices))
         feature.properties["neighbours"] = indices
     return hexagons
 
 
-def determine_ownership(hexagons):
+def determine_ownership(hexagons, printing=False):
     """
     Function that generates random ownership based on:
         - Overall size of initial floodplain area
@@ -131,8 +132,8 @@ def determine_ownership(hexagons):
         else:
             taken_hexagons.append(random_value)
         random_hexagon = floodplain_indices[random_value]
-        print("")
-        print("Trying from hexagon: " + str(random_hexagon))
+        if printing:
+            print("Trying from hexagon: " + str(random_hexagon))
         hexagon = hexagons[random_hexagon]
         if hexagon.properties["owned"]:
             continue
@@ -140,10 +141,12 @@ def determine_ownership(hexagons):
             hexagon.properties["landuse"] == 1):
             continue
         neighbours = hexagon.properties["neighbours"]
-        print("Neighbours are: " + str(neighbours))
+        if printing:
+            print("Neighbours are: " + str(neighbours))
         floodplain_neighbours = check_floodplain(
                 floodplain_indices, neighbours)
-        print("Floodplain neighbours are: " + str(floodplain_neighbours))
+        if printing:
+            print("Floodplain neighbours are: " + str(floodplain_neighbours))
         if i < nature_count:
             owner = "Nature"
         elif i < (nature_count + water_count):
@@ -169,8 +172,9 @@ def determine_ownership(hexagons):
                 neighbour_hexagon.properties["owner"] = owner
                 i += 1
                 taken_hexagons.append(chosen_neighbour)
-                print(owner + " ownership of hexagons: " +
-                      str(random_hexagon) + ", " + str(chosen_neighbour))
+                if printing:
+                    print(owner + " ownership of hexagons: " +
+                          str(random_hexagon) + ", " + str(chosen_neighbour))
                 continue
         else:
             if len(floodplain_neighbours) == 2:
@@ -200,8 +204,10 @@ def determine_ownership(hexagons):
                 neighbour_hexagon2.properties["owner"] = owner
                 i += 1
                 taken_hexagons.append(chosen_neighbours[1])
-                print(owner + " ownership of hexagons: " +
-                      str(random_hexagon) + ", " + str(chosen_neighbours[1]))
+                if printing:
+                    print(owner + " ownership of hexagons: " +
+                          str(random_hexagon) + ", " +
+                          str(chosen_neighbours[1]))
             elif (neighbour_hexagon2.properties["owned"] or
                   neighbour_hexagon2.properties["landuse"] == 0 or
                   neighbour_hexagon2.properties["landuse"] == 1):
@@ -211,8 +217,10 @@ def determine_ownership(hexagons):
                 neighbour_hexagon1.properties["owner"] = owner
                 i += 1
                 taken_hexagons.append(chosen_neighbours[0])
-                print(owner + " ownership of hexagons: " +
-                      str(random_hexagon) + ", " + str(chosen_neighbours[0]))
+                if printing:
+                    print(owner + " ownership of hexagons: " +
+                          str(random_hexagon) + ", " +
+                          str(chosen_neighbours[0]))
             else:
                 hexagon.properties["owned"] = True
                 hexagon.properties["owner"] = owner
@@ -223,9 +231,11 @@ def determine_ownership(hexagons):
                 i += 1
                 taken_hexagons.append(chosen_neighbours[0])
                 taken_hexagons.append(chosen_neighbours[1])
-                print(owner + " ownership of hexagons: " +
-                      str(random_hexagon) + ", " + str(chosen_neighbours[0]) +
-                      ", " + str(chosen_neighbours[1]))
+                if printing:
+                    print(owner + " ownership of hexagons: " +
+                          str(random_hexagon) + ", " +
+                          str(chosen_neighbours[0]) + ", " +
+                          str(chosen_neighbours[1]))
     return hexagons
 
 
