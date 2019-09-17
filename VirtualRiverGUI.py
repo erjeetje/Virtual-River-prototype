@@ -27,53 +27,79 @@ import visualization as visualize
 import biosafeVR as biosafe
 import localServer as server
 from copy import deepcopy
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QMessageBox,
+                             QLabel)
 from PyQt5.QtCore import QCoreApplication, Qt
+from PyQt5.QtGui import QPainter, QPen
 
 
 class GUI(QWidget):
     def __init__(self):
         super(GUI, self).__init__()
+        self.script = runScript()
+        self.setWindowTitle('Virtual River interface')
+        self.setFixedSize(200, 1040)
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.initUI()
+        self.show()  # app.exec_()
 
     def initUI(self):
-        self.script = runScript()
+        lbl_update = QLabel('Update controls', self)
+        lbl_update.move(10, 40)
+        lbl_update.setFixedWidth(180)
+        lbl_update.setAlignment(Qt.AlignCenter)
         btn_update = QPushButton('Update', self)
         btn_update.clicked.connect(self.on_update_button_clicked)
         btn_update.resize(180, 40)
-        btn_update.move(10, 40)
+        btn_update.move(10, 80)
         btn_round = QPushButton('End round', self)
         btn_round.clicked.connect(self.on_end_round_button_clicked)
         btn_round.resize(180, 40)
-        btn_round.move(10, 130)
+        btn_round.move(10, 160)
+        lbl_viz = QLabel('Visualization controls', self)
+        lbl_viz.move(10, 340)
+        lbl_viz.setFixedWidth(180)
+        lbl_viz.setAlignment(Qt.AlignCenter)
         btn_elevation = QPushButton('Elevation', self)
         btn_elevation.clicked.connect(self.on_elevation_button_clicked)
         btn_elevation.resize(180, 40)
-        btn_elevation.move(10, 335)
+        btn_elevation.move(10, 380)
         btn_flow = QPushButton('Flow velocities', self)
         btn_flow.clicked.connect(self.on_flow_button_clicked)
         btn_flow.resize(180, 40)
-        btn_flow.move(10, 425)
+        btn_flow.move(10, 460)
         btn_roughness = QPushButton('Roughness', self)
         btn_roughness.clicked.connect(self.on_roughness_button_clicked)
         btn_roughness.resize(180, 40)
-        btn_roughness.move(10, 515)
+        btn_roughness.move(10, 540)
         btn_ownership = QPushButton('Ownership', self)
         btn_ownership.clicked.connect(self.on_ownership_button_clicked)
         btn_ownership.resize(180, 40)
-        btn_ownership.move(10, 605)
+        btn_ownership.move(10, 620)
+        lbl_facilitator = QLabel('Facilitator controls', self)
+        lbl_facilitator.move(10, 810)
+        lbl_facilitator.setFixedWidth(180)
+        lbl_facilitator.setAlignment(Qt.AlignCenter)
         btn_initialize = QPushButton('Initialize', self)
         btn_initialize.clicked.connect(self.on_initialize_button_clicked)
         btn_initialize.resize(180, 40)
-        btn_initialize.move(10, 810)
+        btn_initialize.move(10, 850)
         btn_reload = QPushButton('Reload', self)
         btn_reload.clicked.connect(self.on_reload_button_clicked)
         btn_reload.resize(180, 40)
-        btn_reload.move(10, 900)
-        self.setWindowTitle('Virtual River interface')
-        self.setFixedSize(200, 1000)
-        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
-        self.show()  # app.exec_()
+        btn_reload.move(10, 930)
+        return
+    
+    def paintEvent(self, e):
+        painter = QPainter(self)
+        painter.setPen(QPen(Qt.blue, 2, Qt.SolidLine))
+        painter.drawRect(5,10,190,230)
+        painter.setPen(QPen(Qt.green, 2, Qt.SolidLine))
+        painter.drawRect(5,310,190,390)
+        painter.setPen(QPen(Qt.red, 2, Qt.SolidLine))
+        painter.drawRect(5,780,190,230)
+        return
+        
 
     def on_update_button_clicked(self):
         print("Calling update function")
