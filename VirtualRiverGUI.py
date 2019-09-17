@@ -28,7 +28,7 @@ import biosafeVR as biosafe
 import localServer as server
 from copy import deepcopy
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
-from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtCore import QCoreApplication, Qt
 
 
 class GUI(QWidget):
@@ -41,58 +41,38 @@ class GUI(QWidget):
         btn_update = QPushButton('Update', self)
         btn_update.clicked.connect(self.on_update_button_clicked)
         btn_update.resize(180, 40)
-        btn_update.move(20, 35)
-        btn_initialize = QPushButton('Initialize', self)
-        btn_initialize.clicked.connect(self.on_initialize_button_clicked)
-        btn_initialize.resize(180, 40)
-        btn_initialize.move(20, 80)
-        """
-        btn_model = QPushButton('Run model', self)
-        btn_model.clicked.connect(self.on_model_button_clicked)
-        btn_model.resize(180, 40)
-        btn_model.move(20, 170)
-        """
-        btn_elevation = QPushButton('Elevation', self)
-        btn_elevation.clicked.connect(self.on_elevation_button_clicked)
-        btn_elevation.resize(180, 40)
-        btn_elevation.move(20, 170)
-        btn_flow = QPushButton('Flow velocities', self)
-        btn_flow.clicked.connect(self.on_flow_button_clicked)
-        btn_flow.resize(180, 40)
-        btn_flow.move(20, 260)
-        """
-        btn_exit = QPushButton('Exit', self)
-        btn_exit.clicked.connect(self.on_exit_button_clicked)
-        btn_exit.resize(180, 40)
-        btn_exit.move(20, 260)
-        """
-        """
-        # incorporated the score updates within the other script functions,
-        # called and update automatically.
-        btn_scores = QPushButton('Show scores', self)
-        btn_scores.clicked.connect(self.on_score_button_clicked)
-        btn_scores.resize(180, 40)
-        btn_scores.move(280, 35)
-        """
+        btn_update.move(10, 40)
         btn_round = QPushButton('End round', self)
         btn_round.clicked.connect(self.on_end_round_button_clicked)
         btn_round.resize(180, 40)
-        btn_round.move(280, 80)
+        btn_round.move(10, 130)
+        btn_elevation = QPushButton('Elevation', self)
+        btn_elevation.clicked.connect(self.on_elevation_button_clicked)
+        btn_elevation.resize(180, 40)
+        btn_elevation.move(10, 335)
+        btn_flow = QPushButton('Flow velocities', self)
+        btn_flow.clicked.connect(self.on_flow_button_clicked)
+        btn_flow.resize(180, 40)
+        btn_flow.move(10, 425)
         btn_roughness = QPushButton('Roughness', self)
         btn_roughness.clicked.connect(self.on_roughness_button_clicked)
         btn_roughness.resize(180, 40)
-        btn_roughness.move(280, 170)
-        """
-        btn_save = QPushButton('Save', self)
-        btn_save.clicked.connect(self.on_save_button_clicked)
-        btn_save.resize(180, 40)
-        btn_save.move(280, 170)
-        """
+        btn_roughness.move(10, 515)
+        btn_ownership = QPushButton('Ownership', self)
+        btn_ownership.clicked.connect(self.on_ownership_button_clicked)
+        btn_ownership.resize(180, 40)
+        btn_ownership.move(10, 605)
+        btn_initialize = QPushButton('Initialize', self)
+        btn_initialize.clicked.connect(self.on_initialize_button_clicked)
+        btn_initialize.resize(180, 40)
+        btn_initialize.move(10, 810)
         btn_reload = QPushButton('Reload', self)
         btn_reload.clicked.connect(self.on_reload_button_clicked)
         btn_reload.resize(180, 40)
-        btn_reload.move(280, 260)
+        btn_reload.move(10, 900)
         self.setWindowTitle('Virtual River interface')
+        self.setFixedSize(200, 1000)
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.show()  # app.exec_()
 
     def on_update_button_clicked(self):
@@ -137,6 +117,9 @@ class GUI(QWidget):
     
     def on_roughness_button_clicked(self):
         self.script.switch_viz(screen="roughness")
+
+    def on_ownership_button_clicked(self):
+        self.script.switch_viz(screen="ownership")
 
 
 class runScript():
