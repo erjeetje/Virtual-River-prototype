@@ -273,8 +273,8 @@ def visualize_ownership(hexagons):
         # add the necessary offset to match
         pts = feature.geometry["coordinates"]
         pts = np.array(pts)
-        pts = pts * [0.95, 1]
-        pts = pts + [400, 300]
+        pts = pts * [0.94, 1]
+        pts = pts + [395, 300]
         pts = pts * [0.75, 0.75]
         pts = np.round_(pts)
         pts = pts.astype(np.int32)
