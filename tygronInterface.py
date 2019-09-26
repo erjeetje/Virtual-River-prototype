@@ -307,7 +307,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                                      "event/editorindicator/set_attribute/?")):
     if indicator == "flood":
         indicator_id = 0
-        excel_id = 1000021
+        excel_id = 1000024
         value_input = ["RED", "YELLOW", "GREEN"]
         for i, count in enumerate(value):
             try:
@@ -320,7 +320,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000019
+        excel_id = 1000023
         value_input = ["POTTAX_INI", "POTTAX_UPDATE"]
         for i, count in enumerate(value):
             try:
@@ -333,7 +333,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     else:
         indicator_id = 2
-        excel_id = 1000022
+        excel_id = 1000025
         value_input = "COSTS"
         r = requests.post(
                 url=api_endpoint+api_key,
