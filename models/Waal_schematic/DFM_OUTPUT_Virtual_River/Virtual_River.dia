@@ -172,10 +172,10 @@
 ** DEBUG  :           80  0.7297890      iao(nn+1)
 ** DEBUG  :           83  0.3046050      ao(na)
 ** DEBUG  :           89  0.7972200      wk(nwk)
-** INFO   : Modelinit finished   at: 13:31:46, 26-09-2019
+** INFO   : Modelinit finished   at: 13:57:03, 26-09-2019
 ** INFO   : ** Model initialization was successful **
 ** INFO   : * Active Model definition:
-# Generated on 13:31:46, 26-09-2019
+# Generated on 13:57:03, 26-09-2019
 # Deltares, D-Flow FM Version 1.2.38.63172M, Feb 14 2019, 18:49:17
 # Source:https://svn.oss.deltares.nl/repos/delft3d/trunk/
 
