@@ -307,8 +307,8 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                                      "event/editorindicator/set_attribute/?")):
     if indicator == "flood":
         indicator_id = 0
-        excel_id = 1000016
-        value_input = ["RED_LOCATIONS", "YELLOW_LOCATIONS", "GREEN_LOCATIONS"]
+        excel_id = 1000021
+        value_input = ["RED", "YELLOW", "GREEN"]
         for i, count in enumerate(value):
             try:
                 r = requests.post(
@@ -320,8 +320,8 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000017
-        value_input = ["POTTAX_REF", "POTTAX_INT"]
+        excel_id = 1000019
+        value_input = ["POTTAX_INI", "POTTAX_UPDATE"]
         for i, count in enumerate(value):
             try:
                 r = requests.post(
@@ -333,8 +333,8 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     else:
         indicator_id = 2
-        excel_id = 1000018
-        value_input = "TOTAL_COSTS"
+        excel_id = 1000022
+        value_input = "COSTS"
         r = requests.post(
                 url=api_endpoint+api_key,
                 json=[indicator_id, value_input, value])
@@ -361,7 +361,7 @@ def set_turn_tracker(turn, api_key,
                        api_endpoint=("https://engine.tygron.com/api/session/"
                                      "event/editorindicator/set_attribute/?")):
     indicator_id = 3
-    excel_id = 1000019
+    excel_id = 1000000
     score_input = "TURN"
     r = requests.post(
             url=api_endpoint+api_key, json=[indicator_id, score_input, turn])
