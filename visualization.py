@@ -106,10 +106,10 @@ class Visualization():
         ], dtype='float32')
         """
         self.model = np.array([
-            [-400, -300],
-            [400, -300],
-            [400, 300],
-            [-400, 300]
+            [-421, -300],
+            [421, -300],
+            [421, 300],
+            [-421, 300]
         ], dtype='float32')
 
         self.transforms = self.compute_transforms()
