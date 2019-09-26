@@ -127,12 +127,7 @@ def detect_corners(img, method='standard', path=""):
     Function that detects the corners of the board (the four white circles)
     and returns their coordinates as a 2D array.
     """
-    try:
-        height, width, channels = img.shape
-    except AttributeError:
-        print("There appears to be no webcam connected to the system, "
-              "entering test mode")
-        return
+    height, width, channels = img.shape
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # convert image to grayscale
     if method == 'adaptive':
         blur = cv2.medianBlur(gray, 5)  # blur grayscale image
