@@ -40,8 +40,8 @@ class Water():
         # variables that determine the range for the difference in water levels
         # and dike crest height contributing to a 'bad', 'adequate', and 'good'
         # score.
-        self.unsafe = 0.35
-        self.safer = 0.7
+        self.unsafe = 0.25
+        self.safer = 0.5
         # save the directories used to store the figures.
         self.set_dirs()
         return
@@ -382,6 +382,29 @@ class Water():
     def get_flood_safety_score(self):
         return self.flood_safety_score
 
+    def get_dike_safety(self):
+        red = 0
+        yellow = 0
+        green = 0
+        if self.north_dike:
+            for feature in self.north_dike.features:
+                if feature.properties["difference"] < self.unsafe:
+                    red += 1
+                elif feature.properties["difference"] < self.safer:
+                    yellow += 1
+                else:
+                    green += 1
+        if self.south_dike:
+            for feature in self.south_dike.features:
+                if feature.properties["difference"] < self.unsafe:
+                    red += 1
+                elif feature.properties["difference"] < self.safer:
+                    yellow += 1
+                else:
+                    green += 1
+        return [red, yellow, green]
+    
+    
     def water_level_graph(self):
         """
         Function to draw the water level graph that is displayed in the flood
@@ -499,8 +522,8 @@ class Water():
                            fancybox=True, framealpha=0.5, fontsize="large")
         plt.setp(legend.get_texts(), color='w')
         # set all desired settings for the image before saving
-        ax.set_xlabel("river section x")
-        ax.set_ylabel("river section y")
+        #ax.set_xlabel("river section x")
+        #ax.set_ylabel("river section y")
         ax.set_title("Dike segment flooding chances")
         ax.spines['bottom'].set_color('w')
         ax.spines['top'].set_color('w') 

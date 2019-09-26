@@ -801,10 +801,13 @@ class runScript():
         localhost directory to the webserver to avoid problems with loading.
         """
         os.chdir(self.web_path)
+        counts = self.water_module.get_dike_safety()
         tygron.set_indicator(self.flood_safety_score, self.token,
-                             indicator="flood", index=self.turn)
+                             indicator="flood", index=self.turn, value=counts)
+        PotTax = self.biosafe.get_PotTax_sum()
         tygron.set_indicator(self.biosafe_score, self.token,
-                             indicator="biodiversity", index=self.turn)
+                             indicator="biodiversity", index=self.turn,
+                             value=PotTax)
         costs = self.total_costs + self.turn_costs
         tygron.set_indicator(self.cost_score, self.token,
                              indicator="budget", index=self.turn, value=costs)
@@ -937,6 +940,8 @@ class runScript():
         # automatically stored.
         if self.save:
             self.save_files()
+        if self.tygron:
+            tygron.set_turn_tracker(self.turn, self.token)
         self.update_count = 0
         self.groyne_tracker = []
         self.start_new_turn = True

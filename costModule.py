@@ -810,7 +810,7 @@ class Costs():
         x_labels = [("turn " + str(self.turn[value])) for value in self.turn]
         ax.set_xticklabels(x_labels)
         #ax.set_xlabel("turn")
-        ax.set_ylabel("million Euros")
+        ax.set_ylabel("Euros")
         ax.set_title("Budget spending")
         ax.spines['bottom'].set_color('w')
         ax.spines['top'].set_color('w') 
@@ -856,7 +856,7 @@ class Costs():
                            fancybox=True, framealpha=0.5, fontsize="large")
         plt.setp(legend.get_texts(), color='w')
         ax.set_title("Turn costs breakdown")
-        ax.set_ylabel("Million Euros")
+        ax.set_ylabel("Euros")
         ax.spines['bottom'].set_color('w')
         ax.spines['top'].set_color('w') 
         ax.spines['right'].set_color('w')

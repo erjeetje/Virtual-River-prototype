@@ -278,6 +278,26 @@ class BiosafeVR():
         return
     
     
+    def get_PotTax_sum(self):
+        if self.PotTax_reference is not None:
+            PotTax_ref = round(self.PotTax_reference.sum().TFI, 2)
+        else:
+            PotTax_ref = 0
+        if self.PotTax_intervention is not None:
+            PotTax_int = round(self.PotTax_intervention.sum().TFI, 2)
+        else:
+            PotTax_int = 0
+        return [PotTax_ref, PotTax_int]
+
+
+    def get_intervention_PotTax_sum(self):
+        if self.PotTax_intervention is not None:
+            PotTax_sum = round(self.PotTax_intervention.sum().TFI, 2)
+        else:
+            PotTax_sum = 0
+        return PotTax_sum
+
+
     def biodiversity_graph(self, graph="percentage"):
         """
         Function to generate the output graphs displayed in the Tygron engine.
@@ -297,14 +317,16 @@ class BiosafeVR():
                         xticks[i] = "Dragon &\nDamselflies"
                     if item == "HigherPlants":
                         xticks[i] = "Higher\nPlants"
-                label = ("reference: " +
-                         str(round(self.PotTax_reference.sum().TFI, 2)))
+                #label = ("reference: " +
+                #         str(round(self.PotTax_reference.sum().TFI, 2)))
+                label = "initial board"
                 reference = ax.bar(
                         index-offset, self.PotTax_reference.values.flatten(),
                         bar_width, label=label, tick_label=xticks)
             if self.PotTax_intervention is not None:
-                label = ("intervention: " +
-                         str(round(self.PotTax_intervention.sum().TFI, 2)))
+                #label = ("intervention: " +
+                #         str(round(self.PotTax_intervention.sum().TFI, 2)))
+                label = "current board"
                 intervention = ax.bar(
                         index+offset, self.PotTax_intervention.values.flatten(),
                         bar_width, label=label, tick_label=xticks)

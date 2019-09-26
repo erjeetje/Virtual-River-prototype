@@ -307,13 +307,33 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                                      "event/editorindicator/set_attribute/?")):
     if indicator == "flood":
         indicator_id = 0
-        excel_id = 1000000
+        excel_id = 1000016
+        value_input = ["RED_LOCATIONS", "YELLOW_LOCATIONS", "GREEN_LOCATIONS"]
+        for i, count in enumerate(value):
+            try:
+                r = requests.post(
+                        url=api_endpoint+api_key,
+                        json=[indicator_id, value_input[i], value[i]])
+            except IndexError:
+                print("faulty length of values to be sent to the flood safety "
+                      "indicator")
+                continue
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000014
+        excel_id = 1000017
+        value_input = ["POTTAX_REF", "POTTAX_INT"]
+        for i, count in enumerate(value):
+            try:
+                r = requests.post(
+                        url=api_endpoint+api_key,
+                        json=[indicator_id, value_input[i], value[i]])
+            except IndexError:
+                print("faulty length of values to be sent to the biodiversity "
+                      "indicator")
+                continue
     else:
         indicator_id = 2
-        excel_id = 1000015
+        excel_id = 1000018
         value_input = "TOTAL_COSTS"
         r = requests.post(
                 url=api_endpoint+api_key,
@@ -331,6 +351,20 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
         link = "IMAGE_LINK"
         r = requests.post(url=api_endpoint+api_key, json=[indicator_id, link, html])
     """
+    api_endpoint=("https://engine.tygron.com/api/session/event/"
+                  "editorindicator/set_excel/?")
+    r = requests.post(url=api_endpoint+api_key, json=[indicator_id, excel_id])
+    return
+
+
+def set_turn_tracker(turn, api_key,
+                       api_endpoint=("https://engine.tygron.com/api/session/"
+                                     "event/editorindicator/set_attribute/?")):
+    indicator_id = 3
+    excel_id = 1000019
+    score_input = "TURN"
+    r = requests.post(
+            url=api_endpoint+api_key, json=[indicator_id, score_input, turn])
     api_endpoint=("https://engine.tygron.com/api/session/event/"
                   "editorindicator/set_excel/?")
     r = requests.post(url=api_endpoint+api_key, json=[indicator_id, excel_id])
