@@ -17,6 +17,7 @@ cligj==0.5.0
 cloudpickle==1.1.1
 cmocean==2.0
 colorama==0.4.1
+comtypes==1.1.7
 cryptography==2.7
 cycler==0.10.0
 cytoolz==0.9.0.1
@@ -28,6 +29,7 @@ docopt==0.6.1
 docopts==0.6.1
 docutils==0.14
 entrypoints==0.3
+et-xmlfile==1.0.1
 Fiona==1.8.4
 GDAL==2.3.3
 geojson==2.4.1
@@ -39,6 +41,7 @@ ipykernel==5.1.1
 ipython==7.5.0
 ipython-genutils==0.2.0
 isort==4.3.20
+jdcal==1.4.1
 jedi==0.13.3
 Jinja2==2.10.1
 jsonschema==3.0.1
@@ -66,6 +69,7 @@ networkx==2.3
 numpy==1.14.6
 numpydoc==0.9.1
 olefile==0.46
+openpyxl==2.6.2
 packaging==19.0
 pandas==0.24.2
 pandocfilters==1.4.2
@@ -91,6 +95,7 @@ python-dateutil==2.8.0
 pytz==2019.1
 PyWavelets==1.0.3
 pywin32==223
+pywinauto==0.6.7
 pyzmq==18.0.0
 QtAwesome==0.5.7
 qtconsole==4.5.1
@@ -100,7 +105,6 @@ rasterio==1.0.21
 requests==2.22.0
 rope==0.14.0
 Rtree==0.8.3
--e git+https://github.com/openearth/sandbox-fm.git@f9bbe06153bba7aa8bb598f1341e7e94e3af73f8#egg=sandbox_fm
 scikit-image==0.15.0
 scipy==1.2.1
 Shapely==1.6.4.post1
@@ -128,3 +132,4 @@ webencodings==0.5.1
 win-inet-pton==1.1.0
 wincertstore==0.2
 wrapt==1.11.1
+xlrd==1.2.0
