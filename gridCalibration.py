@@ -214,6 +214,11 @@ def rotate_grid(canvas, img):
     canvas = np.delete(canvas, (lowest_y), axis=0)
 
     # store the two bottom corners
+    """
+    An AttributeError was triggered at canvas[1] in the pilot session -->
+    most likely a corner was not found (len(canvas) 3 instead of 4) -->
+    When that happens, this should stop any update and retry.
+    """
     bottom_corner1 = canvas[0]
     x3 = bottom_corner1[0]
     bottom_corner2 = canvas[1]
