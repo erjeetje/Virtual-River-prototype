@@ -320,7 +320,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000027
+        excel_id = 1000028
         value_input = ["POTTAX_INI", "POTTAX_UPDATE"]
         for i, count in enumerate(value):
             try:
@@ -333,7 +333,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     else:
         indicator_id = 2
-        excel_id = 1000028
+        excel_id = 1000027
         value_input = "COSTS"
         r = requests.post(
                 url=api_endpoint+api_key,
