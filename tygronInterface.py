@@ -289,7 +289,7 @@ def update_elevation(tiff_file, api_key, heightmap_id, turn=0,
     elevation in tygron. Doesn't seem to work. Workaround right now is to
     upload new geotiffs and set these (this method is therefore not called).
     """
-    json = elevation_json(heightmap_id, heightmap)
+    json = elevation_json(heightmap_id, tiff_file)
     json.append("")
     r = requests.post(url=api_endpoint+api_key, json=json)
     print(r)
@@ -307,7 +307,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                                      "event/editorindicator/set_attribute/?")):
     if indicator == "flood":
         indicator_id = 0
-        excel_id = 1000024
+        excel_id = 1000026
         value_input = ["RED", "YELLOW", "GREEN"]
         for i, count in enumerate(value):
             try:
@@ -320,7 +320,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     elif indicator == "biodiversity":
         indicator_id = 1
-        excel_id = 1000023
+        excel_id = 1000027
         value_input = ["POTTAX_INI", "POTTAX_UPDATE"]
         for i, count in enumerate(value):
             try:
@@ -333,7 +333,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     else:
         indicator_id = 2
-        excel_id = 1000025
+        excel_id = 1000028
         value_input = "COSTS"
         r = requests.post(
                 url=api_endpoint+api_key,
