@@ -1151,6 +1151,7 @@ class runScript():
             self.save_files()
         if self.tygron:
             tygron.set_turn_tracker(self.turn, self.token)
+        self.hexagons_sandbox = owner.reset_change(self.hexagons_sandbox)
         self.update_ownership_viz(end_of_round=True)
         self.copy_images()
         self.update_count = 0

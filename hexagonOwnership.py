@@ -296,6 +296,18 @@ def visualize_ownership(hexagons, end_of_round=False):
     return img
 
 
+def reset_change(hexagons):
+    for feature in hexagons.features:
+        if (feature.properties["ghost_hexagon"] or
+            feature.properties["behind_dike"] or 
+            feature.properties["south_dike"] or
+            feature.properties["north_dike"] or
+            feature.properties["main_channel"]):
+            continue
+        feature.properties["ownership_change"] = False
+    return hexagons
+
+
 def update_ownership(feature, ownership_change):
     if ownership_change is not None:
         feature.properties["ownership_change"] = True
