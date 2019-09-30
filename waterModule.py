@@ -61,7 +61,7 @@ class Water():
                 continue
             if (feature.properties["north_dike"] or
                 feature.properties["south_dike"]):
-                dike_level = (min(feature.properties["z_reference"] * 4, 17) +
+                dike_level = (min(feature.properties["z_reference"] * 4, 16.5) +
                               feature.properties["bedslope_correction"])
                 column = feature.properties["column"] - 1
                 dike_level_columns[column].append(dike_level)

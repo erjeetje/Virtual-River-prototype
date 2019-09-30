@@ -27,6 +27,7 @@ import visualization as visualize
 import biosafeVR as biosafe
 import localServer as server
 from copy import deepcopy
+from shutil import copyfile
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QMessageBox,
                              QLabel)
 from PyQt5.QtCore import QCoreApplication, Qt
@@ -272,6 +273,90 @@ class runScript():
         tic = time.time()
         self.tygron_login()
         self.get_image()
+        """
+        An AttributeError was triggered at canvas[1] in the pilot session -->
+        most likely a corner was not found (len(canvas) 3 instead of 4) -->
+        When that happens, this should stop any update and retry.
+        """
+        continue_code = self.calibrate_camera()
+        if not continue_code:
+            print("failed to calibrate camera and not testing, aborting rest "
+                  "of method")
+            return
+        self.transform_hexagons()
+        found_hexagons = self.get_hexagons()
+        if not found_hexagons:
+            print("failed to get hexagons, aborting rest of method")
+            return
+        if self.tygron:
+            self.tygron_update_buildings()
+        self.create_grids()
+        self.set_up_hexagons()
+        self.process_hexagons()
+        if self.tygron:
+            self.tygron_transform()
+        self.update_ownership_viz()
+        tac = time.time()
+        self.index_grids()
+        self.set_up_structures()
+        self.process_grids() 
+        tec = time.time()
+        if self.tygron:
+            t0 = time.time()
+            self.tygron_update()
+            t1 = time.time()
+        self.run_biosafe()
+        self.update_cost_score()
+        self.initialized = True
+        self.index_model()
+        self.run_model()
+        self.update_water_module()
+        self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
+        self.save_files()
+        # always reset the reloading variables in case reloading is used.
+        self.reloading = False
+        self.reload_enabled = False
+        toc = time.time()
+        try:
+            print("Finished startup and calibration" +
+                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
+                  " seconds. Indexing and interpolation time: " +
+                  str(round(tec-tac, 2)) +
+                  " seconds. Tygron terrain update time: " +
+                  str(round(t1-t0, 2)) +
+                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
+                  " seconds. Total initialization time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        except UnboundLocalError:
+            print("Finished startup and calibration" +
+                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
+                  " seconds. Indexing and interpolation time: " +
+                  str(round(tec-tac, 2)) +
+                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
+                  " seconds. Total initialization time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        self.update_viz()
+        return
+    
+    
+    def initialize_old(self):
+        """
+        Function that handles configuring and calibrating the game board.
+        """
+        if self.initialized:
+            print("Virtual River is already initialized, please use Update "
+                  "instead.")
+            return
+        tic = time.time()
+        self.tygron_login()
+        self.get_image()
+        """
+        An AttributeError was triggered at canvas[1] in the pilot session -->
+        most likely a corner was not found (len(canvas) 3 instead of 4) -->
+        When that happens, this should stop any update and retry.
+        """
         self.calibrate_camera()
         self.transform_hexagons()
         self.get_hexagons()
@@ -343,6 +428,88 @@ class runScript():
         self.prepare_turn()
         if not self.test:
             self.get_image()
+            """
+            An AttributeError was triggered at canvas[1] in the pilot session -->
+            most likely a corner was not found (len(canvas) 3 instead of 4) -->
+            When that happens, this should stop any update and retry.
+            """
+            continue_code = self.calibrate_camera()
+            if not continue_code:
+                print("failed to calibrate camera and not testing, aborting rest "
+                      "of method")
+                return
+        #self.transform_hexagons()
+        found_hexagons = self.get_hexagons()
+        if not found_hexagons:
+            print("failed to get hexagons, aborting rest of method")
+            return
+        if self.tygron:
+            self.tygron_update_buildings()
+            self.tygron_transform()
+        dike_moved = self.compare_hexagons()
+        self.process_hexagons(dike_moved=dike_moved)
+        tac = time.time()
+        self.update_ownership_viz()
+        self.process_grids(dike_moved=dike_moved)
+        tec = time.time()
+        if self.tygron:
+            t0 = time.time()
+            self.tygron_update()
+            t1 = time.time()
+        self.run_biosafe()
+        self.update_cost_score()
+        self.run_model()
+        self.update_water_module(dike_moved=dike_moved)
+        self.scores()
+        if self.tygron:
+            self.tygron_set_indicators()
+        self.save_files(end_round=False)
+        # always reset the reloading variables in case reloading is used.
+        self.reloading = False
+        self.reload_enabled = False
+        toc = time.time()
+        try:
+            print("Updated to turn " + str(self.turn) +
+                  ". Comparison update time: " + str(round(tac-tic, 2)) +
+                  " seconds. Interpolation update time: " +
+                  str(round(tec-tac, 2)) + " seconds. Tygron update time: " +
+                  str(round((t1-t0), 2)) + " seconds. Model update time: " +
+                  str(round(toc-tec, 2)) + " seconds. Total update time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        except UnboundLocalError:
+            print("Updated to turn " + str(self.turn) +
+                  ". Comparison update time: " + str(round(tac-tic, 2)) +
+                  " seconds. Interpolation update time: " +
+                  str(round(tec-tac, 2)) + " seconds. Model update time: " +
+                  str(round(toc-tec, 2)) + " seconds. Total update time: " +
+                  str(round(toc-tic, 2)) + " seconds.")
+        self.update_viz()
+        return
+    
+    
+    def update_old(self):
+        """
+        Function that handles updating the game board.
+        """
+        if not self.initialized:
+            print("ERROR: Virtual River is not yet calibrated, "
+                  "please first run initialize")
+            return
+        if (self.initialized and self.turn == 0):
+            print("ERROR: It seems Virtual River is initialized, but that end "
+                  "end round has not yet been triggered.")
+            return
+        tic = time.time()
+        self.start_new_turn = False
+        self.update_count += 1
+        self.prepare_turn()
+        if not self.test:
+            self.get_image()
+            """
+            An AttributeError was triggered at canvas[1] in the pilot session -->
+            most likely a corner was not found (len(canvas) 3 instead of 4) -->
+            When that happens, this should stop any update and retry.
+            """
             self.calibrate_camera()
         #self.transform_hexagons()
         self.get_hexagons()
@@ -394,11 +561,30 @@ class runScript():
             self.reload_enabled = True
             return
         self.reloading = True
+        if not self.initialized:
+            self.initialize()
+        else:
+            self.update()
+        return
+        
+    
+    def reload_old(self):
+        if not self.reload_enabled:
+            print("Are you sure you want to iniate a reload? If you intended "
+                  "to press reload, press reload again to engage the reload.")
+            self.reload_enabled = True
+            return
+        self.reloading = True
         tic = time.time()
         self.start_new_turn = False
         if not self.initialized:
             self.tygron_login()
             self.get_image()
+            """
+            An AttributeError was triggered at canvas[1] in the pilot session -->
+            most likely a corner was not found (len(canvas) 3 instead of 4) -->
+            When that happens, this should stop any update and retry.
+            """
             self.calibrate_camera()
         self.get_hexagons()
         #self.transform_hexagons()
@@ -501,8 +687,19 @@ class runScript():
         if not self.test:
             #self.pers, self.img_x, self.img_y, self.origins, self.radius, \
             #    cut_points, self.hexagons = cali.rotate_grid(canvas, thresh)
-            self.pers, self.img_x, self.img_y, cut_points = \
-                    cali.rotate_grid(canvas, thresh)
+            try:
+                self.pers, self.img_x, self.img_y, cut_points = \
+                        cali.rotate_grid(canvas, thresh)
+            except AttributeError:
+                if not self.initialized:
+                    print("did not find all four calibration corners, "
+                          "aborting initialization. Fix the problem (check "
+                          "webcam picture) and try again.")
+                else:
+                    print("did not find all four calibration corners, "
+                          "aborting update. Fix the problem (check "
+                          "webcam picture) and try again.")
+                return False
             print("Calibrated camera.")
             # create the calibration file for use by other methods and store it
             save_calibration = False
@@ -518,7 +715,7 @@ class runScript():
                     path=self.config_path, test=self.test)
         t1 = time.time()
         print("Camera calibration time: " + str(t1-t0))
-        return
+        return True
 
 
     def transform_hexagons(self):
@@ -554,9 +751,16 @@ class runScript():
             else:
                 path = self.test_path
                 print("TEST MODE: Getting new board state from test folder.")
-            self.hexagons_sandbox = gridmap.read_hexagons(
-                    filename='hexagons%d.geojson' % self.turn,
-                    path=path)
+            try:
+                self.hexagons_sandbox = gridmap.read_hexagons(
+                        filename='hexagons%d.geojson' % self.turn,
+                        path=path)
+            except FileNotFoundError:
+                if self.reloading:
+                    print("No more files to reload")
+                else:
+                    print("No more files to test")
+                return False
             """
             if self.test:
                 self.hexagons_sandbox = adjust.test_mode_z_correction(
@@ -566,7 +770,7 @@ class runScript():
                             self.hexagons_sandbox)
             """
         print("Retrieved board state.")
-        return
+        return True
 
 
     def set_up_hexagons(self):        
@@ -575,12 +779,15 @@ class runScript():
         floodplains. Function also finds the neighbours of hexagons and
         generates ownership for the players (only called on initialization).
         """
+        if self.reloading:
+            return
         self.hexagons_sandbox = structures.determine_dikes(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = structures.determine_channel(
                 self.hexagons_sandbox)
-        self.hexagons_sandbox = structures.determine_floodplains_and_behind_dikes(
-                self.hexagons_sandbox)
+        self.hexagons_sandbox = \
+                structures.determine_floodplains_and_behind_dikes(
+                        self.hexagons_sandbox)
         self.hexagons_sandbox = owner.determine_neighbours(
                 self.hexagons_sandbox)
         self.hexagons_sandbox = owner.generate_ownership(
@@ -596,14 +803,15 @@ class runScript():
         """
         Process the hexagons, add various properties.
         """
-        if not self.initialized:
-            self.hexagons_sandbox = adjust.add_bedslope(
-                    self.hexagons_sandbox, self.slope)
-            self.hexagons_sandbox = gridmap.hexagons_to_fill(
-                    self.hexagons_sandbox)
-        # not sure the z_correction is needed anymore.
-        self.hexagons_sandbox = adjust.z_correction(
-                    self.hexagons_sandbox, initialized=self.initialized)
+        if not self.reloading:
+            if not self.initialized:
+                self.hexagons_sandbox = adjust.add_bedslope(
+                        self.hexagons_sandbox, self.slope)
+                self.hexagons_sandbox = gridmap.hexagons_to_fill(
+                        self.hexagons_sandbox)
+            # not sure the z_correction is needed anymore.
+            self.hexagons_sandbox = adjust.z_correction(
+                        self.hexagons_sandbox, initialized=self.initialized)
         if dike_moved:
             self.hexagons_sandbox = structures.determine_dikes(
                         self.hexagons_sandbox)
@@ -825,12 +1033,13 @@ class runScript():
         return
 
 
-    def update_ownership_viz(self):
+    def update_ownership_viz(self, end_of_round=False):
         """
         Function that adds non-model visualizations to the visualization
         object.
         """
-        ownership_viz = owner.visualize_ownership(self.hexagons_sandbox)
+        ownership_viz = owner.visualize_ownership(
+                self.hexagons_sandbox, end_of_round=end_of_round)
         self.viz.add_image("OWNERSHIP", ownership_viz)
         return
 
@@ -942,10 +1151,30 @@ class runScript():
             self.save_files()
         if self.tygron:
             tygron.set_turn_tracker(self.turn, self.token)
+        self.update_ownership_viz(end_of_round=True)
+        self.copy_images()
         self.update_count = 0
         self.groyne_tracker = []
         self.start_new_turn = True
         self.turn += 1
+        return
+    
+    
+    def copy_images(self):
+        filenames_src = ["flood_safety_score1.png", "flood_safety_score2.png",
+                         "biodiversity_score1.png", "biodiversity_score2.png",
+                         "budget_score1.png", "budget_score2.png"]
+        filenames_dst = ["flood_safety_score1_turn%d.png" % self.turn,
+                         "flood_safety_score2_turn%d.png" % self.turn,
+                         "biodiversity_score1_turn%d.png" % self.turn,
+                         "biodiversity_score2_turn%d.png" % self.turn,
+                         "budget_score1_turn%d.png" % self.turn,
+                         "budget_score1_turn%d.png" % self.turn]
+        for i, src_name, dst_name in enumerate(
+                zip(filenames_src, filenames_dst)):
+            src = os.path.join(self.web_path, src_name)
+            dst = os.path.join(self.store_path, dst_name)
+            copyfile(src, dst)
         return
 
 

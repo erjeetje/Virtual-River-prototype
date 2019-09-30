@@ -247,7 +247,7 @@ def generate_ownership(hexagons):
     return hexagons
 
 
-def visualize_ownership(hexagons, end_of_round=False):
+def visualize_ownership(hexagons):
     # generate empty, white image
     img = np.full((450, 600, 3), 255, dtype="uint8")
     # draw hexagons in empty image
@@ -260,26 +260,14 @@ def visualize_ownership(hexagons, end_of_round=False):
             feature.properties["main_channel"]):
             continue
         # set color to draw based on ownership (or lack of it)
-        if end_of_round:
-            if feature.properties["owner"] == "Water":
-                color = (52, 96, 241)
-            elif feature.properties["owner"] == "Nature":
-                color = (31, 127, 63)
-            elif feature.properties["owner"] == "Province":
-                color = (213, 28, 66)
-            else:
-                color = (160, 160, 160)
+        if feature.properties["owner"] == "Water":
+            color = (52, 96, 241)
+        elif feature.properties["owner"] == "Nature":
+            color = (31, 127, 63)
+        elif feature.properties["owner"] == "Province":
+            color = (213, 28, 66)
         else:
-            if feature.properties["ownership_change"]:
-                color = (235, 232, 4)
-            elif feature.properties["owner"] == "Water":
-                color = (52, 96, 241)
-            elif feature.properties["owner"] == "Nature":
-                color = (31, 127, 63)
-            elif feature.properties["owner"] == "Province":
-                color = (213, 28, 66)
-            else:
-                color = (160, 160, 160)
+            color = (160, 160, 160)
         
         # get the coordinates to draw the hexagons, turn into numpy array and
         # add the necessary offset to match
