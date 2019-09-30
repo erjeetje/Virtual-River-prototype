@@ -1169,9 +1169,8 @@ class runScript():
                          "biodiversity_score1_turn%d.png" % self.turn,
                          "biodiversity_score2_turn%d.png" % self.turn,
                          "budget_score1_turn%d.png" % self.turn,
-                         "budget_score1_turn%d.png" % self.turn]
-        for i, src_name, dst_name in enumerate(
-                zip(filenames_src, filenames_dst)):
+                         "budget_score2_turn%d.png" % self.turn]
+        for src_name, dst_name in zip(filenames_src, filenames_dst):
             src = os.path.join(self.web_path, src_name)
             dst = os.path.join(self.store_path, dst_name)
             copyfile(src, dst)
