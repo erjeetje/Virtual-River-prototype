@@ -829,6 +829,8 @@ class runScript():
         """
         Compare the previous turn hexagons with the updated hexagons.
         """
+        self.hexagons_sandbox = owner.reset_owners(self.hexagons_sandbox,
+                                                   self.hexagons_prev)
         self.hexagons_sandbox, self.turn_costs, dike_moved = \
         compare.compare_hex(
                 self.cost_module, self.hexagons_prev, self.hexagons_sandbox,
