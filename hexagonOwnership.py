@@ -296,7 +296,7 @@ def visualize_ownership(hexagons, end_of_round=False):
     return img
 
 
-def reset_owner(hexagons_new, hexagons_old):
+def reset_owners(hexagons_new, hexagons_old):
     for feature in hexagons_new.features:
         if (feature.properties["ghost_hexagon"] or
             feature.properties["behind_dike"] or 
