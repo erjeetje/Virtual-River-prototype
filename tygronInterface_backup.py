@@ -396,7 +396,7 @@ def elevation_json(tiff_id, heightmap):
     return datapackage
 
 
-def hex_to_terrain(api_key, hexagons, updated_hex=[]):
+def hex_to_terrain(api_key, hexagons):
     """
     Function that sets the terrain of the hexagons in tygron.
     
@@ -416,8 +416,7 @@ def hex_to_terrain(api_key, hexagons, updated_hex=[]):
     for feature in hexagons.features:
         if feature.properties["ghost_hexagon"]:
             continue
-        if (not feature.properties["landuse_changed"] or
-            feature.id not in updated_hex):
+        if not feature.properties["landuse_changed"]:
             continue
         if feature.properties["water"]:
             continue
