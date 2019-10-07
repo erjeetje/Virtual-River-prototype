@@ -13,7 +13,7 @@ import pywinauto
 import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping as gridmap
+import gridMapping_test as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
@@ -917,8 +917,8 @@ class runScript():
         # dikes. The filled node grid is for the hydrodynamic model.
         if not self.initialized:
             self.filled_node_grid = deepcopy(self.node_grid)
-            self.filled_node_grid, self.groyne_tracker = \
-            gridmap.update_node_grid(
+            self.filled_node_grid, self.groyne_tracker, \
+            self.updated_hexagons = gridmap.update_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
