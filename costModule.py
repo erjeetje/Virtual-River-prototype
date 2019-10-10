@@ -70,6 +70,7 @@ class Costs():
                 "relocate": 1100000
                 }
         self.turn.append(0)
+        # set the value below here to adjust the budget
         self.total_costs.append(25000000)
         root_dir = dirname(realpath(__file__))
         self.web_dir = join(root_dir, 'webserver')
@@ -792,6 +793,7 @@ class Costs():
         return
     
     def calculate_cost_score(self, costs):
+        # set the values below here to adjust the budget
         cost_score = max(((25000000 - costs) / 25000000), 0)
         return cost_score
     
