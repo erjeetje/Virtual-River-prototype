@@ -333,7 +333,7 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                 continue
     else:
         indicator_id = 2
-        excel_id = 1000027
+        excel_id = 1000029
         value_input = "COSTS"
         r = requests.post(
                 url=api_endpoint+api_key,

@@ -71,7 +71,7 @@ class Costs():
                 }
         self.turn.append(0)
         # set the value below here to adjust the budget
-        self.total_costs.append(25000000)
+        self.total_costs.append(17500000)
         root_dir = dirname(realpath(__file__))
         self.web_dir = join(root_dir, 'webserver')
         self.z_cost = np.zeros(4)
@@ -794,7 +794,7 @@ class Costs():
     
     def calculate_cost_score(self, costs):
         # set the values below here to adjust the budget
-        cost_score = max(((25000000 - costs) / 25000000), 0)
+        cost_score = max(((17500000 - costs) / 17500000), 0)
         return cost_score
     
     def get_cost(self, cost_type, multiplier, what):
@@ -807,7 +807,8 @@ class Costs():
         fig, ax = plt.subplots()
         if self.total_costs:    
             budget = ax.plot(self.turn, self.total_costs, color='r')
-        ax.set_ylim([min(0, min(self.total_costs)), 27500000])
+		# change the ylim if the budget is changed.
+        ax.set_ylim([min(0, min(self.total_costs)), 20000000])
         ax.set_xticks(self.turn)
         x_labels = [("turn " + str(self.turn[value])) for value in self.turn]
         ax.set_xticklabels(x_labels)
