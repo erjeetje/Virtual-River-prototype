@@ -10,10 +10,10 @@ import time
 import geojson
 import os
 import pywinauto
-import tygronInterface_backup as tygron
+import tygronInterface as tygron
 import gridCalibration as cali
 import processImage as detect
-import gridMapping_backup as gridmap
+import gridMapping as gridmap
 import updateFunctions as compare
 import webcamControl as webcam
 import modelInterface as D3D
@@ -239,6 +239,8 @@ class runScript():
         self.img_y = None
         self.origins = None
         self.radius = None
+        # list that tracks updated hexagons in case hexagons are placed back.
+        self.updated_hexagons = []
         # list that tracks groyne/LTDs updates during a turn (both have to be
         # reset if changes are reverted).
         self.groyne_tracker = []
@@ -892,7 +894,7 @@ class runScript():
         roughness setting of the flow grid.
         """
         if self.initialized:
-            self.node_grid, ignore = gridmap.update_node_grid(
+            self.node_grid, ignore, ignore2 = gridmap.update_node_grid(
                     self.hexagons_sandbox, self.node_grid,
                     were_groynes = self.groyne_tracker, turn=self.turn,
                     printing=True)
@@ -915,8 +917,8 @@ class runScript():
         # dikes. The filled node grid is for the hydrodynamic model.
         if not self.initialized:
             self.filled_node_grid = deepcopy(self.node_grid)
-            self.filled_node_grid, self.groyne_tracker = \
-            gridmap.update_node_grid(
+            self.filled_node_grid, self.groyne_tracker, \
+            self.updated_hexagons = gridmap.update_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid, fill=True)
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
@@ -926,17 +928,19 @@ class runScript():
                 # if the dike locations changed, make a deepcopy of the
                 # node_grid and update it accordingly.
                 self.filled_node_grid = deepcopy(self.node_grid)
-                self.filled_node_grid, self.groyne_tracker = \
-                gridmap.update_node_grid(
+                self.filled_node_grid, self.groyne_tracker, \
+                self.updated_hexagons = gridmap.update_node_grid(
                         self.hexagons_sandbox, self.filled_node_grid,
-                        were_groynes = self.groyne_tracker, fill=True)
+                        were_groynes=self.groyne_tracker,
+                        updated_hex=self.updated_hexagons, fill=True)
             else:
                 # if the dike locations did not change, a simple update
                 # suffices.
-                self.filled_node_grid, self.groyne_tracker = \
-                gridmap.update_node_grid(
+                self.filled_node_grid, self.groyne_tracker, \
+                self.updated_hexagons = gridmap.update_node_grid(
                         self.hexagons_sandbox, self.filled_node_grid,
-                        were_groynes = self.groyne_tracker, turn=self.turn,
+                        were_groynes=self.groyne_tracker,
+                        updated_hex=self.updated_hexagons, turn=self.turn,
                         grid_type="filled")
             self.filled_node_grid = gridmap.interpolate_node_grid(
                     self.hexagons_sandbox, self.filled_node_grid,
@@ -997,7 +1001,8 @@ class runScript():
             self.node_grid, turn=self.turn, path=self.store_path)
         print("Created geotiff elevation map")
         tygron.set_terrain_type(self.token, self.hexagons_tygron)
-        tygron.hex_to_terrain(self.token, self.hexagons_tygron)
+        tygron.hex_to_terrain(self.token, self.hexagons_tygron,
+                              updated_hex=self.updated_hexagons)
         file_location = (self.store_path + "\\grid_height_map" +
                          str(self.turn) + ".tif")
         heightmap_id = tygron.set_elevation(
@@ -1157,6 +1162,7 @@ class runScript():
         self.update_ownership_viz(end_of_round=True)
         self.copy_images()
         self.update_count = 0
+        self.updated_hexagons = []
         self.groyne_tracker = []
         self.start_new_turn = True
         self.turn += 1

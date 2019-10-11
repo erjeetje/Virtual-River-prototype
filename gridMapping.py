@@ -405,7 +405,6 @@ def index_node_grid(hexagons, grid, slope):
     closest hexagons to a point in the node grid. Also calculates weight
     factors based on the distance to the hexagon centers.
     """
-    
     def add_bedslope(x, slope):
         return abs(x - 600) * slope
     
@@ -569,7 +568,6 @@ def update_node_grid(hexagons, grid, were_groynes=[], updated_hex=[],
     indices_updated = []
     becomes_ltd = []
     becomes_groyne = []
-    #was_building = []
     counter = 0
     # add feature ids of the changed hexagons to a list.
     for feature in hexagons.features:
@@ -594,29 +592,39 @@ def update_node_grid(hexagons, grid, were_groynes=[], updated_hex=[],
         elif (feature.properties["landuse_changed"] and
               feature.properties["landuse"] == 9):
             becomes_groyne.append(feature.id)
-        #elif feature.properties["was_building"]:
-        #    was_building.append(feature.id)
     # add the updated_hex to indices_updated and remove any duplicates
-    indices_updated.extend(updated_hex)
-    indices_updated = list(set(indices_updated))
+    total_updated = indices_updated + updated_hex
+    total_updated = list(set(total_updated))
+    #indices_updated.extend(updated_hex)
+    #indices_updated = list(set(indices_updated))
     # set the changed properties of the points in the grid indexed to a hexagon
     # indices_updated to True. Set the points that should not change to False.
     for feature in grid.features:
         if not feature.properties["board"]:
             continue
         if type(feature.properties["nearest"]) is int:
-            if feature.properties["nearest"] in indices_updated:
+            if feature.properties["nearest"] in total_updated:
                 feature.properties["changed"] = True
-                if turn != 0:
-                    feature.properties["building_active"] = False
+                if turn != 0:  # this if should not matter, but just in case
+                    if feature.properties["building"]:
+                        if feature.properties["nearest"] in indices_updated:
+                            feature.properties["building_active"] = False
+                        elif feature.properties["nearest"] in updated_hex:
+                            feature.properties["building_active"] = True
                 counter += 1
             else:
                 feature.properties["changed"] = False
         elif any(True for x in feature.properties["nearest"]
-                 if x in indices_updated):
+                 if x in total_updated):
             feature.properties["changed"] = True
+            """
             if turn != 0:
-                feature.properties["building_active"] = False
+                if feature.properties["building"]:
+                    if feature.properties["nearest"][0] in indices_updated:
+                        feature.properties["building_active"] = False
+                    elif feature.properties["nearest"][0] in updated_hex:
+                        feature.properties["building_active"] = True
+            """
             counter += 1
         else:
             feature.properties["changed"] = False
@@ -635,12 +643,6 @@ def update_node_grid(hexagons, grid, were_groynes=[], updated_hex=[],
                 if feature.properties["groyne"] != None:
                     feature.properties["groyne_active"] = True
                     feature.properties["ltd_active"] = False
-            """
-            elif feature.properties["nearest"] in was_building:
-                feature.properties["changed"] = True
-                counter += 1
-                feature.properties["building_active"] = False
-            """
         else:
             if feature.properties["nearest"][0] in becomes_ltd:
                 feature.properties["changed"] = True
@@ -654,12 +656,6 @@ def update_node_grid(hexagons, grid, were_groynes=[], updated_hex=[],
                 if feature.properties["groyne"] != None:
                     feature.properties["groyne_active"] = True
                     feature.properties["ltd_active"] = False
-            """
-            elif feature.properties["nearest"][0] in was_building:
-                feature.properties["changed"] = True
-                counter += 1
-                feature.properties["building_active"] = False
-            """
     if printing:
         print("Hexagons updated are: "+str(indices_updated))
         print("Number of gridpoints inside the board to update: "+str(counter))

@@ -558,7 +558,8 @@ def index_node_grid(hexagons, grid, slope):
     return grid
 
 
-def update_node_grid(hexagons, grid, were_groynes=[], fill=False, turn=0, printing=False, grid_type="node"):
+def update_node_grid(hexagons, grid, were_groynes=[], updated_hex=[],
+                     fill=False, turn=0, printing=False, grid_type="node"):
     """ 
     Function to update the grid: determine which grid points require updating
     based on which hexagons are changed. This way, only the grid points that
@@ -595,6 +596,9 @@ def update_node_grid(hexagons, grid, were_groynes=[], fill=False, turn=0, printi
             becomes_groyne.append(feature.id)
         #elif feature.properties["was_building"]:
         #    was_building.append(feature.id)
+    # add the updated_hex to indices_updated and remove any duplicates
+    indices_updated.extend(updated_hex)
+    indices_updated = list(set(indices_updated))
     # set the changed properties of the points in the grid indexed to a hexagon
     # indices_updated to True. Set the points that should not change to False.
     for feature in grid.features:
@@ -659,7 +663,7 @@ def update_node_grid(hexagons, grid, were_groynes=[], fill=False, turn=0, printi
     if printing:
         print("Hexagons updated are: "+str(indices_updated))
         print("Number of gridpoints inside the board to update: "+str(counter))
-    return grid, becomes_ltd
+    return grid, becomes_ltd, indices_updated
 
 
 """

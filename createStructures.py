@@ -432,6 +432,9 @@ def create_buildings(hexagons, grid):
             buildings.append(building)
     buildings = geojson.FeatureCollection(buildings)
     for feature in grid.features:
+        feature.properties["building"] = False
+        feature.properties["building_active"] = False
+        feature.properties["z_building"] = 0
         if type(feature.properties["nearest"]) is int:
             if feature.properties["nearest"] not in building_ids:
                 continue
@@ -448,8 +451,9 @@ def create_buildings(hexagons, grid):
         """
         point = geometry.asShape(feature.geometry)
         building = buildings.features[reference]
-        polygon = geometry.asShape(feature.geometry)
+        polygon = geometry.asShape(building.geometry)
         if polygon.contains(point):
+            feature.properties["building"] = True
             feature.properties["building_active"] = True
             feature.properties["z_building"] = 5
     return grid
