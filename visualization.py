@@ -389,12 +389,12 @@ class Visualization():
         #cv2.namedWindow('debug', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
         cv2.namedWindow('debug', flags=cv2.WINDOW_NORMAL)
         # Create a main window for the beamer
-        #cv2.namedWindow('main', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
-        cv2.namedWindow('main', flags=cv2.WINDOW_NORMAL)
+        #cv2.namedWindow('visualizer', flags=cv2.WINDOW_OPENGL | cv2.WINDOW_NORMAL)
+        cv2.namedWindow('visualizer', flags=cv2.WINDOW_NORMAL)
         # make main window full screen
         if self.config['settings'].get('fullscreen', False):
-            cv2.moveWindow('main', -1920, -1080)
-            cv2.setWindowProperty('main', cv2.WND_PROP_FULLSCREEN,
+            cv2.moveWindow('visualizer', -1920, -1080)
+            cv2.setWindowProperty('visualizer', cv2.WND_PROP_FULLSCREEN,
                                   cv2.WINDOW_FULLSCREEN)
 
 
@@ -572,7 +572,7 @@ class Visualization():
             # Open CV expects BGR, never found out why
             bgr = cv2.cvtColor(rgba, cv2.COLOR_RGBA2BGR)
             bgr = cv2.flip(bgr, 1)
-            cv2.imshow('main', bgr)
+            cv2.imshow('visualizer', bgr)
 
             img =  self.put_text('Timestep: %s\nT: %s' % (i, self.data['t']))
             cv2.imshow('debug', img)

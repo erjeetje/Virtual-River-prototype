@@ -162,6 +162,21 @@
                     "scale": 1.0
                 }
             ]
+        },
+		{
+            "title": "Previous turn",
+            "key": "0",
+            "layers": [
+                {
+                    "variable": "PREV_TURN",
+					"blur": true,
+                    "type": "image"
+                },
+                {
+                    "type": "lic",
+                    "scale": 1.0
+                }
+            ]
         }
     ]
 }
