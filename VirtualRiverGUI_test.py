@@ -26,7 +26,7 @@ import hexagonOwnership as owner
 import visualization as visualize
 import biosafeVR as biosafe
 import localServer as server
-import createVisualizations as create_viz
+import createVisualizations as overlays
 from copy import deepcopy
 from shutil import copyfile
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QMessageBox,
@@ -328,6 +328,7 @@ class runScript():
         self.biosafe_score = None
         # visualization
         self.viz = visualize.Visualization(self.model)
+        self.create_viz = overlays.createViz()
         app = pywinauto.application.Application().connect(title_re='visualizer')
         self.window = app.window(title_re='visualizer')
         return
@@ -936,7 +937,7 @@ class runScript():
         Function that adds non-model visualizations to the visualization
         object.
         """
-        ownership_viz = create_viz.visualize_ownership(
+        ownership_viz = self.create_viz.visualize_ownership(
                 self.hexagons_sandbox, end_of_round=end_of_round)
         self.viz.add_image("OWNERSHIP", ownership_viz)
         return
@@ -1047,7 +1048,7 @@ class runScript():
         if self.tygron:
             tygron.set_turn_tracker(self.turn, self.token)
         self.hexagons_sandbox = owner.reset_change(self.hexagons_sandbox)
-        prev_turn_viz = create_viz.visualize_prev_turn(
+        prev_turn_viz = self.create_viz.visualize_prev_turn(
                 self.hexagons_sandbox)
         self.viz.add_image("PREV_TURN", prev_turn_viz)
         self.update_ownership_viz(end_of_round=True)

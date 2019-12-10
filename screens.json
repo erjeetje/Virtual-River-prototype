@@ -169,12 +169,8 @@
             "layers": [
                 {
                     "variable": "PREV_TURN",
-					"blur": true,
+					"blur": false,
                     "type": "image"
-                },
-                {
-                    "type": "lic",
-                    "scale": 1.0
                 }
             ]
         }
