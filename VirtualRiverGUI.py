@@ -26,10 +26,11 @@ import hexagonOwnership as owner
 import visualization as visualize
 import biosafeVR as biosafe
 import localServer as server
+import createVisualizations as overlays
 from copy import deepcopy
 from shutil import copyfile
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QMessageBox,
-                             QLabel)
+                             QLabel, QDialog, QDesktopWidget)
 from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtGui import QPainter, QPen
 
@@ -49,46 +50,50 @@ class GUI(QWidget):
         #lbl_update.move(10, 40)
         #lbl_update.setFixedWidth(180)
         #lbl_update.setAlignment(Qt.AlignCenter)
-        btn_update = QPushButton('Update', self)
-        btn_update.clicked.connect(self.on_update_button_clicked)
-        btn_update.resize(180, 40)
-        btn_update.move(10, 40)
-        lbl_viz = QLabel('Visualization controls', self)
-        lbl_viz.move(10, 190)
-        lbl_viz.setFixedWidth(180)
-        lbl_viz.setAlignment(Qt.AlignCenter)
-        btn_elevation = QPushButton('Elevation', self)
-        btn_elevation.clicked.connect(self.on_elevation_button_clicked)
-        btn_elevation.resize(180, 40)
-        btn_elevation.move(10, 250)
-        btn_flow = QPushButton('Flow velocities', self)
-        btn_flow.clicked.connect(self.on_flow_button_clicked)
-        btn_flow.resize(180, 40)
-        btn_flow.move(10, 330)
-        btn_roughness = QPushButton('Roughness', self)
-        btn_roughness.clicked.connect(self.on_roughness_button_clicked)
-        btn_roughness.resize(180, 40)
-        btn_roughness.move(10, 410)
-        btn_ownership = QPushButton('Ownership', self)
-        btn_ownership.clicked.connect(self.on_ownership_button_clicked)
-        btn_ownership.resize(180, 40)
-        btn_ownership.move(10, 490)
-        btn_round = QPushButton('End round', self)
-        btn_round.clicked.connect(self.on_end_round_button_clicked)
-        btn_round.resize(180, 40)
-        btn_round.move(10, 640)
-        lbl_facilitator = QLabel('Facilitator controls', self)
-        lbl_facilitator.move(10, 800)
-        lbl_facilitator.setFixedWidth(180)
-        lbl_facilitator.setAlignment(Qt.AlignCenter)
-        btn_initialize = QPushButton('Initialize', self)
-        btn_initialize.clicked.connect(self.on_initialize_button_clicked)
-        btn_initialize.resize(180, 40)
-        btn_initialize.move(10, 840)
-        btn_reload = QPushButton('Reload', self)
-        btn_reload.clicked.connect(self.on_reload_button_clicked)
-        btn_reload.resize(180, 40)
-        btn_reload.move(10, 920)
+        self.btn_update = QPushButton('Update', self)
+        self.btn_update.clicked.connect(self.on_update_button_clicked)
+        self.btn_update.resize(180, 40)
+        self.btn_update.move(10, 40)
+        self.lbl_viz = QLabel('Visualization controls', self)
+        self.lbl_viz.move(10, 180)
+        self.lbl_viz.setFixedWidth(180)
+        self.lbl_viz.setAlignment(Qt.AlignCenter)
+        self.btn_elevation = QPushButton('Elevation', self)
+        self.btn_elevation.clicked.connect(self.on_elevation_button_clicked)
+        self.btn_elevation.resize(180, 40)
+        self.btn_elevation.move(10, 220)
+        self.btn_flow = QPushButton('Flow velocities', self)
+        self.btn_flow.clicked.connect(self.on_flow_button_clicked)
+        self.btn_flow.resize(180, 40)
+        self.btn_flow.move(10, 300)
+        self.btn_roughness = QPushButton('Roughness', self)
+        self.btn_roughness.clicked.connect(self.on_roughness_button_clicked)
+        self.btn_roughness.resize(180, 40)
+        self.btn_roughness.move(10, 380)
+        self.btn_ownership = QPushButton('Ownership', self)
+        self.btn_ownership.clicked.connect(self.on_ownership_button_clicked)
+        self.btn_ownership.resize(180, 40)
+        self.btn_ownership.move(10, 460)
+        self.btn_prev_turn = QPushButton('Previous board', self)
+        self.btn_prev_turn.clicked.connect(self.on_prev_board_button_clicked)
+        self.btn_prev_turn.resize(180, 40)
+        self.btn_prev_turn.move(10, 540)
+        self.btn_round = QPushButton('End round', self)
+        self.btn_round.clicked.connect(self.on_end_round_button_clicked)
+        self.btn_round.resize(180, 40)
+        self.btn_round.move(10, 690)
+        self.lbl_facilitator = QLabel('Facilitator controls', self)
+        self.lbl_facilitator.move(10, 830)
+        self.lbl_facilitator.setFixedWidth(180)
+        self.lbl_facilitator.setAlignment(Qt.AlignCenter)
+        self.btn_initialize = QPushButton('Initialize', self)
+        self.btn_initialize.clicked.connect(self.on_initialize_button_clicked)
+        self.btn_initialize.resize(180, 40)
+        self.btn_initialize.move(10, 860)
+        self.btn_reload = QPushButton('Reload', self)
+        self.btn_reload.clicked.connect(self.on_reload_button_clicked)
+        self.btn_reload.resize(180, 40)
+        self.btn_reload.move(10, 940)
         return
     
     def paintEvent(self, e):
@@ -96,21 +101,37 @@ class GUI(QWidget):
         painter.setPen(QPen(Qt.blue, 2, Qt.SolidLine))
         painter.drawRect(5,10,190,100)
         painter.setPen(QPen(Qt.green, 2, Qt.SolidLine))
-        painter.drawRect(5,160,190,400)
+        painter.drawRect(5,160,190,450)
         painter.setPen(QPen(Qt.red, 2, Qt.SolidLine))
-        painter.drawRect(5,610,190,100)
+        painter.drawRect(5,660,190,100)
         painter.setPen(QPen(Qt.yellow, 2, Qt.SolidLine))
-        painter.drawRect(5,770,190,230)
+        painter.drawRect(5,810,190,190)
         return
         
+    def buttons_available(self, boolean):
+        self.btn_update.setDisabled(boolean)
+        self.btn_initialize.setDisabled(boolean)
+        self.btn_elevation.setDisabled(boolean)
+        self.btn_flow.setDisabled(boolean)
+        self.btn_roughness.setDisabled(boolean)
+        self.btn_ownership.setDisabled(boolean)
+        self.btn_prev_turn.setDisabled(boolean)
+        self.btn_round.setDisabled(boolean)
+        self.btn_reload.setDisabled(boolean)
 
     def on_update_button_clicked(self):
+        feedback = Feedback(self)
+        feedback.show()
+        #self.buttons_available(True)
         print("Calling update function")
-        self.script.update()
+        self.script.update(self, feedback)
 
     def on_initialize_button_clicked(self):
+        feedback = Feedback(self)
+        feedback.show()
+        #self.buttons_available(True)
         print("Calling initialize function")
-        self.script.initialize()
+        self.script.initialize(self, feedback)
         
     def on_model_button_clicked(self):
         print("Calling model function")
@@ -131,8 +152,10 @@ class GUI(QWidget):
         self.script.save_files()
         
     def on_reload_button_clicked(self):
+        feedback = Feedback(self)
+        feedback.show()
         print("Calling reload function")
-        self.script.reload()
+        self.script.reload(self, feedback)
         
     def on_score_button_clicked(self):
         print("Calling score function")
@@ -149,7 +172,51 @@ class GUI(QWidget):
 
     def on_ownership_button_clicked(self):
         self.script.switch_viz(screen="ownership")
+        
+    def on_prev_board_button_clicked(self):
+        self.script.switch_viz(screen="previous")
 
+
+class Feedback(QDialog):
+    def __init__(self, parent):
+        QDialog.__init__(self, parent)
+        self.setModal(0)
+        self.resize(250, 50)
+        self.center()
+        self.lbl_feedback = QLabel("Game is updating!", self)
+        self.lbl_feedback.move(25, 20)
+        self.lbl_feedback.setFixedWidth(200)
+        self.lbl_feedback.setAlignment(Qt.AlignCenter)
+        self.lbl_timer = QLabel("", self)
+        self.lbl_timer.move(25, 40)
+        self.lbl_timer.setFixedWidth(200)
+        self.lbl_timer.setAlignment(Qt.AlignCenter)
+        self.setWindowTitle("Updating...")
+        self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        self.show()
+        return
+        
+    def set_feedback_text(self, feedback_text, time_text=None):
+        self.lbl_feedback.setText(feedback_text)
+        if time_text is not None:
+            self.lbl_timer.setText(time_text)
+        return
+    
+    def remove(self):
+        self.close()
+        return
+        
+    def center(self):
+        # geometry of the main window
+        qr = self.frameGeometry()
+        # center point of screen
+        cp = QDesktopWidget().availableGeometry().center()
+        # move rectangle's center point to screen's center point
+        qr.moveCenter(cp)
+        # top left of rectangle becomes top left of window centering it
+        self.move(qr.topLeft())
+        return
 
 class runScript():
     """
@@ -261,12 +328,13 @@ class runScript():
         self.biosafe_score = None
         # visualization
         self.viz = visualize.Visualization(self.model)
-        app = pywinauto.application.Application().connect(title_re='main')
-        self.window = app.window(title_re='main')
+        self.create_viz = overlays.createViz()
+        app = pywinauto.application.Application().connect(title_re='visualizer')
+        self.window = app.window(title_re='visualizer')
         return
 
 
-    def initialize(self):
+    def initialize(self, gui, feedback):
         """
         Function that handles configuring and calibrating the game board.
         """
@@ -275,7 +343,13 @@ class runScript():
                   "instead.")
             return
         tic = time.time()
+        gui.buttons_available(True)
+        feedback.set_feedback_text('Initializing the game')
+        #self.switch_viz(screen="break")
+        #feedback.set_feedback_text('Logging into Tygron',
+        #                      time_text='Over 4 minutes remaining')
         self.tygron_login()
+        
         self.get_image()
         """
         An AttributeError was triggered at canvas[1] in the pilot session -->
@@ -294,26 +368,33 @@ class runScript():
             return
         if self.tygron:
             self.tygron_update_buildings()
+        #feedback.set_feedback_text('Creating grids',
+        #                      time_text='Roughly 4 minutes remaining')
         self.create_grids()
         self.set_up_hexagons()
         self.process_hexagons()
         if self.tygron:
             self.tygron_transform()
-        self.update_ownership_viz()
+        self.update_board_viz(end_of_round=True)
         tac = time.time()
         self.index_grids()
         self.set_up_structures()
         self.process_grids() 
         tec = time.time()
         if self.tygron:
+            #feedback.set_feedback_text('Updating the virtual game world',
+            #                      time_text='Roughly 3 minutes remaining')
             t0 = time.time()
             self.tygron_update()
             t1 = time.time()
+        #feedback.set_feedback_text('Running models')
         self.run_biosafe()
         self.update_cost_score()
         self.initialized = True
         self.index_model()
         self.run_model()
+        #feedback.set_feedback_text('Finalizing initialization',
+        #                      time_text='Just a few more seconds')
         self.update_water_module()
         self.scores()
         if self.tygron:
@@ -341,80 +422,13 @@ class runScript():
                   " seconds. Model run time: " + str(round(toc-tec, 2)) +
                   " seconds. Total initialization time: " +
                   str(round(toc-tic, 2)) + " seconds.")
-        self.update_viz()
-        return
-    
-    
-    def initialize_old(self):
-        """
-        Function that handles configuring and calibrating the game board.
-        """
-        if self.initialized:
-            print("Virtual River is already initialized, please use Update "
-                  "instead.")
-            return
-        tic = time.time()
-        self.tygron_login()
-        self.get_image()
-        """
-        An AttributeError was triggered at canvas[1] in the pilot session -->
-        most likely a corner was not found (len(canvas) 3 instead of 4) -->
-        When that happens, this should stop any update and retry.
-        """
-        self.calibrate_camera()
-        self.transform_hexagons()
-        self.get_hexagons()
-        if self.tygron:
-            self.tygron_update_buildings()
-        self.create_grids()
-        self.set_up_hexagons()
-        self.process_hexagons()
-        if self.tygron:
-            self.tygron_transform()
-        self.update_ownership_viz()
-        tac = time.time()
-        self.index_grids()
-        self.set_up_structures()
-        self.process_grids() 
-        tec = time.time()
-        if self.tygron:
-            t0 = time.time()
-            self.tygron_update()
-            t1 = time.time()
-        self.run_biosafe()
-        self.update_cost_score()
-        self.initialized = True
-        self.index_model()
-        self.run_model()
-        self.update_water_module()
-        self.scores()
-        if self.tygron:
-            self.tygron_set_indicators()
-        self.save_files()
-        toc = time.time()
-        try:
-            print("Finished startup and calibration" +
-                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
-                  " seconds. Indexing and interpolation time: " +
-                  str(round(tec-tac, 2)) +
-                  " seconds. Tygron terrain update time: " +
-                  str(round(t1-t0, 2)) +
-                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
-                  " seconds. Total initialization time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
-        except UnboundLocalError:
-            print("Finished startup and calibration" +
-                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
-                  " seconds. Indexing and interpolation time: " +
-                  str(round(tec-tac, 2)) +
-                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
-                  " seconds. Total initialization time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
+        feedback.remove()
+        gui.buttons_available(False)
         self.update_viz()
         return
 
 
-    def update(self):
+    def update(self, gui, feedback):
         """
         Function that handles updating the game board.
         """
@@ -427,8 +441,11 @@ class runScript():
                   "end round has not yet been triggered.")
             return
         tic = time.time()
+        self.switch_viz(screen="break")
         self.start_new_turn = False
         self.update_count += 1
+        gui.buttons_available(True)
+        feedback.set_feedback_text('Updating the game!')
         self.prepare_turn()
         if not self.test:
             self.get_image()
@@ -450,19 +467,29 @@ class runScript():
         if self.tygron:
             self.tygron_update_buildings()
             self.tygron_transform()
+        #feedback.set_feedback_text('Comparing changes on the board',
+        #                      time_text='Around 25 seconds remaining')
         dike_moved = self.compare_hexagons()
+        #feedback.set_feedback_text('Processing changes on the board')
         self.process_hexagons(dike_moved=dike_moved)
         tac = time.time()
-        self.update_ownership_viz()
+        self.update_board_viz()
+        #feedback.set_feedback_text('Updating elevation and land use')
         self.process_grids(dike_moved=dike_moved)
         tec = time.time()
         if self.tygron:
+            #feedback.set_feedback_text('Updating the virtual game world',
+            #                      time_text='Around 20 seconds remaining')
             t0 = time.time()
             self.tygron_update()
             t1 = time.time()
+        #feedback.set_feedback_text('Running the models',
+        #                      time_text='Around 10 to 15 seconds remaining')
         self.run_biosafe()
         self.update_cost_score()
         self.run_model()
+        #feedback.set_feedback_text('Calculating scores',
+        #                      time_text='Just a few more seconds')
         self.update_water_module(dike_moved=dike_moved)
         self.scores()
         if self.tygron:
@@ -487,164 +514,24 @@ class runScript():
                   str(round(tec-tac, 2)) + " seconds. Model update time: " +
                   str(round(toc-tec, 2)) + " seconds. Total update time: " +
                   str(round(toc-tic, 2)) + " seconds.")
+        feedback.remove()
+        gui.buttons_available(False)
         self.update_viz()
         return
-    
-    
-    def update_old(self):
-        """
-        Function that handles updating the game board.
-        """
-        if not self.initialized:
-            print("ERROR: Virtual River is not yet calibrated, "
-                  "please first run initialize")
-            return
-        if (self.initialized and self.turn == 0):
-            print("ERROR: It seems Virtual River is initialized, but that end "
-                  "end round has not yet been triggered.")
-            return
-        tic = time.time()
-        self.start_new_turn = False
-        self.update_count += 1
-        self.prepare_turn()
-        if not self.test:
-            self.get_image()
-            """
-            An AttributeError was triggered at canvas[1] in the pilot session -->
-            most likely a corner was not found (len(canvas) 3 instead of 4) -->
-            When that happens, this should stop any update and retry.
-            """
-            self.calibrate_camera()
-        #self.transform_hexagons()
-        self.get_hexagons()
-        if self.tygron:
-            self.tygron_update_buildings()
-            self.tygron_transform()
-        dike_moved = self.compare_hexagons()
-        self.process_hexagons(dike_moved=dike_moved)
-        tac = time.time()
-        self.update_ownership_viz()
-        self.process_grids(dike_moved=dike_moved)
-        tec = time.time()
-        if self.tygron:
-            t0 = time.time()
-            self.tygron_update()
-            t1 = time.time()
-        self.run_biosafe()
-        self.update_cost_score()
-        self.run_model()
-        self.update_water_module(dike_moved=dike_moved)
-        self.scores()
-        if self.tygron:
-            self.tygron_set_indicators()
-        self.save_files(end_round=False)
-        toc = time.time()
-        try:
-            print("Updated to turn " + str(self.turn) +
-                  ". Comparison update time: " + str(round(tac-tic, 2)) +
-                  " seconds. Interpolation update time: " +
-                  str(round(tec-tac, 2)) + " seconds. Tygron update time: " +
-                  str(round((t1-t0), 2)) + " seconds. Model update time: " +
-                  str(round(toc-tec, 2)) + " seconds. Total update time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
-        except UnboundLocalError:
-            print("Updated to turn " + str(self.turn) +
-                  ". Comparison update time: " + str(round(tac-tic, 2)) +
-                  " seconds. Interpolation update time: " +
-                  str(round(tec-tac, 2)) + " seconds. Model update time: " +
-                  str(round(toc-tec, 2)) + " seconds. Total update time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
-        self.update_viz()
-        return
-    
-    
-    def reload(self):
+
+
+    def reload(self, gui, feedback):
         if not self.reload_enabled:
             print("Are you sure you want to iniate a reload? If you intended "
                   "to press reload, press reload again to engage the reload.")
             self.reload_enabled = True
             return
         self.reloading = True
+        gui.buttons_available(True)
         if not self.initialized:
-            self.initialize()
+            self.initialize(gui, feedback)
         else:
-            self.update()
-        return
-        
-    
-    def reload_old(self):
-        if not self.reload_enabled:
-            print("Are you sure you want to iniate a reload? If you intended "
-                  "to press reload, press reload again to engage the reload.")
-            self.reload_enabled = True
-            return
-        self.reloading = True
-        tic = time.time()
-        self.start_new_turn = False
-        if not self.initialized:
-            self.tygron_login()
-            self.get_image()
-            """
-            An AttributeError was triggered at canvas[1] in the pilot session -->
-            most likely a corner was not found (len(canvas) 3 instead of 4) -->
-            When that happens, this should stop any update and retry.
-            """
-            self.calibrate_camera()
-        self.get_hexagons()
-        #self.transform_hexagons()
-        #self.process_hexagons()
-        if self.tygron:
-            self.tygron_update_buildings()
-            self.tygron_transform()
-        dike_moved = False
-        if self.initialized:
-            dike_moved = self.compare_hexagons()
-        self.update_ownership_viz()
-        tac = time.time()
-        if not self.initialized:
-            self.create_grids()
-            self.index_grids()
-            self.set_up_structures()
-        if dike_moved is None:
-            self.process_grids()
-        else:
-            self.process_grids(dike_moved=dike_moved)
-        tec = time.time()
-        if self.tygron:
-            t0 = time.time()
-            self.tygron_update()
-            t1 = time.time()
-        self.run_biosafe()
-        self.update_cost_score()
-        if not self.initialized:
-            self.initialized = True
-        self.reload_enabled = False
-        self.reloading = False
-        self.run_model()
-        self.update_water_module(dike_moved=dike_moved)
-        self.scores()
-        if self.tygron:
-            self.tygron_set_indicators()
-        toc = time.time()
-        try:
-            print("Finished reloading to turn " + str(self.turn) +
-                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
-                  " seconds. Indexing and interpolation time: " +
-                  str(round(tec-tac, 2)) +
-                  " seconds. Tygron terrain update time: " +
-                  str(round(t1-t0, 2)) +
-                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
-                  " seconds. Total initialization time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
-        except UnboundLocalError:
-            print("Finished reloading to turn " + str(self.turn) +
-                  ". Calibration and loading time: " + str(round(tac-tic, 2)) +
-                  " seconds. Indexing and interpolation time: " +
-                  str(round(tec-tac, 2)) +
-                  " seconds. Model run time: " + str(round(toc-tec, 2)) +
-                  " seconds. Total initialization time: " +
-                  str(round(toc-tic, 2)) + " seconds.")
-        self.update_viz()
+            self.update(gui, feedback)
         return
 
 
@@ -654,16 +541,16 @@ class runScript():
         """
         server.run_server(self.web_path, path=self.dir_path)
         return
-    
-    
+
+
     def prepare_turn(self):
         """
         Reset the turn costs in the cost module to 0.
         """
         self.cost_module.reset_costs(turn=self.turn)
         return
-    
-    
+
+
     def get_image(self):
         """
         Get a camera image.
@@ -734,8 +621,8 @@ class runScript():
                     path=self.dir_path)
         print("Transformed hexagons suitable for model and tygron.")
         return
-    
-    
+
+
     def get_hexagons(self):
         """
         Function that creates/gets the new hexagons. Gets them from either the
@@ -801,8 +688,8 @@ class runScript():
         self.hexagons_sandbox = adjust.find_factory(
                 self.hexagons_sandbox)
         return
-    
-    
+
+
     def process_hexagons(self, dike_moved=False):
         """
         Process the hexagons, add various properties.
@@ -1002,6 +889,9 @@ class runScript():
         gridmap.create_geotiff(
             self.node_grid, turn=self.turn, path=self.store_path)
         print("Created geotiff elevation map")
+        """
+        TO DO: add that tygron also updates the self.updated_hexagons list
+        """
         tygron.set_terrain_type(self.token, self.hexagons_tygron)
         tygron.hex_to_terrain(self.token, self.hexagons_tygron,
                               updated_hex=self.updated_hexagons)
@@ -1042,14 +932,18 @@ class runScript():
         return
 
 
-    def update_ownership_viz(self, end_of_round=False):
+    def update_board_viz(self, end_of_round=False):
         """
         Function that adds non-model visualizations to the visualization
         object.
         """
-        ownership_viz = owner.visualize_ownership(
+        ownership_viz = self.create_viz.visualize_ownership(
                 self.hexagons_sandbox, end_of_round=end_of_round)
         self.viz.add_image("OWNERSHIP", ownership_viz)
+        if end_of_round:
+            prev_turn_viz = self.create_viz.visualize_prev_turn(
+                    self.hexagons_sandbox)
+            self.viz.add_image("PREV_TURN", prev_turn_viz)
         return
 
 
@@ -1115,8 +1009,8 @@ class runScript():
         self.water_module.water_level_graph()
         self.water_module.dike_safety_graph()
         return
-    
-    
+
+
     def run_biosafe(self):
         """
         This function handles all things related to BIOSAFE/biodiversity
@@ -1149,9 +1043,6 @@ class runScript():
             return
         print("Ending round " + str(self.turn) + ", applying all the changes. "
               "Make sure to save the files for this turn!")
-        """
-        TODO: code to handle whatever needs to be handled, e.g. the indicators.
-        """
         self.store_costs()
         self.store_previous_turn()
         # if self.save is defined as True, the end of turn files are
@@ -1161,7 +1052,7 @@ class runScript():
         if self.tygron:
             tygron.set_turn_tracker(self.turn, self.token)
         self.hexagons_sandbox = owner.reset_change(self.hexagons_sandbox)
-        self.update_ownership_viz(end_of_round=True)
+        self.update_board_viz(end_of_round=True)
         self.copy_images()
         self.update_count = 0
         self.updated_hexagons = []
@@ -1169,8 +1060,8 @@ class runScript():
         self.start_new_turn = True
         self.turn += 1
         return
-    
-    
+
+
     def copy_images(self):
         filenames_src = ["flood_safety_score1.png", "flood_safety_score2.png",
                          "biodiversity_score1.png", "biodiversity_score2.png",
@@ -1243,8 +1134,8 @@ class runScript():
         self.total_costs = self.total_costs + self.turn_costs
         self.turn_costs = 0
         return
-    
-    
+
+
     def update_cost_score(self):
         costs = self.total_costs + self.turn_costs
         self.cost_score = self.cost_module.calculate_cost_score(costs)
@@ -1265,7 +1156,8 @@ class runScript():
     def scores(self):
         self.cost_module.costs_graph()
         self.cost_module.costs_graph_breakdown()
-        self.hexagons_sandbox = self.model.update_waterlevel(self.hexagons_sandbox)
+        self.hexagons_sandbox = self.model.update_waterlevel(
+                self.hexagons_sandbox)
         if not self.initialized:
             print("Virtual River is not yet initialized, there are no scores "
                   "to show, please first run initialize")
@@ -1299,18 +1191,21 @@ class runScript():
     
     
     def switch_viz(self, screen="elevation"):
-        if screen == "flow":
+        if screen == "break":
+            key = 'q'
+        elif screen == "flow":
             key = '6'
         elif screen == "roughness":
             key = '8'
         elif screen == "ownership":
             key = '9'
+        elif screen == "previous":
+            key = '0'
         else:
             key = '5'
         self.window.set_focus()
         self.window.type_keys(key)
         
-
 
     def update_viz(self):
         self.viz.loop()

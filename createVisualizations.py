@@ -151,12 +151,14 @@ class createViz():
 
             # determine which icon to use in the image
             icon = None
-            if feature.properties["factory"]:
-                icon = self.factory_icon.copy()
-                icon_alpha = self.factory_alpha.copy()
-            elif feature.properties["landuse"] == 0:
-                icon = self.farm_icon.copy()
-                icon_alpha = self.farm_alpha.copy()
+            
+            if feature.properties["landuse"] == 0:
+                if feature.properties["factory"]:
+                    icon = self.factory_icon.copy()
+                    icon_alpha = self.factory_alpha.copy()
+                else:
+                    icon = self.farm_icon.copy()
+                    icon_alpha = self.farm_alpha.copy()
             elif feature.properties["landuse"] == 1:
                 icon = self.meadow_icon.copy()
                 icon_alpha = self.meadow_alpha.copy()
