@@ -22,6 +22,9 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
     if debug:    
         filename = 'turn_%d.jpg' % turn
         cv2.imwrite(os.path.join(path, filename), warped)
+       
+    #filename = 'calibrated_image.jpg'
+    #cv2.imwrite(os.path.join(path, filename), warped)
     if method == 'LAB':
         # convert the image to labspace and get the A and B channels.
         lab = cv2.cvtColor(warped, cv2.COLOR_BGR2Lab)
@@ -45,6 +48,13 @@ def detect_markers(img, pers, img_x, img_y, origins, r, features, turn=0,
                         red_dilate)
             cv2.imwrite(os.path.join(path, 'blue_mask_dilated_LAB%d.jpg' % turn),
                         blue_dilate)
+        
+        """
+        cv2.imwrite(os.path.join(path, 'red_mask_dilated_LAB.jpg'),
+                    red_dilate)
+        cv2.imwrite(os.path.join(path, 'blue_mask_dilated_LAB.jpg'),
+                    blue_dilate)
+        """
     elif method == 'YCrCb':
         # convert to image to YCRCb and get the Cb and Cr channels.
         ycrcb = cv2.cvtColor(warped, cv2.COLOR_BGR2YCrCb)

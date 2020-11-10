@@ -30,7 +30,7 @@ def join_session(username, password, application_type="EDITOR",
     session_id = -1
     sessions = sessions_data.json()
     for item in sessions:
-        if item["name"] == "virtual_river":
+        if item["name"] == "virtual_river_salti":
             session_id = item["id"]
             break
     if session_id > -1:
