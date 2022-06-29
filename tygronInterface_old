@@ -14,7 +14,9 @@ from geojson import FeatureCollection
 
 
 def join_session(username, password, application_type="EDITOR",
-                 api_endpoint=("https://engine.tygron.com/api/event/io/get_my_joinable_sessions/?f=JSON")):
+                 api_endpoint=("https://engine.tygron.com/api/services/event/"
+                               "IOServiceEventType/GET_MY_JOINABLE_SESSIONS/?"
+                               "f=JSON")):
     """
     Login function to Tygron, returns api token on successful login (requires
     a Tygron session to run called 'virtual_river2').
@@ -26,20 +28,14 @@ def join_session(username, password, application_type="EDITOR",
         print("There appears to be no internet connection.")
         return None
     session_id = -1
-    print(sessions_data)
     sessions = sessions_data.json()
     for item in sessions:
         if item["name"] == "virtual_river_salti":
             session_id = item["id"]
             break
-    print(session_id)
     if session_id > -1:
-        join_url = ("https://engine.tygron.com/api/event/io/join/?f=JSON")
-        """
-        r = requests.post(url=join_url, json=[session_id, application_type,
-                          "Virtual River application script"],
-                          auth=(username, password))
-        """
+        join_url = ("https://engine.tygron.com/api/services/event/"
+                    "IOServiceEventType/join/")
         r = requests.post(url=join_url, json=[session_id, application_type,
                           "Virtual River application script"],
                           auth=(username, password))
