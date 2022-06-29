@@ -310,8 +310,8 @@ def set_indicator(score, api_key, indicator="budget", index=0, value=0,
                        api_endpoint=("https://engine.tygron.com/api/session/"
                                      "event/editorindicator/set_attribute/?")):
     if indicator == "flood":
-        indicator_id = 0
-        excel_id = 1000026
+        indicator_id = 4
+        excel_id = 1000020
         value_input = ["RED", "YELLOW", "GREEN"]
         for i, count in enumerate(value):
             try:
