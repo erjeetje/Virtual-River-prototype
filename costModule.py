@@ -830,6 +830,7 @@ class Costs():
         ax.title.set_color('w')
         plt.tight_layout()
         plt.savefig(join(self.web_dir, "budget_score1.png"), edgecolor='w',transparent=True)
+        plt.close(fig)
         return
 
 

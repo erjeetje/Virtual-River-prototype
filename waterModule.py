@@ -465,6 +465,7 @@ class Water():
         plt.tight_layout()
         plt.savefig(join(self.web_dir, "flood_safety_score1.png"),
                     edgecolor='w', transparent=True)
+        plt.close(fig)
         return
     
     def dike_safety_graph(self):
@@ -544,6 +545,7 @@ class Water():
         plt.tight_layout()
         plt.savefig(join(self.web_dir, "flood_safety_score2.png"),
                     edgecolor='w',transparent=True)
+        plt.close(fig)
         return
 
 def load(turn=0):

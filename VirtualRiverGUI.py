@@ -27,6 +27,7 @@ import visualization as visualize
 import biosafeVR as biosafe
 import localServer as server
 import createVisualizations as overlays
+import offlineIndicators as off_ind
 from copy import deepcopy
 from shutil import copyfile
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QMessageBox,
@@ -399,6 +400,9 @@ class runScript():
         self.scores()
         if self.tygron:
             self.tygron_set_indicators()
+        else:
+            self.indicators = off_ind.Indicator_screen(path=self.web_path)
+            self.offline_indicators()
         self.save_files()
         # always reset the reloading variables in case reloading is used.
         self.reloading = False
@@ -494,6 +498,8 @@ class runScript():
         self.scores()
         if self.tygron:
             self.tygron_set_indicators()
+        else:
+            self.offline_indicators()
         self.save_files(end_round=False)
         # always reset the reloading variables in case reloading is used.
         self.reloading = False
@@ -931,6 +937,18 @@ class runScript():
                 export="tygron_initialize")
         return
 
+    def offline_indicators(self):
+        counts = self.water_module.get_dike_safety()
+        self.indicators.set_flood_scores(score=self.flood_safety_score, red=counts[0],
+                                 yellow=counts[1], green=counts[2])
+        PotTax = self.biosafe.get_PotTax_sum()
+        self.indicators.set_bio_scores(score=self.biosafe_score, pottax_ini=PotTax[0],
+                               pottax=PotTax[1])
+        costs = self.total_costs + self.turn_costs
+        self.indicators.set_budget_scores(score=self.cost_score, costs=costs)
+        self.indicators.update_scores(turn=self.turn)
+        self.indicators.update_images(turn=self.turn)
+        return
 
     def update_board_viz(self, end_of_round=False):
         """

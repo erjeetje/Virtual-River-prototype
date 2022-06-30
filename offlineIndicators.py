@@ -19,7 +19,7 @@ class Indicator_screen(QWidget):
         super(Indicator_screen, self).__init__()
         self.setWindowTitle('Indicator screen')
         self.setFixedSize(1720, 1000)
-        #self.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.path = path
         self.turn_tracker = 0
         self.score_flood_safety = 0
@@ -30,7 +30,7 @@ class Indicator_screen(QWidget):
         self.green_locations = 0
         self.bio_initial_total = 0
         self.bio_current_total = 0
-        self.budget_tracker = 25000000
+        self.budget_tracker = 17500000
         self.initUI()
         self.show()  # app.exec_()
         return
@@ -82,22 +82,22 @@ class Indicator_screen(QWidget):
         """
         os.chdir(self.path)
         image_width = 390
-        flood_image1_source = QPixmap("flood_safety_score1_turn0.png")
+        flood_image1_source = QPixmap("flood_safety_score1.png")
         self.flood_image1 = flood_image1_source.scaledToWidth(image_width)
         self.flood_image1_label = QLabel()
         self.flood_image1_label.setPixmap(self.flood_image1)
         self.images_top.addWidget(self.flood_image1_label)
-        flood_image2_source = QPixmap("flood_safety_score2_turn0.png")
+        flood_image2_source = QPixmap("flood_safety_score2.png")
         self.flood_image2 = flood_image2_source.scaledToWidth(image_width)
         self.flood_image2_label = QLabel()
         self.flood_image2_label.setPixmap(self.flood_image2)
         self.images_top.addWidget(self.flood_image2_label)
-        bio_image1_source = QPixmap("biodiversity_score1_turn0.png")
+        bio_image1_source = QPixmap("biodiversity_score1.png")
         self.bio_image1 = bio_image1_source.scaledToWidth(image_width)
         self.bio_image1_label = QLabel()
         self.bio_image1_label.setPixmap(self.bio_image1)
         self.images_top.addWidget(self.bio_image1_label)        
-        bio_image2_source = QPixmap("biodiversity_score2_turn0.png")
+        bio_image2_source = QPixmap("biodiversity_score2.png")
         self.bio_image2 = bio_image2_source.scaledToWidth(image_width)
         self.bio_image2_label = QLabel()
         self.bio_image2_label.setPixmap(self.bio_image2)
@@ -130,19 +130,19 @@ class Indicator_screen(QWidget):
         self.flood_score_exp3.setFont(content_font)
         self.info_top3.addWidget(self.flood_score_exp3)
         
-        text = "# of red locations(0 score contribution): " + str(self.red_locations)
+        text = "# of red locations (0 score contribution): " + str(self.red_locations)
         self.dike_score_exp1 = QLabel(text)
         self.dike_score_exp1.setStyleSheet('color: white;}')
         #self.flood_score_exp1.setAlignment(Qt.AlignCenter)
         self.dike_score_exp1.setFont(content_font)
         self.info_top1.addWidget(self.dike_score_exp1)
-        text = "# of yellow locations(0 score contribution): " + str(self.yellow_locations)
+        text = "# of yellow locations (0.5 score contribution): " + str(self.yellow_locations)
         self.dike_score_exp2 = QLabel(text)
         self.dike_score_exp2.setStyleSheet('color: white;}')
         #self.flood_score_exp1.setAlignment(Qt.AlignCenter)
         self.dike_score_exp2.setFont(content_font)
         self.info_top2.addWidget(self.dike_score_exp2)
-        text = "# of green locations(0 score contribution): " + str(self.green_locations)
+        text = "# of green locations (1 score contribution): " + str(self.green_locations)
         self.dike_score_exp3 = QLabel(text)
         self.dike_score_exp3.setStyleSheet('color: white;}')
         #self.flood_score_exp1.setAlignment(Qt.AlignCenter)
@@ -211,12 +211,12 @@ class Indicator_screen(QWidget):
         self.turn_score.setFont(title_font)
         self.header_bottom.addWidget(self.turn_score)
         
-        budget_image1_source = QPixmap("budget_score1_turn0.png")
+        budget_image1_source = QPixmap("budget_score1.png")
         self.budget_image1 = budget_image1_source.scaledToWidth(image_width)
         self.budget_image1_label = QLabel()
         self.budget_image1_label.setPixmap(self.budget_image1)
         self.images_bottom.addWidget(self.budget_image1_label)
-        budget_image2_source = QPixmap("budget_score2_turn0.png")
+        budget_image2_source = QPixmap("budget_score2.png")
         self.budget_image2 = budget_image2_source.scaledToWidth(image_width)
         self.budget_image2_label = QLabel()
         self.budget_image2_label.setPixmap(self.budget_image2)
@@ -226,7 +226,7 @@ class Indicator_screen(QWidget):
         self.info_bottom2.addWidget(QLabel())
         
         
-        text = "Initial budget: 25000000 Euros"
+        text = "Initial budget: 17500000 Euros"
         self.initial_budget = QLabel(text)
         self.initial_budget.setStyleSheet('color: white;}')
         #self.flood_score_exp1.setAlignment(Qt.AlignCenter)
@@ -284,28 +284,22 @@ class Indicator_screen(QWidget):
     def update_images(self, turn):
         os.chdir(self.path)
         image_width = 390
-        flood_filename1 = "flood_safety_score1_turn" + str(turn) + ".png"
-        flood_filename2 = "flood_safety_score2_turn" + str(turn) + ".png"
-        bio_filename1 = "biodiversity_score1_turn" + str(turn) + ".png"
-        bio_filename2 = "biodiversity_score2_turn" + str(turn) + ".png"
-        budget_filename1 = "budget_score1_turn" + str(turn) + ".png"
-        budget_filename2 = "budget_score2_turn" + str(turn) + ".png"
-        flood_image1_source = QPixmap(flood_filename1)
+        flood_image1_source = QPixmap("flood_safety_score1.png")
         self.flood_image1 = flood_image1_source.scaledToWidth(image_width)
         self.flood_image1_label.setPixmap(self.flood_image1)
-        flood_image2_source = QPixmap(flood_filename2)
+        flood_image2_source = QPixmap("flood_safety_score2.png")
         self.flood_image2 = flood_image2_source.scaledToWidth(image_width)
         self.flood_image2_label.setPixmap(self.flood_image2)
-        bio_image1_source = QPixmap(bio_filename1)
+        bio_image1_source = QPixmap("biodiversity_score1.png")
         self.bio_image1 = bio_image1_source.scaledToWidth(image_width)
         self.bio_image1_label.setPixmap(self.bio_image1)     
-        bio_image2_source = QPixmap(bio_filename2)
+        bio_image2_source = QPixmap("biodiversity_score2.png")
         self.bio_image2 = bio_image2_source.scaledToWidth(image_width)
         self.bio_image2_label.setPixmap(self.bio_image2)
-        budget_image1_source = QPixmap(budget_filename1)
+        budget_image1_source = QPixmap("budget_score1.png")
         self.budget_image1 = budget_image1_source.scaledToWidth(image_width)
         self.budget_image1_label.setPixmap(self.budget_image1)     
-        budget_image2_source = QPixmap(budget_filename2)
+        budget_image2_source = QPixmap("budget_score2.png")
         self.budget_image2 = budget_image2_source.scaledToWidth(image_width)
         self.budget_image2_label.setPixmap(self.budget_image2)
         os.chdir(os.path.dirname(os.path.realpath(__file__)))
@@ -313,15 +307,18 @@ class Indicator_screen(QWidget):
         
     def update_scores(self, turn): 
         self.turn_score.setText(str(turn))
-        self.flood_score.setText(str(self.score_flood_safety))
-        self.bio_score.setText(str(self.score_biodiversity))
-        self.budget_score.setText(str(self.score_budget))
+        text = str(self.score_flood_safety) + " %"
+        self.flood_score.setText(text)
+        text = str(self.score_biodiversity) + " %"
+        self.bio_score.setText(text)
+        text = str(self.score_budget) + " %"
+        self.budget_score.setText(text)
         
-        text = "# of red locations(0 score contribution): " + str(self.red_locations)
+        text = "# of red locations (0 score contribution): " + str(self.red_locations)
         self.dike_score_exp1.setText(text)
-        text = "# of yellow locations(0 score contribution): " + str(self.yellow_locations)
+        text = "# of yellow locations (0.5 score contribution): " + str(self.yellow_locations)
         self.dike_score_exp2.setText(text)
-        text = "# of green locations(0 score contribution): " + str(self.green_locations)
+        text = "# of green locations (1 score contribution): " + str(self.green_locations)
         self.dike_score_exp3.setText(text)
         text = "Initial board: " + str(self.bio_initial_total)
         self.taxo_score_exp2.setText(text)
@@ -332,21 +329,21 @@ class Indicator_screen(QWidget):
         return
     
     def set_flood_scores(self, score=0, red=0, yellow=0, green=0):
-        self.score_flood_safety = score
+        self.score_flood_safety = round(score*100)
         self.red_locations = red
         self.yellow_locations = yellow
         self.green_locations = green
         return
         
-    def set_bio_scores(self, score=0, pottax=0, pottax_ini=0):
-        self.score_biodiversity = score
+    def set_bio_scores(self, score=0, pottax_ini=0, pottax=0):
+        self.score_biodiversity = round(score*100)
         self.bio_initial_total = pottax_ini
         self.bio_current_total = pottax
         return
         
-    def set_budget_scores(self, score=100, budget=0):
-        self.score_budget = score
-        self.budget_tracker = budget
+    def set_budget_scores(self, score=100, costs=0):
+        self.score_budget = round(score*100)
+        self.budget_tracker = 17500000 - costs
         return
         
         

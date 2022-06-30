@@ -375,6 +375,7 @@ class BiosafeVR():
         else:
             plt.savefig(os.path.join(self.web_dir, "biodiversity_score2.png"),
                         edgecolor='w',transparent=True)
+        plt.close(fig)
         return
 
 
